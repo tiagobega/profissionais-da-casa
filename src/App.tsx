@@ -5,9 +5,7 @@ import Router from "components/Router";
 function App() {
   return (
     <Providers>
-      <Layout>
-        <Router />
-      </Layout>
+      <Router />
     </Providers>
   );
 }
