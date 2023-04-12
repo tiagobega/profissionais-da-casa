@@ -57,7 +57,7 @@ const Router = () => (
           path={"/review/:id"}
           element={<PublicRoute element={<HomePage />} />}
         />
-        //ADMIN ROUTES
+        {/* //ADMIN ROUTES */}
         <Route
           path={"/admin/"}
           element={<PublicRoute element={<HomePage />} />}
@@ -110,7 +110,7 @@ const PrivateRoute = ({
   }
 
   if (admin && !useIsAdmin) {
-    redirectTo ??= "/";
+    redirectTo ??= '/'
     return <Navigate to={redirectTo} />;
   }
 
