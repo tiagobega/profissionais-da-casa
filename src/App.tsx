@@ -1,15 +1,15 @@
-import { ThemeProvider } from 'styled-components'
-import './App.css'
-import { defaultTheme } from './styles/defaultTheme'
-import { GlobalStyle } from 'styles/global'
+import Providers from "components/Providers";
+import Layout from "components/Layout";
+import Router from "components/Router";
 
 function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
-      <h1>Profissionais da casa</h1>
-    </ThemeProvider>
-  )
+    <Providers>
+      <Layout>
+        <Router />
+      </Layout>
+    </Providers>
+  );
 }
 
-export default App
+export default App;
