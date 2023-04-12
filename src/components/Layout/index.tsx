@@ -1,16 +1,17 @@
-import Header from "components/Header";
-import Footer from "components/Footer";
+import Header from 'components/Header'
+import Footer from 'components/Footer'
+import { Outlet } from 'react-router-dom'
 
-import type { LayoutTypesProps } from "./types";
-
-const Layout = ({ children }: LayoutTypesProps) => {
+const Layout = () => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout
