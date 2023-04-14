@@ -14,6 +14,13 @@ export const GlobalStyle = createGlobalStyle`
       font-family: 'Lexend', sans-serif;
       text-decoration: none;
       font-size: 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      flex-grow: 1;
+      background-color: red;
     }
 
     a {
@@ -22,6 +29,13 @@ export const GlobalStyle = createGlobalStyle`
     }
     a:visited {
       color: inherit;
+    }
+    li {
+      list-style-type: none;
+    }
+
+    button {
+      cursor: pointer;
     }
   `}
 `

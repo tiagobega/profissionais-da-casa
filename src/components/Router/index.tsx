@@ -2,18 +2,19 @@ import { useUser } from 'contexts/User'
 import React, { Suspense } from 'react'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import Layout from 'components/Layout'
+import NotFound from 'pages/notFound'
 
 const HomePage = React.lazy(() => import('pages/home'))
 
 const Router = () => (
   <BrowserRouter>
     <Routes>
-      <Route path={'/'} element={<Layout />}>
+      <Route element={<Layout />}>
         {/* //OPEN ROUTES */}
         <Route path={'/'} element={<PublicRoute element={<HomePage />} />} />
         <Route
           path={'/not-found'}
-          element={<PublicRoute element={<HomePage />} />}
+          element={<PublicRoute element={<NotFound />} />}
         />
         <Route
           path={'/register/customer'}
