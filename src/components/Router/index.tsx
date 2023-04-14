@@ -1,85 +1,85 @@
-import { useUser } from "contexts/User";
-import React, { Suspense } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Layout from "components/Layout";
+import { useUser } from 'contexts/User'
+import React, { Suspense } from 'react'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+import Layout from 'components/Layout'
 
-const HomePage = React.lazy(() => import("pages/home"));
+const HomePage = React.lazy(() => import('pages/home'))
 
 const Router = () => (
   <BrowserRouter>
     <Routes>
-      <Route path={"/"} element={<Layout />}>
+      <Route path={'/'} element={<Layout />}>
         {/* //OPEN ROUTES */}
-        <Route path={"/"} element={<PublicRoute element={<HomePage />} />} />
+        <Route path={'/'} element={<PublicRoute element={<HomePage />} />} />
         <Route
-          path={"/not-found"}
+          path={'/not-found'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/register/customer"}
+          path={'/register/customer'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/register/professional"}
+          path={'/register/professional'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/register/professional"}
+          path={'/register/professional'}
           element={<PublicRoute element={<HomePage />} />}
         />
-        <Route path={"/faq"} element={<PublicRoute element={<HomePage />} />} />
+        <Route path={'/faq'} element={<PublicRoute element={<HomePage />} />} />
         <Route
-          path={"/terms-conditions"}
-          element={<PublicRoute element={<HomePage />} />}
-        />
-        <Route
-          path={"/catalog"}
+          path={'/terms-conditions'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/professional/:id"}
+          path={'/catalog'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/project/:id"}
+          path={'/professional/:id'}
+          element={<PublicRoute element={<HomePage />} />}
+        />
+        <Route
+          path={'/project/:id'}
           element={<PublicRoute element={<HomePage />} />}
         />
         {/* //CUSTOMER/PROFESSIONAL ROUTES */}
         <Route
-          path={"/my-projects/"}
+          path={'/my-projects/'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/project-details/"}
+          path={'/project-details/'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/review/:id"}
+          path={'/review/:id'}
           element={<PublicRoute element={<HomePage />} />}
         />
         {/* //ADMIN ROUTES */}
         <Route
-          path={"/admin/"}
+          path={'/admin/'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/admin/reviews"}
+          path={'/admin/reviews'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/admin/review/:id"}
+          path={'/admin/review/:id'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/admin/professionals-management"}
+          path={'/admin/professionals-management'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/admin/professionals-management/:id"}
+          path={'/admin/professionals-management/:id'}
           element={<PublicRoute element={<HomePage />} />}
         />
         <Route
-          path={"/admin/professionals-management/:id/projects"}
+          path={'/admin/professionals-management/:id/projects'}
           element={<PublicRoute element={<HomePage />} />}
         />
       </Route>
@@ -87,38 +87,38 @@ const Router = () => (
       <Route index element={<PublicRoute element={<HomePage />} />} />
     </Routes>
   </BrowserRouter>
-);
+)
 
 const SuspenseComponent = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<>Loading...</>}>{children}</Suspense>
-);
+)
 
 const PrivateRoute = ({
   element,
   redirectTo,
   admin = false,
 }: {
-  element: React.ReactElement;
-  redirectTo?: string;
-  admin?: boolean;
+  element: React.ReactElement
+  redirectTo?: string
+  admin?: boolean
 }) => {
-  const { logged } = useUser();
-  const useIsAdmin = true;
+  const { logged } = useUser()
+  const useIsAdmin = true
 
   if (!logged && redirectTo) {
-    return <Navigate to={redirectTo} />;
+    return <Navigate to={redirectTo} />
   }
 
   if (admin && !useIsAdmin) {
     redirectTo ??= '/'
-    return <Navigate to={redirectTo} />;
+    return <Navigate to={redirectTo} />
   }
 
-  return <SuspenseComponent>{element}</SuspenseComponent>;
-};
+  return <SuspenseComponent>{element}</SuspenseComponent>
+}
 
 const PublicRoute = ({ element }: { element: React.ReactElement }) => {
-  return <SuspenseComponent>{element}</SuspenseComponent>;
-};
+  return <SuspenseComponent>{element}</SuspenseComponent>
+}
 
-export default Router;
+export default Router
