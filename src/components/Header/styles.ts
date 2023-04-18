@@ -15,6 +15,9 @@ export const HeaderContainer = styled.header`
       display: flex;
       justify-content: space-between;
       gap: 3rem;
+      button {
+        font-size: 0.875rem;
+      }
     }
   `}
 `

@@ -7,6 +7,7 @@ import instagramLogo from 'assets/images/instagramLogo.png'
 import linkedinLogo from 'assets/images/linkedinLogo.png'
 import pinterestLogo from 'assets/images/pinterestLogo.png'
 import youtubeLogo from 'assets/images/youtubeLogo.png'
+import { Button } from 'components/Button'
 
 const Footer = (props: FooterProps) => (
   <FooterContainer>
@@ -32,25 +33,47 @@ const Footer = (props: FooterProps) => (
           gap={2}
         >
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
-            <strong>FAQ</strong>
-            <strong>Política de Troca e Cancelamento</strong>
+            <Button variant="text" color="white" href="#">
+              FAQ
+            </Button>
+            <Button variant="text" color="white" href="#">
+              Política de Troca e Cancelamento
+            </Button>
           </FlexBox>
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
-            <strong>Termos de uso</strong>
-            <strong>Politica de Privacidade</strong>
-            <strong>Politica de Devolução e Reenbolso</strong>
+            <Button variant="text" color="white" href="#">
+              Termos de uso
+            </Button>
+            <Button variant="text" color="white" href="#">
+              Politica de Privacidade
+            </Button>
+            <Button variant="text" color="white" href="#">
+              Politica de Devolução e Reenbolso
+            </Button>
           </FlexBox>
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
-            <strong>Seja um Profissional da Casa</strong>
+            <Button variant="text" color="white" href="#">
+              Seja um Profissional da Casa
+            </Button>
           </FlexBox>
         </FlexBox>
       </FlexBox>
       <FlexBox centralized gap={2}>
-        <img src={facebookLogo} alt="facebook" />
-        <img src={instagramLogo} alt="instagram" />
-        <img src={linkedinLogo} alt="linkedin" />
-        <img src={pinterestLogo} alt="pinterest" />
-        <img src={youtubeLogo} alt="youtube" />
+        <Button variant="text" color="white" href="#">
+          <img src={facebookLogo} alt="facebook" />
+        </Button>
+        <Button variant="text" color="white" href="#">
+          <img src={instagramLogo} alt="instagram" />
+        </Button>
+        <Button variant="text" color="white" href="#">
+          <img src={linkedinLogo} alt="linkedin" />
+        </Button>
+        <Button variant="text" color="white" href="#">
+          <img src={pinterestLogo} alt="pinterest" />
+        </Button>
+        <Button variant="text" color="white" href="#">
+          <img src={youtubeLogo} alt="youtube" />
+        </Button>
       </FlexBox>
     </FooterContent>
   </FooterContainer>

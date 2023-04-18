@@ -4,7 +4,6 @@ import logo from 'assets/images/logo.png'
 import { HeaderContainer, LoginContainer } from './styles'
 import { Button } from 'components/Button'
 import { useTheme } from 'styled-components'
-import keyhole from 'assets/images/keyhole.svg'
 
 const Header = () => {
   const { color } = useTheme()
@@ -17,17 +16,41 @@ const Header = () => {
         <FlexBox justifyContent="space-between">
           <nav>
             <ul>
-              <li>Casa Fast</li>
-              <li>Profissionais da Casa</li>
-              <li>Seguros</li>
-              <li>Blog</li>
-              <li>Quem somos</li>
+              <li>
+                <Button variant="text" color="black" href="#">
+                  Casa Fast
+                </Button>
+              </li>
+              <li>
+                <Button variant="text" color="black" href="#">
+                  Profissionais da Casa
+                </Button>
+              </li>
+              <li>
+                <Button variant="text" color="black" href="#">
+                  Seguros
+                </Button>
+              </li>
+              <li>
+                <Button variant="text" color="black" href="#">
+                  Blog
+                </Button>
+              </li>
+              <li>
+                <Button variant="text" color="black" href="#">
+                  Quem somos
+                </Button>
+              </li>
             </ul>
           </nav>
         </FlexBox>
       </FlexBox>
       <LoginContainer role="customer">
-        <Button variant="primary" color={color.brand.yellowLight}>
+        <Button
+          variant="primary"
+          color={color.brand.yellowLight}
+          href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        >
           <svg
             width="16"
             height="21"

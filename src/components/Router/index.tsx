@@ -11,7 +11,7 @@ const Router = () => (
     <Routes>
       <Route element={<Layout />}>
         {/* //OPEN ROUTES */}
-        <Route path={'/'} element={<PublicRoute element={<HomePage />} />} />
+        <Route path="/" element={<PublicRoute element={<HomePage />} />} />
         <Route
           path={'/not-found'}
           element={<PublicRoute element={<NotFound />} />}
