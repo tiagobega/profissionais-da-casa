@@ -48,7 +48,6 @@ const Header = () => {
       <LoginContainer role="customer">
         <Button
           variant="primary"
-          color={color.brand.yellowLight}
           href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         >
           <svg
@@ -59,8 +58,8 @@ const Header = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M10.7389 9.70152C12.1184 8.73839 13.0208 7.1391 13.0208 5.32903C13.0208 2.38589 10.635 0 7.69181 0C4.74867 0 2.36278 2.38589 2.36278 5.32903C2.36278 7.13908 3.26521 8.73837 4.64469 9.7015L0 20.4279H15.3836L10.7389 9.70152Z"
               fill="black"
             />

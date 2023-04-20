@@ -1,11 +1,17 @@
 import { createGlobalStyle, css } from 'styled-components'
 
+const checkedIcon = '/assets/check.svg'
+
 export const GlobalStyle = createGlobalStyle`
   ${({ theme }) => css`
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+
+      &:focus {
+        border: 2px solid ${theme.color.brand.purple};
+      }
     }
     body {
       background-color: ${theme.color.base[100]};
@@ -36,5 +42,42 @@ export const GlobalStyle = createGlobalStyle`
     button {
       cursor: pointer;
     }
-  `}
-`
+
+    label {
+      font-size: 14;
+      cursor: pointer;
+    }
+
+    fieldset {
+      border: none;
+      outline: none;
+      padding: 1rem 0 0;
+    }
+
+    input {
+      font-size: 0.875rem;
+      padding: 0.8rem 1.25rem;
+      outline: none;
+      border: 2px solid ${theme.color.base[300]};
+      font-family: 'Lexend', sans-serif;
+      width: 100%;
+
+      &[type='checkbox'],
+      &[type='radio'] {
+        appearance: none;
+        width: 26px;
+        height: 26px;
+        cursor: pointer;
+        border: 2px solid black;
+        background-clip: content-box;
+        padding: 0;
+
+        &:checked {
+          background: black;
+        }
+      }
+      &[type='radio'] {
+        border-radius: 50%;
+      }
+    }
+  `}`
