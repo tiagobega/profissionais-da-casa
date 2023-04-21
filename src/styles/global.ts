@@ -56,7 +56,8 @@ export const GlobalStyle = createGlobalStyle`
       padding: 1rem 0 0;
     }
 
-    input {
+    input,
+    select {
       font-size: 0.875rem;
       padding: 0.8rem 1.25rem;
       outline: none;

@@ -1,17 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from 'components/Button'
 import { FlexBox } from 'components/FlexBox'
-import {
-  Checkbox,
-  Input,
-  RadioGroup,
-  Select,
-  SelectInput,
-} from 'components/Input'
+import { Checkbox, Input, RadioGroup, Select } from 'components/Input'
 import { RadioOptionType } from 'components/Input/types'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { formTestSchema } from './validation'
-import { useEffect } from 'react'
 
 export interface TestForm1Props {}
 
@@ -23,6 +17,7 @@ export const FormTest: React.FC<TestForm1Props> = () => {
     register,
     watch,
     control,
+    setValue,
     formState: { errors },
   } = useForm<FormTestData>({
     resolver: zodResolver(formTestSchema),
@@ -36,8 +31,12 @@ export const FormTest: React.FC<TestForm1Props> = () => {
   const food = watch('food')
 
   useEffect(() => {
-    console.log(food)
+    setValue('food', 'one')
   }, [])
+
+  useEffect(() => {
+    console.log(food)
+  }, [food])
 
   const submitFunction = (values: FormTestData) => {
     console.log(errors)
@@ -97,6 +96,13 @@ export const FormTest: React.FC<TestForm1Props> = () => {
           options={foodOptions}
           control={control}
         />
+        {/* <select {...register('food')}>
+          {foodOptions.map((op) => (
+            <option key={op.name} value={op.value}>
+              {op.name}
+            </option>
+          ))}
+        </select> */}
 
         <Button type="submit" full>
           Confirmar

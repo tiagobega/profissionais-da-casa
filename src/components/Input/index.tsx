@@ -121,14 +121,12 @@ export const SelectInput = forwardRef(
                 <SelectPrimitive.Viewport>
                   <SelectPrimitive.Group>
                     <SelectPrimitive.Label>Escolha um</SelectPrimitive.Label>
-                    <SelectPrimitive.Item value="spam">
-                      SPAM
-                      <SelectPrimitive.ItemIndicator />
-                    </SelectPrimitive.Item>
-                    <SelectPrimitive.SelectItem value="fruit">
-                      Fresh Fruit
-                      <SelectPrimitive.ItemIndicator />
-                    </SelectPrimitive.SelectItem>
+                    {props.options.map((op) => (
+                      <SelectPrimitive.Item value={op.value} key={op.name}>
+                        {op.name}
+                        <SelectPrimitive.ItemIndicator />
+                      </SelectPrimitive.Item>
+                    ))}
                   </SelectPrimitive.Group>
                 </SelectPrimitive.Viewport>
               </SelectPrimitive.Content>
