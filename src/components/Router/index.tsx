@@ -13,10 +13,6 @@ const Router = () => (
         {/* //OPEN ROUTES */}
         <Route path="/" element={<PublicRoute element={<HomePage />} />} />
         <Route
-          path={'/not-found'}
-          element={<PublicRoute element={<NotFound />} />}
-        />
-        <Route
           path={'/register/customer'}
           element={<PublicRoute element={<HomePage />} />}
         />
@@ -86,6 +82,10 @@ const Router = () => (
       </Route>
 
       <Route index element={<PublicRoute element={<HomePage />} />} />
+      <Route
+          path={'*'}
+          element={<PublicRoute element={<NotFound />} />}
+        />
     </Routes>
   </BrowserRouter>
 )
