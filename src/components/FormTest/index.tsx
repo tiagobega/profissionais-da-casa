@@ -1,10 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from 'components/Button'
 import { FlexBox } from 'components/FlexBox'
-import { Checkbox, Input, RadioGroup } from 'components/Input'
+import {
+  Checkbox,
+  Input,
+  RadioGroup,
+  Select,
+  SelectInput,
+} from 'components/Input'
 import { RadioOptionType } from 'components/Input/types'
 import { useForm } from 'react-hook-form'
 import { formTestSchema } from './validation'
+import { useEffect } from 'react'
 
 export interface TestForm1Props {}
 
@@ -14,17 +21,26 @@ export const FormTest: React.FC<TestForm1Props> = () => {
   const {
     handleSubmit,
     register,
+    watch,
+    control,
     formState: { errors },
   } = useForm<FormTestData>({
     resolver: zodResolver(formTestSchema),
-    mode: 'onChange',
+    mode: 'all',
     defaultValues: {
       name: '',
       age: 0,
     },
   })
 
+  const food = watch('food')
+
+  useEffect(() => {
+    console.log(food)
+  }, [])
+
   const submitFunction = (values: FormTestData) => {
+    console.log(errors)
     console.log(values)
     window.alert(JSON.stringify(values))
   }
@@ -32,6 +48,17 @@ export const FormTest: React.FC<TestForm1Props> = () => {
   const radioOptions: RadioOptionType[] = [
     { label: 'Arquiteto(a)', value: 'arquiteto' },
     { label: 'Outros', value: 'outros' },
+  ]
+
+  const foodOptions = [
+    {
+      name: 'Food 1',
+      value: 'one',
+    },
+    {
+      name: 'Food 2',
+      value: 'two',
+    },
   ]
 
   return (
@@ -63,27 +90,14 @@ export const FormTest: React.FC<TestForm1Props> = () => {
           subject="terms"
           {...register('terms')}
         />
+        <Select
+          error={errors.profession}
+          label="Favorite food"
+          selectName="food"
+          options={foodOptions}
+          control={control}
+        />
 
-        {/* <FlexBox gap={3}>
-          <FlexBox alignItems="center" gap={0.5}>
-            <input
-              {...register('profession', { required: true })}
-              type="radio"
-              value="architect"
-              id="architect"
-            />
-            <label htmlFor="architect">Arquiteto(a)</label>
-          </FlexBox>
-          <FlexBox alignItems="center" gap={0.5}>
-            <input
-              {...register('profession', { required: true })}
-              type="radio"
-              value="others"
-              id="others"
-            />
-            <label htmlFor="others">Outros</label>
-          </FlexBox>
-        </FlexBox> */}
         <Button type="submit" full>
           Confirmar
         </Button>

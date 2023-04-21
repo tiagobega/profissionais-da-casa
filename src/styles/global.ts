@@ -41,6 +41,8 @@ export const GlobalStyle = createGlobalStyle`
 
     button {
       cursor: pointer;
+
+      font-family: 'Lexend', sans-serif;
     }
 
     label {
@@ -68,12 +70,16 @@ export const GlobalStyle = createGlobalStyle`
         width: 26px;
         height: 26px;
         cursor: pointer;
-        border: 2px solid black;
         background-clip: content-box;
         padding: 0;
 
+        &:focus {
+          outline: 2px solid black;
+        }
+
         &:checked {
           background: black;
+          border: 2px solid black;
         }
       }
       &[type='radio'] {
