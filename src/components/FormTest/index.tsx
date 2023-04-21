@@ -1,15 +1,30 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from 'components/Button'
-import { FlexBox } from 'components/FlexBox'
-import { Checkbox, Input, RadioGroup, Select } from 'components/Input'
-import { RadioOptionType } from 'components/Input/types'
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { formTestSchema } from './validation'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "components/Button";
+import { FlexBox } from "components/FlexBox";
+import Input from "components/Input";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { formTestSchema } from "./validation";
 
 export interface TestForm1Props {}
 
-export type FormTestData = Zod.infer<typeof formTestSchema>
+export type FormTestData = Zod.infer<typeof formTestSchema>;
+
+const radioOptions = [
+  { label: "Arquiteto(a)", value: "arquiteto" },
+  { label: "Outros", value: "outros" },
+];
+
+const foodOptions = [
+  {
+    name: "Food 1",
+    value: "one",
+  },
+  {
+    name: "Food 2",
+    value: "two",
+  },
+];
 
 export const FormTest: React.FC<TestForm1Props> = () => {
   const {
@@ -21,93 +36,78 @@ export const FormTest: React.FC<TestForm1Props> = () => {
     formState: { errors },
   } = useForm<FormTestData>({
     resolver: zodResolver(formTestSchema),
-    mode: 'all',
-    defaultValues: {
-      name: '',
-      age: 0,
-    },
-  })
+    mode: "all",
+  });
 
-  const food = watch('food')
+  // const food = watch("food");
+  const profession = watch("terms");
+  const onSubmit = (data: FormTestData) => {
+    console.log(data);
+
+    // console.log(errors);
+    // console.log(values);
+    // window.alert(JSON.stringify(values));
+  };
 
   useEffect(() => {
-    setValue('food', 'one')
-  }, [])
+    // setValue("food", "one");
+    console.log(profession);
+  }, [profession]);
 
-  useEffect(() => {
-    console.log(food)
-  }, [food])
+  // useEffect(() => {}, []);
 
-  const submitFunction = (values: FormTestData) => {
-    console.log(errors)
-    console.log(values)
-    window.alert(JSON.stringify(values))
-  }
-
-  const radioOptions: RadioOptionType[] = [
-    { label: 'Arquiteto(a)', value: 'arquiteto' },
-    { label: 'Outros', value: 'outros' },
-  ]
-
-  const foodOptions = [
-    {
-      name: 'Food 1',
-      value: 'one',
-    },
-    {
-      name: 'Food 2',
-      value: 'two',
-    },
-  ]
+  // useEffect(() => {
+  //   console.log(food);
+  // }, [food]);
 
   return (
-    <form onSubmit={handleSubmit(submitFunction)}>
+    <form
+      onSubmit={handleSubmit((e) => {
+        console.log(e);
+        return onSubmit(e);
+      })}
+    >
       <FlexBox direction="column" gap={1.5} full>
-        <Input
+        <Input.Text
           type="text"
-          label="Name"
+          placeholder="Name"
           error={errors.name}
-          {...register('name')}
+          {...register("name")}
         />
-        <Input
+
+        <Input.Text
           type="number"
           label="Age"
           error={errors.age}
-          {...register('age')}
+          {...register("age", { valueAsNumber: true })}
         />
-        <RadioGroup
+
+        <Input.Radio
           error={errors.profession}
           groupLegend="Registro profissional / Acadêmico"
           options={radioOptions}
-          groupName="profession"
-          {...register('profession')}
+          {...register("profession")}
         />
 
-        <Checkbox
-          error={errors.profession}
+        <Input.Checkbox
+          error={errors.terms}
           label="Confirmo que li os termos"
           subject="terms"
-          {...register('terms')}
+          {...register("terms", { required: true })}
         />
-        <Select
+
+        {/* <Input.Select
           error={errors.profession}
           label="Favorite food"
           selectName="food"
           options={foodOptions}
           control={control}
-        />
-        {/* <select {...register('food')}>
-          {foodOptions.map((op) => (
-            <option key={op.name} value={op.value}>
-              {op.name}
-            </option>
-          ))}
-        </select> */}
+        /> */}
 
         <Button type="submit" full>
           Confirmar
         </Button>
       </FlexBox>
     </form>
-  )
-}
+  );
+};
