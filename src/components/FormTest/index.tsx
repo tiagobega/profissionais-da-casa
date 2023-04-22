@@ -3,10 +3,8 @@ import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { formTestSchema } from "./validation";
-
-export interface TestForm1Props {}
 
 export type FormTestData = Zod.infer<typeof formTestSchema>;
 
@@ -26,7 +24,7 @@ const foodOptions = [
   },
 ];
 
-export const FormTest: React.FC<TestForm1Props> = () => {
+export const FormTest = () => {
   const {
     handleSubmit,
     register,
@@ -39,26 +37,16 @@ export const FormTest: React.FC<TestForm1Props> = () => {
     mode: "all",
   });
 
-  // const food = watch("food");
-  const profession = watch("terms");
+  const profession = watch("food");
   const onSubmit = (data: FormTestData) => {
     console.log(data);
 
-    // console.log(errors);
-    // console.log(values);
-    // window.alert(JSON.stringify(values));
+    window.alert(JSON.stringify(data));
   };
 
   useEffect(() => {
-    // setValue("food", "one");
     console.log(profession);
   }, [profession]);
-
-  // useEffect(() => {}, []);
-
-  // useEffect(() => {
-  //   console.log(food);
-  // }, [food]);
 
   return (
     <form
@@ -96,13 +84,22 @@ export const FormTest: React.FC<TestForm1Props> = () => {
           {...register("terms", { required: true })}
         />
 
-        {/* <Input.Select
-          error={errors.profession}
-          label="Favorite food"
-          selectName="food"
-          options={foodOptions}
+        <Controller
           control={control}
-        /> */}
+          name={"food"}
+          render={({ field }) => {
+            return (
+              <Input.Select
+                {...field}
+                options={foodOptions}
+                label={"teste"}
+                innerRef={field.ref}
+                error={errors.food}
+                onValueChange={field.onChange}
+              />
+            );
+          }}
+        />
 
         <Button type="submit" full>
           Confirmar

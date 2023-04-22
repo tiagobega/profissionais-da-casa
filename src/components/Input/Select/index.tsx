@@ -1,77 +1,71 @@
-import React, { FC, Ref, forwardRef, useEffect } from "react";
+import React, { Ref, forwardRef } from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { Controller } from "react-hook-form";
-import { CaretDown } from "@phosphor-icons/react";
 
 import { SelectContainer } from "./styles";
-import type { SelectInputProps, SelectProps } from "./types";
+import type { SelectProps } from "./types";
 import { FlexBox } from "components/FlexBox";
 
-export const SelectInput = forwardRef(
-  ({ ...props }: SelectInputProps, forwardedRef: Ref<HTMLButtonElement>) => {
-    useEffect(() => {
-      console.log(props.value);
-    }, []);
+export const Select = forwardRef(
+  (props: SelectProps, innerRef: Ref<HTMLButtonElement>) => {
+    
+    const {
+      placeholder = "Escolha uma opção",
+      label,
+      error,
+      options = [],
+      name,
+      value,
+    } = props;
+
     return (
       <SelectContainer>
+        {label && <label htmlFor={name}>{label}</label>}
         <FlexBox gap={0.5} alignItems="center">
-          <SelectPrimitive.Root {...props}>
-            <SelectPrimitive.Trigger ref={forwardedRef}>
-              {props.value ?? props.label}
-              <SelectPrimitive.Value asChild />
-              <SelectPrimitive.Icon>
-                <CaretDown size={14} />
-              </SelectPrimitive.Icon>
+          <SelectPrimitive.Root
+            {...props}
+          >
+            <SelectPrimitive.Trigger
+              ref={innerRef}
+              id={name}
+              className="text-md border-solid border-2 border-slate-500 px-2"
+            >
+              <SelectPrimitive.Value asChild>
+                <span>
+                  {options.find((option) => option.value == value)?.name ??
+                    placeholder}
+                </span>
+              </SelectPrimitive.Value>
+              <SelectPrimitive.Icon />
             </SelectPrimitive.Trigger>
 
             <SelectPrimitive.Portal>
-              <SelectPrimitive.Content>
+              <SelectPrimitive.Content className="border-solid border-2 border-slate-500 bg-white p-2">
+                <SelectPrimitive.ScrollUpButton />
                 <SelectPrimitive.Viewport>
-                  <SelectPrimitive.Group>
-                    <SelectPrimitive.Label>Escolha um</SelectPrimitive.Label>
-                    {props.options.map((op) => (
-                      <SelectPrimitive.Item value={op.value} key={op.name}>
-                        {op.name}
-                        <SelectPrimitive.ItemIndicator />
-                      </SelectPrimitive.Item>
-                    ))}
-                  </SelectPrimitive.Group>
+                  {options.map((option) => (
+                    <SelectPrimitive.Item
+                      key={option.value}
+                      value={option.value}
+                    >
+                      <SelectPrimitive.ItemText>
+                        {option.name}
+                      </SelectPrimitive.ItemText>
+                      <SelectPrimitive.ItemIndicator />
+                    </SelectPrimitive.Item>
+                  ))}
+                  <SelectPrimitive.Separator />
                 </SelectPrimitive.Viewport>
+                <SelectPrimitive.ScrollDownButton />
               </SelectPrimitive.Content>
             </SelectPrimitive.Portal>
           </SelectPrimitive.Root>
         </FlexBox>
-        {props.error && (
-          <p aria-errormessage={props.error.message} role="alert">
-            {props.error.message}
+        {error && (
+          <p aria-errormessage={error.message} role="alert">
+            {error.message}
           </p>
         )}
       </SelectContainer>
     );
   }
 );
-
-export const Select: FC<SelectProps> = ({
-  control,
-  selectName,
-  options,
-  error,
-  label,
-}) => {
-  return (
-    <Controller
-      control={control}
-      name={selectName}
-      render={({ field: { onChange, value, ref } }) => (
-        <SelectInput
-          onValueChange={onChange}
-          value={value?.toString()}
-          forwardedRef={ref}
-          options={options}
-          error={error}
-          label={label}
-        />
-      )}
-    />
-  );
-};

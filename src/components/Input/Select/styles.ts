@@ -1,7 +1,4 @@
-import styled, { css } from 'styled-components'
-
-
-
+import styled, { css } from "styled-components";
 
 export const SelectContainer = styled.div`
   ${({ theme }) => css`
@@ -24,5 +21,10 @@ export const SelectContainer = styled.div`
       font-size: 0.875rem;
       color: ${theme.color.base[400]};
     }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
   `}
-`
+`;
