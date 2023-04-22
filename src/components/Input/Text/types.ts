@@ -1,4 +1,4 @@
-import { FieldError, Control, RefCallBack } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 
 export interface InputProps extends React.ComponentProps<"input"> {
   label?: string;

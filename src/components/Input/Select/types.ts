@@ -8,6 +8,7 @@ export interface SelectProps extends RadixSelectProps {
   error?: FieldError;
   options?: NameValueType[];
   onOpenChange?: (open: boolean) => void;
+  disabled?: boolean;
 }
 
 export type NameValueType = {
