@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components'
-import './css.css'
 import * as SelectPrimitive from '@radix-ui/react-select'
 
 export const SelectContainer = styled.div`

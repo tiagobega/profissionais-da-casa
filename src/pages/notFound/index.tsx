@@ -1,24 +1,37 @@
-import { CaretLeft, SlidersHorizontal } from "@phosphor-icons/react";
-import { Button } from "components/Button";
-import { FlexBox } from "components/FlexBox";
-import { FormTest } from "components/FormTest";
-import { Skeleton } from "components/Skeleton";
-import { useTheme } from "styled-components";
+import { CaretLeft, SlidersHorizontal } from '@phosphor-icons/react'
+import { Button } from 'components/Button'
+import { FlexBox } from 'components/FlexBox'
+import { FormTest } from 'components/FormTest'
+import { Geometry } from 'components/Geometry'
+import { Loading } from 'components/Loading'
+import { Skeleton } from 'components/Skeleton'
+import { useTheme } from 'styled-components'
 
 const NotFound = () => {
-  const theme = useTheme();
+  const theme = useTheme()
 
   return (
     <div className="HomePage">
       <h1>notFound</h1>
+      <Loading />
       <FlexBox>
         <FlexBox grow={1}>teste1</FlexBox>
-        <FlexBox flex={"auto"}>teste2</FlexBox>
+        <FlexBox flex={'auto'}>teste2</FlexBox>
       </FlexBox>
 
       <FlexBox gap={2} p={2}>
         <Skeleton width={270} height={360} variant="rectangle" pulse />
         <Skeleton width={270} variant="round" pulse />
+        <FlexBox>
+          <Geometry color={theme.color.brand.orange} width={40} />
+          <Geometry color={theme.color.brand.purple} width={40} triangle />
+          <Geometry
+            color={theme.color.secondary.blue}
+            width={40}
+            triangle
+            angle={270}
+          />
+        </FlexBox>
       </FlexBox>
       <FlexBox direction="column" gap={1} p={2}>
         <Skeleton width={360} height={24} variant="rectangle" pulse />
@@ -52,7 +65,7 @@ const NotFound = () => {
         <FormTest />
       </FlexBox>
     </div>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound
