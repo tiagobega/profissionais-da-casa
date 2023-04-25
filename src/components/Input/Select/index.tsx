@@ -1,29 +1,33 @@
-import React, { Ref, forwardRef } from "react";
-import * as SelectPrimitive from "@radix-ui/react-select";
+import * as SelectPrimitive from '@radix-ui/react-select'
+import { Ref, forwardRef } from 'react'
 
-import { SelectContainer } from "./styles";
-import type { SelectProps } from "./types";
-import { FlexBox } from "components/FlexBox";
+import { CaretDown, CaretUp } from '@phosphor-icons/react'
+import { FlexBox } from 'components/FlexBox'
+import {
+  OptionsContainer,
+  ScrollDownButton,
+  ScrollUpButton,
+  SelectContainer,
+  StyledOption,
+} from './styles'
+import type { SelectProps } from './types'
 
 export const Select = forwardRef(
   (props: SelectProps, innerRef: Ref<HTMLButtonElement>) => {
-    
     const {
-      placeholder = "Escolha uma opção",
+      placeholder = 'Escolha uma opção',
       label,
       error,
       options = [],
       name,
       value,
-    } = props;
+    } = props
 
     return (
       <SelectContainer>
         {label && <label htmlFor={name}>{label}</label>}
         <FlexBox gap={0.5} alignItems="center">
-          <SelectPrimitive.Root
-            {...props}
-          >
+          <SelectPrimitive.Root {...props}>
             <SelectPrimitive.Trigger
               ref={innerRef}
               id={name}
@@ -39,24 +43,25 @@ export const Select = forwardRef(
             </SelectPrimitive.Trigger>
 
             <SelectPrimitive.Portal>
-              <SelectPrimitive.Content className="border-solid border-2 border-slate-500 bg-white p-2">
-                <SelectPrimitive.ScrollUpButton />
+              <OptionsContainer className="border-solid border-2 border-slate-500 bg-white p-2 options-container">
+                <ScrollUpButton>
+                  <CaretUp />
+                </ScrollUpButton>
                 <SelectPrimitive.Viewport>
                   {options.map((option) => (
-                    <SelectPrimitive.Item
-                      key={option.value}
-                      value={option.value}
-                    >
+                    <StyledOption key={option.value} value={option.value}>
                       <SelectPrimitive.ItemText>
                         {option.name}
                       </SelectPrimitive.ItemText>
                       <SelectPrimitive.ItemIndicator />
-                    </SelectPrimitive.Item>
+                    </StyledOption>
                   ))}
                   <SelectPrimitive.Separator />
                 </SelectPrimitive.Viewport>
-                <SelectPrimitive.ScrollDownButton />
-              </SelectPrimitive.Content>
+                <ScrollDownButton>
+                  <CaretDown />
+                </ScrollDownButton>
+              </OptionsContainer>
             </SelectPrimitive.Portal>
           </SelectPrimitive.Root>
         </FlexBox>
@@ -66,6 +71,6 @@ export const Select = forwardRef(
           </p>
         )}
       </SelectContainer>
-    );
+    )
   }
-);
+)

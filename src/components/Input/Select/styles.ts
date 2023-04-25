@@ -1,4 +1,6 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components'
+import './css.css'
+import * as SelectPrimitive from '@radix-ui/react-select'
 
 export const SelectContainer = styled.div`
   ${({ theme }) => css`
@@ -26,5 +28,70 @@ export const SelectContainer = styled.div`
       display: block;
       margin-bottom: 0.5rem;
     }
+
+    .options-container {
+      background-color: red;
+    }
+    select {
+      background-color: red;
+    }
   `}
-`;
+`
+export const OptionsContainer = styled(SelectPrimitive.Content)`
+  ${({ theme }) => css`
+    background-color: white;
+    border: 3px solid ${theme.color.base[200]};
+
+    padding: 1rem 0;
+  `}
+`
+export const StyledOption = styled(SelectPrimitive.Item)`
+  ${({ theme }) => css`
+    background-color: white;
+    padding: 0.25rem 1rem;
+    border: 1px solid transparent;
+
+    &:hover {
+      border: 1px solid ${theme.color.base[500]};
+      outline: 1px solid ${theme.color.base[500]};
+      background-color: ${theme.color.base[500]};
+      color: white;
+      font-family: 700;
+    }
+  `}
+`
+
+export const ScrollUpButton = styled(SelectPrimitive.ScrollUpButton)`
+  ${({ theme }) => css`
+    background-color: white;
+    padding: 0.25rem 1rem;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: center;
+
+    &:hover {
+      border: 1px solid ${theme.color.base[500]};
+      outline: 1px solid ${theme.color.base[500]};
+      background-color: ${theme.color.base[500]};
+      color: white;
+      font-family: 700;
+    }
+  `}
+`
+export const ScrollDownButton = styled(SelectPrimitive.ScrollDownButton)`
+  ${({ theme }) => css`
+    background-color: white;
+    padding: 0.25rem 1rem;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: center;
+
+    &:hover {
+      border: 1px solid ${theme.color.base[500]};
+      outline: 1px solid ${theme.color.base[500]};
+      background-color: ${theme.color.base[500]};
+      color: white;
+      font-family: 700;
+    }
+  `}
+`

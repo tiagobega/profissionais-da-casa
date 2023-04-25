@@ -1,28 +1,52 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "components/Button";
-import { FlexBox } from "components/FlexBox";
-import Input from "components/Input";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { formTestSchema } from "./validation";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button } from 'components/Button'
+import { FlexBox } from 'components/FlexBox'
+import Input from 'components/Input'
+import { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { formTestSchema } from './validation'
 
-export type FormTestData = Zod.infer<typeof formTestSchema>;
+export type FormTestData = Zod.infer<typeof formTestSchema>
 
 const radioOptions = [
-  { label: "Arquiteto(a)", value: "arquiteto" },
-  { label: "Outros", value: "outros" },
-];
+  { label: 'Arquiteto(a)', value: 'arquiteto' },
+  { label: 'Outros', value: 'outros' },
+]
 
 const foodOptions = [
   {
-    name: "Food 1",
-    value: "one",
+    name: 'Food 1',
+    value: 'one',
   },
   {
-    name: "Food 2",
-    value: "two",
+    name: 'Food 2',
+    value: 'two',
   },
-];
+  {
+    name: 'Food 3',
+    value: 'three',
+  },
+  {
+    name: 'Food 4',
+    value: 'vier',
+  },
+  {
+    name: 'Food 5',
+    value: 'cinq',
+  },
+  {
+    name: 'Food 6',
+    value: 'seis',
+  },
+  {
+    name: 'Food 7',
+    value: 'sieben',
+  },
+  {
+    name: 'Food 8',
+    value: 'ocho',
+  },
+]
 
 export const FormTest = () => {
   const {
@@ -34,25 +58,25 @@ export const FormTest = () => {
     formState: { errors },
   } = useForm<FormTestData>({
     resolver: zodResolver(formTestSchema),
-    mode: "all",
-  });
+    mode: 'all',
+  })
 
-  const profession = watch("food");
+  const profession = watch('food')
   const onSubmit = (data: FormTestData) => {
-    console.log(data);
+    console.log(data)
 
-    window.alert(JSON.stringify(data));
-  };
+    window.alert(JSON.stringify(data))
+  }
 
   useEffect(() => {
-    console.log(profession);
-  }, [profession]);
+    console.log(profession)
+  }, [profession])
 
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
-        return onSubmit(e);
+        console.log(e)
+        return onSubmit(e)
       })}
     >
       <FlexBox direction="column" gap={1.5} full>
@@ -60,44 +84,44 @@ export const FormTest = () => {
           type="text"
           placeholder="Name"
           error={errors.name}
-          {...register("name")}
+          {...register('name')}
         />
 
         <Input.Text
           type="number"
           label="Age"
           error={errors.age}
-          {...register("age", { valueAsNumber: true })}
+          {...register('age', { valueAsNumber: true })}
         />
 
         <Input.Radio
           error={errors.profession}
           groupLegend="Registro profissional / Acadêmico"
           options={radioOptions}
-          {...register("profession")}
+          {...register('profession')}
         />
 
         <Input.Checkbox
           error={errors.terms}
           label="Confirmo que li os termos"
           subject="terms"
-          {...register("terms", { required: true })}
+          {...register('terms', { required: true })}
         />
 
         <Controller
           control={control}
-          name={"food"}
+          name={'food'}
           render={({ field }) => {
             return (
               <Input.Select
                 {...field}
                 options={foodOptions}
-                label={"teste"}
+                label={'teste'}
                 innerRef={field.ref}
                 error={errors.food}
                 onValueChange={field.onChange}
               />
-            );
+            )
           }}
         />
 
@@ -106,5 +130,5 @@ export const FormTest = () => {
         </Button>
       </FlexBox>
     </form>
-  );
-};
+  )
+}
