@@ -1,5 +1,6 @@
-import { CaretLeft, SlidersHorizontal } from '@phosphor-icons/react'
+import { CaretLeft, Pencil, SlidersHorizontal, X } from '@phosphor-icons/react'
 import { Button } from 'components/Button'
+import { Collapsible } from 'components/Collapsable'
 import { FlexBox } from 'components/FlexBox'
 import { FormTest } from 'components/FormTest'
 import { Geometry } from 'components/Geometry'
@@ -41,6 +42,26 @@ const NotFound = () => {
             text="this is a text tooltip with longer text! omg that's too much information to put on a tooltip"
           />
         </FlexBox>
+      </FlexBox>
+      <FlexBox direction="column" gap={1} p={2}>
+        <Collapsible title="title of the collapsable">
+          <FlexBox direction="column" gap={1}>
+            <p>Item A</p>
+            <p>Item B</p>
+          </FlexBox>
+        </Collapsible>
+        <Collapsible
+          title="title of the collapsable"
+          titleButton={
+            <Pencil weight="fill" onClick={() => window.alert('edit')} />
+          }
+          actionButton={<X size={24} onClick={() => window.alert('delete')} />}
+        >
+          <FlexBox direction="column" gap={1}>
+            <p>Item A</p>
+            <p>Item B</p>
+          </FlexBox>
+        </Collapsible>
       </FlexBox>
       <FlexBox direction="column" gap={1} p={2}>
         <Skeleton width={360} height={24} variant="rectangle" pulse />

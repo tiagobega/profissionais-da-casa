@@ -23,4 +23,8 @@ export const defaultTheme = {
       500: '#222', //text
     },
   },
+  transition: {
+    short: '200ms',
+    long: '400ms',
+  },
 } as const
