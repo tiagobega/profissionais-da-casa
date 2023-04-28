@@ -24,24 +24,29 @@ export const TitleContainer = styled(FlexBox)`
   `}
 `
 
-export const BodyContainer = styled(FlexBox)`
+export const BodyContainer = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.color.secondary.lighterYellow};
     animation-name: slideDownAndFade;
     animation-duration: 400ms;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 10;
+    padding: 1rem 2rem;
   `}
   @keyframes slideDownAndFade {
     from {
-      opacity: 0;
-      transform: translateY(-5px);
-      z-index: 10;
+      height: 0;
     }
     to {
-      opacity: 1;
-      transform: translateY(0);
-      z-index: 10;
+      height: fit-content;
+    }
+  }
+  @keyframes slideUpAndFade {
+    from {
+      height: fit-content;
+    }
+    to {
+      height: 0;
     }
   }
 `

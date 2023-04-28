@@ -13,7 +13,7 @@ export interface HeaderListProps {}
 export const HeaderList: React.FC<HeaderListProps> = () => {
   const { color } = useTheme()
   return (
-    <FlexBox full gap={1.75}>
+    <FlexBox full gap={1.75} px={8}>
       <TextContainer direction="column" justifyContent="space-between">
         <h2>Encontre o profissional certo para a sua reforma</h2>
         <div>
