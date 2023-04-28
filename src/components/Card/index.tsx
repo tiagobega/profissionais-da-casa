@@ -3,6 +3,7 @@ import { Button } from 'components/Button'
 import { FlexBox } from 'components/FlexBox'
 import { useTheme } from 'styled-components'
 import {
+  ButtonContainer,
   CardContainer,
   InformationContainer,
   PhotoContainer,
@@ -35,7 +36,7 @@ export const CardProfile: React.FC<CardProfileProps> = () => {
         p={0.5}
         pt={1.5}
         justifyContent="flex-end"
-        gap={0.5}
+        gap={1}
         full
       >
         <div>
@@ -54,7 +55,7 @@ export const CardProfile: React.FC<CardProfileProps> = () => {
           ))}
           {profile.tags.length > 3 && <Tag tagName="..." />}
         </FlexBox>
-        <FlexBox full justifyContent="flex-end">
+        <ButtonContainer full justifyContent="flex-end">
           <Button
             variant="text"
             color={color.secondary.lightTeal}
@@ -62,7 +63,7 @@ export const CardProfile: React.FC<CardProfileProps> = () => {
           >
             Ver mais <CaretRight />
           </Button>
-        </FlexBox>
+        </ButtonContainer>
       </InformationContainer>
     </CardContainer>
   )

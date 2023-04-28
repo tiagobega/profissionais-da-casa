@@ -6,8 +6,10 @@ export const CardContainer = styled.div`
     position: relative;
     min-width: 270px;
     width: 270px;
-    height: 360px;
+    height: 400px;
     border: 5px solid ${theme.color.base[500]};
+    display: flex;
+    flex-direction: column;
   `}
 `
 export const PhotoContainer = styled.div`
@@ -36,13 +38,19 @@ export const ProfileContainer = styled.img`
     border: 4px solid ${theme.color.brand.purple};
     overflow: hidden;
     right: 1rem;
-    top: 90px;
+    top: 105px;
     object-fit: cover;
   `}
 `
 
 export const InformationContainer = styled(FlexBox)`
   ${({ theme }) => css`
-    height: 200px;
+    height: 240px;
+  `}
+`
+
+export const ButtonContainer = styled(FlexBox)`
+  ${({ theme }) => css`
+    height: 24px;
   `}
 `

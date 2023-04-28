@@ -7,6 +7,7 @@ import { FlexBox } from 'components/FlexBox'
 import { FormTest } from 'components/FormTest'
 import { Geometry } from 'components/Geometry'
 import { Loading } from 'components/Loading'
+import { NotFoundContent } from 'components/NotFound'
 import { Skeleton } from 'components/Skeleton'
 import { Tooltip } from 'components/Tooltip'
 import { TooltipIcon } from 'components/TooltipIcon'
@@ -49,6 +50,7 @@ const NotFound = () => {
           </FlexBox>
         </FlexBox>
       </FlexBox>
+      <NotFoundContent />
       <FlexBox direction="column" gap={1} p={2}>
         <Collapsible title="title of the collapsable">
           <FlexBox direction="column" gap={1}>
