@@ -1,5 +1,7 @@
 import { CaretLeft, Pencil, SlidersHorizontal, X } from '@phosphor-icons/react'
 import { Button } from 'components/Button'
+import { CardProfile } from 'components/Card'
+import { CardStyledProfile } from 'components/Card copy'
 import { Collapsible } from 'components/Collapsable'
 import { FlexBox } from 'components/FlexBox'
 import { FormTest } from 'components/FormTest'
@@ -41,6 +43,10 @@ const NotFound = () => {
             title="tooltip super creative title"
             text="this is a text tooltip with longer text! omg that's too much information to put on a tooltip"
           />
+          <FlexBox gap={3}>
+            <CardProfile />
+            <CardStyledProfile />
+          </FlexBox>
         </FlexBox>
       </FlexBox>
       <FlexBox direction="column" gap={1} p={2}>

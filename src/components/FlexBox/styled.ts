@@ -24,6 +24,10 @@ export interface FlexBoxStyleProps {
    */
   gap?: number
   /**
+   * vertical dimension in REM
+   */
+  h?: number | '100%'
+  /**
    * vertical padding in REM
    */
   py?: number
@@ -99,6 +103,10 @@ export interface FlexBoxStyleProps {
    * flex property
    */
   flex?: 'auto' | 'none'
+  /**
+   * flex property
+   */
+  wrap?: boolean
 }
 
 const setMargin = (
@@ -192,6 +200,7 @@ export const FlexBoxContainer = styled.div<FlexBoxStyleProps>`
     centralized = false,
     alignItems = 'flex-start',
     justifyContent = 'flex-start',
+    h,
     m = 0,
     mx = 0,
     my = 0,
@@ -212,7 +221,9 @@ export const FlexBoxContainer = styled.div<FlexBoxStyleProps>`
     flex,
     shrink,
     grow,
+    wrap,
   }) => css`
+    height: ${h || 'auto'};
     flex-direction: ${direction};
     display: flex;
     align-items: ${centralized ? 'center' : alignItems};
@@ -220,6 +231,7 @@ export const FlexBoxContainer = styled.div<FlexBoxStyleProps>`
     gap: ${gap}rem;
     margin: ${setMargin(m, my, mx, mt, mb, ml, mr)};
     padding: ${setPadding(p, py, px, pt, pb, pl, pr)};
+    ${wrap && 'flex-wrap: wrap'};
     ${full && 'width:100%;'}
     ${flex && `flex:${flex};`}
     ${shrink && `flex-shrink:${shrink};`}
