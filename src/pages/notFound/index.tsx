@@ -6,10 +6,9 @@ import { Collapsible } from 'components/Collapsable'
 import { FlexBox } from 'components/FlexBox'
 import { FormTest } from 'components/FormTest'
 import { Geometry } from 'components/Geometry'
-import { Loading } from 'components/Loading'
+import { HeaderList } from 'components/HeaderList'
 import { NotFoundContent } from 'components/NotFound'
 import { Skeleton } from 'components/Skeleton'
-import { Tooltip } from 'components/Tooltip'
 import { TooltipIcon } from 'components/TooltipIcon'
 import { useTheme } from 'styled-components'
 
@@ -19,7 +18,7 @@ const NotFound = () => {
   return (
     <div className="HomePage">
       <h1>notFound</h1>
-
+      <HeaderList />
       <FlexBox>
         <FlexBox grow={1}>teste1</FlexBox>
         <FlexBox flex={'auto'}>teste2</FlexBox>

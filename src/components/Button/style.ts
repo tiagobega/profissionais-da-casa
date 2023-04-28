@@ -21,11 +21,11 @@ export const ButtonContainer = styled.button<ButtonContainerStyle>`
     full,
   }) => css`
     display: flex;
+    height: fit-content;
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
     padding: ${variant != 'text' && '0.75rem 1.25rem'};
-    max-height: 2.75rem;
     width: ${full ? '100%' : `${width}rem`};
     outline: none;
     font-family: 'Lexend', sans-serif;

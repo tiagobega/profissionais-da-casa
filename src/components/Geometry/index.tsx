@@ -10,6 +10,5 @@ export interface GeometryStyleProps {
 export interface GeometryProps extends GeometryStyleProps {}
 
 export const Geometry: React.FC<GeometryProps> = (props) => {
-  console.log(props)
   return <Shape {...props} />
 }
