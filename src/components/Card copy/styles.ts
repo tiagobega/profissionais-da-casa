@@ -42,7 +42,7 @@ export const ProfileContainer = styled.img`
     border: 4px solid ${theme.color.brand.purple};
     overflow: hidden;
     right: 1rem;
-    top: 90px;
+    top: 80px;
     object-fit: cover;
     z-index: 13;
   `}
@@ -51,6 +51,7 @@ export const ProfileContainer = styled.img`
 export const InformationContainer = styled(FlexBox)`
   ${({ theme }) => css`
     position: relative;
+    height: 230px;
     * {
       z-index: 12;
       opacity: 1;
@@ -59,7 +60,9 @@ export const InformationContainer = styled(FlexBox)`
       width: 100%;
       height: 100%;
       background-color: white;
-      opacity: 0.85;
+      backdrop-filter: blur(8.3px);
+      -webkit-backdrop-filter: blur(8.3px);
+      opacity: 0.9;
       position: absolute;
       z-index: 11;
       top: 0;

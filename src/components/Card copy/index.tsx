@@ -32,7 +32,7 @@ export const CardStyledProfile: React.FC<CardProfileProps> = () => {
       <ProfileContainer src={profilePlaceholder} alt="foto do profissional" />
       <InformationContainer
         direction="column"
-        p={0.5}
+        p={1}
         pt={1.5}
         justifyContent="flex-end"
         gap={0.5}
