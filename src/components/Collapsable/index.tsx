@@ -36,11 +36,7 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
         </FlexBox>
         {actionButton}
       </TitleContainer>
-      {isOpen && (
-        <BodyContainer className={`${isOpen ? 'open' : 'close'}`}>
-          {children}
-        </BodyContainer>
-      )}
+      {isOpen && <BodyContainer>{children}</BodyContainer>}
     </CollapsibleContainer>
   )
 }

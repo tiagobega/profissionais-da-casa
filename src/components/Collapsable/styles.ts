@@ -27,26 +27,17 @@ export const TitleContainer = styled(FlexBox)`
 export const BodyContainer = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.color.secondary.lighterYellow};
-    animation-name: slideDownAndFade;
-    animation-duration: 400ms;
-    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
     z-index: 10;
     padding: 1rem 2rem;
+    transform-origin: top center;
   `}
-  @keyframes slideDownAndFade {
+  @keyframes slideDown {
     from {
-      height: 0;
+      transform: scaleY(0);
     }
     to {
-      height: fit-content;
-    }
-  }
-  @keyframes slideUpAndFade {
-    from {
-      height: fit-content;
-    }
-    to {
-      height: 0;
+      transform: scaleY(1);
     }
   }
 `
