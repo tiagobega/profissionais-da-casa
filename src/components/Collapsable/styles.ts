@@ -34,7 +34,7 @@ export const BodyContainer = styled.div<{ isOpen: boolean }>`
     transform-origin: top center;
     display: grid;
     grid-template-rows: ${isOpen ? '0fr' : '1fr'};
-    transition: grid-template-rows 400ms;
+    transition: grid-template-rows ${theme.transition.short};
     & > div {
       overflow: hidden;
     }
