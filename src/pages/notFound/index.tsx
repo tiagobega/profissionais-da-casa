@@ -54,7 +54,7 @@ const NotFound = () => {
       <NotFoundContent />
       <FlexBox direction="column" gap={1} p={2}>
         <Collapsible title="title of the collapsable">
-          <FlexBox direction="column" gap={1}>
+          <FlexBox direction="column" gap={1} p={1}>
             <p>Item A</p>
             <p>Item B</p>
           </FlexBox>

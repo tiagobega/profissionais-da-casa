@@ -20,23 +20,26 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
   return (
     <CollapsibleContainer>
       <TitleContainer
+        isOpen={isOpen}
         alignItems="center"
         justifyContent="space-between"
         full
         p={1}
       >
         <FlexBox alignItems="center" gap={1} onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? (
-            <CaretDown onClick={() => setIsOpen(false)} size={24} />
-          ) : (
-            <CaretRight onClick={() => setIsOpen(true)} size={24} />
-          )}
+          <CaretRight
+            onClick={() => setIsOpen(true)}
+            size={24}
+            className="toggle"
+          />
           <h4>{title}</h4>
           {titleButton}
         </FlexBox>
         {actionButton}
       </TitleContainer>
-      {isOpen && <BodyContainer>{children}</BodyContainer>}
+      <BodyContainer isOpen={isOpen} aria-hidden={!isOpen}>
+        <div>{children}</div>
+      </BodyContainer>
     </CollapsibleContainer>
   )
 }

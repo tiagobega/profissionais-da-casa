@@ -7,8 +7,8 @@ export const CollapsibleContainer = styled.div`
   `}
 `
 
-export const TitleContainer = styled(FlexBox)`
-  ${({ theme }) => css`
+export const TitleContainer = styled(FlexBox)<{ isOpen: boolean }>`
+  ${({ theme, isOpen }) => css`
     background-color: ${theme.color.brand.yellowLight};
     z-index: 15;
     div {
@@ -17,6 +17,9 @@ export const TitleContainer = styled(FlexBox)`
     svg {
       cursor: pointer;
       transition: ${theme.transition.short};
+      &.toggle {
+        rotate: ${isOpen ? '0' : '90deg'};
+      }
       &:hover {
         transform: scale(1.25);
       }
@@ -24,20 +27,16 @@ export const TitleContainer = styled(FlexBox)`
   `}
 `
 
-export const BodyContainer = styled.div`
-  ${({ theme }) => css`
+export const BodyContainer = styled.div<{ isOpen: boolean }>`
+  ${({ theme, isOpen }) => css`
     background-color: ${theme.color.secondary.lighterYellow};
-    animation: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
     z-index: 10;
-    padding: 1rem 2rem;
     transform-origin: top center;
+    display: grid;
+    grid-template-rows: ${isOpen ? '0fr' : '1fr'};
+    transition: grid-template-rows 400ms;
+    & > div {
+      overflow: hidden;
+    }
   `}
-  @keyframes slideDown {
-    from {
-      transform: scaleY(0);
-    }
-    to {
-      transform: scaleY(1);
-    }
-  }
 `
