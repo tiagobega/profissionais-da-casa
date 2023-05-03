@@ -56,6 +56,7 @@ export const ButtonContainer = styled.button<ButtonContainerStyle>`
     }
     &:active {
       ${variant != 'text' && 'box-shadow: -3px 3px 0 black;'}
+      border: 3px solid ${variant !== 'text' && 'black'}
     }
   `}
 `

@@ -8,6 +8,7 @@ import { FormTest } from 'components/FormTest'
 import { Geometry } from 'components/Geometry'
 import { HeaderList } from 'components/HeaderList'
 import { NotFoundContent } from 'components/NotFound'
+import { ProjectCard } from 'components/ProjectCard'
 import { Skeleton } from 'components/Skeleton'
 import { TooltipIcon } from 'components/TooltipIcon'
 import { useTheme } from 'styled-components'
@@ -23,6 +24,7 @@ const NotFound = () => {
         <FlexBox grow={1}>teste1</FlexBox>
         <FlexBox flex={'auto'}>teste2</FlexBox>
       </FlexBox>
+      <ProjectCard projectStatus="not-started" />
 
       <FlexBox gap={2} p={2}>
         <Skeleton width={270} height={360} variant="rectangle" pulse />
