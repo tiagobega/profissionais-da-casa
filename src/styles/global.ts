@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
       box-sizing: border-box;
 
       &:focus {
-        border: 2px solid ${theme.color.brand.purple};
+        border: 4px solid ${theme.color.brand.purple};
       }
     }
     body {

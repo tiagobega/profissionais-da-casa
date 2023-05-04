@@ -24,6 +24,14 @@ export const TitleContainer = styled(FlexBox)<{ isOpen: boolean }>`
         transform: scale(1.25);
       }
     }
+    button {
+      &:hover {
+        text-decoration: none;
+      }
+      &:focus {
+        border: none;
+      }
+    }
   `}
 `
 

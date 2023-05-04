@@ -57,6 +57,7 @@ const NotFound = () => {
           <FlexBox direction="column" gap={1} p={1}>
             <p>Item A</p>
             <p>Item B</p>
+            <Button>HEY</Button>
           </FlexBox>
         </Collapsible>
         <Collapsible

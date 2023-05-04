@@ -2,9 +2,10 @@ import { CaretDown, CaretRight } from '@phosphor-icons/react'
 import { FlexBox } from 'components/FlexBox'
 import { ReactElement, ReactNode, useState } from 'react'
 import { BodyContainer, CollapsibleContainer, TitleContainer } from './styles'
+import { Button } from 'components/Button'
 
 export interface CollapsibleProps {
-  title: string
+  title: string | ReactNode
   children: ReactNode
   actionButton?: ReactElement
   titleButton?: ReactElement
@@ -26,13 +27,15 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
         full
         p={1}
       >
-        <FlexBox alignItems="center" gap={1} onClick={() => setIsOpen(!isOpen)}>
-          <CaretRight
-            onClick={() => setIsOpen(true)}
-            size={24}
-            className="toggle"
-          />
-          <h4>{title}</h4>
+        <FlexBox alignItems="center" gap={2}>
+          <Button variant="text" onClick={() => setIsOpen(!isOpen)}>
+            <CaretRight
+              onClick={() => setIsOpen(true)}
+              size={24}
+              className="toggle"
+            />
+            <h4>{title}</h4>
+          </Button>
           {titleButton}
         </FlexBox>
         {actionButton}
