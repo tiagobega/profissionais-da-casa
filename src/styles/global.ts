@@ -93,4 +93,11 @@ export const GlobalStyle = createGlobalStyle`
         border-radius: 50%;
       }
     }
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
   `}`

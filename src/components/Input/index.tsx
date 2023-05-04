@@ -1,7 +1,7 @@
-import { Checkbox } from "./Checkbox";
-import { RadioGroup } from "./Radio";
-import { TextInput } from "./Text";
-import { Select } from "./Select";
+import { Checkbox } from './Checkbox'
+import { RadioGroup } from './Radio'
+import { TextInput } from './Text'
+import { Select } from './HTMLSelect'
 // export * from "./Checkbox";
 // export * from "./Radio";
 
@@ -10,6 +10,6 @@ const Input = {
   Radio: RadioGroup,
   Text: TextInput,
   Select: Select,
-};
+}
 
-export default Input;
+export default Input

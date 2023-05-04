@@ -23,6 +23,8 @@ export const Select = forwardRef(
       value,
     } = props
 
+    const preventAutoClose = (e: React.MouseEvent) => e.stopPropagation()
+
     return (
       <SelectContainer>
         {label && <label htmlFor={name}>{label}</label>}
@@ -32,6 +34,7 @@ export const Select = forwardRef(
               ref={innerRef}
               id={name}
               className="text-md border-solid border-2 border-slate-500 px-2"
+              onClick={(event: React.MouseEvent) => preventAutoClose(event)}
             >
               <SelectPrimitive.Value asChild>
                 <span>

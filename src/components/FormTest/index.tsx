@@ -5,6 +5,7 @@ import Input from 'components/Input'
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { formTestSchema } from './validation'
+import { Select } from 'components/Input/HTMLSelect'
 
 export type FormTestData = Zod.infer<typeof formTestSchema>
 
@@ -108,7 +109,7 @@ export const FormTest = () => {
           {...register('terms', { required: true })}
         />
 
-        <Controller
+        {/* <Controller
           control={control}
           name={'food'}
           render={({ field }) => {
@@ -123,6 +124,19 @@ export const FormTest = () => {
               />
             )
           }}
+        />
+
+        <select {...register('food')}>
+          {foodOptions.map((option) => (
+            <option value={option.value} key={option.value}>
+              {option.name}
+            </option>
+          ))}
+        </select> */}
+        <Input.Select
+          options={foodOptions}
+          {...register('food', { required: true })}
+          label="Selecione uma comida"
         />
 
         <Button type="submit" full>

@@ -4,6 +4,7 @@ import * as SelectPrimitive from '@radix-ui/react-select'
 export const SelectContainer = styled.div`
   ${({ theme }) => css`
     position: relative;
+    z-index: 1000;
     width: 100%;
     p {
       position: absolute;
@@ -39,6 +40,7 @@ export const SelectContainer = styled.div`
 export const OptionsContainer = styled(SelectPrimitive.Content)`
   ${({ theme }) => css`
     background-color: white;
+    z-index: 1000;
     border: 3px solid ${theme.color.base[200]};
 
     padding: 1rem 0;
