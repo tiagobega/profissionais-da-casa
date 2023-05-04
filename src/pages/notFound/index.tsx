@@ -7,18 +7,31 @@ import { FlexBox } from 'components/FlexBox'
 import { FormTest } from 'components/FormTest'
 import { Geometry } from 'components/Geometry'
 import { HeaderList } from 'components/HeaderList'
+import { Modal } from 'components/Modal'
 import { NotFoundContent } from 'components/NotFound'
 import { ProjectCard } from 'components/ProjectCard'
 import { Skeleton } from 'components/Skeleton'
 import { TooltipIcon } from 'components/TooltipIcon'
+import { useState } from 'react'
 import { useTheme } from 'styled-components'
 
 const NotFound = () => {
+  const [modalOpen, setModalOpen] = useState(false)
   const theme = useTheme()
 
   return (
     <div className="HomePage">
       <h1>notFound</h1>
+      <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
+      <p>{String(modalOpen)}</p>
+      <Modal
+        isOpened={modalOpen}
+        onProceed={() => console.log('proceed')}
+        onClose={() => setModalOpen(false)}
+      >
+        <FormTest />
+        <FormTest />
+      </Modal>
       <HeaderList />
       <FlexBox>
         <FlexBox grow={1}>teste1</FlexBox>

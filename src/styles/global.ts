@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
       box-sizing: border-box;
 
       &:focus {
-        border: 4px solid ${theme.color.brand.purple};
+        border: 2px solid ${theme.color.brand.purple};
       }
     }
     body {
@@ -23,6 +23,9 @@ export const GlobalStyle = createGlobalStyle`
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      &.modal-open {
+        overflow: hidden;
+      }
     }
     main {
       flex-grow: 1;
@@ -43,6 +46,9 @@ export const GlobalStyle = createGlobalStyle`
       cursor: pointer;
 
       font-family: 'Lexend', sans-serif;
+      &:focus {
+        border: 3px solid ${theme.color.brand.purple};
+      }
     }
 
     label {
