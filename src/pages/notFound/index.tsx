@@ -10,6 +10,7 @@ import { HeaderList } from 'components/HeaderList'
 import { Modal } from 'components/Modal'
 import { NotFoundContent } from 'components/NotFound'
 import { ProjectCard } from 'components/ProjectCard'
+import { ReviewCard } from 'components/ReviewCard'
 import { Skeleton } from 'components/Skeleton'
 import { TooltipIcon } from 'components/TooltipIcon'
 import { useState } from 'react'
@@ -38,6 +39,7 @@ const NotFound = () => {
         <FlexBox flex={'auto'}>teste2</FlexBox>
       </FlexBox>
       <ProjectCard projectStatus="not-started" />
+      <ReviewCard />
 
       <FlexBox gap={2} p={2}>
         <Skeleton width={270} height={360} variant="rectangle" pulse />
