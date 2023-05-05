@@ -9,12 +9,14 @@ export interface CollapsibleProps {
   children: ReactNode
   actionButton?: ReactElement
   titleButton?: ReactElement
+  variant?: 'project' | 'faq'
 }
 export const Collapsible: React.FC<CollapsibleProps> = ({
   title,
   children,
   actionButton,
   titleButton,
+  variant = 'project',
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -26,6 +28,7 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
         justifyContent="space-between"
         full
         p={1}
+        variant={variant}
       >
         <FlexBox alignItems="center" gap={2}>
           <Button variant="text" onClick={() => setIsOpen(!isOpen)}>
@@ -40,7 +43,7 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
         </FlexBox>
         {actionButton}
       </TitleContainer>
-      <BodyContainer isOpen={isOpen} aria-hidden={!isOpen}>
+      <BodyContainer isOpen={isOpen} aria-hidden={!isOpen} variant={variant}>
         <div>{children}</div>
       </BodyContainer>
     </CollapsibleContainer>

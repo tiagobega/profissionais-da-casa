@@ -7,10 +7,16 @@ export const CollapsibleContainer = styled.div`
   `}
 `
 
-export const TitleContainer = styled(FlexBox)<{ isOpen: boolean }>`
-  ${({ theme, isOpen }) => css`
-    background-color: ${theme.color.brand.yellowLight};
+export const TitleContainer = styled(FlexBox)<{
+  isOpen: boolean
+  variant: 'project' | 'faq'
+}>`
+  ${({ theme, isOpen, variant }) => css`
+    background-color: ${variant == 'faq'
+      ? theme.color.brand.purple
+      : theme.color.brand.yellowLight};
     z-index: 15;
+    color: ${variant == 'faq' ? 'white' : 'black'};
     div {
       cursor: pointer;
     }
@@ -25,8 +31,10 @@ export const TitleContainer = styled(FlexBox)<{ isOpen: boolean }>`
       }
     }
     button {
+      color: ${variant == 'faq' ? 'white' : 'black'};
       &:hover {
         text-decoration: none;
+        color: ${variant == 'faq' ? 'white' : 'black'};
       }
       &:focus {
         border: none;
@@ -35,9 +43,14 @@ export const TitleContainer = styled(FlexBox)<{ isOpen: boolean }>`
   `}
 `
 
-export const BodyContainer = styled.div<{ isOpen: boolean }>`
-  ${({ theme, isOpen }) => css`
-    background-color: ${theme.color.secondary.lighterYellow};
+export const BodyContainer = styled.div<{
+  isOpen: boolean
+  variant: 'project' | 'faq'
+}>`
+  ${({ theme, isOpen, variant }) => css`
+    background-color: ${variant == 'faq'
+      ? theme.color.base[200]
+      : theme.color.secondary.lighterYellow};
     z-index: 10;
     transform-origin: top center;
     display: grid;

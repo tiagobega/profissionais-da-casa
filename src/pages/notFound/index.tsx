@@ -79,8 +79,9 @@ const NotFound = () => {
             <Pencil weight="fill" onClick={() => window.alert('edit')} />
           }
           actionButton={<X size={24} onClick={() => window.alert('delete')} />}
+          variant="faq"
         >
-          <FlexBox direction="column" gap={1}>
+          <FlexBox direction="column" gap={1} p={1}>
             <p>Item A</p>
             <p>Item B</p>
           </FlexBox>
