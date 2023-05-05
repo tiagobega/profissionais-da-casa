@@ -70,7 +70,7 @@ export const GlobalStyle = createGlobalStyle`
       border: 2px solid ${theme.color.base[300]};
       font-family: 'Lexend', sans-serif;
       width: 100%;
-
+      height: 47px;
       &[type='checkbox'],
       &[type='radio'] {
         appearance: none;

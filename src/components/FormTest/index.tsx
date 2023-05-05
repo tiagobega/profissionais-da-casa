@@ -88,9 +88,15 @@ export const FormTest = () => {
           {...register('name')}
         />
 
+        <Input.File
+          label="Foto de Perfil"
+          error={errors.file}
+          {...register('file')}
+        />
+
         <Input.Text
           type="number"
-          label="Age"
+          placeholder="Age"
           error={errors.age}
           {...register('age', { valueAsNumber: true })}
         />

@@ -1,10 +1,11 @@
-import * as z from "zod";
+import * as z from 'zod'
 
-export const ERROR_REQUIRED = "Esse campo é obrigatório";
-export const ERROR_MINIMUN_AGE = "Você deve ter ao menos 18 anos";
-export const ERROR_TERMS = "Você deve aceitar os termos e condições";
-export const ERROR_NAME = "Escreva seu nome";
-export const ERROR_FOOD = "Selecione uma comida";
+export const ERROR_REQUIRED = 'Esse campo é obrigatório'
+export const ERROR_MINIMUN_AGE = 'Você deve ter ao menos 18 anos'
+export const ERROR_TERMS = 'Você deve aceitar os termos e condições'
+export const ERROR_NAME = 'Escreva seu nome'
+export const ERROR_FOOD = 'Selecione uma comida'
+export const ERROR_FILE = 'Selecione uma imagem'
 
 export const formTestSchema = z.object({
   name: z.string().min(1, ERROR_NAME),
@@ -23,4 +24,5 @@ export const formTestSchema = z.object({
     errorMap: () => ({ message: ERROR_REQUIRED }),
   }),
   food: z.string({ required_error: ERROR_FOOD }).min(1, ERROR_FOOD),
-});
+  file: z.instanceof(FileList),
+})
