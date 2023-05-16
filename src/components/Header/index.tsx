@@ -4,10 +4,9 @@ import logo from 'assets/images/logo.png'
 import { HeaderContainer, LoginContainer } from './styles'
 import { Button } from 'components/Button'
 import { useTheme } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
-  const { color } = useTheme()
-
   return (
     <HeaderContainer>
       <FlexBox full justifyContent="space-between" alignItems="center" px={6}>
@@ -17,29 +16,19 @@ const Header = () => {
           <nav>
             <ul>
               <li>
-                <Button variant="text" color="black" href="#">
-                  Casa Fast
-                </Button>
+                <a href="#">Casa Fast</a>
               </li>
               <li>
-                <Button variant="text" color="black" href="#">
-                  Profissionais da Casa
-                </Button>
+                <Link to="/catalog/">Profissionais da Casa</Link>
               </li>
               <li>
-                <Button variant="text" color="black" href="#">
-                  Seguros
-                </Button>
+                <a href="#">Seguros</a>
               </li>
               <li>
-                <Button variant="text" color="black" href="#">
-                  Blog
-                </Button>
+                <a href="#">Blog</a>
               </li>
               <li>
-                <Button variant="text" color="black" href="#">
-                  Quem somos
-                </Button>
+                <a href="#">Quem somos</a>
               </li>
             </ul>
           </nav>

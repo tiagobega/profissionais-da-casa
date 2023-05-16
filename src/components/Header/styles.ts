@@ -6,7 +6,7 @@ interface LoginContainer {
 
 export const HeaderContainer = styled.header`
   ${({ theme, role }) => css`
-    width: 100vw;
+    width: 100%;
     font-weight: 700;
     display: flex;
     justify-content: space-between;

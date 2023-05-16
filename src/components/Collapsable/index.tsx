@@ -18,8 +18,7 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
   titleButton,
   variant = 'project',
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
-
+  const [isOpen, setIsOpen] = useState(true)
   return (
     <CollapsibleContainer>
       <TitleContainer

@@ -1,6 +1,7 @@
 import { FlexBox } from 'components/FlexBox'
 import {
   ButtonContainer,
+  HeaderContainer,
   InviteContainer,
   RightContainer,
   TextContainer,
@@ -8,12 +9,14 @@ import {
 import { Button } from 'components/Button'
 import { Geometry } from 'components/Geometry'
 import { useTheme } from 'styled-components'
+import { Router, useNavigate } from 'react-router-dom'
 
 export interface HeaderListProps {}
 export const HeaderList: React.FC<HeaderListProps> = () => {
+  const navigate = useNavigate()
   const { color } = useTheme()
   return (
-    <FlexBox full gap={1.75} px={8}>
+    <HeaderContainer>
       <TextContainer direction="column" justifyContent="space-between">
         <h2>Encontre o profissional certo para a sua reforma</h2>
         <div>
@@ -28,12 +31,11 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
         <InviteContainer
           alignItems="center"
           p={2}
-          pl={5}
-          gap={3}
+          px={1.5}
           justifyContent="space-between"
         >
           <h2>Seja um profissional da casa</h2>
-          <FlexBox gap={3} alignItems="center">
+          <FlexBox gap={1.5} alignItems="center">
             <div>
               <p>
                 Estamos sempre procurando novos profissionais de arquitetura e
@@ -45,7 +47,12 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
               </p>
             </div>
             <ButtonContainer centralized>
-              <Button background="white">Seja um Profissional da Casa</Button>
+              <Button
+                background="white"
+                onClick={() => navigate('/register/professional')}
+              >
+                Seja um Profissional da Casa
+              </Button>
             </ButtonContainer>
           </FlexBox>
         </InviteContainer>
@@ -62,6 +69,6 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
           />
         </FlexBox>
       </RightContainer>
-    </FlexBox>
+    </HeaderContainer>
   )
 }

@@ -14,6 +14,7 @@ export const defaultTheme = {
       darkPink: '#FFA6D6',
       brown: '#7A3D3D',
       blue: '#2D74E6',
+      green: '#054F52',
     },
     base: {
       100: '#F1F0F0',

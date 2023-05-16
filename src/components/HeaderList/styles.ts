@@ -1,10 +1,19 @@
 import styled, { css } from 'styled-components'
 import { FlexBox } from 'components/FlexBox'
-import { Button } from 'components/Button'
+
+export const HeaderContainer = styled.header`
+  ${({ theme }) => css`
+    width: 1170px;
+    margin: 0 auto;
+    display: flex;
+    gap: 1.5rem;
+  `}
+`
 
 export const TextContainer = styled(FlexBox)`
   ${({ theme }) => css`
     width: 370px;
+    min-width: 370px;
     height: 365px;
     border: 6px solid ${theme.color.brand.orange};
     padding: 2rem 3rem;
@@ -17,7 +26,7 @@ export const TextContainer = styled(FlexBox)`
 
 export const RightContainer = styled(FlexBox)`
   ${({ theme }) => css`
-    flex: 1;
+    flex-grow: 1;
     flex-direction: column;
   `}
 `
@@ -44,6 +53,8 @@ export const ButtonContainer = styled(FlexBox)`
     height: 100%;
     button {
       height: 5rem;
+      padding: 0.5rem 1rem;
+      scale: 0.8;
     }
   `}
 `

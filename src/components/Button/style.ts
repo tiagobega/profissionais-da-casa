@@ -54,7 +54,8 @@ export const ButtonContainer = styled.button<ButtonContainerStyle>`
         }
       }
     }
-    &:active {
+    &:focus {
+      transition: 200ms;
       ${variant != 'text' && 'box-shadow: -3px 3px 0 black;'}
       border: 3px solid ${variant !== 'text' && 'black'}
     }

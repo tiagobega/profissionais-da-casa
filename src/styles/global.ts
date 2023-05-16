@@ -41,6 +41,16 @@ export const GlobalStyle = createGlobalStyle`
     li {
       list-style-type: none;
     }
+    nav {
+      li {
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+        transition: ${theme.transition.short};
+        &:hover {
+          background-color: ${theme.color.brand.yellowLight};
+        }
+      }
+    }
 
     button {
       cursor: pointer;
