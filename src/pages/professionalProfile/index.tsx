@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useTheme } from 'styled-components'
 import {
   GalleryContainer,
+  GrayContainer,
   HeaderContainer,
   RatingContainer,
   RatingHeader,
@@ -13,6 +14,7 @@ import {
 } from './styles'
 import { useState } from 'react'
 import { CarouselButton, MarginContainer } from 'styles/commonComponents'
+import { ProfileManager } from './ProfileManager'
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -21,6 +23,7 @@ export const ProfessionalProfilePage: React.FC<
   const { color } = useTheme()
   const navigate = useNavigate()
   const id = useParams()
+  const [isOwn, setIsOwn] = useState(true)
 
   const [displayProject, setDisplayProject] = useState(0)
   const [displayReview, setDisplayReview] = useState(0)
@@ -79,65 +82,75 @@ export const ProfessionalProfilePage: React.FC<
 
   return (
     <>
-      <MarginContainer>
-        <Button variant="text" onClick={() => navigate(-1)}>
-          <CaretLeft weight="fill" /> Voltar
-        </Button>
-      </MarginContainer>
-      <HeaderContainer>
-        <FlexBox full justifyContent="space-between" alignItems="center">
-          <div>
-            <FlexBox alignItems="center" gap={2}>
-              <img
-                src="https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt="profile picture"
-                className="profile-img"
-              />
-              <FlexBox direction="column" gap={1}>
-                <FlexBox alignItems="center" gap={2}>
-                  <h2>Nome do Profissional</h2>
-                  <FlexBox alignItems="center" gap={0.5}>
-                    <MapPin weight="fill" />
-                    <p>Localização</p>
-                  </FlexBox>
-                </FlexBox>
-                <p className="description-text">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Distinctio est veniam debitis incidunt nobis modi quasi quis
-                  architecto beatae expedita aspernatur, quisquam ipsum officia.
-                  Dicta fugit cum magnam maiores dignissimos.
-                </p>
-                <RatingHeader alignItems="center" gap={2}>
-                  <div className="rating">
-                    <Star
-                      weight="fill"
-                      size={32}
-                      color={color.secondary.yellow}
-                    />{' '}
-                    <p>4.5</p>
-                    <span>(123)</span>
-                  </div>
-                  <Button variant="text">
-                    Deixe sua avaliação <CaretRight weight="fill" />
-                  </Button>
-                </RatingHeader>
-              </FlexBox>
-            </FlexBox>
-            <ul className="category-list">
-              <li>Categoria A</li>
-              <li>Categoria B</li>
-              <li>Categoria C</li>
-            </ul>
-          </div>
-          <Button
-            variant="primary"
-            background={color.brand.yellowLight}
-            width={8}
-          >
-            Entrar em contato
+      <GrayContainer isOwn={isOwn}>
+        <MarginContainer>
+          <Button variant="text" onClick={() => navigate(-1)}>
+            <CaretLeft weight="fill" /> Voltar
           </Button>
-        </FlexBox>
-      </HeaderContainer>
+        </MarginContainer>
+        <HeaderContainer>
+          <FlexBox
+            full
+            justifyContent="space-between"
+            alignItems="center"
+            gap={5}
+          >
+            <ProfileManager />
+            <FlexBox full direction="column">
+              <FlexBox alignItems="center" gap={2}>
+                <img
+                  src="https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  alt="profile picture"
+                  className="profile-img"
+                />
+                <FlexBox direction="column" gap={1}>
+                  <FlexBox alignItems="center" gap={2}>
+                    <h2>Nome do Profissional</h2>
+                    <FlexBox alignItems="center" gap={0.5}>
+                      <MapPin weight="fill" />
+                      <p>Localização</p>
+                    </FlexBox>
+                  </FlexBox>
+                  <p className="description-text">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Distinctio est veniam debitis incidunt nobis modi quasi quis
+                    architecto beatae expedita aspernatur, quisquam ipsum
+                    officia. Dicta fugit cum magnam maiores dignissimos.
+                  </p>
+                  <RatingHeader alignItems="center" gap={2}>
+                    <div className="rating">
+                      <Star
+                        weight="fill"
+                        size={32}
+                        color={color.secondary.yellow}
+                      />{' '}
+                      <p>4.5</p>
+                      <span>(123)</span>
+                    </div>
+                    <Button variant="text">
+                      Deixe sua avaliação <CaretRight weight="fill" />
+                    </Button>
+                  </RatingHeader>
+                </FlexBox>
+              </FlexBox>
+              <ul className="category-list">
+                <li>Categoria A</li>
+                <li>Categoria B</li>
+                <li>Categoria C</li>
+              </ul>
+            </FlexBox>
+            {!isOwn && (
+              <Button
+                variant="primary"
+                background={color.brand.yellowLight}
+                width={8}
+              >
+                Entrar em contato
+              </Button>
+            )}
+          </FlexBox>
+        </HeaderContainer>
+      </GrayContainer>
       <GalleryContainer>
         <div className="gallery-bg">
           <img

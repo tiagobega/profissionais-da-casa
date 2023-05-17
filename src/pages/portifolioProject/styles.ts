@@ -13,7 +13,7 @@ export const GalleryContainer = styled(FullContainer)`
       justify-content: center;
       img {
         width: 100%;
-        max-width: ${theme.sizes.pageWidth};
+        max-width: 1366px;
         height: 100%;
         object-fit: cover;
       }
@@ -24,7 +24,7 @@ export const InformationContainer = styled(MarginContainer)`
   ${({ theme }) => css`
     display: flex;
     gap: 2rem;
-    padding-bottom: 5rem;
+    padding: 2rem 0 5rem;
   `}
 `
 

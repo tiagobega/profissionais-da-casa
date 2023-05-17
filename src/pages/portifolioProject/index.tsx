@@ -46,7 +46,7 @@ export const PortifolioProjectPage: React.FC<
   return (
     <>
       <MarginContainer>
-        <FlexBox alignItems="center" gap={2}>
+        <FlexBox alignItems="center" gap={2} py={2}>
           <Button variant="text" onClick={() => navigate(-1)}>
             <CaretLeft weight="fill" /> Voltar
           </Button>

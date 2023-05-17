@@ -4,7 +4,7 @@ import { FlexBox } from 'components/FlexBox'
 export const MarginContainer = styled.div`
   ${({ theme }) => css`
     width: ${theme.sizes.pageWidth};
-    margin: ${theme.sizes.pageMarginY} auto;
+    margin: 0 auto;
   `}
 `
 export const FullContainer = styled.div`

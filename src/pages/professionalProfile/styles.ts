@@ -2,11 +2,22 @@ import styled, { css } from 'styled-components'
 import { FlexBox } from 'components/FlexBox'
 import { FullContainer, MarginContainer } from 'styles/commonComponents'
 
+export const GrayContainer = styled.section<{ isOwn: boolean }>`
+  ${({ theme, isOwn }) => css`
+    width: 100%;
+    background-color: ${isOwn ? theme.color.base[200] : theme.color.base[100]};
+    padding: 2rem 0;
+  `}
+`
+
 export const HeaderContainer = styled(MarginContainer)`
   ${({ theme }) => css`
+    height: 235px;
+    margin-top: 1rem;
     .profile-img {
       width: 180px;
       height: 180px;
+
       background-color: black;
       object-fit: cover;
     }
@@ -15,7 +26,7 @@ export const HeaderContainer = styled(MarginContainer)`
     }
 
     .category-list {
-      padding: 2rem 0 1rem;
+      padding: 2rem 0 0;
       display: flex;
       gap: 0.5rem;
       li {
@@ -52,9 +63,12 @@ export const GalleryContainer = styled(FullContainer)`
       height: 400px;
       background-color: black;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
     }
     .gallery-img {
       width: 100%;
+      max-width: 1366px;
       height: 100%;
       object-fit: cover;
       animation: slideRight;
