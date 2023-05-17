@@ -24,9 +24,6 @@ export const HeaderContainer = styled(MarginContainer)`
         padding: 0.125rem 0.5rem;
       }
     }
-    .contact {
-      width: 128px;
-    }
   `}
 `
 

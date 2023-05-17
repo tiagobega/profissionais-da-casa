@@ -132,7 +132,7 @@ export const ProfessionalProfilePage: React.FC<
           <Button
             variant="primary"
             background={color.brand.yellowLight}
-            className="contact"
+            width={8}
           >
             Entrar em contato
           </Button>

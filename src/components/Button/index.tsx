@@ -11,6 +11,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   full?: boolean
   width?: number
   //width in REM - optional - default:fit-content
+  small?: boolean
 }
 export const Button: React.FC<ButtonProps> = (props) => {
   return props.href ? (
@@ -30,6 +31,7 @@ const ButtonBody: React.FC<ButtonProps> = ({
   variant,
   width,
   full,
+  small = false,
   ...props
 }) => (
   <ButtonContainer
@@ -39,6 +41,7 @@ const ButtonBody: React.FC<ButtonProps> = ({
     variant={variant}
     width={width}
     full={full}
+    small={small}
     {...props}
   >
     {children}

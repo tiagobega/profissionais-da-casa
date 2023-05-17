@@ -7,6 +7,7 @@ export interface ButtonContainerStyle {
   variant?: ButtonVariants
   width?: number
   full?: boolean
+  small?: boolean
 }
 
 export type ButtonVariants = 'primary' | 'outline' | 'text'
@@ -19,13 +20,20 @@ export const ButtonContainer = styled.button<ButtonContainerStyle>`
     background,
     width,
     full,
+    small,
   }) => css`
     display: flex;
     height: fit-content;
     gap: 0.5rem;
     align-items: center;
     justify-content: center;
-    padding: ${variant != 'text' && '0.75rem 1.25rem'};
+    padding: ${
+      variant == 'text'
+        ? 0
+        : !small
+        ? '0.75rem 1.25rem'
+        : small && '0.25rem 0.7rem'
+    };
     width: ${full ? '100%' : `${width}rem`};
     outline: none;
     font-family: 'Lexend', sans-serif;
