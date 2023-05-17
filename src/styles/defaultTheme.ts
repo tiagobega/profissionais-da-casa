@@ -28,4 +28,8 @@ export const defaultTheme = {
     short: '200ms',
     long: '400ms',
   },
+  sizes: {
+    pageWidth: '1170px',
+    pageMarginY: '32px',
+  },
 } as const

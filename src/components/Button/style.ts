@@ -32,15 +32,19 @@ export const ButtonContainer = styled.button<ButtonContainerStyle>`
     font-weight: 700;
     text-underline-offset: 8px;
     font-size: 1rem;
-    background-color: ${variant != 'primary'
-      ? 'transparent'
-      : background
-      ? background
-      : theme.color.brand.yellowLight};
+    background-color: ${
+      variant != 'primary'
+        ? 'transparent'
+        : background
+        ? background
+        : theme.color.brand.yellowLight
+    };
     color: ${color};
-    ${variant != 'text'
-      ? `border: 3px solid ${variant == 'primary' ? 'black' : color}; `
-      : `border:none;`}
+    ${
+      variant != 'text'
+        ? `border: 3px solid ${variant == 'primary' ? 'black' : color}; `
+        : `border:none;`
+    }
     ${variant != 'text' && shadow && `box-shadow: -3px 3px 0 black;`}
     &:hover {
       transition: 200ms;
@@ -57,7 +61,12 @@ export const ButtonContainer = styled.button<ButtonContainerStyle>`
     &:focus {
       transition: 200ms;
       ${variant != 'text' && 'box-shadow: -3px 3px 0 black;'}
-      border: 3px solid ${variant !== 'text' && 'black'}
+      border: ${variant !== 'text' ? '3px solid black' : 'none'}}
+    }
+    &:active {
+      transition: 200ms;
+      ${variant != 'text' && 'box-shadow: -3px 3px 0 black;'}
+      border: ${variant !== 'text' ? '3px solid black' : 'none'}}
     }
   `}
 `

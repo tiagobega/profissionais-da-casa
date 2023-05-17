@@ -6,6 +6,7 @@ import NotFound from 'pages/notFound'
 import TermsPage from 'pages/terms'
 import { FAQPage } from 'pages/faq'
 import { ProfessionalsListPage } from 'pages/professionalsList'
+import { ProfessionalProfilePage } from 'pages/professionalProfile'
 
 const HomePage = React.lazy(() => import('pages/home'))
 
@@ -39,7 +40,7 @@ const Router = () => (
         />
         <Route
           path={'/professional/:id'}
-          element={<PublicRoute element={<HomePage />} />}
+          element={<PublicRoute element={<ProfessionalProfilePage />} />}
         />
         <Route
           path={'/project/:id'}
