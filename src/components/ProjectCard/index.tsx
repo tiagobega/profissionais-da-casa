@@ -1,47 +1,48 @@
-import { Button } from 'components/Button'
-import { FlexBox } from 'components/FlexBox'
-import { ProjectCardContainer } from './styles'
+import { Button } from "components/Button";
+import { FlexBox } from "components/FlexBox";
+import { ProjectCardContainer } from "./styles";
+import { ProjectType } from "Models/models";
 
 export interface ProjectCardProps {
-  projectStatus: 'not-started' | 'ongoing' | 'complete'
+  project: ProjectType;
 }
-export const ProjectCard: React.FC<ProjectCardProps> = ({ projectStatus }) => {
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const statusText = () => {
-    switch (projectStatus) {
-      case 'not-started':
-        return 'Projeto não iniciado'
-        break
-      case 'ongoing':
-        return 'Projeto em andamento'
-        break
-      case 'complete':
-        return 'Projeto finalizado'
-        break
+    switch (project.status) {
+      case "not-started":
+        return "Projeto não iniciado";
+        break;
+      case "ongoing":
+        return "Projeto em andamento";
+        break;
+      case "complete":
+        return "Projeto finalizado";
+        break;
       default:
-        return
+        return;
     }
-  }
+  };
 
   return (
     <ProjectCardContainer
-      projectStatus={projectStatus}
+      projectStatus={project.status}
       full
       p={1.5}
       direction="column"
       justifyContent="space-between"
     >
       <FlexBox full direction="column">
-        <h3>Nome do projeto</h3>
-        <p>Nome do cliente</p>
-        <p>(12)34567-8910</p>
-        <p>esseehomeuemail@email.com</p>
+        <h3>{project.name}</h3>
+        <p>{project.customer}</p>
+        <p>{project.phone}</p>
+        <p>{project.email}</p>
       </FlexBox>
       <FlexBox full alignItems="flex-end" justifyContent="space-between">
-        <p className="status">Status:{statusText()}</p>
-        {projectStatus === 'complete' && <Button>Visão geral</Button>}
-        {projectStatus === 'ongoing' && <Button>Acompanhar</Button>}
-        {projectStatus === 'not-started' && <Button>Iniciar projeto</Button>}
+        <p className="status">Status: {statusText()}</p>
+        {project.status === "complete" && <Button>Visão geral</Button>}
+        {project.status === "ongoing" && <Button>Acompanhar</Button>}
+        {project.status === "not-started" && <Button>Iniciar projeto</Button>}
       </FlexBox>
     </ProjectCardContainer>
-  )
-}
+  );
+};

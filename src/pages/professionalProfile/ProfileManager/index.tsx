@@ -1,16 +1,19 @@
-import { Button } from 'components/Button'
-import { FlexBox } from 'components/FlexBox'
-import { FormTest } from 'components/FormTest'
-import { Modal } from 'components/Modal'
-import { useState } from 'react'
-import { useTheme } from 'styled-components'
-import { ManagerContainer } from './styles'
-import { Plus } from '@phosphor-icons/react'
+import { Button } from "components/Button";
+import { FlexBox } from "components/FlexBox";
+import { FormTest } from "components/FormTest";
+import { Modal } from "components/Modal";
+import { useState } from "react";
+import { useTheme } from "styled-components";
+import { ManagerContainer } from "./styles";
+import { Plus } from "@phosphor-icons/react";
+import { FormEditProfile } from "components/Forms/FormEditProfile";
+import { useNavigate } from "react-router-dom";
 
 export interface ProfileManagerProps {}
 export const ProfileManager: React.FC<ProfileManagerProps> = () => {
-  const [modalOpen, setModalOpen] = useState(false)
-  const { color } = useTheme()
+  const [modalOpen, setModalOpen] = useState(false);
+  const { color } = useTheme();
+  const navigate = useNavigate();
 
   return (
     <ManagerContainer direction="column" gap={1} justifyContent="space-between">
@@ -36,7 +39,7 @@ export const ProfileManager: React.FC<ProfileManagerProps> = () => {
         variant="primary"
         background={color.secondary.blue}
         small
-        onClick={() => setModalOpen(true)}
+        onClick={() => navigate("/my-projects")}
         width={10}
       >
         Meus Clientes
@@ -52,11 +55,11 @@ export const ProfileManager: React.FC<ProfileManagerProps> = () => {
       </Button>
       <Modal
         isOpened={modalOpen}
-        onProceed={() => console.log('proceed')}
+        onProceed={() => console.log("proceed")}
         onClose={() => setModalOpen(false)}
       >
-        <FormTest />
+        <FormEditProfile />
       </Modal>
     </ManagerContainer>
-  )
-}
+  );
+};

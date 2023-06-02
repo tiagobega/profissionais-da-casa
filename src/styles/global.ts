@@ -1,6 +1,6 @@
-import { createGlobalStyle, css } from 'styled-components'
+import { createGlobalStyle, css } from "styled-components";
 
-const checkedIcon = '/assets/check.svg'
+const checkedIcon = "/assets/check.svg";
 
 export const GlobalStyle = createGlobalStyle`
   ${({ theme }) => css`
@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
       background-color: ${theme.color.base[100]};
       color: ${theme.color.base[500]};
       -webkit-font-smoothing: antialiased;
-      font-family: 'Lexend', sans-serif;
+      font-family: "Lexend", sans-serif;
       text-decoration: none;
       font-size: 1rem;
       display: flex;
@@ -55,7 +55,7 @@ export const GlobalStyle = createGlobalStyle`
     button {
       cursor: pointer;
 
-      font-family: 'Lexend', sans-serif;
+      font-family: "Lexend", sans-serif;
       &:focus {
         border: 3px solid ${theme.color.brand.purple};
       }
@@ -73,16 +73,18 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     input,
-    select {
+    select,
+    textarea {
       font-size: 0.875rem;
       padding: 0.8rem 1.25rem;
       outline: none;
       border: 2px solid ${theme.color.base[300]};
-      font-family: 'Lexend', sans-serif;
+      font-family: "Lexend", sans-serif;
       width: 100%;
       height: 47px;
-      &[type='checkbox'],
-      &[type='radio'] {
+      resize: none;
+      &[type="checkbox"],
+      &[type="radio"] {
         appearance: none;
         width: 26px;
         height: 26px;
@@ -99,7 +101,7 @@ export const GlobalStyle = createGlobalStyle`
           border: 2px solid black;
         }
       }
-      &[type='radio'] {
+      &[type="radio"] {
         border-radius: 50%;
       }
     }
@@ -110,4 +112,4 @@ export const GlobalStyle = createGlobalStyle`
       appearance: none;
       border-radius: 0;
     }
-  `}`
+  `}`;

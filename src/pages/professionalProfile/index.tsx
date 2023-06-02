@@ -1,8 +1,8 @@
-import { CaretLeft, CaretRight, MapPin, Star } from '@phosphor-icons/react'
-import { Button } from 'components/Button'
-import { FlexBox } from 'components/FlexBox'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useTheme } from 'styled-components'
+import { CaretLeft, CaretRight, MapPin, Star } from "@phosphor-icons/react";
+import { Button } from "components/Button";
+import { FlexBox } from "components/FlexBox";
+import { useNavigate, useParams } from "react-router-dom";
+import { useTheme } from "styled-components";
 import {
   GalleryContainer,
   GrayContainer,
@@ -11,74 +11,74 @@ import {
   RatingHeader,
   ReviewContainer,
   ReviewSection,
-} from './styles'
-import { useState } from 'react'
-import { CarouselButton, MarginContainer } from 'styles/commonComponents'
-import { ProfileManager } from './ProfileManager'
+} from "./styles";
+import { useState } from "react";
+import { CarouselButton, MarginContainer } from "styles/commonComponents";
+import { ProfileManager } from "./ProfileManager";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
   ProfessionalProfileProps
 > = () => {
-  const { color } = useTheme()
-  const navigate = useNavigate()
-  const id = useParams()
-  const [isOwn, setIsOwn] = useState(true)
+  const { color } = useTheme();
+  const navigate = useNavigate();
+  const id = useParams();
+  const [isOwn, setIsOwn] = useState(true);
 
-  const [displayProject, setDisplayProject] = useState(0)
-  const [displayReview, setDisplayReview] = useState(0)
+  const [displayProject, setDisplayProject] = useState(0);
+  const [displayReview, setDisplayReview] = useState(0);
 
   const projectList = [
     {
       id: 0,
-      name: 'Project 1',
+      name: "Project 1",
       description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?',
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
       image:
-        'https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+        "https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     },
     {
       id: 1,
-      name: 'Project 2',
+      name: "Project 2",
       description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?',
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
       image:
-        'https://images.pexels.com/photos/6527069/pexels-photo-6527069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+        "https://images.pexels.com/photos/6527069/pexels-photo-6527069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     },
-  ]
+  ];
 
   const reviewList = [
     {
       id: 0,
-      name: 'Cliente 1',
+      name: "Cliente 1",
       description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?',
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
     },
     {
       id: 1,
-      name: 'Cliente 2',
+      name: "Cliente 2",
       description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?',
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
     },
     {
       id: 2,
-      name: 'Cliente 3',
+      name: "Cliente 3",
       description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?',
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
     },
     {
       id: 3,
-      name: 'Cliente 4',
+      name: "Cliente 4",
       description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?',
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
     },
     {
       id: 4,
-      name: 'Cliente 5',
+      name: "Cliente 5",
       description:
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?',
+        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
     },
-  ]
+  ];
 
   return (
     <>
@@ -95,7 +95,7 @@ export const ProfessionalProfilePage: React.FC<
             alignItems="center"
             gap={5}
           >
-            <ProfileManager />
+            {isOwn && <ProfileManager />}
             <FlexBox full direction="column">
               <FlexBox alignItems="center" gap={2}>
                 <img
@@ -123,7 +123,7 @@ export const ProfessionalProfilePage: React.FC<
                         weight="fill"
                         size={32}
                         color={color.secondary.yellow}
-                      />{' '}
+                      />{" "}
                       <p>4.5</p>
                       <span>(123)</span>
                     </div>
@@ -221,5 +221,5 @@ export const ProfessionalProfilePage: React.FC<
         </FlexBox>
       </ReviewSection>
     </>
-  )
-}
+  );
+};
