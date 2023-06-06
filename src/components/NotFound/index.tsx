@@ -1,12 +1,12 @@
-import { FlexBox } from 'components/FlexBox'
-import NotFound from 'assets/images/NotFound.png'
-import { Button } from 'components/Button'
-import { TextContainer } from './styles'
+import { FlexBox } from "components/FlexBox";
+import NotFound from "assets/images/NotFound.png";
+import { Button } from "components/Button";
+import { TextContainer } from "./styles";
 
 export interface NotFoundContentProps {}
 export const NotFoundContent: React.FC<NotFoundContentProps> = () => {
   return (
-    <FlexBox full gap={4} centralized py={6}>
+    <FlexBox full gap={4} centralized py={9}>
       <img src={NotFound} alt="piled shapes" />
       <TextContainer direction="column" gap={2}>
         <h2>Página não encontrada</h2>
@@ -20,5 +20,5 @@ export const NotFoundContent: React.FC<NotFoundContentProps> = () => {
         </FlexBox>
       </TextContainer>
     </FlexBox>
-  )
-}
+  );
+};
