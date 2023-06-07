@@ -1,24 +1,24 @@
-import { CaretDown, CaretRight } from '@phosphor-icons/react'
-import { FlexBox } from 'components/FlexBox'
-import { ReactElement, ReactNode, useState } from 'react'
-import { BodyContainer, CollapsibleContainer, TitleContainer } from './styles'
-import { Button } from 'components/Button'
+import { CaretDown, CaretRight } from "@phosphor-icons/react";
+import { FlexBox } from "components/FlexBox";
+import { ReactElement, ReactNode, useState } from "react";
+import { BodyContainer, CollapsibleContainer, TitleContainer } from "./styles";
+import { Button } from "components/Button";
 
 export interface CollapsibleProps {
-  title: string | ReactNode
-  children: ReactNode
-  actionButton?: ReactElement
-  titleButton?: ReactElement
-  variant?: 'project' | 'faq'
+  title: string | ReactNode;
+  children: ReactNode;
+  actionButton?: ReactElement;
+  titleButton?: ReactElement;
+  variant?: "project" | "faq";
 }
 export const Collapsible: React.FC<CollapsibleProps> = ({
   title,
   children,
   actionButton,
   titleButton,
-  variant = 'project',
+  variant = "project",
 }) => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <CollapsibleContainer>
       <TitleContainer
@@ -46,5 +46,5 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
         <div>{children}</div>
       </BodyContainer>
     </CollapsibleContainer>
-  )
-}
+  );
+};
