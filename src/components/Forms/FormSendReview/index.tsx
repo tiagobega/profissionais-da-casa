@@ -7,7 +7,7 @@ import { useTheme } from "styled-components";
 import { sendReviewSchema } from "./validation";
 import { Star } from "@phosphor-icons/react";
 import { Form, StarContainer } from "./style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type FormEditProfileData = Zod.infer<typeof sendReviewSchema>;
 
@@ -23,6 +23,11 @@ export const FormSendReview = () => {
     resolver: zodResolver(sendReviewSchema),
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    setValue("rating", 0);
+  }, []);
+
   const { color } = useTheme();
 
   const onSubmit = (data: FormEditProfileData) => {
@@ -72,6 +77,7 @@ export const FormSendReview = () => {
           background={color.secondary.blue}
           width={10}
           color="white"
+          disabled={+currentRating == 0}
         >
           Enviar
         </Button>

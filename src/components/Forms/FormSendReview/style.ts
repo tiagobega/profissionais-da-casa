@@ -5,7 +5,7 @@ export const Form = styled.form`
   ${({ theme }) => css`
     border-top: 3px solid ${theme.color.secondary.tealDark};
     padding-block: 2rem;
-    margin-top: 3rem;
+    margin-block: 3rem;
     margin-inline: auto;
 
     label {
