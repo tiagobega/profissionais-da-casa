@@ -1,7 +1,7 @@
 import { FlexBox } from "components/FlexBox";
 import styled, { css } from "styled-components";
 
-export const StepCollapsableContent = styled(FlexBox)`
+export const StageCollapsableContent = styled(FlexBox)`
   ${({ theme }) => css`
     ul {
       display: flex;

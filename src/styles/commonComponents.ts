@@ -1,17 +1,18 @@
-import styled, { css } from 'styled-components'
-import { FlexBox } from 'components/FlexBox'
+import styled, { css } from "styled-components";
+import { FlexBox } from "components/FlexBox";
 
 export const MarginContainer = styled.div`
   ${({ theme }) => css`
     width: ${theme.sizes.pageWidth};
     margin: 0 auto;
+    /* border: 1px solid red; */
   `}
-`
+`;
 export const FullContainer = styled.div`
   ${({ theme }) => css`
     width: 100%;
   `}
-`
+`;
 export const CarouselButton = styled.div<{ isActive: boolean }>`
   ${({ theme, isActive }) => css`
     width: 1rem;
@@ -27,4 +28,4 @@ export const CarouselButton = styled.div<{ isActive: boolean }>`
         ${isActive ? theme.color.brand.orange : theme.color.base[400]};
     }
   `}
-`
+`;

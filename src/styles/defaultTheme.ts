@@ -7,7 +7,7 @@ export const defaultTheme = {
       orange: "#FF8F69",
     },
     secondary: {
-      tealDark: "#FAFAFA",
+      tealDark: "#00BDAB",
       lightTeal: "#00BDAB",
       lighterYellow: "#FFEBC9",
       yellow: "#FFD945",
