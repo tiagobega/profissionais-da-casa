@@ -1,4 +1,5 @@
 import { FlexBox } from "components/FlexBox";
+import { Modal } from "components/Modal";
 import styled, { css } from "styled-components";
 
 export const Form = styled.form`
@@ -25,5 +26,11 @@ export const StarContainer = styled(FlexBox)`
     * {
       cursor: pointer;
     }
+  `}
+`;
+
+export const ConfirmModal = styled(Modal)`
+  ${({ theme }) => css`
+    background-color: red;
   `}
 `;

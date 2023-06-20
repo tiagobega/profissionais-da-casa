@@ -1,36 +1,38 @@
-import { FlexBox } from 'components/FlexBox'
-import { ReactNode, useEffect, useRef } from 'react'
-import { CloseButton, Container } from './styles'
-import { CaretLeft, X } from '@phosphor-icons/react'
-import { Button } from 'components/Button'
+import { FlexBox } from "components/FlexBox";
+import { ReactNode, useEffect, useRef } from "react";
+import { CloseButton, Container } from "./styles";
+import { CaretLeft, X } from "@phosphor-icons/react";
+import { Button } from "components/Button";
 
 export interface ModalProps {
-  children: ReactNode
-  isOpened: boolean
-  onProceed?: () => void
-  onClose: () => void
-  small?: boolean
+  children: ReactNode;
+  isOpened: boolean;
+  onProceed?: () => void;
+  onClose: () => void;
+  small?: boolean;
+  bg?: string;
 }
 export const Modal: React.FC<ModalProps> = ({
   children,
   isOpened,
   onProceed,
+  bg,
   onClose,
   small = false,
 }) => {
-  const ref: any = useRef(null)
+  const ref: any = useRef(null);
 
   useEffect(() => {
     if (isOpened) {
-      ref.current?.showModal()
-      document.body.classList.add('modal-open')
+      ref.current?.showModal();
+      document.body.classList.add("modal-open");
     } else {
-      ref.current?.close()
-      document.body.classList.remove('modal-open')
+      ref.current?.close();
+      document.body.classList.remove("modal-open");
     }
-  }, [isOpened])
+  }, [isOpened]);
 
-  const preventAutoClose = (e: React.MouseEvent) => e.stopPropagation()
+  const preventAutoClose = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <Container
@@ -38,6 +40,7 @@ export const Modal: React.FC<ModalProps> = ({
       onCancel={() => onClose()}
       onClick={() => onClose()}
       small={small}
+      bg={bg}
     >
       <div onClick={(event: React.MouseEvent) => preventAutoClose(event)}>
         <FlexBox direction="column" py={3} px={6} gap={1} full>
@@ -51,5 +54,5 @@ export const Modal: React.FC<ModalProps> = ({
         </FlexBox>
       </div>
     </Container>
-  )
-}
+  );
+};

@@ -6,8 +6,9 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import { sendReviewSchema } from "./validation";
 import { Star } from "@phosphor-icons/react";
-import { Form, StarContainer } from "./style";
+import { ConfirmModal, Form, StarContainer } from "./style";
 import { useEffect, useState } from "react";
+import { Modal } from "components/Modal";
 
 export type FormEditProfileData = Zod.infer<typeof sendReviewSchema>;
 
@@ -24,6 +25,8 @@ export const FormSendReview = () => {
     mode: "onSubmit",
   });
 
+  const [modalConfirm, setModalConfirm] = useState(false);
+
   useEffect(() => {
     setValue("rating", 0);
   }, []);
@@ -32,8 +35,6 @@ export const FormSendReview = () => {
 
   const onSubmit = (data: FormEditProfileData) => {
     console.log(data);
-
-    window.alert(JSON.stringify(data));
   };
   const currentRating = +watch("rating");
   const setRating = (value: number) => {
@@ -45,6 +46,7 @@ export const FormSendReview = () => {
     <Form
       onSubmit={handleSubmit((e) => {
         console.log(e);
+        setModalConfirm(true);
         return onSubmit(e);
       })}
     >
@@ -82,6 +84,22 @@ export const FormSendReview = () => {
           Enviar
         </Button>
       </FlexBox>
+      <ConfirmModal
+        isOpened={modalConfirm}
+        onClose={() => setModalConfirm(false)}
+        bg={color.brand.yellowLight}
+      >
+        <FlexBox direction="column" my={3} centralized gap={3}>
+          <h2>Agradecemos pela avaliação!</h2>
+          <Button
+            type="button"
+            background="white"
+            onClick={() => setModalConfirm(false)}
+          >
+            Sair
+          </Button>
+        </FlexBox>
+      </ConfirmModal>
     </Form>
   );
 };

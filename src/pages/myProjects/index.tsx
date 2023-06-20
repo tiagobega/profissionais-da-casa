@@ -12,7 +12,7 @@ import { Content, ListContainer } from "./styles";
 
 export interface MyProjectsPageProps {}
 
-const projectList: ProjectType[] = [
+export const projectList: ProjectType[] = [
   {
     name: "Reforma apartamento Cursino",
     customer: "Antônio Carlos dos Santos",
