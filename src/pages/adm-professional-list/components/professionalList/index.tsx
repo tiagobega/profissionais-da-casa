@@ -27,13 +27,14 @@ export type ProfessionalType = {
     yearOfConclusion: string;
   };
   social: {
-    linkedin?: URL;
-    instagram?: URL;
-    pinterest?: URL;
-    facebook?: URL;
-    other?: URL;
+    linkedin?: string;
+    instagram?: string;
+    pinterest?: string;
+    facebook?: string;
+    other?: string;
   };
   photo?: string;
+  files?: { name: string; url: string }[];
 };
 
 export type ProfessionalPersonalInfo = {
@@ -43,7 +44,7 @@ export type ProfessionalPersonalInfo = {
   phone: string;
   email: string;
   birthDate: string;
-  status: "approved" | "waiting" | "refused";
+  status: "approved" | "waiting";
   rating: number;
 };
 
@@ -105,7 +106,7 @@ const professionalListPersonal: ProfessionalPersonalInfo[] = [
     phone: "(11)98765-4321",
     email: "bernadetesalinski@bol.com",
     cpf: "12345678910",
-    status: "refused",
+    status: "waiting",
     rating: 0,
   },
   {

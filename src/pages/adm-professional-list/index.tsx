@@ -5,6 +5,8 @@ import { useState } from "react";
 import { MarginContainer } from "styles/commonComponents";
 import { ProfessionalList } from "./components/professionalList";
 import { Header } from "./styles";
+import { useNavigate } from "react-router-dom";
+import { CaretLeft } from "@phosphor-icons/react";
 
 export interface AdmProfessionalListProps {}
 
@@ -12,9 +14,15 @@ export type ScreenList = "professionals" | "validation";
 
 export const AdmProfessionalList: React.FC<AdmProfessionalListProps> = () => {
   const [screen, setScreen] = useState<ScreenList>("professionals");
+  const navigate = useNavigate();
 
   return (
     <MarginContainer>
+      <FlexBox mt={2}>
+        <Button variant="text" onClick={() => navigate(-1)}>
+          <CaretLeft weight="fill" /> Voltar
+        </Button>
+      </FlexBox>
       <Header>
         <h2>Profissionais da Casa</h2>
         <FlexBox direction="column">
