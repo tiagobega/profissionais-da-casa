@@ -5,4 +5,5 @@ export interface InputProps extends React.ComponentProps<"input"> {
   type?: "text" | "number" | "date" | "email";
   error?: FieldError;
   disabled?: boolean;
+  width?: number;
 }

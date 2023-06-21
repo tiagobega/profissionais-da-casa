@@ -18,10 +18,14 @@ import {
 import { UserProjects } from "./components/userProjects";
 import { projectList } from "pages/myProjects";
 import { Button } from "components/Button";
+import { Modal } from "components/Modal";
+import { useState } from "react";
+import { FormEditUserProfile } from "components/Forms/FormEditUserProfile";
 
 export interface CustomerProfileProps {}
 
 export const UserProfile: React.FC<CustomerProfileProps> = () => {
+  const [modalEdit, setModalEdit] = useState(false);
   return (
     <>
       <HeaderWrapper>
@@ -59,7 +63,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
                   (11)98765-4321
                 </FlexBox>
               </div>
-              <Button background="white" onClick={() => console.log("edit")}>
+              <Button background="white" onClick={() => setModalEdit(true)}>
                 Editar
               </Button>
             </InfoColumn>
@@ -88,6 +92,12 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
           <UserProjects list={projectList} />
         </ProjectContainer>
       </MarginContainer>
+      <Modal isOpened={modalEdit} onClose={() => setModalEdit(false)} small>
+        <FlexBox direction="column" centralized gap={3}>
+          <h2>Editar perfil</h2>
+          <FormEditUserProfile />
+        </FlexBox>
+      </Modal>
     </>
   );
 };

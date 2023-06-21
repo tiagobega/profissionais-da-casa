@@ -12,6 +12,7 @@ import { MyProjectsPage } from "pages/myProjects";
 import { ProjectPage } from "pages/project";
 import { NewReviewPage } from "pages/newReview";
 import { UserProfile } from "pages/userProfile";
+import { AdmProfessionalList } from "pages/adm-professional-list";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -83,7 +84,7 @@ const Router = () => (
         />
         <Route
           path={"/admin/professionals-management"}
-          element={<PublicRoute element={<HomePage />} />}
+          element={<PublicRoute element={<AdmProfessionalList />} />}
         />
         <Route
           path={"/admin/professionals-management/:id"}

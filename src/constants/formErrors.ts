@@ -5,4 +5,5 @@ export const formErrors = {
   ERROR_NAME: "Escreva seu nome",
   ERROR_FOOD: "Selecione uma comida",
   ERROR_FILE: "Selecione uma imagem",
+  ERROR_INVALID: "Formato inválido",
 };

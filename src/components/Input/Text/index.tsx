@@ -6,11 +6,11 @@ import { InputContainer } from "./styles";
 
 export const TextInput = forwardRef(
   (
-    { type = "text", label, error, ...rest }: InputProps,
+    { type = "text", label, error, width, ...rest }: InputProps,
     forwardedRef: ForwardedRef<HTMLInputElement>
   ) => {
     return (
-      <InputContainer>
+      <InputContainer width={width}>
         {label && <label htmlFor={rest.name}>{label}</label>}
         <input type={type} id={rest.name} {...rest} ref={forwardedRef} />
         {error && (
