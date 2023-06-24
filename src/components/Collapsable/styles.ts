@@ -24,7 +24,7 @@ export const TitleContainer = styled(FlexBox)<{
       cursor: pointer;
       transition: ${theme.transition.short};
       &.toggle {
-        rotate: ${isOpen ? "0" : "90deg"};
+        rotate: ${!isOpen ? "0" : "90deg"};
       }
       &:hover {
         transform: scale(1.25);
