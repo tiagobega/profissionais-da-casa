@@ -14,6 +14,9 @@ import { NewReviewPage } from "pages/newReview";
 import { UserProfile } from "pages/userProfile";
 import { AdmProfessionalList } from "pages/adm-professional-list";
 import { AdmProfessionalDetails } from "pages/adm-professional-profile";
+import { AdmRatingList } from "pages/adm-rating-list";
+import { AdmRatingDetails } from "pages/adm-rating-list/RatingDetails";
+import { LoginPage } from "pages/login";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -24,9 +27,11 @@ const Router = () => (
         path={"/terms-conditions"}
         element={<PublicRoute element={<TermsPage />} />}
       />
+      <Route path="/login" element={<PublicRoute element={<LoginPage />} />} />
       <Route path="/" element={<Layout />}>
         {/* //OPEN ROUTES */}
         <Route path="/" element={<PublicRoute element={<HomePage />} />} />
+
         <Route
           path={"/register/customer"}
           element={<PublicRoute element={<HomePage />} />}
@@ -77,11 +82,11 @@ const Router = () => (
         />
         <Route
           path={"/admin/reviews"}
-          element={<PublicRoute element={<HomePage />} />}
+          element={<PublicRoute element={<AdmRatingList />} />}
         />
         <Route
           path={"/admin/review/:id"}
-          element={<PublicRoute element={<HomePage />} />}
+          element={<PublicRoute element={<AdmRatingDetails />} />}
         />
         <Route
           path={"/admin/professionals-management"}

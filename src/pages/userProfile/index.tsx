@@ -9,12 +9,7 @@ import {
   PhotoColumn,
   ProjectContainer,
 } from "./styles";
-import {
-  Envelope,
-  MapPin,
-  PhoneCall,
-  PhoneIncoming,
-} from "@phosphor-icons/react";
+import { Envelope, MapPin, PhoneCall } from "@phosphor-icons/react";
 import { UserProjects } from "./components/userProjects";
 import { projectList } from "pages/myProjects";
 import { Button } from "components/Button";
