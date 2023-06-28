@@ -1,12 +1,13 @@
-import { FlexBox } from 'components/FlexBox'
-import type { HeaderProps } from './types'
-import logo from 'assets/images/logo.png'
-import { HeaderContainer, LoginContainer } from './styles'
-import { Button } from 'components/Button'
-import { useTheme } from 'styled-components'
-import { Link } from 'react-router-dom'
+import { FlexBox } from "components/FlexBox";
+import type { HeaderProps } from "./types";
+import logo from "assets/images/logo.png";
+import { HeaderContainer, LoginContainer } from "./styles";
+import { Button } from "components/Button";
+import { useTheme } from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
       <FlexBox full justifyContent="space-between" alignItems="center" px={6}>
@@ -35,10 +36,7 @@ const Header = () => {
         </FlexBox>
       </FlexBox>
       <LoginContainer role="customer">
-        <Button
-          variant="primary"
-          href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-        >
+        <Button variant="primary" onClick={() => navigate("/login")}>
           <svg
             width="16"
             height="21"
@@ -57,6 +55,6 @@ const Header = () => {
         </Button>
       </LoginContainer>
     </HeaderContainer>
-  )
-}
-export default Header
+  );
+};
+export default Header;

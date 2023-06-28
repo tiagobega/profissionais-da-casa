@@ -1,12 +1,14 @@
-import { Geometry } from 'components/Geometry'
-import type { HomePageProps } from './types'
-import { useTheme } from 'styled-components'
-import { FlexBox } from 'components/FlexBox'
-import { Button } from 'components/Button'
-import { HomeContainer, InformationContainer } from './styles'
+import { Geometry } from "components/Geometry";
+import type { HomePageProps } from "./types";
+import { useTheme } from "styled-components";
+import { FlexBox } from "components/FlexBox";
+import { Button } from "components/Button";
+import { HomeContainer, InformationContainer } from "./styles";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const { color } = useTheme()
+  const { color } = useTheme();
+  const navigate = useNavigate();
 
   return (
     <HomeContainer>
@@ -31,7 +33,11 @@ const HomePage = () => {
           profissional pelo Profissionais da Casa. Você também pode conferir
           seus pedidos na aba “Meu Perfil”
         </p>
-        <Button variant="primary" background="white">
+        <Button
+          variant="primary"
+          background="white"
+          onClick={() => navigate("/catalog")}
+        >
           Profissionais da Casa
         </Button>
       </InformationContainer>
@@ -40,7 +46,7 @@ const HomePage = () => {
         <Geometry color={color.base[200]} width={170} triangle angle={270} />
       </FlexBox>
     </HomeContainer>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

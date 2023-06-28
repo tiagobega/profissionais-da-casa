@@ -7,3 +7,7 @@ export const formErrors = {
   ERROR_FILE: "Selecione uma imagem",
   ERROR_INVALID: "Formato inválido",
 };
+
+export const minChars = (number: number) => {
+  return `Pelo menos ${number} caracteres`;
+};

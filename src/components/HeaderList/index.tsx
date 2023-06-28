@@ -1,20 +1,20 @@
-import { FlexBox } from 'components/FlexBox'
+import { FlexBox } from "components/FlexBox";
 import {
   ButtonContainer,
   HeaderContainer,
   InviteContainer,
   RightContainer,
   TextContainer,
-} from './styles'
-import { Button } from 'components/Button'
-import { Geometry } from 'components/Geometry'
-import { useTheme } from 'styled-components'
-import { Router, useNavigate } from 'react-router-dom'
+} from "./styles";
+import { Button } from "components/Button";
+import { Geometry } from "components/Geometry";
+import { useTheme } from "styled-components";
+import { Router, useNavigate } from "react-router-dom";
 
 export interface HeaderListProps {}
 export const HeaderList: React.FC<HeaderListProps> = () => {
-  const navigate = useNavigate()
-  const { color } = useTheme()
+  const navigate = useNavigate();
+  const { color } = useTheme();
   return (
     <HeaderContainer>
       <TextContainer direction="column" justifyContent="space-between">
@@ -49,7 +49,7 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
             <ButtonContainer centralized>
               <Button
                 background="white"
-                onClick={() => navigate('/register/professional')}
+                onClick={() => navigate("/register/professional")}
               >
                 Seja um Profissional da Casa
               </Button>
@@ -70,5 +70,5 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
         </FlexBox>
       </RightContainer>
     </HeaderContainer>
-  )
-}
+  );
+};
