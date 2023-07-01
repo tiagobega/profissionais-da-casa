@@ -40,10 +40,6 @@ const Router = () => (
           path={"/register/professional"}
           element={<PublicRoute element={<HomePage />} />}
         />
-        <Route
-          path={"/register/professional"}
-          element={<PublicRoute element={<HomePage />} />}
-        />
         <Route path={"/faq"} element={<PublicRoute element={<FAQPage />} />} />
 
         <Route

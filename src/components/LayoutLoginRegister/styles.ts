@@ -4,7 +4,7 @@ import { FullContainer } from "styles/commonComponents";
 export const BlueField = styled.div`
   ${({ theme }) => css`
     position: relative;
-    width: 668px;
+    width: 45vw;
     height: 767px;
     background-color: ${theme.color.secondary.blue};
     padding: 120px 110px;
@@ -42,6 +42,9 @@ export const BlueField = styled.div`
     h2 {
       color: white;
       font-size: 40px;
+      & @media screen and (max-width:1200px) {
+        font-size: 32px;
+      }
     }
   `}
 `;

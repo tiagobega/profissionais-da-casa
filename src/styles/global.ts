@@ -81,13 +81,13 @@ export const GlobalStyle = createGlobalStyle`
       border: 2px solid ${theme.color.base[300]};
       font-family: "Lexend", sans-serif;
       width: 100%;
-      min-height: 47px;
       resize: none;
       &[type="checkbox"],
       &[type="radio"] {
         appearance: none;
         width: 26px;
         height: 26px;
+        min-height: 26px;
         cursor: pointer;
         background-clip: content-box;
         padding: 0;
