@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { FullContainer, MarginContainer } from "styles/commonComponents";
 import { Content, ListContainer } from "./styles";
+import { Modal } from "components/Modal";
+import { FormCreateProject } from "components/Forms/FormCreateProject";
 
 export interface MyProjectsPageProps {}
 
@@ -179,6 +181,9 @@ export const MyProjectsPage: React.FC<MyProjectsPageProps> = () => {
           </FlexBox>
         </Content>
       </ListContainer>
+      <Modal isOpened={isOpen} onClose={() => setIsOpen(false)}>
+        <FormCreateProject />
+      </Modal>
     </>
   );
 };

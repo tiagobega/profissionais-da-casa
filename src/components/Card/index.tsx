@@ -1,29 +1,31 @@
-import { CaretRight, Star } from '@phosphor-icons/react'
-import { Button } from 'components/Button'
-import { FlexBox } from 'components/FlexBox'
-import { useTheme } from 'styled-components'
+import { CaretRight, Star } from "@phosphor-icons/react";
+import { Button } from "components/Button";
+import { FlexBox } from "components/FlexBox";
+import { useTheme } from "styled-components";
 import {
   ButtonContainer,
   CardContainer,
   InformationContainer,
   PhotoContainer,
   ProfileContainer,
-} from './styles'
-import profilePlaceholder from 'assets/images/profile-placeholder.jpeg'
-import photoPlaceholder from 'assets/images/photo-placeholder.jpeg'
-import { Tag } from 'components/Tag'
+} from "./styles";
+import profilePlaceholder from "assets/images/profile-placeholder.jpeg";
+import photoPlaceholder from "assets/images/photo-placeholder.jpeg";
+import { Tag } from "components/Tag";
+import { useNavigate } from "react-router-dom";
 
 export interface CardProfileProps {}
 export const CardProfile: React.FC<CardProfileProps> = () => {
-  const { color } = useTheme()
+  const { color } = useTheme();
+  const navigate = useNavigate();
 
   const profile = {
     id: 1,
-    name: 'Andréa Albuquerque de OliveiraaaaAAAAAAAAA',
-    profession: 'Arquiteto(a)',
+    name: "Andréa Albuquerque de OliveiraaaaAAAAAAAAA",
+    profession: "Arquiteto(a)",
     rating: 4.5,
-    tags: ['Interiores', 'Reformas', 'Ambientes pequenos', 'Acessibilidade'],
-  }
+    tags: ["Interiores", "Reformas", "Ambientes pequenos", "Acessibilidade"],
+  };
 
   return (
     <CardContainer>
@@ -41,7 +43,7 @@ export const CardProfile: React.FC<CardProfileProps> = () => {
       >
         <div>
           <p>{profile.profession}</p>
-          <h3 className={`${profile.name.length > 22 ? 'small' : ''}`}>
+          <h3 className={`${profile.name.length > 22 ? "small" : ""}`}>
             {profile.name}
           </h3>
         </div>
@@ -59,12 +61,12 @@ export const CardProfile: React.FC<CardProfileProps> = () => {
           <Button
             variant="text"
             color={color.secondary.lightTeal}
-            onClick={() => window.alert('open profile')}
+            onClick={() => navigate("/professional/1")}
           >
             Ver mais <CaretRight />
           </Button>
         </ButtonContainer>
       </InformationContainer>
     </CardContainer>
-  )
-}
+  );
+};
