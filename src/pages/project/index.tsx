@@ -10,6 +10,7 @@ import { Modal } from "components/Modal";
 import { FormAddDelivery } from "components/Forms/FormAddDelivery";
 import { FormAddStage } from "components/Forms/FormAddStage";
 import Input from "components/Input";
+import { useNavigate } from "react-router-dom";
 
 export interface ProjectPageProps {
   status: "not-started" | "ongoing" | "complete";
@@ -60,6 +61,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
   const [modalEntrega, setModalEntrega] = useState(false);
   const [modalStage, setModalStage] = useState(false);
   const [currentStage, setCurrentStage] = useState<StageType | null>(null);
+  const navigate = useNavigate();
 
   const addDeliveryToStage = (index: number) => {
     const updatedProject: ProjectManagementType = project;
@@ -119,7 +121,9 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
               Voltar
             </Button>
             <h2>{title()}</h2>
-            <Button variant="outline">Criar Projeto</Button>
+            <Button variant="outline" onClick={() => navigate("/my-projects")}>
+              Criar Projeto
+            </Button>
           </FlexBox>
         </header>
         <FlexBox full gap={4} pb={3}>
@@ -163,10 +167,6 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
                             Entrega #{index + 1}:{delivery.date.getUTCDate()}
                           </p>
                         )}
-
-                        <Button variant="text" small>
-                          <Pencil weight="fill" />
-                        </Button>
                       </FlexBox>
                     </li>
                   ))}
@@ -206,7 +206,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
           )}
         </FlexBox>
       </MarginContainer>
-      {status == "not-started" && (
+      {(status == "not-started" || status == "ongoing") && (
         <Modal isOpened={modalEntrega} onClose={handleCloseModal} small>
           <h2>Adicionar Entrega*</h2>
           <FlexBox
