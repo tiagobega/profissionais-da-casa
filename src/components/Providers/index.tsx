@@ -1,14 +1,15 @@
-import React from 'react'
+import React from "react";
 
-import type { ProvidersProps, StyledProviderProps } from './types'
+import type { ProvidersProps, StyledProviderProps } from "./types";
 
-import { QueryClientProvider } from 'react-query'
-import { ThemeProvider } from 'styled-components'
-import { GlobalStyle } from 'styles/global'
-import { defaultTheme } from 'styles/defaultTheme'
-import { UserContextProvider } from 'contexts/User'
-import client from 'config/queryClient'
-import { TooltipProvider } from '@radix-ui/react-tooltip'
+import { QueryClientProvider } from "react-query";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyle } from "styles/global";
+import { defaultTheme } from "styles/defaultTheme";
+import { UserContextProvider } from "contexts/User";
+import client from "config/queryClient";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { ToastContextProvider } from "contexts/Toast";
 
 const StyledProvider = ({ children }: StyledProviderProps) => {
   return (
@@ -16,19 +17,21 @@ const StyledProvider = ({ children }: StyledProviderProps) => {
       <GlobalStyle />
       {children}
     </ThemeProvider>
-  )
-}
+  );
+};
 
 const Providers = ({ children }: ProvidersProps) => {
   return (
     <TooltipProvider>
-      <QueryClientProvider client={client}>
-        <StyledProvider>
-          <UserContextProvider>{children}</UserContextProvider>
-        </StyledProvider>
-      </QueryClientProvider>
+      <ToastContextProvider>
+        <QueryClientProvider client={client}>
+          <StyledProvider>
+            <UserContextProvider>{children}</UserContextProvider>
+          </StyledProvider>
+        </QueryClientProvider>
+      </ToastContextProvider>
     </TooltipProvider>
-  )
-}
+  );
+};
 
-export default Providers
+export default Providers;

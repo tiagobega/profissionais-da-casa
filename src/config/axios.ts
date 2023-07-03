@@ -1,18 +1,25 @@
 import axios from "axios";
 
-// import Session from "../utils/Session/Session";
+export const API_POST_ROUTES = {} as const;
+
+export const API_ROUTES = {
+  POST: {
+    AUTH: "/auth/local",
+    AUTH_REGISTER: "/auth/local/register",
+    AUTH_FORGOT_PASSWORD: "/auth/forgot-password",
+    AUTH_RESET_PASSWORD: "/auth/reset-password",
+    AUTH_SEND_EMAIL_CONFIRMATION: "/auth/send-email-confirmation",
+  },
+  GET: {},
+  PUT: {},
+  DELETE: {},
+} as const;
 
 export const api = axios.create({
-  baseURL: "",
+  baseURL: "https://api.cadacasa.com.br/api",
 });
 
 api.interceptors.request.use((config) => {
-  // const authSession: any = Session.Get("auth");
-
-  // if (authSession.accessToken) {
-  //   config.headers!.Authorization = `Bearer ${authSession.accessToken}`;
-  // }
-
   return config;
 });
 

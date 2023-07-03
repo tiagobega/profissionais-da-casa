@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import { loginSchema } from "./validation";
 import { Form } from "./style";
+import { useUser } from "contexts/User";
 
 export type FormData = Zod.infer<typeof loginSchema>;
 
@@ -23,10 +24,10 @@ export const FormLogin = () => {
   });
   const { color } = useTheme();
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const { login } = useUser();
 
-    window.alert(JSON.stringify(data));
+  const onSubmit = (data: FormData) => {
+    login(data);
   };
 
   return (
