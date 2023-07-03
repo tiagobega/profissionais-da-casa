@@ -1,0 +1,316 @@
+@mixin media($media) {
+  @media only screen and #{$media} {
+    @content;
+  }
+}
+
+@function px($value) {
+  @return #{($value)}px;
+}
+
+@function crossm($size, $base, $transformPercentage: false) {
+  $calc: calc(($size * 100) / $base);
+
+  @if $transformPercentage {
+    @return percentage($calc);
+  } @else {
+    @return $calc;
+  }
+}
+
+@mixin threadmillAnimation($GAP_SIZE) {
+  animation: threadmill;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-play-state: paused;
+
+  .repeater {
+    left: calc(100% + px($GAP_SIZE));
+  }
+
+  @keyframes threadmill {
+    0% {
+      transform: none;
+    }
+    100% {
+      transform: translateX(calc(-100% + px(-$GAP_SIZE)));
+    }
+  }
+
+  &:hover {
+    animation-play-state: running;
+  }
+}
+
+.ToastWrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column-reverse;
+  pointer-events: none;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+
+  &__List {
+    $BOTTOM: 30;
+    display: flex;
+    align-items: center;
+    margin-bottom: px($BOTTOM);
+    flex-direction: column-reverse;
+    list-style: none;
+  }
+}
+
+.ToastItem {
+  $TOAST_SMALL_HEIGHT: 56;
+  $TOAST_BIG_HEIGHT: 80;
+  $MARGIN_TOP: 28;
+
+  display: flex;
+  opacity: 0;
+  height: 0;
+  transition: all 400ms, opacity 300ms;
+  pointer-events: all;
+  transition-timing-function: cubic-bezier(0.3, -0.33, 0.5, 0.89);
+  cursor: pointer;
+  margin-top: 0;
+
+  &.animate {
+    transition-timing-function: cubic-bezier(0.31, 0.85, 0.5, 1.19);
+    margin-top: px($MARGIN_TOP);
+    opacity: 1;
+
+    &.size {
+      &-small {
+        height: px($TOAST_SMALL_HEIGHT);
+      }
+      &-big {
+        height: px($TOAST_BIG_HEIGHT);
+      }
+    }
+  }
+
+  &__Content {
+    //general
+    $CONTENT_MAX_WIDTH: 600;
+    $CONTENT_GAP: 16;
+
+    //padding
+    $CONTENT_SMALL_PADDING_Y: 10;
+    $CONTENT_SMALL_PADDING_X: 16;
+    $CONTENT_BIG_PADDING_Y: 16;
+    $CONTENT_BIG_PADDING_X: 24;
+
+    //title
+    $CONTENT_SMALL_TITLE_FONT_SIZE: 14;
+    $CONTENT_SMALL_TITLE_LINE_HEIGHT: 16;
+    $CONTENT_SMALL_TITLE_MARGIN_BOTTOM: 4;
+    $CONTENT_BIG_TITLE_FONT_SIZE: 22;
+    $CONTENT_BIG_TITLE_LINE_HEIGHT: 16;
+    $CONTENT_BIG_TITLE_MARGIN_BOTTOM: 16;
+
+    //message
+    $CONTENT_SMALL_MESSAGE_FONT_SIZE: 14;
+    $CONTENT_SMALL_MESSAGE_LINE_HEIGHT: 16;
+    $CONTENT_BIG_MESSAGE_FONT_SIZE: 18;
+    $CONTENT_BIG_MESSAGE_LINE_HEIGHT: 16;
+
+    max-width: px($CONTENT_MAX_WIDTH);
+    gap: px($CONTENT_GAP);
+
+    position: relative;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0px 23px 54px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 2px;
+
+    &__Icon {
+      $ICON_SMALL_SIZE: 34;
+      $ICON_BIG_SIZE: 48;
+
+      display: flex;
+      transform: scale(0);
+      transition: all 400ms;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+
+      &.size {
+        &-small {
+          width: px($ICON_SMALL_SIZE);
+          min-width: px($ICON_SMALL_SIZE);
+          height: px($ICON_SMALL_SIZE);
+        }
+        &-big {
+          width: px($ICON_BIG_SIZE);
+          min-width: px($ICON_BIG_SIZE);
+          height: px($ICON_BIG_SIZE);
+        }
+      }
+
+      &.type {
+        &-alert {
+          background-color: rgba(155, 78, 247);
+        }
+
+        &-error {
+          background-color: rgba(255, 71, 71);
+        }
+
+        &-info {
+          background-color: rgba(242, 129, 20);
+        }
+
+        &-success {
+          background-color: rgba(95, 255, 111);
+        }
+      }
+
+      img {
+        filter: invert(1);
+        // fill: $white;
+        display: flex;
+      }
+
+      &.animate {
+        transform: scale(1);
+      }
+    }
+
+    &__Message {
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    &__Destroy {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+      background: #ffffff;
+      left: 0;
+      animation: destroy;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+
+    h3 {
+      color: #000000;
+    }
+
+    span {
+      color: #000000;
+      position: relative;
+      pointer-events: all;
+      white-space: nowrap;
+      width: max-content;
+      min-width: 100%;
+      cursor: pointer;
+
+      .repeater {
+        position: absolute;
+
+        &:hover {
+          transform: none;
+        }
+      }
+    }
+
+    &.size {
+      &-small {
+        padding: px($CONTENT_SMALL_PADDING_Y) px($CONTENT_SMALL_PADDING_X);
+
+        h3 {
+          line-height: crossm(
+            $CONTENT_SMALL_TITLE_LINE_HEIGHT,
+            $CONTENT_SMALL_TITLE_FONT_SIZE,
+            true
+          );
+          margin-bottom: px($CONTENT_SMALL_TITLE_MARGIN_BOTTOM);
+          font-size: px($CONTENT_SMALL_TITLE_FONT_SIZE);
+        }
+
+        span {
+          line-height: crossm(
+            $CONTENT_SMALL_MESSAGE_LINE_HEIGHT,
+            $CONTENT_SMALL_MESSAGE_FONT_SIZE,
+            true
+          );
+          font-size: px($CONTENT_SMALL_MESSAGE_FONT_SIZE);
+
+          .repeater {
+            left: calc(100% + px($CONTENT_BIG_PADDING_X));
+          }
+
+          @include threadmillAnimation($CONTENT_SMALL_PADDING_X);
+        }
+      }
+
+      &-big {
+        padding: px($CONTENT_BIG_PADDING_Y) px($CONTENT_BIG_PADDING_X);
+
+        h3 {
+          line-height: crossm(
+            $CONTENT_BIG_TITLE_LINE_HEIGHT,
+            $CONTENT_BIG_TITLE_FONT_SIZE,
+            true
+          );
+          margin-bottom: px($CONTENT_BIG_TITLE_MARGIN_BOTTOM);
+          font-size: px($CONTENT_BIG_TITLE_FONT_SIZE);
+        }
+
+        span {
+          line-height: crossm(
+            $CONTENT_BIG_MESSAGE_LINE_HEIGHT,
+            $CONTENT_BIG_MESSAGE_FONT_SIZE,
+            true
+          );
+          font-size: px($CONTENT_BIG_MESSAGE_FONT_SIZE);
+
+          .repeater {
+            left: calc(100% + px($CONTENT_BIG_PADDING_X));
+          }
+
+          @include threadmillAnimation($CONTENT_BIG_PADDING_X);
+        }
+      }
+    }
+
+    &.type {
+      &-info {
+        border-color: rgba(155, 78, 247, 0.5);
+      }
+
+      &-error {
+        border-color: rgba(255, 71, 71, 0.5);
+      }
+
+      &-alert {
+        border-color: rgba(242, 129, 20, 0.5);
+      }
+
+      &-success {
+        border-color: rgba(95, 255, 111, 0.5);
+      }
+    }
+  }
+}
+
+@keyframes destroy {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}

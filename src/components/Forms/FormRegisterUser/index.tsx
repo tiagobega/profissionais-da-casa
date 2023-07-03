@@ -6,10 +6,11 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import { registerUserSchema } from "./validation";
 import { Form, StyledTooltip } from "./style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tooltip } from "components/Tooltip";
 import { Question } from "@phosphor-icons/react";
 import { FC } from "react";
+import { useUser } from "contexts/User";
 
 export type FormData = Zod.infer<typeof registerUserSchema>;
 
@@ -22,6 +23,8 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
   toConfirm,
   showTerms,
 }) => {
+  const { register: userRegister } = useUser();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -35,9 +38,19 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
   const terms = watch("terms");
   const name = watch("name");
 
-  const onSubmit = (data: FormData) => {
-    window.alert(JSON.stringify(data));
-    toConfirm();
+  const onSubmit = async (data: FormData) => {
+    userRegister(
+      {
+        zipCode: data.cep,
+        email: data.email,
+        name: data.name,
+        password: data.password,
+        phone: data.phone,
+        CPF: "",
+        RG: "",
+      },
+      toConfirm
+    );
   };
 
   return (
