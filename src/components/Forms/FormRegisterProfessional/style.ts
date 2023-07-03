@@ -4,6 +4,17 @@ import { FullContainer } from "styles/commonComponents";
 
 export const Form = styled.form`
   ${({ theme }) => css`
+    .fieldsetDivider {
+      padding-block: 2rem;
+      border-bottom: 1px solid black;
+    }
+    fieldset:last-child {
+      padding-block: 2rem;
+      border-bottom: none;
+    }
+    legend {
+      font-size: 1.2rem;
+    }
     input[type="text"],
     [type="email"],
     [type="password"] {

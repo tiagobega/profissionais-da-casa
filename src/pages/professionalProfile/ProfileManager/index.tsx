@@ -51,7 +51,7 @@ export const ProfileManager: React.FC<ProfileManagerProps> = () => {
         width={10}
       >
         <Plus weight="bold" size={24} />
-        Adicionar Projeto
+        Adicionar Projeto ao portifolio
       </Button>
       <Modal
         isOpened={modalOpen}

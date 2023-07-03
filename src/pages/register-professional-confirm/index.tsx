@@ -46,9 +46,9 @@ export const RegisterProfessionalConfirm = () => {
               <p>e engenheiros</p>
             </div>
           </Header>
-          <FlexBox full direction="column" gap={1}>
+          <FlexBox full direction="column" gap={1.5} mt={1}>
             <div>
-              <strong>Pronto! Seu cadastro foi enviado e será validado</strong>
+              <strong>Pronto! Seu cadastro foi enviado e será validado.</strong>
               <p>
                 Fique atento ao e-mail cadastrado, em breve entraremos em
                 contato

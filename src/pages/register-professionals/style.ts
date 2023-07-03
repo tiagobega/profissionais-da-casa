@@ -27,15 +27,15 @@ export const ContentContainer = styled(FlexBox)`
 `;
 export const LinkBackContainer = styled(FlexBox)`
   ${({ theme }) => css`
-    height: 92px;
+    height: 42px;
     padding-left: 72px;
   `}
 `;
 
 export const BodyContainer = styled(FlexBox)`
   ${({ theme }) => css`
-    height: calc(100vh - 92px);
     background-color: ${theme.color.base[200]};
     padding: 3rem;
+    min-height: calc(100vh - 42px);
   `}
 `;

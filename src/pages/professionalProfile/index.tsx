@@ -23,7 +23,7 @@ export const ProfessionalProfilePage: React.FC<
   const { color } = useTheme();
   const navigate = useNavigate();
   const id = useParams();
-  const [isOwn, setIsOwn] = useState(false);
+  const [isOwn, setIsOwn] = useState(true);
 
   const [displayProject, setDisplayProject] = useState(0);
   const [displayReview, setDisplayReview] = useState(0);
@@ -162,7 +162,7 @@ export const ProfessionalProfilePage: React.FC<
             <FlexBox direction="column" gap={1}>
               <h5>{projectList[displayProject].name}</h5>
               <p>{projectList[displayProject].description}</p>
-              <Button variant="text">
+              <Button variant="text" onClick={() => navigate("/project/1")}>
                 Ver Mais
                 <CaretRight weight="fill" />
               </Button>
