@@ -8,7 +8,7 @@ import { Modal } from "components/Modal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RightPannel } from "./styles";
-import { FormConfirmUser } from "components/Forms/FormConfirmUser";
+import { FormConfirmUser } from "components/Forms/FormResendEmail";
 
 export interface LoginPageProps {}
 

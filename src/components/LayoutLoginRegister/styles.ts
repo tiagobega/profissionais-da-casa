@@ -5,7 +5,7 @@ export const BlueField = styled.div`
   ${({ theme }) => css`
     position: relative;
     width: 45vw;
-    height: 767px;
+    height: calc(100vh - 90px);
     background-color: ${theme.color.secondary.blue};
     padding: 120px 110px;
     .shape1 {

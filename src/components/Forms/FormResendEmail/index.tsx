@@ -7,16 +7,14 @@ import { Tooltip } from "components/Tooltip";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Form, StyledTooltip } from "./style";
-import { codeSchema } from "./validation";
+import { resendSchema } from "./validation";
 import { FC } from "react";
 
-export type FormData = Zod.infer<typeof codeSchema>;
+export type FormData = Zod.infer<typeof resendSchema>;
 
-interface FormRegisterUserProps {
-  toConfirm: () => void;
-}
+interface FormRegisterUserProps {}
 
-export const FormConfirmUser: FC<FormRegisterUserProps> = ({ toConfirm }) => {
+export const FormResendEmail: FC<FormRegisterUserProps> = () => {
   const {
     handleSubmit,
     register,
@@ -25,12 +23,12 @@ export const FormConfirmUser: FC<FormRegisterUserProps> = ({ toConfirm }) => {
     getValues,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(codeSchema),
+    resolver: zodResolver(resendSchema),
     mode: "onSubmit",
   });
 
   const onSubmit = (data: FormData) => {
-    toConfirm();
+    window.alert("email resent!");
   };
 
   return (
@@ -39,24 +37,24 @@ export const FormConfirmUser: FC<FormRegisterUserProps> = ({ toConfirm }) => {
         return onSubmit(e);
       })}
     >
-      <strong>Validação por código</strong>
+      <strong>Não recebeu o e-mail?</strong>
       <p>
-        Insira o código enviado para
-        <br />o seu telefone.
+        Insira seu e-mail cadastrado
+        <br />
+        que enviaremos novamente.
       </p>
-      <FlexBox direction="column" gap={1} full mt={2} mb={1}>
+      <p>* Não se esqueça de checar o lixo eletrônico</p>
+      <FlexBox direction="column" gap={1} full mt={1} mb={1}>
         <FlexBox gap={1} alignItems="flex-end">
           <Input.Text
-            aria-label="código enviado"
-            placeholder="_____"
-            {...register("code", { required: true })}
-            error={errors.code}
+            type="email"
+            aria-label="email"
+            placeholder="Email"
+            {...register("email", { required: true })}
+            error={errors.email}
           />
         </FlexBox>
-        <Button type="button" variant="text">
-          Reenviar código
-        </Button>
-        <Button type="submit">Confirmar</Button>
+        <Button type="submit">Reenviar</Button>
       </FlexBox>
     </Form>
   );

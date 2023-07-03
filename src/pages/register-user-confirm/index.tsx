@@ -8,12 +8,11 @@ import { Modal } from "components/Modal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RightPannel } from "./styles";
-import { FormConfirmUser } from "components/Forms/FormConfirmUser";
+import { FormResendEmail } from "components/Forms/FormResendEmail";
 
 export interface LoginPageProps {}
 
 export const RegisterUserConfirm: React.FC<LoginPageProps> = () => {
-  const [isDone, setIsDone] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -26,21 +25,17 @@ export const RegisterUserConfirm: React.FC<LoginPageProps> = () => {
           />
         </div>
 
-        {!isDone ? (
-          <FormConfirmUser toConfirm={() => setIsDone(true)} />
-        ) : (
-          <FlexBox gap={1} mt={1} direction="column">
-            <div>
-              <p className="title">Conta criada com sucesso!!</p>
-              <p>
-                Agora você já pode aproveitar os
-                <br />
-                serviços da Cada Casa.
-              </p>
-            </div>
-            <Button onClick={() => navigate("/catalog")}>Vamos lá!</Button>
-          </FlexBox>
-        )}
+        <FlexBox gap={1} mt={1} direction="column">
+          <h2>Confirmação de registro</h2>
+          <div>
+            <p className="title">Enviamos um email para você!</p>
+            <p>
+              Cheque sua caixa de entrada (e o seu lixo eletrônico)
+              <br />e clique no link de confirmação do e-mail.
+            </p>
+          </div>
+        </FlexBox>
+        <FormResendEmail />
       </RightPannel>
     </LoginLayout>
   );

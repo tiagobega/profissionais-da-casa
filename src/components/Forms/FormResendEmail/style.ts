@@ -4,15 +4,13 @@ import { FullContainer } from "styles/commonComponents";
 
 export const Form = styled.form`
   ${({ theme }) => css`
-    width: 30rem;
     display: relative;
+    margin-top: 3rem;
     strong {
       font-size: 1.2rem;
     }
     input {
-      letter-spacing: 0.55rem;
-      font-size: 2rem;
-      width: 12rem;
+      width: 20rem;
     }
   `}
 `;
