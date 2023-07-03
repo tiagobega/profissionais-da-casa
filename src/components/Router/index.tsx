@@ -17,6 +17,10 @@ import { AdmProfessionalDetails } from "pages/adm-professional-profile";
 import { AdmRatingList } from "pages/adm-rating-list";
 import { AdmRatingDetails } from "pages/adm-rating-list/RatingDetails";
 import { LoginPage } from "pages/login";
+import { RegisterUser } from "pages/register-user";
+import { RegisterUserConfirm } from "pages/register-user-confirm";
+import { RegisterProfessional } from "pages/register-professionals";
+import { RegisterProfessionalConfirm } from "pages/register-professional-confirm";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -28,18 +32,26 @@ const Router = () => (
         element={<PublicRoute element={<TermsPage />} />}
       />
       <Route path="/login" element={<PublicRoute element={<LoginPage />} />} />
+      <Route
+        path={"/register/customer"}
+        element={<PublicRoute element={<RegisterUser />} />}
+      />
+      <Route
+        path={"/register/customer/confirm"}
+        element={<PublicRoute element={<RegisterUserConfirm />} />}
+      />
+      <Route
+        path={"/register/professional"}
+        element={<PublicRoute element={<RegisterProfessional />} />}
+      />
+      <Route
+        path={"/register/professional/confirm"}
+        element={<PublicRoute element={<RegisterProfessionalConfirm />} />}
+      />
       <Route path="/" element={<Layout />}>
         {/* //OPEN ROUTES */}
         <Route path="/" element={<PublicRoute element={<HomePage />} />} />
 
-        <Route
-          path={"/register/customer"}
-          element={<PublicRoute element={<HomePage />} />}
-        />
-        <Route
-          path={"/register/professional"}
-          element={<PublicRoute element={<HomePage />} />}
-        />
         <Route path={"/faq"} element={<PublicRoute element={<FAQPage />} />} />
 
         <Route

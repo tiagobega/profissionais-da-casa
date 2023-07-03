@@ -54,8 +54,6 @@ export const FormTest = () => {
     handleSubmit,
     register,
     watch,
-    control,
-    setValue,
     formState: { errors },
   } = useForm<FormTestData>({
     resolver: zodResolver(formTestSchema),
