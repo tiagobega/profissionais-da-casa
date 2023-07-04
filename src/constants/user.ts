@@ -77,3 +77,9 @@ export interface EmailReponse {
 }
 
 export type EmailError = ResponseError;
+
+//me
+
+export type MeResponse = User;
+
+export type MeError = ResponseError;

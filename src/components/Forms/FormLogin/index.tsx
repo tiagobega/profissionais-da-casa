@@ -7,6 +7,7 @@ import { useTheme } from "styled-components";
 import { loginSchema } from "./validation";
 import { Form } from "./style";
 import { useUser } from "contexts/User";
+import { useNavigate } from "react-router-dom";
 
 export type FormData = Zod.infer<typeof loginSchema>;
 
@@ -23,11 +24,12 @@ export const FormLogin = () => {
     mode: "onSubmit",
   });
   const { color } = useTheme();
+  const navigate = useNavigate();
 
   const { login } = useUser();
 
   const onSubmit = (data: FormData) => {
-    login(data);
+    login(data, () => navigate("/catalog"));
   };
 
   return (

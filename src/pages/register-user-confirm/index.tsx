@@ -9,12 +9,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RightPannel } from "./styles";
 import { FormResendEmail } from "components/Forms/FormResendEmail";
+import { useUser } from "contexts/User";
 
 export interface LoginPageProps {}
 
 export const RegisterUserConfirm: React.FC<LoginPageProps> = () => {
   const navigate = useNavigate();
-
   return (
     <LoginLayout>
       <RightPannel full pb={10} direction="column">

@@ -1,12 +1,18 @@
-import { LoginParams, RegisterParams, User } from "constants/user";
+import {
+  LoginParams,
+  RegisterParams,
+  User,
+  EmailConfirmationParams,
+} from "constants/user";
 
 export interface UserContext {
   logged: boolean;
-  login: (params: LoginParams) => void;
-  logout: () => void;
+  login: (params: LoginParams, callback: () => void) => void;
+  logout: (callback: () => void) => void;
   register: (params: RegisterParams, callback: () => void) => void;
   registeredUser?: User;
   currentUser?: User;
+  sendEmailConfirmation: (params: EmailConfirmationParams) => void;
 }
 
 export interface ContextProviderProps {

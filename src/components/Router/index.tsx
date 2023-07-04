@@ -73,7 +73,9 @@ const Router = () => (
         />
         <Route
           path={"/project-details/:id"}
-          element={<PublicRoute element={<ProjectPage status="complete" />} />}
+          element={
+            <PublicRoute element={<ProjectPage status="ongoing" />} />
+          }
         />
         <Route
           path={"/review/:id"}

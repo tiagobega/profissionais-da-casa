@@ -3,10 +3,8 @@ import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
 import { useForm } from "react-hook-form";
-import { useTheme } from "styled-components";
 import { registerUserSchema } from "./validation";
 import { Form, StyledTooltip } from "./style";
-import { Link, useNavigate } from "react-router-dom";
 import { Tooltip } from "components/Tooltip";
 import { Question } from "@phosphor-icons/react";
 import { FC } from "react";
@@ -24,7 +22,6 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
   showTerms,
 }) => {
   const { register: userRegister } = useUser();
-  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -56,7 +53,6 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
   return (
     <Form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

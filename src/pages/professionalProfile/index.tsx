@@ -23,7 +23,7 @@ export const ProfessionalProfilePage: React.FC<
   const { color } = useTheme();
   const navigate = useNavigate();
   const id = useParams();
-  const [isOwn, setIsOwn] = useState(true);
+  const [isOwn, setIsOwn] = useState(false);
 
   const [displayProject, setDisplayProject] = useState(0);
   const [displayReview, setDisplayReview] = useState(0);

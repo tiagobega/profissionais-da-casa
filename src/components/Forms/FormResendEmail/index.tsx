@@ -9,12 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { Form, StyledTooltip } from "./style";
 import { resendSchema } from "./validation";
 import { FC } from "react";
+import { useUser } from "contexts/User";
 
 export type FormData = Zod.infer<typeof resendSchema>;
 
 interface FormRegisterUserProps {}
 
 export const FormResendEmail: FC<FormRegisterUserProps> = () => {
+  const { registeredUser, sendEmailConfirmation } = useUser();
   const {
     handleSubmit,
     register,
@@ -25,10 +27,13 @@ export const FormResendEmail: FC<FormRegisterUserProps> = () => {
   } = useForm<FormData>({
     resolver: zodResolver(resendSchema),
     mode: "onSubmit",
+    defaultValues: {
+      email: registeredUser?.email,
+    },
   });
 
   const onSubmit = (data: FormData) => {
-    window.alert("email resent!");
+    sendEmailConfirmation({ email: data.email });
   };
 
   return (
