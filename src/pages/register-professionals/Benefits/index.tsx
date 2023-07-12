@@ -111,22 +111,30 @@ export const Benefits: React.FC<BenefitsProps> = ({ showForm, showTerms }) => {
           </Benefit>
         </Card>
       </FlexBox>
-      <Input.Checkbox
-        {...register("terms")}
-        error={errors.terms}
-        id="terms"
-        label={
-          <FlexBox gap={0.25}>
-            Li e aceito os{" "}
-            <Button variant="text" onClick={() => showTerms()}>
-              Termos e Condições
-            </Button>
-          </FlexBox>
-        }
-      />
-      <Button onClick={() => showForm()} disabled={!termsValue}>
-        Iniciar cadastro
-      </Button>
+
+      <p>
+        Enfatizamos que o aceite das condições dos termos de uso não excluem a
+        etapa de análise para aprovação do perfil do profissional para a
+        comunidade dos Profissionais da Casa.
+      </p>
+      <FlexBox justifyContent="space-between" full alignItems="flex-start">
+        <Input.Checkbox
+          {...register("terms")}
+          error={errors.terms}
+          id="terms"
+          label={
+            <FlexBox gap={0.25}>
+              Li e aceito os{" "}
+              <Button variant="text" onClick={() => showTerms()}>
+                Termos e Condições
+              </Button>
+            </FlexBox>
+          }
+        />
+        <Button onClick={() => showForm()} disabled={!termsValue}>
+          Iniciar cadastro
+        </Button>
+      </FlexBox>
     </FlexBox>
   );
 };

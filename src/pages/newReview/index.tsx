@@ -7,6 +7,7 @@ import { MarginContainer } from "styles/commonComponents";
 import profile from "assets/images/profile-placeholder.jpeg";
 import { Title, Profile, Header } from "./styles";
 import { FormSendReview } from "components/Forms/FormSendReview";
+import { projectList } from "pages/myProjects";
 
 export interface NewReviewPageProps {}
 
@@ -50,7 +51,7 @@ export const NewReviewPage: React.FC<NewReviewPageProps> = () => {
           </Profile>
         </FlexBox>
       </Header>
-      <FormSendReview />
+      <FormSendReview project={projectList[0]} />
     </MarginContainer>
   );
 };

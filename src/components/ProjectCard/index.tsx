@@ -7,10 +7,12 @@ import { useNavigate } from "react-router-dom";
 export interface ProjectCardProps {
   project: ProjectType;
   isCustomer?: boolean;
+  toReview?: () => void;
 }
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   isCustomer,
+  toReview,
 }) => {
   const navigate = useNavigate();
 
@@ -37,7 +39,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           Visão geral
         </Button>
         {isCustomer && (
-          <Button variant="outline" onClick={() => navigate("/review/1")}>
+          <Button variant="outline" onClick={toReview}>
             Avaliar
           </Button>
         )}

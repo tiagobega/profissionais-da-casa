@@ -2,11 +2,11 @@ import {
   MagnifyingGlass,
   SlidersHorizontal,
   XCircle,
-} from '@phosphor-icons/react'
-import { Button } from 'components/Button'
-import Input from 'components/Input'
-import { useState } from 'react'
-import { useTheme } from 'styled-components'
+} from "@phosphor-icons/react";
+import { Button } from "components/Button";
+import Input from "components/Input";
+import { useState } from "react";
+import { useTheme } from "styled-components";
 import {
   Container,
   FilterContainer,
@@ -14,47 +14,47 @@ import {
   FilterSearchContainer,
   ProfileList,
   Triangle,
-} from './styles'
-import { CardProfile } from 'components/Card'
+} from "./styles";
+import { CardProfile } from "components/Card";
 
 export interface ListProps {}
 
 export const List: React.FC<ListProps> = () => {
-  const [filterIsOpen, setFilterIsOpen] = useState(false)
-  const [selected, setSelected] = useState<string[]>([])
-  const { color } = useTheme()
+  const [filterIsOpen, setFilterIsOpen] = useState(false);
+  const [selected, setSelected] = useState<string[]>([]);
+  const { color } = useTheme();
 
-  const profissões = ['arquiteto', 'engenheiro']
+  const profissões = ["arquiteto", "engenheiro"];
   const categorias = [
-    'apartamento',
-    'alugados',
-    'demolição',
-    'ambientes pequenos',
-    'ambientes grandes',
-    'corporativo',
-    'varejo',
-    'roll-out',
-    'acessibilidade',
-    'crianças',
-    'minimalista',
-    'redormas',
-    'industrial',
-    'vigilância sanitária',
-    'estrutural',
-    'instalações',
-    'automação residencial',
-  ]
+    "apartamento",
+    "alugados",
+    "demolição",
+    "ambientes pequenos",
+    "ambientes grandes",
+    "corporativo",
+    "varejo",
+    "roll-out",
+    "acessibilidade",
+    "crianças",
+    "minimalista",
+    "redormas",
+    "industrial",
+    "vigilância sanitária",
+    "estrutural",
+    "instalações",
+    "automação residencial",
+  ];
 
   const toggleItemOnFilter = (item: string) => {
-    const currentList = [...selected]
+    const currentList = [...selected];
     if (currentList.includes(item)) {
-      const filteredList = currentList.filter((el) => el !== item)
-      setSelected(filteredList)
+      const filteredList = currentList.filter((el) => el !== item);
+      setSelected(filteredList);
     } else {
-      currentList.push(item)
-      setSelected(currentList)
+      currentList.push(item);
+      setSelected(currentList);
     }
-  }
+  };
 
   return (
     <Container>
@@ -65,7 +65,7 @@ export const List: React.FC<ListProps> = () => {
             className="icon-button"
             variant="text"
             name="busca"
-            onClick={() => console.log('search')}
+            onClick={() => console.log("search")}
           >
             <MagnifyingGlass />
           </Button>
@@ -92,12 +92,12 @@ export const List: React.FC<ListProps> = () => {
               <li className="profession-list">
                 {profissões.map((item) => (
                   <Button
-                    variant={selected.includes(item) ? 'primary' : 'outline'}
+                    variant={selected.includes(item) ? "primary" : "outline"}
                     background={
-                      selected.includes(item) ? 'white' : 'transparent'
+                      selected.includes(item) ? "white" : "transparent"
                     }
                     color={
-                      selected.includes(item) ? color.brand.purple : 'white'
+                      selected.includes(item) ? color.brand.purple : "white"
                     }
                     key={item}
                     onClick={() => toggleItemOnFilter(item)}
@@ -107,21 +107,25 @@ export const List: React.FC<ListProps> = () => {
                 ))}
               </li>
               <li className="category-list">
-                {categorias.map((item) => (
-                  <Button
-                    variant={selected.includes(item) ? 'primary' : 'outline'}
-                    background={
-                      selected.includes(item) ? 'white' : 'transparent'
-                    }
-                    color={
-                      selected.includes(item) ? color.brand.purple : 'white'
-                    }
-                    key={item}
-                    onClick={() => toggleItemOnFilter(item)}
-                  >
-                    {item}
-                  </Button>
-                ))}
+                {categorias.length > 0 ? (
+                  categorias.map((item) => (
+                    <Button
+                      variant={selected.includes(item) ? "primary" : "outline"}
+                      background={
+                        selected.includes(item) ? "white" : "transparent"
+                      }
+                      color={
+                        selected.includes(item) ? color.brand.purple : "white"
+                      }
+                      key={item}
+                      onClick={() => toggleItemOnFilter(item)}
+                    >
+                      {item}
+                    </Button>
+                  ))
+                ) : (
+                  <div>Não achamos nada</div>
+                )}
               </li>
             </FilterContent>
           </FilterContainer>
@@ -133,5 +137,5 @@ export const List: React.FC<ListProps> = () => {
         ))}
       </ProfileList>
     </Container>
-  )
-}
+  );
+};

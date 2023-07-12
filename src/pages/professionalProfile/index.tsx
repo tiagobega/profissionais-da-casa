@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 import { CarouselButton, MarginContainer } from "styles/commonComponents";
 import { ProfileManager } from "./ProfileManager";
+import { StarMeter } from "components/StarMeter";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -80,6 +81,11 @@ export const ProfessionalProfilePage: React.FC<
     },
   ];
 
+  const carrouselButtonArray = new Array(Math.ceil(reviewList.length / 2)).fill(
+    ""
+  );
+
+  console.log(carrouselButtonArray);
   return (
     <>
       <GrayContainer isOwn={isOwn}>
@@ -123,13 +129,10 @@ export const ProfessionalProfilePage: React.FC<
                         weight="fill"
                         size={32}
                         color={color.secondary.yellow}
-                      />{" "}
+                      />
                       <p>4.5</p>
                       <span>(123)</span>
                     </div>
-                    <Button variant="text">
-                      Deixe sua avaliação <CaretRight weight="fill" />
-                    </Button>
                   </RatingHeader>
                 </FlexBox>
               </FlexBox>
@@ -143,7 +146,7 @@ export const ProfessionalProfilePage: React.FC<
               <Button
                 variant="primary"
                 background={color.brand.yellowLight}
-                width={8}
+                width={10}
               >
                 Entrar em contato
               </Button>
@@ -181,25 +184,49 @@ export const ProfessionalProfilePage: React.FC<
         </FlexBox>
       </GalleryContainer>
       <ReviewSection>
+        <RatingContainer
+          alignItems="center"
+          direction="column"
+          justifyContent="flex-start"
+          gap={0.5}
+        >
+          <FlexBox full alignItems="center" justifyContent="flex-start" gap={1}>
+            <Star weight="fill" color={color.secondary.yellow} size={45} />
+            <p className="rating">4.5</p>
+            <p className="quantity">(123)</p>
+          </FlexBox>
+
+          <FlexBox alignItems="flex-start" gap={0.75} direction="column">
+            <div>
+              <p>Custo</p>
+              <StarMeter rating={4.5} size={16} />
+            </div>
+            <div>
+              <p>Prazo</p>
+              <StarMeter rating={4.5} size={16} />
+            </div>
+            <div>
+              <p>Funcionalidade</p>
+              <StarMeter rating={4.5} size={16} />
+            </div>
+            <div>
+              <p>Qualidade das Entregas</p>
+              <StarMeter rating={4.5} size={16} />
+            </div>
+            <div>
+              <p>Relacionamento com o Cliente</p>
+              <StarMeter rating={4.5} size={16} />
+            </div>
+          </FlexBox>
+        </RatingContainer>
         <FlexBox direction="column" alignItems="center" gap={3}>
           <h3>Depoimentos</h3>
           <FlexBox full justifyContent="center" alignItems="flex-start" gap={5}>
-            <RatingContainer
-              alignItems="center"
-              direction="column"
-              justifyContent="flex-start"
-            >
-              <FlexBox alignItems="center" gap={1}>
-                <Star weight="fill" color={color.secondary.yellow} size={90} />
-                <p className="rating">4.5</p>
-              </FlexBox>
-              <p className="quantity">(123)</p>
-            </RatingContainer>
             <ReviewContainer direction="column" alignItems="center" gap={1}>
               <FlexBox gap={2}>
                 {reviewList
                   .slice(displayReview, displayReview + 2)
-                  .map((item, index) => (
+                  .map((item) => (
                     <div className="review-item" key={item.id}>
                       <p>{item.description}</p>
                       <strong>{item.name}</strong>
@@ -207,11 +234,11 @@ export const ProfessionalProfilePage: React.FC<
                   ))}
               </FlexBox>
               <FlexBox full justifyContent="center" gap={1} p={1}>
-                {reviewList.map((item, index) => (
+                {carrouselButtonArray.map((item, index) => (
                   <CarouselButton
                     isActive={displayReview == index}
                     className="carousel-btn"
-                    onClick={() => setDisplayReview(index)}
+                    onClick={() => setDisplayReview(index * 2)}
                     key={item.id}
                   />
                 ))}

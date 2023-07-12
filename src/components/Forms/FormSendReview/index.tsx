@@ -6,13 +6,17 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import { sendReviewSchema } from "./validation";
 import { Star } from "@phosphor-icons/react";
-import { ConfirmModal, Form, StarContainer } from "./style";
-import { useEffect, useState } from "react";
-import { Modal } from "components/Modal";
+import { ConfirmModal, Form, Information, StarContainer } from "./style";
+import { FC, useEffect, useState } from "react";
+import { ProjectType } from "Models/models";
+
+export interface FormSendReviewProps {
+  project: ProjectType;
+}
 
 export type FormEditProfileData = Zod.infer<typeof sendReviewSchema>;
 
-export const FormSendReview = () => {
+export const FormSendReview: FC<FormSendReviewProps> = ({ project }) => {
   const {
     handleSubmit,
     register,
@@ -28,19 +32,34 @@ export const FormSendReview = () => {
   const [modalConfirm, setModalConfirm] = useState(false);
 
   useEffect(() => {
-    setValue("rating", 0);
+    setValue("cost", 0);
+    setValue("customerRelationship", 0);
+    setValue("deadline", 0);
+    setValue("functionality", 0);
+    setValue("handedOver", 0);
   }, []);
 
   const { color } = useTheme();
 
   const onSubmit = (data: FormEditProfileData) => {
-    console.log(data);
+    window.alert(data);
   };
-  const currentRating = +watch("rating");
-  const setRating = (value: number) => {
-    setValue("rating", value);
-    console.log(getValues("testimonial"));
-  };
+
+  const categories: {
+    name: string;
+    value:
+      | "cost"
+      | "deadline"
+      | "functionality"
+      | "handedOver"
+      | "customerRelationship";
+  }[] = [
+    { name: "Custo", value: "cost" },
+    { name: "Prazo", value: "deadline" },
+    { name: "Funcionalidade", value: "functionality" },
+    { name: "Qualidade das Entregas", value: "handedOver" },
+    { name: "Relacionamento com o Cliente", value: "customerRelationship" },
+  ];
 
   return (
     <Form
@@ -50,23 +69,44 @@ export const FormSendReview = () => {
         return onSubmit(e);
       })}
     >
-      <FlexBox direction="column" gap={2} full centralized>
-        <StarContainer full justifyContent="center" gap={1}>
-          {[1, 2, 3, 4, 5].map((rating) => (
-            <Star
-              weight={"fill"}
-              onClick={() => setRating(rating)}
-              key={rating}
-              size={48}
-              color={
-                currentRating >= rating
-                  ? color.secondary.yellow
-                  : color.base[200]
-              }
-            />
-          ))}
-        </StarContainer>
-        <FlexBox>
+      <FlexBox direction="column" gap={1} full>
+        <h2>Avaliação do profissional</h2>
+        <Information direction="column" mb={1} full pb={1}>
+          <p>
+            Profissional: <strong>{project.professional}</strong>
+          </p>
+          <p>
+            Projeto: <strong>{project.name}</strong>
+          </p>
+        </Information>
+        {categories.map((cat, index) => (
+          <FlexBox key={index} direction="column">
+            <StarContainer
+              full
+              justifyContent="center"
+              gap={1}
+              alignItems="center"
+            >
+              <div className="cat-name">
+                <p>{cat.name}</p>
+              </div>
+              {[1, 2, 3, 4, 5].map((rating) => (
+                <Star
+                  weight={"fill"}
+                  onClick={() => setValue(cat.value, +rating)}
+                  key={rating}
+                  size={24}
+                  color={
+                    watch(cat.value) >= rating
+                      ? color.secondary.yellow
+                      : color.base[200]
+                  }
+                />
+              ))}
+            </StarContainer>
+          </FlexBox>
+        ))}
+        <FlexBox full mt={0.5}>
           <Input.Area
             label="Depoimento"
             error={errors.testimonial}
@@ -79,7 +119,6 @@ export const FormSendReview = () => {
           background={color.secondary.blue}
           width={10}
           color="white"
-          disabled={+currentRating == 0}
         >
           Enviar
         </Button>

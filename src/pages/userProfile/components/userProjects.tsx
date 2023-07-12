@@ -1,7 +1,9 @@
 import { ProjectType } from "Models/models";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
+import { FormSendReview } from "components/Forms/FormSendReview";
 import Input from "components/Input";
+import { Modal } from "components/Modal";
 import { ProjectCard } from "components/ProjectCard";
 import { useState } from "react";
 
@@ -12,6 +14,9 @@ export interface UserProjectsProps {
 export const UserProjects: React.FC<UserProjectsProps> = ({ list }) => {
   const [query, setQuery] = useState<string>("");
   const [sort, setSort] = useState<string | undefined>(undefined);
+  const [currentProject, setCurrentProject] = useState<ProjectType | null>(
+    null
+  );
 
   const filteredList = list
     ? list.filter(
@@ -49,9 +54,20 @@ export const UserProjects: React.FC<UserProjectsProps> = ({ list }) => {
 
       <FlexBox direction="column" gap={1} full>
         {sortedList?.map((item) => (
-          <ProjectCard key={Math.random()} project={item} isCustomer />
+          <ProjectCard
+            key={Math.random()}
+            project={item}
+            isCustomer
+            toReview={() => setCurrentProject(item)}
+          />
         ))}
       </FlexBox>
+      <Modal
+        isOpened={currentProject != null}
+        onClose={() => setCurrentProject(null)}
+      >
+        {currentProject && <FormSendReview project={currentProject} />}
+      </Modal>
     </FlexBox>
   );
 };

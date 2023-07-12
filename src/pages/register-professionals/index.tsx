@@ -13,8 +13,6 @@ import logo from "assets/images/logoVazada.png";
 import { FormRegisterProfessional } from "components/Forms/FormRegisterProfessional";
 import { useState } from "react";
 import { Modal } from "components/Modal";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Benefits } from "./Benefits";
 
 export interface RegisterProfessionalProps {}
@@ -27,8 +25,8 @@ export const RegisterProfessional: React.FC<RegisterProfessionalProps> = () => {
   return (
     <FullContainer>
       <LinkBackContainer full alignItems="center">
-        <Button variant="text">
-          <CaretLeft weight="fill" onClick={() => navigate("/login")} />
+        <Button variant="text" onClick={() => navigate("/")}>
+          <CaretLeft weight="fill" />
           Página Inicial
         </Button>
       </LinkBackContainer>

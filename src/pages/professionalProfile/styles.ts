@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components'
-import { FlexBox } from 'components/FlexBox'
-import { FullContainer, MarginContainer } from 'styles/commonComponents'
+import styled, { css } from "styled-components";
+import { FlexBox } from "components/FlexBox";
+import { FullContainer, MarginContainer } from "styles/commonComponents";
 
 export const GrayContainer = styled.section<{ isOwn: boolean }>`
   ${({ theme, isOwn }) => css`
@@ -8,7 +8,7 @@ export const GrayContainer = styled.section<{ isOwn: boolean }>`
     background-color: ${isOwn ? theme.color.base[200] : theme.color.base[100]};
     padding: 2rem 0;
   `}
-`
+`;
 
 export const HeaderContainer = styled(MarginContainer)`
   ${({ theme }) => css`
@@ -36,7 +36,7 @@ export const HeaderContainer = styled(MarginContainer)`
       }
     }
   `}
-`
+`;
 
 export const RatingHeader = styled(FlexBox)`
   ${({ theme }) => css`
@@ -53,7 +53,7 @@ export const RatingHeader = styled(FlexBox)`
       }
     }
   `}
-`
+`;
 
 export const GalleryContainer = styled(FullContainer)`
   ${({ theme }) => css`
@@ -98,27 +98,27 @@ export const GalleryContainer = styled(FullContainer)`
       }
     }
   `}
-`
+`;
 
 export const ReviewSection = styled(MarginContainer)`
   ${({ theme }) => css`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     padding: 2rem 0;
+    gap: 4rem;
     h3 {
       color: ${theme.color.secondary.lightTeal};
       font-size: 2rem;
     }
   `}
-`
+`;
 export const ReviewContainer = styled(FlexBox)`
   ${() => css`
     display: flex;
     align-items: center;
     justify-content: center;
     width: 570px;
-
     .review-item {
       width: 270px;
       p {
@@ -126,16 +126,16 @@ export const ReviewContainer = styled(FlexBox)`
       }
     }
   `}
-`
+`;
 export const RatingContainer = styled(FlexBox)`
   ${() => css`
     .rating {
-      font-size: 5rem;
+      font-size: 3rem;
       font-weight: bolder;
     }
     .quantity {
-      font-size: 2.5rem;
+      font-size: 1.5rem;
       font-weight: 400;
     }
   `}
-`
+`;
