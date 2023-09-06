@@ -1,48 +1,58 @@
 import axios from "axios";
-import { Session } from "utils/Session";
+import { UserUtils } from "../utils/user";
 
-export const API_POST_ROUTES = {} as const;
-
-export const API_ROUTES = {
-  POST: {
-    AUTH: "/auth/local",
-    AUTH_REGISTER: "/auth/local/register",
-    AUTH_FORGOT_PASSWORD: "/auth/forgot-password",
-    AUTH_RESET_PASSWORD: "/auth/reset-password",
-    AUTH_SEND_EMAIL_CONFIRMATION: "/auth/send-email-confirmation",
-    USERS: "/users",
-    USERS_PERMISSIONS_ROLES: "/users-permissions/roles",
-  },
-  GET: {
-    USERS: "/users",
-    USERS_ME: "/users/me",
-    USERS_PERMISSIONS: "/users-permissions/permissions",
-    USERS_PERMISSIONS_ROLES: "/users-permissions/roles",
-  },
-  PUT: {
-    USERS: "/users",
-  },
-  DELETE: {
-    USERS: "/users",
-    USERS_PERMISSIONS_ROLES: "/users-permissions/roles",
-  },
+export const API_POST_ROUTES = {
+  SIGN_IN: "/signin",
+  SIGN_UP: "/signup",
 } as const;
 
+export const API_GET_ROUTES = {
+  USER_ME: "/users/me",
+} as const;
 
+export const API_PUT_ROUTES = {
+  USER_ME: "/users/me",
+} as const;
+
+export const API_DELETE_ROUTES = {};
+
+export const API_ROUTES = {
+  POST: API_POST_ROUTES,
+  GET: API_GET_ROUTES,
+  PUT: API_PUT_ROUTES,
+  DELETE: API_DELETE_ROUTES,
+} as const;
 
 export const api = axios.create({
-  baseURL: "https://api.cadacasa.com.br/api",
+  baseURL: import.meta.env.MODE === "production" ? "" : "localhost:4000/v1",
 });
 
-api.interceptors.request.use((config) => {
-  const authSession: any = Session.get("auth");
+const createApiAuthInterceptor = () => {
+  const tokenRequest = UserUtils.getAuthToken();
 
-  if (authSession.accessToken) {
-    config.headers!.Authorization = `Bearer ${authSession.accessToken}`;
-  }
+  const accessToken = tokenRequest.accessToken;
 
-  return config;
-});
+  api.interceptors.request.use((config) => {
+    if (accessToken) {
+      config.headers!.Authorization = `Bearer ${accessToken}`;
+    }
+
+    return config;
+  });
+
+  return {
+    tokenRequest,
+    accessToken,
+  };
+};
+
+export const recreateApiAuthInterceptors = () => {
+  api.interceptors.request.clear();
+
+  return createApiAuthInterceptor();
+};
+
+export const { tokenRequest, accessToken } = createApiAuthInterceptor();
 
 export default {
   api,

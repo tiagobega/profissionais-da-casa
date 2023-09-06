@@ -16,10 +16,13 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 
 import { AxiosError } from "axios";
-import { api, API_ROUTES } from "config/axios";
+import { api, API_ROUTES, recreateApiAuthInterceptors } from "config/axios";
 import { LoginResponse } from "constants/user";
 import { useToast } from "contexts/Toast";
 import { Session } from "utils/Session";
+import { UserService } from "services/User";
+import { GenericError, SignUp } from "services/User/types";
+import { UserUtils } from "utils/user";
 
 export const userContext = React.createContext<UserContext | null>(null);
 
@@ -31,27 +34,29 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
   const [registeredUser, setRegisteredUser] =
     useState<UserContext["registeredUser"]>();
 
-  const login: UserContext["login"] = async (params, callback) => {
-    try {
-      const response = await api.post<LoginResponse>(API_ROUTES.POST.AUTH, {
-        identifier: params.email,
-        password: params.password,
-      });
-
-      Session.set({ accessToken: response.data.jwt }, { context: "auth" });
-      setLogged(true);
-      setCurrentUser(response.data.user);
-      callback();
-    } catch (err) {
-      const { response } = err as AxiosError<LoginError>;
-
-      if (!response) return;
-
-      addToast(response.data.error.message, {
+  const handleErrors = (responseData: AxiosError<GenericError>) => {
+    responseData.response?.data.messages.forEach((message: string) => {
+      addToast(message, {
+        type: "error",
         autoDestroy: true,
         timer: 5000,
       });
+    });
+  };
+
+  const login: UserContext["login"] = async (params, callback) => {
+    const response = await UserService.singIn(params);
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
     }
+
+    console.log(response);
+
+    UserUtils.setAuthToken(response.accessToken);
+
+    recreateApiAuthInterceptors();
   };
 
   const logout: UserContext["logout"] = (callback) => {
@@ -62,89 +67,17 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
   };
 
   const register: UserContext["register"] = async (params, callback) => {
-    const { name, email, phone, zipCode, password, RG, CPF } = params;
-    const data = {
-      username: name,
-      RG,
-      CPF,
-      email,
-      password,
-      ProfilePhone: phone,
-      ProfilePostalCode: zipCode,
-    };
+    const response = await UserService.signUp(params);
 
-    try {
-      const response = await api.post<RegisterResponse>(
-        API_ROUTES.POST.AUTH_REGISTER,
-        data
-      );
-
-      setRegisteredUser(response.data.user);
-
-      const email = response.data.user.email;
-
-      await sendEmailConfirmation({ email });
-
-      callback();
-    } catch (err) {
-      const { response } = err as AxiosError<RegisterError>;
-
-      if (!response) return;
-
-      addToast(response.data.error.message, {
-        autoDestroy: true,
-        timer: 5000,
-      });
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
     }
+
+    console.log(response);
+
+    callback();
   };
-
-  const sendEmailConfirmation: UserContext["sendEmailConfirmation"] = async (
-    params: EmailConfirmationParams
-  ) => {
-    try {
-      const response = await api.post<EmailReponse>(
-        API_ROUTES.POST.AUTH_SEND_EMAIL_CONFIRMATION,
-        params
-      );
-
-      if (!response.data.sent) {
-        addToast("Não foi possível enviar um e-mail de confirmação", {
-          autoDestroy: true,
-          timer: 5000,
-        });
-      } else {
-        addToast(`Um email foi enviado para: ${response.data.email}`, {
-          autoDestroy: true,
-          timer: 5000,
-        });
-      }
-    } catch (err) {
-      const error = err as EmailError;
-      addToast("Não foi possível enviar um e-mail de confirmação", {
-        autoDestroy: true,
-        timer: 5000,
-      });
-    }
-  };
-
-  const me = async () => {
-    try {
-      const response = await api.get<MeResponse>(API_ROUTES.GET.USERS_ME);
-
-      setCurrentUser(response.data);
-      setLogged(true);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    const { accessToken } = Session.get("auth");
-
-    if (accessToken && !currentUser) {
-      me();
-    }
-  }, []);
 
   return (
     <userContext.Provider
@@ -153,7 +86,6 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         login,
         logout,
         register,
-        sendEmailConfirmation,
         registeredUser,
         currentUser,
       }}
