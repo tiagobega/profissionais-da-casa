@@ -10,18 +10,22 @@ import {
   RegisterError,
   RegisterParams,
   RegisterResponse,
-  User,
 } from "constants/user";
 
 import React, { useContext, useEffect, useState } from "react";
 
 import { AxiosError } from "axios";
-import { api, API_ROUTES, recreateApiAuthInterceptors } from "config/axios";
+import {
+  api,
+  API_ROUTES,
+  recreateApiAuthInterceptors,
+  tokenRequest,
+} from "config/axios";
 import { LoginResponse } from "constants/user";
 import { useToast } from "contexts/Toast";
 import { Session } from "utils/Session";
 import { UserService } from "services/User";
-import { GenericError, SignUp } from "services/User/types";
+import { GenericError, Me, SignUp } from "services/User/types";
 import { UserUtils } from "utils/user";
 
 export const userContext = React.createContext<UserContext | null>(null);
@@ -31,6 +35,10 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
 
   const [logged, setLogged] = useState(false);
   const [currentUser, setCurrentUser] = useState<UserContext["currentUser"]>();
+  const [roles, setRoles] = useState<UserContext["roles"]>([]);
+  const [currentProfessional, setCurrentProfessional] =
+    useState<UserContext["currentProfessional"]>();
+
   const [registeredUser, setRegisteredUser] =
     useState<UserContext["registeredUser"]>();
 
@@ -52,11 +60,69 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
       return false;
     }
 
-    console.log(response);
-
     UserUtils.setAuthToken(response.accessToken);
 
     recreateApiAuthInterceptors();
+
+    const meResponse = await getMe();
+
+    if (!meResponse) return false;
+
+    setLogged(true);
+
+    callback(meResponse);
+
+    return response;
+  };
+
+  const getMe: UserContext["getMe"] = async () => {
+    const response = await UserService.getMe();
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
+    }
+
+    setCurrentUser(response);
+
+    return response;
+  };
+
+  const putMe: UserContext["putMe"] = async (data) => {
+    const response = await UserService.putMe(data);
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
+    }
+
+    // setCurrentUser(response);
+
+    return response;
+  };
+
+  const getRoles: UserContext["getRoles"] = async () => {
+    const response = await UserService.getRoles();
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
+    }
+
+    setRoles(response);
+
+    return response;
+  };
+
+  const getSingleRole: UserContext["getSingleRole"] = async (id) => {
+    const response = await UserService.getSingleRole(id);
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
+    }
+
+    return response;
   };
 
   const logout: UserContext["logout"] = (callback) => {
@@ -74,10 +140,43 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
       return false;
     }
 
-    console.log(response);
-
     callback();
+
+    return response;
   };
+
+  const registerProfessional: UserContext["registerProfessional"] = async (
+    params
+  ) => {
+    const response = await UserService.professionalSignUp(params);
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
+    }
+
+    setCurrentProfessional(response);
+
+    return response;
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (!tokenRequest.success) {
+        return;
+      }
+
+      const meResponse = await getMe();
+
+      if (!meResponse) return;
+      setLogged(true);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    console.log(currentUser, logged);
+  }, [currentUser, logged]);
 
   return (
     <userContext.Provider
@@ -86,8 +185,14 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         login,
         logout,
         register,
+        getMe,
+        putMe,
+        getRoles,
+        getSingleRole,
+        registerProfessional,
         registeredUser,
         currentUser,
+        currentProfessional,
       }}
     >
       {children}

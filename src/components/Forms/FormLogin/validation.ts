@@ -6,5 +6,5 @@ export const loginSchema = z.object({
     .string()
     .min(1, formErrors.ERROR_REQUIRED)
     .email(formErrors.ERROR_INVALID),
-  password: z.string().min(8, minChars(8)),
+  password: z.string().min(6, minChars(6)),
 });

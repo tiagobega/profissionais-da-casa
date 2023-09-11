@@ -1,6 +1,6 @@
 import type { CookieObject, SetCookieOptions } from "./types";
 
-const COOKIE_NAME = `literaverso-app`;
+const COOKIE_NAME = `cadacasa-app`;
 
 export class Session {
   static set<TData extends object>(

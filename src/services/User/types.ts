@@ -1,3 +1,6 @@
+import { Role } from "constants/roles";
+import { SubPlanName } from "constants/subplan";
+
 export interface AuthCookie {
   accessToken: string;
 }
@@ -10,18 +13,23 @@ export interface GenericError {
  * RESPONSE /ACCOUNT/ME
  */
 export interface Me {
-  id: number;
-  nickname: string;
+  id: string;
+  cpf: string;
+  role: string;
+  roleRel: SingleRole;
   name: string;
-  email: string;
-  countryCode: string;
-  disability: string | null;
-  instruction: string;
-  profile: string;
-  birthdate: string;
-  readonly createdAt: string;
-  readonly updatedAt: string;
+  verified: boolean;
+  profilePicture: string;
+  profileType: string;
 }
+
+/**
+ * 
+ */
+export interface Professional {
+  
+}
+
 
 /**
  * RESPONSE /ACCOUNT/SIGNIN
@@ -36,17 +44,21 @@ export interface SignIn {
 export interface SignUp {}
 
 /**
- * RESPONSE /ACCOUNT/FORGOT-PASSWORD
+ * RESPONSE /ROLE/GETONE
  */
-export interface ForgotPassword {
-  success: boolean;
+export interface SingleRole {
+  id: string;
+  name: Role;
 }
 
 /**
- * RESPONSE /ACCOUNT/RESET-PASSWORD
+ * RESPONSE /SUBPLAN/CREATE
  */
-export interface ResetPassword {
-  messages: string;
+
+export interface Subplan {
+  id: string;
+  name: SubPlanName;
+  isActive: boolean;
 }
 
 /**
@@ -56,6 +68,8 @@ export type SignInData = {
   email: string;
   password: string;
 };
+
+
 export interface SignInError extends GenericError {}
 
 /**
@@ -70,4 +84,34 @@ export type SignUpData = {
   name: string;
   profileType: string;
   profilePicture: string;
+};
+
+/**
+ * DATA TO REGISTER PROFESSIONAL
+ */
+export type ProfessionalSignUpData = {
+  userId: string;
+  subscriptionPlanId: string;
+  name: string;
+  professionalRegister: string;
+  companyName: string;
+  cnpj: string;
+  zipCode: string;
+  phone: string;
+  formationInstitute: string;
+  formationDetails: string;
+  formation: boolean;
+  caucrea: string;
+  yearConclusion: string;
+  tags: string;
+  profilePicture: string;
+  backgroundPicture: string;
+};
+
+/**
+ * DATA TO CREATE SUBPLAN
+ */
+export type SubPlanData = {
+  name: string;
+  isActive: boolean;
 };

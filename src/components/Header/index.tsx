@@ -11,6 +11,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { currentUser, logged, logout } = useUser();
 
+
   return (
     <HeaderContainer>
       <FlexBox full justifyContent="space-between" alignItems="center" px={6}>
@@ -41,7 +42,7 @@ const Header = () => {
       <LoginContainer role="customer">
         {currentUser && logged ? (
           <FlexBox alignItems="center" gap={1}>
-            <p>{`Olá ${currentUser.username}`}</p>
+            <p>{`Olá ${currentUser.name}`}</p>
             <Button
               variant="primary"
               onClick={() => logout(() => navigate("/"))}

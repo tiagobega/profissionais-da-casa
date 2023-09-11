@@ -38,13 +38,14 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
   const onSubmit = async (data: FormData) => {
     userRegister(
       {
-        zipCode: data.cep,
-        email: data.email,
         name: data.name,
         password: data.password,
+        email: data.email,
         phone: data.phone,
-        CPF: "",
-        RG: "",
+        cpf: "65595505087",
+        role: "user",
+        profilePicture: "",
+        profileType: "user",
       },
       toConfirm
     );

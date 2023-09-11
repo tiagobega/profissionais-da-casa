@@ -7,8 +7,8 @@ import { useTheme } from "styled-components";
 import { registerProfessionalSchema } from "./validation";
 import { Form, FullWidthFormContainer } from "./style";
 import { FC, useState } from "react";
-import { areaType } from "../FormEditProfile";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "contexts/User";
 
 export type FormData = Zod.infer<typeof registerProfessionalSchema>;
 
@@ -51,11 +51,53 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const { color } = useTheme();
+  const { register: userRegister, registerProfessional, getMe } = useUser();
 
-  const onSubmit = (data: FormData) => {
-    window.alert(JSON.stringify(data));
-    navigate("/register/professional/confirm");
+  const onSubmit = async (data: FormData) => {
+    // window.alert(JSON.stringify(data));
+    // navigate("/register/professional/confirm");
+
+    const userResponse = await userRegister(
+      {
+        name: data.name,
+        password: data.password,
+        email: data.email,
+        phone: data.phone,
+        cpf: "65595505087",
+        role: "user",
+        profilePicture: "",
+        profileType: "user",
+      },
+      () => {}
+    );
+
+    if (!userResponse) return;
+
+    const meResponse = await getMe();
+
+    if (!meResponse) return;
+
+    registerProfessional({
+      caucrea: "",
+      cnpj: data.cnpj,
+      name: data.name,
+      phone: data.phone,
+      companyName: data.companyName,
+      formationDetails: data.institution,
+      formationInstitute: data.creaCau,
+      professionalRegister: data.registerTech,
+      yearConclusion: data.formationYear,
+      userId: meResponse.id,
+      zipCode: data.cep,
+      subscriptionPlanId: "067e017d-7603-4c56-b9fb-50c25f5fb49d",
+      
+      formation: true,
+      tags: "",
+      profilePicture: "",
+      backgroundPicture: "",
+    });
   };
+
   const terms = watch("terms");
 
   return (
@@ -95,6 +137,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
                 placeholder="Data de Nascimento"
                 aria-label="Data de Nascimento"
                 error={errors.birthDate}
+                type={"date"}
                 {...register("birthDate")}
               />
               <Input.Text
