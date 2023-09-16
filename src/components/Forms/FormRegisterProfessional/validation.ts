@@ -1,5 +1,48 @@
-import { formErrors, minChars } from "constants/formErrors";
+import { errorFileSize, formErrors, minChars } from "constants/formErrors";
+import {
+  ACCEPTED_IMAGE_TYPES,
+  verifyFileSize,
+  verifyFileType,
+} from "utils/fileValidation";
 import * as z from "zod";
+
+const fileRefine = ({
+  size,
+  mimeTypeList,
+  required = true,
+}: {
+  size?: number;
+  mimeTypeList?: string[];
+  required?: boolean;
+} = {}) =>
+  z.instanceof(FileList).superRefine((fileList, ctx) => {
+    if (!fileList.length) {
+      if (required) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: formErrors.ERROR_FILE,
+        });
+      }
+      return;
+    }
+
+    if (!verifyFileType(fileList[0], mimeTypeList)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: formErrors.ERROR_INVALID,
+      });
+    }
+
+    if (!verifyFileSize(fileList[0], size)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.too_big,
+        type: "array",
+        message: errorFileSize(size),
+        maximum: (size || 2) * 1000000,
+        inclusive: true,
+      });
+    }
+  });
 
 export const registerProfessionalSchema = z
   .object({
@@ -8,10 +51,18 @@ export const registerProfessionalSchema = z
       .string()
       .min(1, formErrors.ERROR_REQUIRED)
       .email(formErrors.ERROR_INVALID),
-    phone: z.string().min(11, formErrors.ERROR_INVALID),
-    cep: z.string().min(8, minChars(8)),
-    cpf: z.string().min(11, minChars(8)),
-    birthDate: z.date(),
+    phone: z
+      .string({ required_error: formErrors.ERROR_REQUIRED })
+      .min(15, formErrors.ERROR_INVALID),
+    cep: z
+      .string({ required_error: formErrors.ERROR_REQUIRED })
+      .min(9, formErrors.ERROR_INVALID),
+    cpf: z
+      .string({ required_error: formErrors.ERROR_REQUIRED })
+      .min(14, formErrors.ERROR_INVALID),
+    birthDate: z
+      .string({ required_error: formErrors.ERROR_REQUIRED })
+      .min(10, formErrors.ERROR_INVALID),
     password: z.string().min(8, minChars(8)),
     passwordConfirm: z.string().min(8, minChars(8)),
     terms: z.boolean(),
@@ -24,13 +75,22 @@ export const registerProfessionalSchema = z
     formationLevel: z.string().min(1, formErrors.ERROR_REQUIRED),
     formationDetail: z.string().min(1, formErrors.ERROR_REQUIRED),
     formationYear: z.string().min(1, formErrors.ERROR_REQUIRED),
-    profilePicture: z.instanceof(FileList),
-    portfolio: z.instanceof(FileList),
-    linkedin: z.string().min(1, formErrors.ERROR_REQUIRED),
-    facebook: z.string().min(1, formErrors.ERROR_REQUIRED),
-    instagram: z.string().min(1, formErrors.ERROR_REQUIRED),
-    pinterest: z.string().min(1, formErrors.ERROR_REQUIRED),
-    otherSocials: z.string().min(1, formErrors.ERROR_REQUIRED),
+    onlineApointment: z.boolean(),
+    linkedin: z.string(),
+    facebook: z.string(),
+    instagram: z.string(),
+    pinterest: z.string(),
+    otherSocials: z.string(),
+
+    portfolio: fileRefine({
+      size: 5,
+      mimeTypeList: ["application/pdf", ...ACCEPTED_IMAGE_TYPES],
+      required: false,
+    }),
+    profilePicture: fileRefine({ required: false }),
+    backgroundPicture: fileRefine({ size: 5, required: false }),
+
+    states: z.array(z.string()),
   })
   .refine((data) => data.passwordConfirm == data.password, {
     message: "Digitar a mesma senha novamente",

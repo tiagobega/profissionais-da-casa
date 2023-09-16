@@ -8,8 +8,9 @@ export const registerUserSchema = z
       .string()
       .min(1, formErrors.ERROR_REQUIRED)
       .email(formErrors.ERROR_INVALID),
-    phone: z.string().min(11, formErrors.ERROR_INVALID),
-    cep: z.string().min(8, minChars(8)),
+    phone: z.string().min(14, formErrors.ERROR_INVALID),
+    cpf: z.string().min(14, formErrors.ERROR_INVALID),
+    cep: z.string().min(9, minChars(9)),
     password: z.string().min(8, minChars(8)),
     passwordConfirm: z.string().min(8, minChars(8)),
     terms: z.boolean(),

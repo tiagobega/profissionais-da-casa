@@ -51,7 +51,7 @@ export const CardProfile: React.FC<CardProfileProps> = () => {
           <Star size={32} weight="fill" color={color.secondary.yellow} />
           <h3>x {profile.rating}</h3>
         </FlexBox>
-        <FlexBox wrap gap={0.25}>
+        <FlexBox wrap={"wrap"} gap={0.25}>
           {profile.tags.slice(0, 3).map((tag, index) => (
             <Tag tagName={tag} key={`${profile.id}${index}${tag}`} />
           ))}

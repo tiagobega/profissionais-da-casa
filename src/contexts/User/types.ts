@@ -21,10 +21,7 @@ export interface UserContext {
     callback: (user: Me) => void
   ) => Promise<SignIn | false>;
   logout: (callback: () => void) => void;
-  register: (
-    params: SignUpData,
-    callback: () => void
-  ) => Promise<SignUp | false>;
+  register: (params: SignUpData) => Promise<SignUp | false>;
   registerProfessional: (data: ProfessionalSignUpData) => Promise<Professional>;
   registeredUser?: Me;
   currentUser?: Me;

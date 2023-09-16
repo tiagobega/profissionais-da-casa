@@ -1,5 +1,5 @@
 import { Role } from "constants/roles";
-import { SubPlanName } from "constants/subplan";
+import { SubPlanName } from "constants/subPlan";
 
 export interface AuthCookie {
   accessToken: string;
@@ -19,17 +19,23 @@ export interface Me {
   roleRel: SingleRole;
   name: string;
   verified: boolean;
+  active: boolean;
   profilePicture: string;
+  zipCode: string;
   profileType: string;
+  profileTypeRel: {
+    ui: string;
+    name: "user" | "professional";
+  };
+  email: string;
+  phone: string;
+  createdAt: string;
 }
 
 /**
- * 
+ *
  */
-export interface Professional {
-  
-}
-
+export interface Professional {}
 
 /**
  * RESPONSE /ACCOUNT/SIGNIN
@@ -41,7 +47,10 @@ export interface SignIn {
 /**
  * RESPONSE /ACCOUNT/SIGNUP
  */
-export interface SignUp {}
+export interface SignUp {
+  user: Me;
+  session: SignIn;
+}
 
 /**
  * RESPONSE /ROLE/GETONE
@@ -69,7 +78,6 @@ export type SignInData = {
   password: string;
 };
 
-
 export interface SignInError extends GenericError {}
 
 /**
@@ -84,6 +92,7 @@ export type SignUpData = {
   name: string;
   profileType: string;
   profilePicture: string;
+  zipCode: string;
 };
 
 /**

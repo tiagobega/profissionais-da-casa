@@ -1,9 +1,17 @@
 import { useUser } from "contexts/User";
 import React, { Suspense } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
+
 import Layout from "components/Layout";
 import NotFound from "pages/notFound";
 import TermsPage from "pages/terms";
+
 import { FAQPage } from "pages/faq";
 import { ProfessionalsListPage } from "pages/professionalsList";
 import { ProfessionalProfilePage } from "pages/professionalProfile";
@@ -21,6 +29,7 @@ import { RegisterUser } from "pages/register-user";
 import { RegisterUserConfirm } from "pages/register-user-confirm";
 import { RegisterProfessional } from "pages/register-professionals";
 import { RegisterProfessionalConfirm } from "pages/register-professional-confirm";
+import { EmailConfirmedPage } from "pages/email-confirm";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -37,78 +46,85 @@ const Router = () => (
         element={<PublicRoute element={<RegisterUser />} />}
       />
       <Route
-        path={"/register/customer/confirm"}
-        element={<PublicRoute element={<RegisterUserConfirm />} />}
-      />
-      <Route
         path={"/register/professional"}
         element={<PublicRoute element={<RegisterProfessional />} />}
       />
-      <Route
-        path={"/register/professional/confirm"}
-        element={<PublicRoute element={<RegisterProfessionalConfirm />} />}
-      />
-      <Route path="/" element={<Layout />}>
-        {/* //OPEN ROUTES */}
-        <Route path="/" element={<PublicRoute element={<HomePage />} />} />
 
-        <Route path={"/faq"} element={<PublicRoute element={<FAQPage />} />} />
+      {/**
+       * Home Layout
+       */}
+      <Route path="/" element={<Layout />}>
+        <Route
+          path={"/register/confirm"}
+          element={<PrivateRoute element={<RegisterUserConfirm />} />}
+        />
 
         <Route
+          path={"/register/emailConfirmed"}
+          element={<PrivateRoute element={<EmailConfirmedPage />} />}
+        />
+
+        {/* //OPEN ROUTES */}
+
+        <Route path="/" element={<PrivateRoute element={<HomePage />} />} />
+        <Route path={"/faq"} element={<PrivateRoute element={<FAQPage />} />} />
+        <Route
           path={"/catalog"}
-          element={<PublicRoute element={<ProfessionalsListPage />} />}
+          element={<PrivateRoute element={<ProfessionalsListPage />} />}
         />
         <Route
           path={"/professional/:id"}
-          element={<PublicRoute element={<ProfessionalProfilePage />} />}
+          element={<PrivateRoute element={<ProfessionalProfilePage />} />}
         />
         <Route
           path={"/project/:id"}
-          element={<PublicRoute element={<PortifolioProjectPage />} />}
+          element={<PrivateRoute element={<PortifolioProjectPage />} />}
         />
+
         {/* //CUSTOMER/PROFESSIONAL ROUTES */}
+
         <Route
           path={"/my-projects/"}
-          element={<PublicRoute element={<MyProjectsPage />} />}
+          element={<PrivateRoute element={<MyProjectsPage />} />}
         />
         <Route
           path={"/project-details/:id"}
-          element={
-            <PublicRoute element={<ProjectPage status="ongoing" />} />
-          }
+          element={<PrivateRoute element={<ProjectPage status="ongoing" />} />}
         />
         <Route
           path={"/review/:id"}
-          element={<PublicRoute element={<NewReviewPage />} />}
+          element={<PrivateRoute element={<NewReviewPage />} />}
         />
         <Route
           path={"/profile"}
-          element={<PublicRoute element={<UserProfile />} />}
+          element={<PrivateRoute element={<UserProfile />} />}
         />
+
         {/* //ADMIN ROUTES */}
+
         <Route
           path={"/admin/"}
-          element={<PublicRoute element={<HomePage />} />}
+          element={<PrivateRoute element={<HomePage />} />}
         />
         <Route
           path={"/admin/reviews"}
-          element={<PublicRoute element={<AdmRatingList />} />}
+          element={<PrivateRoute element={<AdmRatingList />} />}
         />
         <Route
           path={"/admin/review/:id"}
-          element={<PublicRoute element={<AdmRatingDetails />} />}
+          element={<PrivateRoute element={<AdmRatingDetails />} />}
         />
         <Route
           path={"/admin/professionals-management"}
-          element={<PublicRoute element={<AdmProfessionalList />} />}
+          element={<PrivateRoute element={<AdmProfessionalList />} />}
         />
         <Route
           path={"/admin/professionals-management/:id"}
-          element={<PublicRoute element={<AdmProfessionalDetails />} />}
+          element={<PrivateRoute element={<AdmProfessionalDetails />} />}
         />
         <Route
           path={"/admin/professionals-management/:id/projects"}
-          element={<PublicRoute element={<HomePage />} />}
+          element={<PrivateRoute element={<HomePage />} />}
         />
 
         <Route index element={<PublicRoute element={<HomePage />} />} />
@@ -131,16 +147,22 @@ const PrivateRoute = ({
   redirectTo?: string;
   admin?: boolean;
 }) => {
-  const { logged } = useUser();
-  const useIsAdmin = true;
+  const { logged, logout, currentUser } = useUser();
+  const navigate = useNavigate();
 
-  if (!logged && redirectTo) {
-    return <Navigate to={redirectTo} />;
+  if (!logged || !currentUser) {
+    navigate("/login");
+    return null;
   }
 
-  if (admin && !useIsAdmin) {
-    redirectTo ??= "/";
-    return <Navigate to={redirectTo} />;
+  if (logged && !currentUser.verified) {
+    navigate("/register/confirm");
+  }
+
+  if (admin && currentUser.roleRel.name !== "admin") {
+    logout(() => {
+      navigate("/login");
+    });
   }
 
   return <SuspenseComponent>{element}</SuspenseComponent>;

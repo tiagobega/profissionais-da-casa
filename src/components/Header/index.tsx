@@ -1,7 +1,7 @@
 import { FlexBox } from "components/FlexBox";
 import type { HeaderProps } from "./types";
 import logo from "assets/images/logo.png";
-import { HeaderContainer, LoginContainer } from "./styles";
+import { HeaderContainer, LoginContainer, LoginName } from "./styles";
 import { Button } from "components/Button";
 import { useTheme } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ import { useUser } from "contexts/User";
 const Header = () => {
   const navigate = useNavigate();
   const { currentUser, logged, logout } = useUser();
-
 
   return (
     <HeaderContainer>
@@ -41,8 +40,12 @@ const Header = () => {
       </FlexBox>
       <LoginContainer role="customer">
         {currentUser && logged ? (
-          <FlexBox alignItems="center" gap={1}>
-            <p>{`Olá ${currentUser.name}`}</p>
+          <FlexBox alignItems="center" gap={2} px={1.5}>
+            <LoginName>
+              Olá
+              <br />
+              {currentUser.name.split(" ")[0]}
+            </LoginName>
             <Button
               variant="primary"
               onClick={() => logout(() => navigate("/"))}

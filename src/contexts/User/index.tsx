@@ -132,7 +132,7 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
     callback();
   };
 
-  const register: UserContext["register"] = async (params, callback) => {
+  const register: UserContext["register"] = async (params) => {
     const response = await UserService.signUp(params);
 
     if (response instanceof AxiosError) {
@@ -140,7 +140,11 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
       return false;
     }
 
-    callback();
+    UserUtils.setAuthToken(response.session.accessToken);
+    recreateApiAuthInterceptors();
+    setLogged(true);
+
+    setCurrentUser(response.user);
 
     return response;
   };
@@ -175,7 +179,6 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
 
   useEffect(() => {
     if (!currentUser) return;
-    console.log(currentUser, logged);
   }, [currentUser, logged]);
 
   return (

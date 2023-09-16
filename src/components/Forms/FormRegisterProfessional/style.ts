@@ -8,6 +8,9 @@ export const Form = styled.form`
       padding-block: 2rem;
       border-bottom: 1px solid black;
     }
+    fieldset {
+      width: 100%;
+    }
     fieldset:last-child {
       padding-block: 2rem;
       border-bottom: none;
@@ -15,10 +18,9 @@ export const Form = styled.form`
     legend {
       font-size: 1.2rem;
     }
-    input[type="text"],
-    [type="email"],
-    [type="password"] {
-      width: 18rem;
+
+    .disclaimer {
+      font-size: 0.8rem;
     }
   `}
 `;

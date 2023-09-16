@@ -30,6 +30,7 @@ export const RegisterProfessional: React.FC<RegisterProfessionalProps> = () => {
           Página Inicial
         </Button>
       </LinkBackContainer>
+
       <BodyContainer full direction="column" alignItems="center">
         <ContentContainer direction="column" gap={1}>
           <Header alignItems="flex-end" justifyContent="space-between">
@@ -50,11 +51,11 @@ export const RegisterProfessional: React.FC<RegisterProfessionalProps> = () => {
               <p>e engenheiros</p>
             </div>
           </Header>
+          <h3>
+            Preencha o formulário para se tornar um Profissional da Casa
+          </h3>
           {!benefits ? (
-            <FormRegisterProfessional
-              showTerms={() => setTerms(true)}
-              toConfirm={() => navigate("/register/professional/confirm")}
-            />
+            <FormRegisterProfessional showTerms={() => setTerms(true)} />
           ) : (
             <Benefits
               showTerms={() => setTerms(true)}
@@ -69,6 +70,7 @@ export const RegisterProfessional: React.FC<RegisterProfessionalProps> = () => {
           </FlexBox>
         </ContentContainer>
       </BodyContainer>
+
       <Modal isOpened={terms} onClose={() => setTerms(false)}>
         <FlexBox direction="column" gap={1} centralized>
           <h2>Termos e condições de uso</h2>

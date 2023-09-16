@@ -1,4 +1,5 @@
-import { FieldError } from "react-hook-form";
+import type { FieldError } from "react-hook-form";
+import { MaskedInputProps } from "react-text-mask";
 
 export interface InputProps extends React.ComponentProps<"input"> {
   label?: string;
@@ -6,4 +7,5 @@ export interface InputProps extends React.ComponentProps<"input"> {
   error?: FieldError;
   disabled?: boolean;
   width?: number;
+  maskedInput?: MaskedInputProps;
 }

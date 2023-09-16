@@ -2,13 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { registerUserSchema } from "./validation";
 import { Form, StyledTooltip } from "./style";
 import { Tooltip } from "components/Tooltip";
 import { Question } from "@phosphor-icons/react";
 import { FC } from "react";
 import { useUser } from "contexts/User";
+import { useNavigate } from "react-router-dom";
+import MaskedInput from "react-text-mask";
+import { mask, parseCPF, parsePhone } from "utils/masks";
 
 export type FormData = Zod.infer<typeof registerUserSchema>;
 
@@ -27,6 +30,8 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
     register,
     watch,
     formState: { errors },
+    getValues,
+    control,
   } = useForm<FormData>({
     resolver: zodResolver(registerUserSchema),
     mode: "onChange",
@@ -34,21 +39,27 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
 
   const terms = watch("terms");
   const name = watch("name");
+  const navigate = useNavigate();
 
   const onSubmit = async (data: FormData) => {
-    userRegister(
-      {
-        name: data.name,
-        password: data.password,
-        email: data.email,
-        phone: data.phone,
-        cpf: "65595505087",
-        role: "user",
-        profilePicture: "",
-        profileType: "user",
-      },
-      toConfirm
-    );
+    const cpf = parseCPF(data.cpf);
+    const phone = parsePhone(data.phone);
+    const zipCode = parsePhone(data.cep);
+
+    const registerResponse = await userRegister({
+      cpf,
+      zipCode,
+      phone,
+      name: data.name,
+      password: data.password,
+      email: data.email,
+      role: "user",
+      profilePicture: "",
+      profileType: "user",
+    });
+
+    if (!registerResponse) return;
+    navigate("/register/confirm");
   };
 
   return (
@@ -62,6 +73,7 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
           <p className="title">Crie sua conta Cada Casa</p>
           <p>Preencha com suas informações</p>
         </div>
+
         <Input.Text
           type="text"
           placeholder="Nome"
@@ -69,6 +81,7 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
           error={errors.name}
           {...register("name")}
         />
+
         <Input.Text
           type="email"
           placeholder="Email"
@@ -76,22 +89,74 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
           error={errors.email}
           {...register("email")}
         />
-        <Input.Text
-          type="text"
-          placeholder="Telefone"
-          aria-label="telefone"
-          error={errors.phone}
-          {...register("phone")}
+
+        <Controller
+          control={control}
+          name={"cpf"}
+          render={({ field }) => (
+            <MaskedInput
+              {...field}
+              mask={mask.cpf}
+              render={(ref, props) => (
+                <Input.Text
+                  type="text"
+                  placeholder="CPF"
+                  aria-label="cpf"
+                  error={errors.cpf}
+                  ref={ref as any}
+                  {...props}
+                />
+              )}
+            />
+          )}
         />
+
+        <Controller
+          control={control}
+          name={"phone"}
+          render={(blabla) => {
+            return (
+              <MaskedInput
+                {...blabla.field}
+                mask={mask.phone9}
+                render={(ref, props) => (
+                  <Input.Text
+                    type="text"
+                    placeholder="Telefone"
+                    aria-label="telefone"
+                    ref={ref as any}
+                    error={errors.phone}
+                    {...props}
+                  />
+                )}
+              />
+            );
+          }}
+        />
+
         <FlexBox gap={1} alignItems="center">
-          <Input.Text
-            type="text"
-            placeholder="CEP"
-            aria-label="CEP"
-            error={errors.cep}
-            {...register("cep")}
+          <Controller
+            control={control}
+            name={"cep"}
+            render={({ field }) => (
+              <MaskedInput
+                {...field}
+                mask={mask.zipCode}
+                render={(ref, props) => (
+                  <Input.Text
+                    type="text"
+                    placeholder="CEP"
+                    aria-label="CEP"
+                    error={errors.cep}
+                    ref={ref as any}
+                    {...props}
+                  />
+                )}
+              />
+            )}
           />
-          <Tooltip
+
+          {/* <Tooltip
             maxWidth={170}
             content={
               <StyledTooltip full direction="column" gap={1}>
@@ -104,8 +169,9 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
               </StyledTooltip>
             }
             trigger={<Question size={"1.5rem"} weight="bold" />}
-          />
+          /> */}
         </FlexBox>
+
         <Input.Text
           type="password"
           placeholder="Senha"

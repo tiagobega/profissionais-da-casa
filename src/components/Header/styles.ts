@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from "styled-components";
 
 interface LoginContainer {
-  role: 'logout' | 'admin' | 'customer' | 'professional'
+  role: "logout" | "admin" | "customer" | "professional";
 }
 
 export const HeaderContainer = styled.header`
@@ -20,7 +20,7 @@ export const HeaderContainer = styled.header`
       }
     }
   `}
-`
+`;
 
 export const LoginContainer = styled.div<LoginContainer>`
   ${({ theme, role }) => css`
@@ -29,12 +29,17 @@ export const LoginContainer = styled.div<LoginContainer>`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${role == 'logout'
-      ? 'transparent'
-      : role == 'admin'
+    background-color: ${role == "logout"
+      ? "transparent"
+      : role == "admin"
       ? theme.color.brand.purple
-      : role == 'professional'
+      : role == "professional"
       ? theme.color.base[200]
-      : role == 'customer' && theme.color.brand.orange};
+      : role == "customer" && theme.color.brand.orange};
   `}
-`
+`;
+export const LoginName = styled.p`
+  ${() => css`
+    min-width: max-content;
+  `}
+`;

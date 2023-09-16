@@ -7,6 +7,7 @@ export const InputContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     gap: 0.5rem;
+
     input {
       background-color: white;
       border: 2px solid ${theme.color.base[300]};
@@ -18,6 +19,10 @@ export const InputContainer = styled.div`
         background: transparent;
         font-size: 1rem;
       }
+    }
+
+    input[type=file] {
+      
     }
 
     p {
