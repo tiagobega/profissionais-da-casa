@@ -54,8 +54,9 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
       password: data.password,
       email: data.email,
       role: "user",
-      profilePicture: "",
       profileType: "user",
+
+      profilePicture: "",
     });
 
     if (!registerResponse) return;

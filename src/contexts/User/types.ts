@@ -1,8 +1,11 @@
 import type { Role } from "constants/roles";
 import type {
+  CreateManyLocationData,
+  CreateManySocialMediaData,
   Me,
   Professional,
   ProfessionalSignUpData,
+  SendFileData,
   SignIn,
   SignInData,
   SignUp,
@@ -12,17 +15,42 @@ import type {
 
 export interface UserContext {
   logged: boolean;
-  getMe: () => Promise<Me | false>;
-  putMe: (data: Partial<Me>) => Promise<Me | false>;
+
+  //ROLE FUNCTIONS
   getRoles: () => Promise<Role[] | false>;
   getSingleRole: (id: string) => Promise<SingleRole | false>;
+
+  //USER FUNCTIONS
+  getMe: () => Promise<Me | false>;
+  putMe: (data: Partial<Me>) => Promise<Me | false>;
   login: (
-    params: SignInData,
+    data: SignInData,
     callback: (user: Me) => void
   ) => Promise<SignIn | false>;
   logout: (callback: () => void) => void;
-  register: (params: SignUpData) => Promise<SignUp | false>;
-  registerProfessional: (data: ProfessionalSignUpData) => Promise<Professional>;
+  register: (data: SignUpData) => Promise<SignUp | false>;
+
+  //PROFESSIONAL FUNCTIONS
+  registerProfessional: (data: ProfessionalSignUpData) => Promise<false |Professional>;
+  putProfessional: (data: Partial<Professional>) => Promise<false | Professional>;
+  getProfessional: (id: Professional["id"]) => Promise<false |Professional>;
+  getAllProfessionals: () => Promise<false | Professional>;
+  deleteProfessional: (id: Professional["id"]) => Promise<false |Professional>;
+  //FILE FUNCTIONS
+
+  sendFile: (data: SendFileData) => Promise<string | false>;
+
+  //LOCATION FUNCTIONS
+
+  createLocation: (data: CreateManyLocationData) => Promise<any>;
+
+  //SOCIALMEDIA FUNCTIONS
+
+  createSocialMedias: (data: CreateManySocialMediaData) => Promise<any>;
+
+  //FAQ FUNCTIONS
+  //PROJECT FUNCTIONS
+
   registeredUser?: Me;
   currentUser?: Me;
   currentProfessional?: Professional;

@@ -35,7 +35,9 @@ export interface Me {
 /**
  *
  */
-export interface Professional {}
+export interface Professional {
+  id: string;
+}
 
 /**
  * RESPONSE /ACCOUNT/SIGNIN
@@ -109,12 +111,14 @@ export type ProfessionalSignUpData = {
   phone: string;
   formationInstitute: string;
   formationDetails: string;
-  formation: boolean;
+  formation: string;
   caucrea: string;
   yearConclusion: string;
   tags: string;
   profilePicture: string;
   backgroundPicture: string;
+  birthDate: string;
+  onlineAppointment: boolean;
 };
 
 /**
@@ -123,4 +127,46 @@ export type ProfessionalSignUpData = {
 export type SubPlanData = {
   name: string;
   isActive: boolean;
+};
+
+/**
+ * DATA TO SEND FILE TO STORAGE
+ */
+
+export type SendFileData = {
+  filename: string;
+  content: string;
+  contentType: string;
+  contentEncoding?: string;
+  acl?:
+    | "private"
+    | "public-read"
+    | "public-read-write"
+    | "aws-exec-read"
+    | "authenticated-read"
+    | "bucket-owner-read"
+    | "bucket-owner-full-control"
+    | "log-delivery-write";
+};
+
+/**
+ * DATA TO CREATE STATES
+ */
+
+export type CreateManyLocationData = {
+  id: string;
+  /**
+   * string separada por virgula
+   * @example "SP,PR,RS"
+   */
+  states: string;
+};
+
+/**
+ * DATA TO CREATE SOCIAL MEDIA
+ */
+
+export type CreateManySocialMediaData = {
+  id: string;
+  socialMedias: any;
 };

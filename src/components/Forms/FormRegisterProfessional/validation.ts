@@ -60,22 +60,22 @@ export const registerProfessionalSchema = z
     cpf: z
       .string({ required_error: formErrors.ERROR_REQUIRED })
       .min(14, formErrors.ERROR_INVALID),
-    birthDate: z
+    birthdate: z
       .string({ required_error: formErrors.ERROR_REQUIRED })
       .min(10, formErrors.ERROR_INVALID),
     password: z.string().min(8, minChars(8)),
     passwordConfirm: z.string().min(8, minChars(8)),
-    terms: z.boolean(),
     registerTech: z.string().min(1, formErrors.ERROR_REQUIRED),
     companyName: z.string().min(1, formErrors.ERROR_REQUIRED),
     cnpj: z.string().min(14, formErrors.ERROR_INVALID),
     formation: z.string().min(1, formErrors.ERROR_REQUIRED),
     institution: z.string().min(1, formErrors.ERROR_REQUIRED),
-    creaCau: z.string(),
     formationLevel: z.string().min(1, formErrors.ERROR_REQUIRED),
-    formationDetail: z.string().min(1, formErrors.ERROR_REQUIRED),
-    formationYear: z.string().min(1, formErrors.ERROR_REQUIRED),
-    onlineApointment: z.boolean(),
+    formationYear: z.string().min(4, formErrors.ERROR_REQUIRED),
+    formationDetail: z.string(),
+    terms: z.boolean(),
+    creaCau: z.string(),
+    onlineAppointment: z.boolean(),
     linkedin: z.string(),
     facebook: z.string(),
     instagram: z.string(),
@@ -96,7 +96,14 @@ export const registerProfessionalSchema = z
     message: "Digitar a mesma senha novamente",
     path: ["passwordConfirm"],
   })
-  .refine((data) => data.terms === true, {
+  .refine((data) => data.terms, {
     message: "É obrigatório o aceite dos termos e condições",
     path: ["agree"],
-  });
+  })
+  .refine(
+    (data) => data.onlineAppointment || !!data.states.length,
+    {
+      message: "Pelo menos um dos campos abaixo deve ser preenchido",
+      path: ["states"],
+    }
+  );

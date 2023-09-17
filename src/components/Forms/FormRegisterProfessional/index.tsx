@@ -12,9 +12,19 @@ import { useUser } from "contexts/User";
 import MaskedInput from "react-text-mask";
 import { mask, parseCEP, parseCNPJ, parseCPF, parsePhone } from "utils/masks";
 import { states } from "constants/states";
+import { formationLevels } from "constants/formationLevels";
+import { FileReaderQueue, QueueFile } from "utils/FileReaderQueue";
 
 export type FormData = Zod.infer<typeof registerProfessionalSchema>;
 
+type FileName = "background" | "profile" | "portfolio";
+type FilePromise = Promise<{ name: FileName; url: string | false }>;
+type CreateImageFileParams = {
+  [key in FileName]?: {
+    file: File;
+    userName: string;
+  };
+};
 interface FormRegisterProfessionalProps {
   showTerms: () => void;
 }
@@ -33,10 +43,101 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
     mode: "onChange",
     defaultValues: {
       states: [],
+      ...(() => {
+        if (import.meta.env.MODE !== "development") return {};
+
+        return {
+          cep: "04144-020",
+          cpf: "410.482.908-08",
+          email: "tiago@fillet.com.br",
+          birthdate: "04/05/1999",
+          cnpj: "11.111.111/0001-01",
+          companyName: "company name",
+          creaCau: "123456789",
+          name: "teste",
+          phone: "(11) 96444-0491",
+          formationLevel: "Superior Completo",
+          formationYear: "2005",
+          formationDetail: "Detallhe importante",
+          institution: "instituiição",
+          password: "P@ss475866",
+          passwordConfirm: "P@ss475866",
+          onlineAppointment: true,
+          otherSocials: "outras",
+          facebook: "facebook",
+          formation: "Arquiteto",
+          linkedin: "linkedIn",
+          instagram: "instagram",
+          pinterest: "pinterest",
+          states: ["SP"],
+          terms: true,
+          registerTech: "123456789",
+        };
+      })(),
     },
   });
   const { color } = useTheme();
-  const { register: userRegister, registerProfessional, getMe } = useUser();
+
+  const {
+    register: userRegister,
+    registerProfessional,
+    getMe,
+    sendFile,
+    putMe,
+    createLocation,
+    createSocialMedias,
+  } = useUser();
+
+  const createImageFile = async (params: CreateImageFileParams = {}) => {
+    const fileReaderQueue = new FileReaderQueue();
+
+    Object.keys(params).forEach((key) => {
+      const param = params[key as FileName];
+      if (!param) return;
+      fileReaderQueue.addFileToQueue(param.file, key as FileName);
+    });
+
+    const promises: FilePromise[] = [];
+
+    await new Promise<{
+      [key in FileName]?: QueueFile;
+    }>((resolve) => {
+      fileReaderQueue.readQueue();
+
+      fileReaderQueue.onLoadEnd = (files) => {
+        Object.keys(files).forEach((filename) => {
+          const { fileBase64, file } = files[filename];
+
+          if (!fileBase64) return;
+
+          const filePromise: FilePromise = new Promise(async (fileResolve) => {
+            const fileResponse = await sendFile({
+              filename: `${filename}`,
+              content: fileBase64,
+              contentType: file.type,
+            });
+
+            fileResolve({ url: fileResponse, name: filename as FileName });
+          });
+
+          promises.push(filePromise);
+        });
+
+        resolve(files);
+      };
+    });
+
+    const promiseResult = await Promise.all(promises);
+
+    const fileLinks: { [key in FileName]?: string } = {};
+
+    promiseResult.forEach((result) => {
+      if (!result.url) return;
+      fileLinks[result.name] = result.url;
+    });
+
+    return fileLinks;
+  };
 
   const onSubmit = async (data: FormData) => {
     const cpf = parseCPF(data.cpf);
@@ -44,50 +145,122 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
     const zipCode = parseCEP(data.cep);
     const cnpj = parseCNPJ(data.cnpj);
 
-    console.log(data);
+    /**
+     * REGISTER USER
+     */
+    const userResponse = await userRegister({
+      cpf,
+      zipCode,
+      phone: phone,
 
-    // const userResponse = await userRegister({
-    //   cpf,
-    //   name: data.name,
-    //   password: data.password,
-    //   email: data.email,
-    //   phone: data.phone,
-    //   zipCode: data.cep,
-    //   role: "user",
-    //   profilePicture: "",
-    //   profileType: "user",
-    // });
+      name: data.name,
+      password: data.password,
+      email: data.email,
 
-    // if (!userResponse) return;
+      role: "professional",
+      profileType: "user",
 
-    // const meResponse = await getMe();
+      profilePicture: "",
+    });
 
-    // if (!meResponse) return;
+    if (!userResponse) return;
 
-    // registerProfessional({
-    //   caucrea: "",
-    //   cnpj: data.cnpj,
-    //   name: data.name,
-    //   phone: data.phone,
-    //   companyName: data.companyName,
-    //   formationDetails: data.institution,
-    //   formationInstitute: data.creaCau,
-    //   professionalRegister: data.registerTech,
-    //   yearConclusion: data.formationYear,
-    //   userId: meResponse.id,
-    //   zipCode: data.cep,
-    //   subscriptionPlanId: "067e017d-7603-4c56-b9fb-50c25f5fb49d",
+    /**
+     * CREATE FILES
+     */
 
-    //   formation: true,
-    //   tags: "",
-    //   profilePicture: "",
-    //   backgroundPicture: "",
-    // });
+    const images: CreateImageFileParams = {};
+
+    if (data.profilePicture[0]) {
+      data.profilePicture[0].text().then();
+      images.profile = {
+        file: data.profilePicture[0],
+        userName: data.name,
+      };
+    }
+
+    if (data.backgroundPicture[0]) {
+      images.background = {
+        file: data.backgroundPicture[0],
+        userName: data.name,
+      };
+    }
+
+    if (data.portfolio[0]) {
+      images.portfolio = {
+        file: data.portfolio[0],
+        userName: data.name,
+      };
+    }
+
+    const imagesResponse = await createImageFile(images);
+
+    /**
+     * UPDATE USER IMAGE
+     */
+    putMe({
+      profilePicture: imagesResponse.profile || "",
+    });
+
+    /**
+     * CREATE PROFESSIONAL
+     */
+    const professionalResponse = await registerProfessional({
+      cnpj,
+      phone,
+      zipCode,
+
+      caucrea: data.creaCau,
+      name: data.name,
+      companyName: data.companyName,
+      formationDetails: data.formationDetail,
+      formationInstitute: data.institution,
+      professionalRegister: data.registerTech,
+      yearConclusion: data.formationYear,
+      birthDate: data.birthdate,
+      userId: userResponse.user.id,
+      subscriptionPlanId: "dcc20647-1385-4f8d-949a-cfe53653cf4a",
+      formation: data.formation,
+      onlineAppointment: data.onlineAppointment,
+
+      tags: "",
+
+      profilePicture: imagesResponse.profile || "",
+      backgroundPicture: imagesResponse.background || "",
+    });
+
+    if (!professionalResponse) return;
+
+    /**
+     * CREATE LOCATIONS
+     */
+
+    if (data.states.length) {
+      createLocation({
+        id: professionalResponse.id,
+        states: data.states.join(","),
+      });
+    }
+
+    /**
+     * CREATE SOCIAL MEDIAS
+     */
+    if (
+      data.instagram ||
+      data.facebook ||
+      data.pinterest ||
+      data.otherSocials ||
+      data.linkedin
+    ) {
+      //create socialMedia
+      createSocialMedias({
+        id: professionalResponse.id,
+        socialMedias: [],
+      });
+    }
   };
 
   const terms = watch("terms");
-
-  console.log(errors);
 
   return (
     <Form
@@ -204,7 +377,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
               {/* CEP */}
               <Controller
                 control={control}
-                name={"birthDate"}
+                name={"birthdate"}
                 render={({ field }) => (
                   <MaskedInput
                     {...field}
@@ -215,7 +388,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
                         label={"Data de Nascimento"}
                         placeholder="Data de Nascimento"
                         aria-label="Data de Nascimento"
-                        error={errors.birthDate}
+                        error={errors.birthdate}
                         ref={ref as any}
                         {...props}
                       />
@@ -349,10 +522,11 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
               />
             </FlexBox>
             <FlexBox direction="column" gap={2} full>
-              <Input.Text
+              <Input.Select
+                options={formationLevels}
                 placeholder="Nivel de Formação"
                 aria-label="Nivel de Formação"
-                label="Nivel de Formação"
+                label={"Nivel de Formação"}
                 error={errors.formationLevel}
                 {...register("formationLevel")}
               />
@@ -379,16 +553,20 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
         <fieldset className="fieldsetDivider">
           <legend>4) Área de Atuação</legend>
           <FlexBox gap={2} direction="column" full>
+            {errors.states && (
+              <p className="fieldError">{errors.states.message}</p>
+            )}
+
             <Input.Checkbox
+              subject={"onlineAppointment"}
               label={"Presto serviço a distancia."}
-              {...register("onlineApointment")}
+              {...register("onlineAppointment")}
             />
 
             <h4>
               Selecione abaixo os estados que você presta serviço
               presencialmente:
             </h4>
-            {errors.states && <p>{errors.states.message}</p>}
             <FlexBox gap={2} full wrap={"wrap"}>
               {states.map((state) => (
                 <Input.Checkbox
@@ -396,7 +574,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
                   subject={state.id}
                   label={state.name}
                   value={state.id}
-                  {...register(`states`, { required: false })}
+                  {...register(`states`)}
                 />
               ))}
             </FlexBox>

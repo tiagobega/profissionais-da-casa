@@ -20,7 +20,7 @@ export const Checkbox = forwardRef(
     return (
       <CheckboxContainer role="checkbox">
         <FlexBox gap={0.5} alignItems="center">
-          <input type={type} {...rest} id={rest.name} ref={forwardedRef} />
+          <input type={type} {...rest} id={subject} ref={forwardedRef} />
           <label htmlFor={subject}>{label}</label>
         </FlexBox>
         {error && (

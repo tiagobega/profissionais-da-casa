@@ -4,7 +4,7 @@ import { UserUtils } from "../utils/user";
 export const API_POST_ROUTES = {
   SIGN_IN: "/user/signin",
   SIGN_UP: "/user/signup",
-  
+
   ROLE_SINGLE: "/role/getone",
   ROLE_CREATE: "/role/create",
   ROLE_DELETE: "/role/delete",
@@ -12,18 +12,29 @@ export const API_POST_ROUTES = {
   SUBPLAN_CREATE: "/subplan/create",
   SUBPLAN_SINGLE: "/subplan/getone",
   SUBPLAN_DELETE: "/subplan/delete",
+
+  PROFESSIONAL_CREATE: "/proprofile/create",
+  PROFESSIONAL_SINGLE: "/proprofile/getone",
+  PROFESSIONAL_DELETE: "/proprofile/delete",
+
+  LOCATION_CREATE_MANY: "/location/createmany",
+  LOCATION_CREATE: "/location/create",
+
+  FILE_UPLOAD: "/file/upload",
 } as const;
 
 export const API_GET_ROUTES = {
   USER_ME: "/user/me",
   ROLE_ALL: "/role/getall",
   SUBPLAN_ALL: "/subplan/getall",
+  PROFESSIONAL_ALL: "/proprofile/getall",
 } as const;
 
 export const API_PUT_ROUTES = {
   USER_ME: "/user/me",
   ROLE_EDIT: "/role/edit",
   SUBPLAN_EDIT: "/subplan/edit",
+  PROFESSIONAL_EDIT: "/proprofile/edit",
 } as const;
 
 export const API_DELETE_ROUTES = {};

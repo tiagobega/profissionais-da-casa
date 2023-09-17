@@ -22,6 +22,10 @@ export const Form = styled.form`
     .disclaimer {
       font-size: 0.8rem;
     }
+
+    .fieldError {
+      color: red;
+    }
   `}
 `;
 export const FullWidthFormContainer = styled(FlexBox)`

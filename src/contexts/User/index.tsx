@@ -164,6 +164,36 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
     return response;
   };
 
+  const updateProfessional: UserContext["updateProfessional"] = async () => {
+
+  }
+
+  const sendFile: UserContext["sendFile"] = async (params) => {
+    const response = await UserService.sendFile(params);
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
+    }
+
+    return response;
+  };
+  
+  const createLocations: UserContext["createLocation"] = async (params) => {
+    const response = await UserService.createStates(params);
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
+    }
+
+    return response;
+  };
+
+  const createSocialMedia: UserContext["createSocialMedias"] = async (params) => {
+
+  }
+
   useEffect(() => {
     (async () => {
       if (!tokenRequest.success) {
@@ -193,6 +223,9 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         getRoles,
         getSingleRole,
         registerProfessional,
+        sendFile,
+        createStates,
+        createSocialMedia,
         registeredUser,
         currentUser,
         currentProfessional,
