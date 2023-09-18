@@ -10,7 +10,7 @@ import { SignOut } from "@phosphor-icons/react";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { currentUser, logged, logout } = useUser();
+  const { currentUser, logged, logout, myProfessional } = useUser();
 
   const getRole = () => {
     if (!currentUser) return "logout";
@@ -62,10 +62,22 @@ const Header = () => {
                 >
                   Painel Admim
                 </Button>
-              ) : (
+              ) : getRole() == "user" ? (
                 <Button variant="text" onClick={() => navigate("/profile/")}>
                   Meu perfil
                 </Button>
+              ) : (
+                getRole() == "professional" &&
+                myProfessional && (
+                  <Button
+                    variant="text"
+                    onClick={() =>
+                      navigate(`/professional/${myProfessional?.id}`)
+                    }
+                  >
+                    Meu perfil
+                  </Button>
+                )
               )}
               <Button small onClick={() => logout(() => navigate("/"))}>
                 <SignOut size={20} weight="bold" />

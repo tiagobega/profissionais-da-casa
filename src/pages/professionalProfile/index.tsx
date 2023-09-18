@@ -12,11 +12,12 @@ import {
   ReviewContainer,
   ReviewSection,
 } from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CarouselButton, MarginContainer } from "styles/commonComponents";
 import { ProfileManager } from "./ProfileManager";
 import { StarMeter } from "components/StarMeter";
 import { useUser } from "contexts/User";
+import { Professional } from "services/User/types";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -25,12 +26,28 @@ export const ProfessionalProfilePage: React.FC<
   const { color } = useTheme();
   const navigate = useNavigate();
   const theme = useTheme();
-  const id = useParams();
+  const { id } = useParams();
+  console.log(id);
   const [isOwn, setIsOwn] = useState(false);
+  const [pageProfessional, setPageProfessional] = useState<Professional>();
 
   const [displayProject, setDisplayProject] = useState(0);
   const [displayReview, setDisplayReview] = useState(0);
-  const { currentUser } = useUser();
+  const { currentUser, myProfessional, getProfessional } = useUser();
+
+  useEffect(() => {
+    (async () => {
+      if (myProfessional && myProfessional.id == String(id)) {
+        setIsOwn(true);
+        setPageProfessional(myProfessional);
+      } else {
+        setIsOwn(false);
+        const response = await getProfessional(String(id));
+        if (!response) return;
+        setPageProfessional(response);
+      }
+    })();
+  }, [myProfessional]);
 
   const projectList = [
     {
@@ -88,7 +105,7 @@ export const ProfessionalProfilePage: React.FC<
     ""
   );
 
-  console.log(carrouselButtonArray);
+  if (!pageProfessional) return null;
   return (
     <>
       <GrayContainer isOwn={isOwn}>
@@ -252,7 +269,7 @@ export const ProfessionalProfilePage: React.FC<
               <FlexBox full justifyContent="center" gap={1} p={1}>
                 {carrouselButtonArray.map((item, index) => (
                   <CarouselButton
-                    isActive={displayReview == index}
+                    isActive={displayReview / 2 == index}
                     className="carousel-btn"
                     onClick={() => setDisplayReview(index * 2)}
                     key={item.id}
