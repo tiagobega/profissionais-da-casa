@@ -2,9 +2,17 @@ import axios from "axios";
 import { UserUtils } from "../utils/user";
 
 export const API_POST_ROUTES = {
+  EVALUATION_SINGLE: "/evaluation/getone",
+  EVALUATION_CREATE: "/evaluation/create",
+  EVALUATION_DELETE: "/evaluation/delete",
+
   FAQ_BLOCK_CREATE: "/faq_block/create",
   FAQ_BLOCK_SINGLE: "/faq_block/getone",
   FAQ_BLOCK_DELETE: "/faq_block/delete",
+
+  FAQ_QUESTION_CREATE: "/faq_question/create",
+  FAQ_QUESTION_SINGLE: "/faq_question/getone",
+  FAQ_QUESTION_DELETE: "/faq_question/delete",
 
   FILE_UPLOAD: "/file/upload",
 
@@ -27,25 +35,50 @@ export const API_POST_ROUTES = {
   ROLE_CREATE: "/role/create",
   ROLE_DELETE: "/role/delete",
 
-  SIGN_IN: "/user/signin",
-  SIGN_UP: "/user/signup",
+  USER_SIGN_IN: "/user/signin",
+  USER_SIGN_UP: "/user/signup",
+  USER_DELETE: "/user/delete",
+  USER_FORGOT_PASSWORD: "/user/forgotpass",
 } as const;
 
 export const API_GET_ROUTES = {
+  EVALUATION_ALL: "/evaluation/getall",
+
   FAQ_BLOCK_ALL: "/faq_block/getall",
+
+  FAQ_QUESTION_ALL: "/faq_block/getall",
+
   PORTFOLIO_PROJECT_ALL: "/portproj/getall",
+
   PROFESSIONAL_ALL: "/proprofile/getall",
+
   ROLE_ALL: "/role/getall",
+
   SUBPLAN_ALL: "/subplan/getall",
+
   USER_ME: "/user/me",
+  USER_ALL: "/user/all",
 } as const;
 
 export const API_PUT_ROUTES = {
+  EVALUATION_EDIT: "/evaluation/edit",
+
+  FAQ_BLOCK_EDIT: "/faq_block/edit",
+
+  FAQ_QUESTION_EDIT: "/faq_question/edit",
+
   PORTFOLIO_PROJECT_EDIT: "/portproj/edit",
+
   PROFESSIONAL_EDIT: "/proprofile/edit",
+
   ROLE_EDIT: "/role/edit",
+
   SUBPLAN_EDIT: "/subplan/edit",
+
   USER_ME: "/user/me",
+  USER_EDIT: "/user/edit",
+  USER_PASSWORD: "/user/me/passowrd",
+  USER_RESET_PASSWORD: "/user/resetpass",
 } as const;
 
 export const API_DELETE_ROUTES = {};

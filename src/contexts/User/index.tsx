@@ -39,11 +39,20 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
   };
 
   //EVALUATION
-  const createEvaluation = () => {};
-  const putEvaluation = () => {};
-  const deleteEvaluation = () => {};
-  const getEvaluation = () => {};
-  const getAllEvaluation = () => {};
+  const createEvaluation: UserContext['createEvaluation'] = async (data) => {
+    const response = await UserService.sendFile(params);
+
+    if (response instanceof AxiosError) {
+      handleErrors(response);
+      return false;
+    }
+
+    return response;
+  };
+  const putEvaluation: UserContext['putEvaluation'] = async (data) => {};
+  const deleteEvaluation: UserContext['deleteEvaluation'] = () => {};
+  const getEvaluation: UserContext['getEvaluation'] = () => {};
+  const getAllEvaluation: UserContext['getAllEvaluation'] = () => {};
 
   //FAQ
   const createFAQ = () => {};
@@ -265,6 +274,11 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
       const meResponse = await getMe();
 
       if (!meResponse) return;
+
+      if(meResponse.role === "professional") {
+        
+      }
+
       setLogged(true);
     })();
   }, []);

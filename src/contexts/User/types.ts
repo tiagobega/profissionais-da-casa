@@ -1,27 +1,48 @@
-import type { Role } from "constants/roles";
 import type {
   CreateLocationData,
-  CreateManySocialMediaData,
   Me,
   Professional,
   ProfessionalSignUpData,
   ProfessionalUpdateData,
+  Role,
   SendFileData,
-  SignIn,
   SignInData,
-  SignUp,
+  SignInResponse,
   SignUpData,
-  SingleRole,
+  SignUpResponse,
 } from "services/User/types";
 
+import {
+  AllEvaluationResponse,
+  CreateEvaluationData,
+  DeleteEvaluationData,
+  DeleteResponse,
+  Evaluation,
+  SingleEvaluationData,
+  UpdateEvaluationData,
+} from "services/User/types/";
+
+export type UserContextPromise<T> = Promise<T | false>;
+
 export interface UserContext {
+  //EVALUATION FUNCTIONS
+  createEvaluation: (
+    data: CreateEvaluationData
+  ) => UserContextPromise<Evaluation>;
+  deleteEvaluation: (
+    data: DeleteEvaluationData
+  ) => UserContextPromise<DeleteResponse>;
+  putEvaluation: (data: UpdateEvaluationData) => UserContextPromise<Evaluation>;
+  getEvaluation: (data: SingleEvaluationData) => UserContextPromise<Evaluation>;
+  getAllEvaluation: () => UserContextPromise<AllEvaluationResponse>;
+
   //FAQ FUNCTIONS
 
   //ROLE FUNCTIONS
   roles?: Role[];
 
   getRoles: () => Promise<Role[] | false>;
-  getSingleRole: (id: string) => Promise<SingleRole | false>;
+  getSingleRole: (id: string) => Promise<Role | false>;
 
   //PROFESSIONAL FUNCTIONS
 
@@ -56,14 +77,13 @@ export interface UserContext {
   currentUser?: Me;
   logged: boolean;
 
-  getMe: () => Promise<Me | false>;
-  putMe: (data: Partial<Me>) => Promise<Me | false>;
-  login: (
-    data: SignInData,
-    callback: (user: Me) => void
-  ) => Promise<SignIn | false>;
+  putMe: (data: Partial<Me>) => UserContextPromise<Me>;
+  register: (data: SignUpData) => UserContextPromise<SignUpResponse>;
+  login: (data: SignInData) => UserContextPromise<SignInResponse>;
+
+  getMe: () => UserContextPromise<Me>;
+
   logout: (callback: () => void) => void;
-  register: (data: SignUpData) => Promise<SignUp | false>;
 }
 
 export interface ContextProviderProps {
