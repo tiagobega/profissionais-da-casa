@@ -84,8 +84,8 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
     getMe,
     sendFile,
     putMe,
-    createLocation,
-    createSocialMedias,
+    // createLocations,
+    // createSocialMedia,
   } = useUser();
 
   const createImageFile = async (params: CreateImageFileParams = {}) => {
@@ -219,7 +219,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       yearConclusion: data.formationYear,
       birthDate: data.birthdate,
       userId: userResponse.user.id,
-      subscriptionPlanId: "dcc20647-1385-4f8d-949a-cfe53653cf4a",
+      subscriptionPlanId: "d56c7b99-3b66-4681-8ec3-a9b44d800178",
       formation: data.formation,
       onlineAppointment: data.onlineAppointment,
 
@@ -236,10 +236,10 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
      */
 
     if (data.states.length) {
-      createLocation({
-        id: professionalResponse.id,
-        states: data.states.join(","),
-      });
+      // createLocations({
+      //   id: professionalResponse.id,
+      //   states: data.states.join(","),
+      // });
     }
 
     /**
@@ -252,11 +252,10 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       data.otherSocials ||
       data.linkedin
     ) {
-      //create socialMedia
-      createSocialMedias({
-        id: professionalResponse.id,
-        socialMedias: [],
-      });
+      // createSocialMedias({
+      //   id: professionalResponse.id,
+      //   socialMedias: [],
+      // });
     }
   };
 

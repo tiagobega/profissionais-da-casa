@@ -9,9 +9,6 @@ export interface GenericError {
   messages: string[];
 }
 
-/**
- * RESPONSE /ACCOUNT/ME
- */
 export interface Me {
   id: string;
   cpf: string;
@@ -30,13 +27,49 @@ export interface Me {
   email: string;
   phone: string;
   createdAt: string;
+  leads: [];
 }
 
-/**
- *
- */
+export interface SocialMedia {}
+
+export interface ProLocation {}
+
+export interface PortfolioProject {
+  id: string;
+  name: string;
+  professionalId: string;
+  description: string;
+  images: string[];
+}
+
+export interface Evaluation {}
+
+export interface Lead {}
+
 export interface Professional {
   id: string;
+  userId: string;
+  subscriptionPlanId: string;
+  name: string;
+  professionalRegister: string;
+  companyName: string;
+  cnpj: string;
+  phone: string;
+  formationInstitute: string;
+  formationDetails: string;
+  formation: string;
+  caucrea: string;
+  yearConclusion: string;
+  tags: "";
+  profilePicture: string;
+  backgroundPicture: string;
+  onlineAppointment: boolean;
+  birthDate: string;
+  locations: ProLocation[];
+  socialMedias: SocialMedia[];
+  portfolioProjects: PortfolioProject[];
+  evaluations: Evaluation[];
+  leads: Lead[];
 }
 
 /**
@@ -121,6 +154,15 @@ export type ProfessionalSignUpData = {
   onlineAppointment: boolean;
 };
 
+export type ProfessionalUpdateData = Partial<
+  Omit<
+    Professional,
+    "locations" | "socialMedias" | "portfolioProjects" | "evaluations" | "leads"
+  >
+> & {
+  id: Professional["id"];
+};
+
 /**
  * DATA TO CREATE SUBPLAN
  */
@@ -153,7 +195,7 @@ export type SendFileData = {
  * DATA TO CREATE STATES
  */
 
-export type CreateManyLocationData = {
+export type CreateLocationData = {
   id: string;
   /**
    * string separada por virgula
@@ -170,3 +212,14 @@ export type CreateManySocialMediaData = {
   id: string;
   socialMedias: any;
 };
+
+/**
+ * DATA TO CREATE SUBPLAN
+ */
+
+export type CreateSubplanData = {
+  name: string;
+  isActive: boolean;
+};
+
+export type PutSubplanData = Subplan;
