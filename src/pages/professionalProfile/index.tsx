@@ -16,6 +16,7 @@ import { useState } from "react";
 import { CarouselButton, MarginContainer } from "styles/commonComponents";
 import { ProfileManager } from "./ProfileManager";
 import { StarMeter } from "components/StarMeter";
+import { useUser } from "contexts/User";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -23,11 +24,13 @@ export const ProfessionalProfilePage: React.FC<
 > = () => {
   const { color } = useTheme();
   const navigate = useNavigate();
+  const theme = useTheme();
   const id = useParams();
   const [isOwn, setIsOwn] = useState(false);
 
   const [displayProject, setDisplayProject] = useState(0);
   const [displayReview, setDisplayReview] = useState(0);
+  const { currentUser } = useUser();
 
   const projectList = [
     {
@@ -143,13 +146,15 @@ export const ProfessionalProfilePage: React.FC<
               </ul>
             </FlexBox>
             {!isOwn && (
-              <Button
-                variant="primary"
-                background={color.brand.yellowLight}
-                width={10}
-              >
-                Entrar em contato
-              </Button>
+              <FlexBox direction="column">
+                <Button
+                  variant="primary"
+                  background={color.brand.yellowLight}
+                  width={10}
+                >
+                  Entrar em contato
+                </Button>
+              </FlexBox>
             )}
           </FlexBox>
         </HeaderContainer>
@@ -220,7 +225,18 @@ export const ProfessionalProfilePage: React.FC<
           </FlexBox>
         </RatingContainer>
         <FlexBox direction="column" alignItems="center" gap={3}>
-          <h3>Depoimentos</h3>
+          <FlexBox full centralized gap={2}>
+            <h3>Depoimentos</h3>
+            {currentUser?.roleRel.name != "professional" && (
+              <Button
+                variant="outline"
+                color={theme.color.secondary.lightTeal}
+                small
+              >
+                Adicionar
+              </Button>
+            )}
+          </FlexBox>
           <FlexBox full justifyContent="center" alignItems="flex-start" gap={5}>
             <ReviewContainer direction="column" alignItems="center" gap={1}>
               <FlexBox gap={2}>
