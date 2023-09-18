@@ -1,19 +1,25 @@
 import { CaretLeft, MapPin, Star } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
-import { Router, useNavigate } from "react-router-dom";
+import { Router, useNavigate, useParams } from "react-router-dom";
 import { useTheme } from "styled-components";
 import { MarginContainer } from "styles/commonComponents";
 import profile from "assets/images/profile-placeholder.jpeg";
 import { Title, Profile, Header } from "./styles";
 import { FormSendReview } from "components/Forms/FormSendReview";
 import { projectList } from "pages/myProjects";
+import { useUser } from "contexts/User";
 
 export interface NewReviewPageProps {}
 
 export const NewReviewPage: React.FC<NewReviewPageProps> = () => {
   const { color } = useTheme();
   const navigate = useNavigate();
+  const professionalId = useParams();
+  const { currentUser } = useUser();
+  const userId = currentUser?.id;
+  //TODO - PUXAR O PROFISSIONAL PELO ID DOS PARAMS
+
   return (
     <MarginContainer>
       <FlexBox my={2}>
