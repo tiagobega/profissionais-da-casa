@@ -42,7 +42,7 @@ export const NewReviewPage: React.FC<NewReviewPageProps> = () => {
               <FlexBox gap={0.5} alignItems="center">
                 <Star weight="fill" color={color.secondary.yellow} />
                 <h4>4.5</h4>
-                <p>8</p>
+                <p>(8)</p>
               </FlexBox>
             </FlexBox>
             <div className="photo-container">

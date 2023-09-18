@@ -1,16 +1,19 @@
 import styled, { css } from "styled-components";
 
-interface LoginContainer {
-  role: "logout" | "admin" | "customer" | "professional";
+interface RoleProps {
+  role: "logout" | "admin" | "user" | "professional";
 }
 
-export const HeaderContainer = styled.header`
+export const HeaderContainer = styled.header<RoleProps>`
   ${({ theme, role }) => css`
     width: 100%;
     font-weight: 700;
     display: flex;
     justify-content: space-between;
     background-color: white;
+    background-color: ${role == "admin"
+      ? theme.color.brand.yellowLight
+      : "white"};
     nav ul {
       display: flex;
       justify-content: space-between;
@@ -22,20 +25,22 @@ export const HeaderContainer = styled.header`
   `}
 `;
 
-export const LoginContainer = styled.div<LoginContainer>`
+export const LoginContainer = styled.div<RoleProps>`
   ${({ theme, role }) => css`
     width: 17rem;
     height: 6rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2;
+    color: ${role == "admin" ? "white" : "black"};
     background-color: ${role == "logout"
-      ? "transparent"
+      ? "white"
       : role == "admin"
       ? theme.color.brand.purple
       : role == "professional"
       ? theme.color.base[200]
-      : role == "customer" && theme.color.brand.orange};
+      : role == "user" && theme.color.brand.orange};
   `}
 `;
 export const LoginName = styled.p`

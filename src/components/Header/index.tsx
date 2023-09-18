@@ -6,13 +6,19 @@ import { Button } from "components/Button";
 import { useTheme } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "contexts/User";
+import { SignOut } from "@phosphor-icons/react";
 
 const Header = () => {
   const navigate = useNavigate();
   const { currentUser, logged, logout } = useUser();
 
+  const getRole = () => {
+    if (!currentUser) return "logout";
+    else return currentUser.roleRel.name;
+  };
+
   return (
-    <HeaderContainer>
+    <HeaderContainer role={getRole()}>
       <FlexBox full justifyContent="space-between" alignItems="center" px={6}>
         <img src={logo} alt="cada casa" />
 
@@ -38,20 +44,33 @@ const Header = () => {
           </nav>
         </FlexBox>
       </FlexBox>
-      <LoginContainer role="customer">
+      <LoginContainer role={getRole()}>
         {currentUser && logged ? (
-          <FlexBox alignItems="center" gap={2} px={1.5}>
-            <LoginName>
-              Olá
-              <br />
-              {currentUser.name.split(" ")[0]}
-            </LoginName>
-            <Button
-              variant="primary"
-              onClick={() => logout(() => navigate("/"))}
-            >
-              logout
-            </Button>
+          <FlexBox
+            alignItems="flex-start"
+            gap={0.5}
+            px={1.5}
+            direction="column"
+          >
+            <LoginName>{currentUser.name.split(" ")[0]}</LoginName>
+            <FlexBox gap={0.5} alignItems="center">
+              {getRole() == "admin" ? (
+                <Button
+                  variant="text"
+                  onClick={() => navigate("/admin/")}
+                  color="white"
+                >
+                  Painel Admim
+                </Button>
+              ) : (
+                <Button variant="text" onClick={() => navigate("/profile/")}>
+                  Meu perfil
+                </Button>
+              )}
+              <Button small onClick={() => logout(() => navigate("/"))}>
+                <SignOut size={20} weight="bold" />
+              </Button>
+            </FlexBox>
           </FlexBox>
         ) : (
           <Button variant="primary" onClick={() => navigate("/login")}>
