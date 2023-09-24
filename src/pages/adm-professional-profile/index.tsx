@@ -16,6 +16,7 @@ export const AdmProfessionalDetails: React.FC<
   const { color } = useTheme();
 
   const professional: ProfessionalType = {
+    id: "1234",
     personalInfo: {
       name: "Maria Silva do Carmo",
       birthDate: "21/04/1975",
@@ -24,7 +25,7 @@ export const AdmProfessionalDetails: React.FC<
       phone: "(11) 98765-4321",
       email: "mariasilvadocarmo@zipmail.com.br",
       rating: 4.32,
-      status: "approved",
+      status: "blocked",
     },
     businessInfo: {
       responsible: "CREA: 12345-SP",
@@ -67,18 +68,30 @@ export const AdmProfessionalDetails: React.FC<
           {professional.personalInfo.status == "approved" ? (
             <FlexBox gap={5}>
               <FlexBox direction="column" gap={1}>
-                <Button variant="outline" width={15}>
+                <Button
+                  variant="outline"
+                  width={15}
+                  onClick={() => navigate(`/professional/${professional.id}`)}
+                >
                   Página do Profissonal
                 </Button>
-                <Button variant="outline" width={15}>
-                  Projetos do Profissonal
+                <Button
+                  variant="outline"
+                  width={15}
+                  onClick={() =>
+                    navigate(
+                      `/admin/professionals-management/leads/${professional.id}`
+                    )
+                  }
+                >
+                  Leads do Profissonal
                 </Button>
               </FlexBox>
               <FlexBox direction="column" gap={1}>
                 <Button>Desativar Profissional</Button>
               </FlexBox>
             </FlexBox>
-          ) : (
+          ) : professional.personalInfo.status == "waiting" ? (
             <FlexBox direction="column" gap={1}>
               <Button
                 variant="primary"
@@ -91,6 +104,34 @@ export const AdmProfessionalDetails: React.FC<
               <Button variant="outline" width={15}>
                 Rejeitar
               </Button>
+            </FlexBox>
+          ) : (
+            <FlexBox direction="column" gap={1}>
+              <FlexBox gap={5}>
+                <FlexBox direction="column" gap={1}>
+                  <Button
+                    variant="outline"
+                    width={15}
+                    onClick={() => navigate(`/professional/${professional.id}`)}
+                  >
+                    Página do Profissonal
+                  </Button>
+                  <Button
+                    variant="outline"
+                    width={15}
+                    onClick={() =>
+                      navigate(
+                        `/admin/professionals-management/leads/${professional.id}`
+                      )
+                    }
+                  >
+                    Leads do Profissonal
+                  </Button>
+                </FlexBox>
+                <FlexBox direction="column" gap={1}>
+                  <Button>Reativar Profissional</Button>
+                </FlexBox>
+              </FlexBox>
             </FlexBox>
           )}
         </FlexBox>

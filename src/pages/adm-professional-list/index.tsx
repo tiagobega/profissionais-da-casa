@@ -25,14 +25,7 @@ export const AdmProfessionalList: React.FC<AdmProfessionalListProps> = () => {
       </FlexBox>
       <Header>
         <h2>Profissionais da Casa</h2>
-        <FlexBox direction="column">
-          <p>
-            <strong>Projetos iniciados:</strong> 134
-          </p>
-          <p>
-            <strong>Projetos finalizados:</strong> 94
-          </p>
-        </FlexBox>
+
         <FlexBox gap={2} mb={2}>
           <Button
             variant={screen == "professionals" ? "primary" : "outline"}
