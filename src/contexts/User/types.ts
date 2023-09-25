@@ -1,6 +1,5 @@
 import { AxiosError } from "axios";
 
-import type { GenericError } from "services/User/types";
 import {
   UserFunctionsReturn,
   EvaluationFunctionsReturn,
@@ -15,6 +14,7 @@ import {
 } from "./functions";
 
 import { SubplanFunctionsReturn } from "./functions/subplan";
+import { GenericError } from "services/Base";
 
 export type UserContextPromise<T> = Promise<T | false>;
 export type ErrorHandler = (responseData: AxiosError<GenericError>) => void;

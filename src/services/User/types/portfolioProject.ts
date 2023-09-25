@@ -3,7 +3,7 @@ export interface PortfolioProject {
   name: string;
   professionalId: string;
   description: string;
-  images: string[];
+  images: string;
 }
 
 export type SinglePortfolioProjectData = {

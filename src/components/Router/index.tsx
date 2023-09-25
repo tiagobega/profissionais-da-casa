@@ -29,6 +29,7 @@ import { RegisterProfessional } from "pages/register-professionals";
 import { AdmHome } from "pages/adm-home";
 import { AdmLeadsList } from "pages/adm-professional-leads";
 import { PermissionInactivePage } from "pages/permissionInactive";
+import EmailConfirmedPage from "pages/email-confirm";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -106,6 +107,11 @@ const Router = () => (
           element={<PrivateRoute element={<UserProfile />} />}
         />
 
+        <Route
+          path={"email-confirmed"}
+          element={<PublicRoute element={<EmailConfirmedPage />} />}
+        />
+
         {/* //ADMIN ROUTES */}
         <Route
           path={"/admin/"}
@@ -168,22 +174,19 @@ const PrivateRoute = ({
   const { logged, me, logout } = useUser();
 
   if (!logged) {
-    navigate("/login");
-    return null;
+    return <Navigate to={"/login"} />;
   }
 
   if (checkVerified && me?.verified) {
-    navigate("/account/confirm");
-    return null;
+    return <Navigate to={"/account/confirm"} />;
   }
 
   if (checkActive && me?.active) {
-    navigate("/permission-inactive");
+    return <Navigate to={"/permission-inactive"} />;
   }
 
   if (admin && me?.profileTypeRel.name !== "admin") {
-    logout(() => navigate("account/login"));
-    return null;
+    return <Navigate to={"/catalog"} />;
   }
 
   return <SuspenseComponent>{element}</SuspenseComponent>;
