@@ -64,7 +64,6 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
           professional.setMyProfessional(professionalResponse);
         }
       }
-
       user.setLogged(true);
     })();
   }, []);

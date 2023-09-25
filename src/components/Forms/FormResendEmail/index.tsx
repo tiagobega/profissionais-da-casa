@@ -16,24 +16,21 @@ export type FormData = Zod.infer<typeof resendSchema>;
 interface FormRegisterUserProps {}
 
 export const FormResendEmail: FC<FormRegisterUserProps> = () => {
-  const { registeredUser, sendEmailConfirmation } = useUser();
+  const { me } = useUser();
   const {
     handleSubmit,
     register,
-    watch,
-    setValue,
-    getValues,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(resendSchema),
     mode: "onSubmit",
     defaultValues: {
-      email: registeredUser?.email,
+      email: me?.email,
     },
   });
 
   const onSubmit = (data: FormData) => {
-    sendEmailConfirmation({ email: data.email });
+    // sendEmailConfirmation({ email: data.email });
   };
 
   return (

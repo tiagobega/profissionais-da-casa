@@ -9,6 +9,12 @@ export type CreateSocialMediaData = {
   id: string;
 };
 
+export type CreateManySocialMediaData = {
+  professionalId: string;
+  names: string;
+  links: string;
+};
+
 export type UpdateSocialMediaData = {
   professionalId: string;
   name: string;
@@ -24,5 +30,9 @@ export type DeleteSocialMediaData = {
 };
 
 export type AllSocialMediaResponse = {
+  socialMedias: SocialMedia[];
+};
+
+export type CreateManySocialMediaResponse = {
   socialMedias: SocialMedia[];
 };

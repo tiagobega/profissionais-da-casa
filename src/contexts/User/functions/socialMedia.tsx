@@ -1,5 +1,6 @@
 import type { ErrorHandler } from "../types";
 import type {
+  CreateManySocialMediaData,
   CreateSocialMediaData,
   DeleteSocialMediaData,
   SingleSocialMediaData,
@@ -12,6 +13,16 @@ import { UserService } from "services/User";
 export const socialMediaFunctions = (errorHandler: ErrorHandler) => {
   const create = async (data: CreateSocialMediaData) => {
     const response = await UserService.createSocialMedia(data);
+    if (response instanceof AxiosError) {
+      errorHandler(response);
+      return false;
+    }
+
+    return response;
+  };
+
+  const createMany = async (data: CreateManySocialMediaData) => {
+    const response = await UserService.createManySocialMedia(data);
     if (response instanceof AxiosError) {
       errorHandler(response);
       return false;
@@ -62,6 +73,7 @@ export const socialMediaFunctions = (errorHandler: ErrorHandler) => {
 
   return {
     create,
+    createMany,
     edit,
     deleteSocialMedia,
     getSingle,

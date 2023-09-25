@@ -1,15 +1,9 @@
-import { CaretLeft } from "@phosphor-icons/react";
 import logo from "assets/images/logoYellowBigger.png";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
-import { FormRegisterUser } from "components/Forms/FormRegisterUser";
-import { LoginLayout } from "components/LayoutLoginRegister";
-import { Modal } from "components/Modal";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { RightPannel } from "./styles";
 import { FormResendEmail } from "components/Forms/FormResendEmail";
 import { useUser } from "contexts/User";
+import { useNavigate } from "react-router-dom";
 
 export interface LoginPageProps {}
 

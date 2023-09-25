@@ -30,6 +30,8 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
       return false;
     }
 
+    setMe(response);
+
     return response;
   };
 
@@ -46,10 +48,11 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
     return response;
   };
 
-  const logout = () => {
+  const logout = (callback: () => void) => {
     setLogged(false);
     setMe(undefined);
     Session.destroy("auth");
+    callback();
   };
 
   const login = async (data: SignInData) => {
@@ -68,6 +71,7 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
 
     if (!meResponse) return false;
 
+    setMe(meResponse);
     setLogged(true);
 
     return {

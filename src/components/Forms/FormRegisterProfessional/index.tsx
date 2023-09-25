@@ -8,7 +8,7 @@ import { registerProfessionalSchema } from "./validation";
 import { Form } from "./style";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "contexts/User";
+import { useApi, useUser } from "contexts/User";
 import MaskedInput from "react-text-mask";
 import { mask, parseCEP, parseCNPJ, parseCPF, parsePhone } from "utils/masks";
 import { states } from "constants/states";
@@ -32,6 +32,7 @@ interface FormRegisterProfessionalProps {
 export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
   showTerms,
 }) => {
+  const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
     register,
@@ -77,16 +78,15 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
     },
   });
   const { color } = useTheme();
+  const navigate = useNavigate();
 
-  const {
-    register: userRegister,
-    registerProfessional,
-    getMe,
-    sendFile,
-    putMe,
-    // createLocations,
-    // createSocialMedia,
-  } = useUser();
+  const { user, professional, location, socialMedia, file } = useApi();
+
+  const { register: userRegister, updateMe } = user;
+  const { register: professionalRegister, getSingle } = professional;
+  const { sendFile } = file;
+  const { createMany: createManyLocation } = location;
+  const { createMany: createManySocialMedia } = socialMedia;
 
   const createImageFile = async (params: CreateImageFileParams = {}) => {
     const fileReaderQueue = new FileReaderQueue();
@@ -140,6 +140,9 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
   };
 
   const onSubmit = async (data: FormData) => {
+
+    setLoading(true);
+
     const cpf = parseCPF(data.cpf);
     const phone = parsePhone(data.phone);
     const zipCode = parseCEP(data.cep);
@@ -163,7 +166,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       profilePicture: "",
     });
 
-    if (!userResponse) return;
+    if (!userResponse) return setLoading(false);
 
     /**
      * CREATE FILES
@@ -198,14 +201,14 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
     /**
      * UPDATE USER IMAGE
      */
-    putMe({
+    updateMe({
       profilePicture: imagesResponse.profile || "",
     });
 
     /**
      * CREATE PROFESSIONAL
      */
-    const professionalResponse = await registerProfessional({
+    const professionalResponse = await professionalRegister({
       cnpj,
       phone,
       zipCode,
@@ -219,44 +222,75 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       yearConclusion: data.formationYear,
       birthDate: data.birthdate,
       userId: userResponse.user.id,
-      subscriptionPlanId: "d56c7b99-3b66-4681-8ec3-a9b44d800178",
+      subscriptionPlanId: "e5b7fcc1-86b3-4d63-ab3d-ad4cf8306399",
       formation: data.formation,
       onlineAppointment: data.onlineAppointment,
-
+      professionalLevel: data.formationLevel,
       tags: "",
 
       profilePicture: imagesResponse.profile || "",
       backgroundPicture: imagesResponse.background || "",
     });
 
-    if (!professionalResponse) return;
+    if (!professionalResponse) return setLoading(false);
 
     /**
      * CREATE LOCATIONS
      */
 
     if (data.states.length) {
-      // createLocations({
-      //   id: professionalResponse.id,
-      //   states: data.states.join(","),
-      // });
+      await createManyLocation({
+        professionalId: professionalResponse.id,
+        states: data.states.join(","),
+      });
     }
 
     /**
      * CREATE SOCIAL MEDIAS
      */
-    if (
-      data.instagram ||
-      data.facebook ||
-      data.pinterest ||
-      data.otherSocials ||
-      data.linkedin
-    ) {
-      // createSocialMedias({
-      //   id: professionalResponse.id,
-      //   socialMedias: [],
-      // });
+
+    const filteredSocialMedias = [
+      {
+        name: "Instagram",
+        link: data.instagram,
+      },
+      {
+        name: "Facebook",
+        link: data.facebook,
+      },
+      {
+        name: "Pinterest",
+        link: data.pinterest,
+      },
+      {
+        name: "LinkedIn",
+        link: data.linkedin,
+      },
+      {
+        name: "Outra",
+        link: data.otherSocials,
+      },
+    ].filter((social) => social.link);
+
+    if (filteredSocialMedias.length !== 0) {
+      await createManySocialMedia({
+        professionalId: professionalResponse.id,
+        names: filteredSocialMedias.map(({ name }) => name).join(","),
+        links: filteredSocialMedias.map(({ link }) => link).join(","),
+      });
     }
+
+    /**
+     * GET FINAL PROFESSIONAL PROFILE
+     */
+
+    const finalProfessional = await getSingle({
+      id: professionalResponse.id,
+    });
+
+    if (!finalProfessional) return setLoading(false);
+
+    navigate("/account/confirm");
   };
 
   const terms = watch("terms");
@@ -649,9 +683,9 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
               type="submit"
               color="white"
               background={color.secondary.blue}
-              disabled={!terms}
+              disabled={!terms || loading}
             >
-              Concluir
+              {!loading ? "Concluir" : "Enviando"} 
             </Button>
           </FlexBox>
         </fieldset>

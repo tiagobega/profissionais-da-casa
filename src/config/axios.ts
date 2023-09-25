@@ -39,6 +39,7 @@ export const API_POST_ROUTES = {
   ROLE_DELETE: "/role/delete",
 
   SOCIALMEDIA_SINGLE: "/socialmedia/getone",
+  SOCIALMEDIA_CREATE_MANY: "/socialmedia/createmany",
   SOCIALMEDIA_CREATE: "/socialmedia/create",
   SOCIALMEDIA_DELETE: "/socialmedia/delete",
 

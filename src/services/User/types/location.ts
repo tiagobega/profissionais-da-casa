@@ -9,12 +9,12 @@ export type SingleLocationData = {
 };
 
 export type CreateLocationData = {
-  id: string;
+  professionalId: string;
   state: string;
 };
 
 export type CreateManyLocationData = {
-  id: string;
+  professionalId: string;
   /**
    * string separada por virgula
    * @example "SP,PR,RS"
