@@ -5,6 +5,7 @@ import { FlexBox } from "components/FlexBox";
 import { Button } from "components/Button";
 import { HomeContainer, InformationContainer } from "./styles";
 import { useNavigate } from "react-router-dom";
+import { FormContactProfessional } from "components/Forms/FormSendContact";
 
 const HomePage = () => {
   const { color } = useTheme();

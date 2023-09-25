@@ -2,31 +2,48 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
-import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useUser } from "contexts/User";
+import { FC, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Me } from "services/User/types";
 import { editProfileSchema } from "./validation";
-import { Select } from "components/Input/HTMLSelect";
 
 export type FormEditUserProfileData = Zod.infer<typeof editProfileSchema>;
+interface FormEditUserProfileProps {
+  user: Me;
+  close: () => void;
+}
 
-export const FormEditUserProfile = () => {
+export const FormEditUserProfile: FC<FormEditUserProfileProps> = ({
+  user,
+  close,
+}) => {
   const {
     handleSubmit,
     register,
-    watch,
-    control,
     setValue,
-    getValues,
+    reset,
     formState: { errors },
   } = useForm<FormEditUserProfileData>({
     resolver: zodResolver(editProfileSchema),
     mode: "onSubmit",
   });
+  const { putMe } = useUser();
 
-  const onSubmit = (data: FormEditUserProfileData) => {
-    console.log(data);
+  const setInitialData = () => {
+    setValue("name", user.name);
+    setValue("phone", user.phone);
+    setValue("cep", user.zipCode);
+    setValue("email", user.email);
+  };
 
-    window.alert(JSON.stringify(data));
+  useEffect(() => {
+    setInitialData();
+  }, [user]);
+
+  const onSubmit = async (data: FormEditUserProfileData) => {
+    await putMe(data);
+    close();
   };
 
   return (
@@ -64,37 +81,6 @@ export const FormEditUserProfile = () => {
           placeholder="Telefone"
           error={errors.phone}
           {...register("phone")}
-        />
-
-        <hr />
-        <legend>Mudar senha</legend>
-        <Input.Text
-          aria-label="senha"
-          placeholder="Senha Atual"
-          error={errors.passwordOld}
-          {...register("passwordOld")}
-        />
-        <Input.Text
-          aria-label="nova senha"
-          placeholder="Nova senha"
-          error={errors.password}
-          {...register("password")}
-        />
-        <Input.Text
-          aria-label="Sobre"
-          placeholder="Escreva um pouco sobre você"
-          error={errors.passwordConfirm}
-          {...register("passwordConfirm")}
-        />
-
-        <hr />
-        <legend>Trocar Foto</legend>
-        <Input.File
-          label="Sobre"
-          placeholder="Escolha uma foto para o perfil"
-          error={errors.photo}
-          accept="image/png, image/gif, image/jpeg"
-          {...register("photo")}
         />
 
         <Button type="submit" full>

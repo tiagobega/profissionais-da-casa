@@ -21,6 +21,7 @@ import { RegisterUser } from "pages/register-user";
 import { RegisterUserConfirm } from "pages/register-user-confirm";
 import { RegisterProfessional } from "pages/register-professionals";
 import { AdmHome } from "pages/adm-home";
+import { AdmLeadsList } from "pages/adm-professional-leads";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -32,6 +33,10 @@ const Router = () => (
         element={<PublicRoute element={<TermsPage />} />}
       />
       <Route path="/login" element={<PublicRoute element={<LoginPage />} />} />
+      <Route
+        path="/reset-password"
+        element={<PublicRoute element={<LoginPage />} />}
+      />
       <Route
         path={"/register/customer"}
         element={<PublicRoute element={<RegisterUser />} />}
@@ -103,6 +108,10 @@ const Router = () => (
         <Route
           path={"/admin/professionals-management/:id"}
           element={<PublicRoute element={<AdmProfessionalDetails />} />}
+        />
+        <Route
+          path={"/admin/professionals-management/leads/:id"}
+          element={<PublicRoute element={<AdmLeadsList />} />}
         />
         <Route
           path={"/admin/professionals-management/:id/projects"}

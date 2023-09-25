@@ -7,6 +7,7 @@ import { useTheme } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "contexts/User";
 import { SignOut } from "@phosphor-icons/react";
+import { useEffect } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ const Header = () => {
     if (!currentUser) return "logout";
     else return currentUser.roleRel.name;
   };
+
+  useEffect(() => {
+    console.log(currentUser, myProfessional);
+  }, [currentUser, myProfessional]);
 
   return (
     <HeaderContainer role={getRole()}>
@@ -72,7 +77,7 @@ const Header = () => {
                   <Button
                     variant="text"
                     onClick={() =>
-                      navigate(`/professional/${myProfessional?.id}`)
+                      navigate(`/professional/${myProfessional.id}`)
                     }
                   >
                     Meu perfil

@@ -1,13 +1,13 @@
-import { FlexBox } from 'components/FlexBox'
-import { FooterContainer, FooterContent } from './styles'
-import type { FooterProps } from './types'
-import logoText from 'assets/images/logoText.png'
-import facebookLogo from 'assets/images/facebookLogo.png'
-import instagramLogo from 'assets/images/instagramLogo.png'
-import linkedinLogo from 'assets/images/linkedinLogo.png'
-import pinterestLogo from 'assets/images/pinterestLogo.png'
-import youtubeLogo from 'assets/images/youtubeLogo.png'
-import { Button } from 'components/Button'
+import { FlexBox } from "components/FlexBox";
+import { FooterContainer, FooterContent } from "./styles";
+import type { FooterProps } from "./types";
+import logoText from "assets/images/logoText.png";
+import facebookLogo from "assets/images/facebookLogo.png";
+import instagramLogo from "assets/images/instagramLogo.png";
+import linkedinLogo from "assets/images/linkedinLogo.png";
+import pinterestLogo from "assets/images/pinterestLogo.png";
+import youtubeLogo from "assets/images/youtubeLogo.png";
+import { Button } from "components/Button";
 
 const Footer = (props: FooterProps) => (
   <FooterContainer>
@@ -48,7 +48,7 @@ const Footer = (props: FooterProps) => (
               Politica de Privacidade
             </Button>
             <Button variant="text" color="white" href="#">
-              Politica de Devolução e Reenbolso
+              Politica de Devolução e Reembolso
             </Button>
           </FlexBox>
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
@@ -77,5 +77,5 @@ const Footer = (props: FooterProps) => (
       </FlexBox>
     </FooterContent>
   </FooterContainer>
-)
-export default Footer
+);
+export default Footer;

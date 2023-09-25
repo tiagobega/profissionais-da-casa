@@ -14,6 +14,10 @@ export const minChars = (number: number) => {
   return `Pelo menos ${number} caracteres`;
 };
 
+export const exactChars = (number: number) => {
+  return `Este campo deve ter exatamente ${number} caracteres`;
+};
+
 export const errorFileSize = (number: number = MAX_FILE_SIZE_MB) => {
   return `A tamanho do arquivo excede o limite de ${number} MB`;
 };

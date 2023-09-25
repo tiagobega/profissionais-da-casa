@@ -16,6 +16,7 @@ import {
   Triangle,
 } from "./styles";
 import { CardProfile } from "components/Card";
+import { useUser } from "contexts/User";
 
 export interface ListProps {}
 
@@ -55,6 +56,8 @@ export const List: React.FC<ListProps> = () => {
       setSelected(currentList);
     }
   };
+
+  const { getAllProfessionals } = useUser();
 
   return (
     <Container>

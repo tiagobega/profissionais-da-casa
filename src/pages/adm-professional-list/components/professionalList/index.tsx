@@ -12,6 +12,7 @@ export interface ProfessionalListProps {
 }
 
 export type ProfessionalType = {
+  id: string;
   personalInfo: ProfessionalPersonalInfo;
   businessInfo: {
     responsible: string;
@@ -44,7 +45,7 @@ export type ProfessionalPersonalInfo = {
   phone: string;
   email: string;
   birthDate: string;
-  status: "approved" | "waiting";
+  status: "approved" | "waiting" | "blocked";
   rating: number;
 };
 

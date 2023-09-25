@@ -28,12 +28,25 @@ export const PhotoColumn = styled(FlexBox)`
   ${({ theme }) => css`
     width: 166px;
     height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .round-picture {
+      position: relative;
       width: 166px;
       height: 166px;
       border: 10px solid white;
       border-radius: 50%;
-      background-color: black;
+      background-color: ${theme.color.brand.purple};
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        object-fit: cover;
+        z-index: 5;
+      }
     }
     p {
       font-weight: 700;
@@ -42,6 +55,25 @@ export const PhotoColumn = styled(FlexBox)`
 
     .name {
       font-size: 20px;
+    }
+    .pictureButton {
+      z-index: 10;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transition: 200ms;
+      border-radius: 50%;
+      color: transparent;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+      }
+    }
+    .userIcon {
+      width: 8rem;
+      height: 8rem;
+      position: absolute;
+      opacity: 0.5;
     }
   `}
 `;
