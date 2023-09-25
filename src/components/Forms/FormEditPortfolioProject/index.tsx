@@ -3,29 +3,34 @@ import { useForm } from "react-hook-form";
 import { usePortfolioProjectSchema } from "./validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "components/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus } from "@phosphor-icons/react";
-import { PhotoPreview } from "./photoPreview";
 import { FlexBox } from "components/FlexBox";
 import { useApi, useUser } from "contexts/User";
 import { Loading } from "components/Loading";
-import { CreatePortfolioProjectData } from "services/User/types";
+import {
+  CreatePortfolioProjectData,
+  PortfolioProject,
+} from "services/User/types";
 import { previewUrl } from "utils/ImageBase64Convert";
+import { PhotoPreview } from "../FormAddPortfolioProject/photoPreview";
 
 export interface FormAddPortfolioProjectProps {
   close: () => void;
+  project: PortfolioProject;
 }
 
 export type FormData = Zod.infer<typeof usePortfolioProjectSchema>;
 
 export const FormAddPortfolioProject: React.FC<
   FormAddPortfolioProjectProps
-> = ({ close }) => {
+> = ({ close, project }) => {
   const {
     handleSubmit,
     register,
     watch,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(usePortfolioProjectSchema),
@@ -36,6 +41,12 @@ export const FormAddPortfolioProject: React.FC<
   const { professional, portfolioProject } = useApi();
   const { myProfessional } = professional;
   const { create } = portfolioProject;
+
+  useEffect(() => {
+    setValue("description", project ? project.description : "");
+    setValue("title", project ? project.name : "");
+    project && setImageList(project.images);
+  }, []);
 
   const imgFile = watch("image");
 
@@ -99,7 +110,6 @@ export const FormAddPortfolioProject: React.FC<
           <Input.File
             placeholder="Selecione uma foto"
             label="Adicione uma foto"
-            {...register("image")}
           />
           <Button
             type="button"

@@ -4,10 +4,17 @@ import { FormEditProfile } from "components/Forms/FormEditProfile";
 import { Modal } from "components/Modal";
 import { useState } from "react";
 import { ManagerContainer } from "./styles";
+import { Professional } from "services/User/types";
+import { PortfolioHome } from "../Portfolio";
 
-export interface ProfileManagerProps {}
-export const ProfileManager: React.FC<ProfileManagerProps> = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+export interface ProfileManagerProps {
+  professional: Professional;
+}
+export const ProfileManager: React.FC<ProfileManagerProps> = ({
+  professional,
+}) => {
+  const [modalEdit, setModalEdit] = useState(false);
+  const [modalPortfolio, setModalPortfolio] = useState(false);
 
   return (
     <ManagerContainer direction="column" gap={1}>
@@ -15,7 +22,7 @@ export const ProfileManager: React.FC<ProfileManagerProps> = () => {
         variant="primary"
         background="white"
         small
-        onClick={() => setModalOpen(true)}
+        onClick={() => setModalEdit(true)}
         width={10}
       >
         Editar Perfil
@@ -24,18 +31,25 @@ export const ProfileManager: React.FC<ProfileManagerProps> = () => {
       <Button
         variant="outline"
         small
-        onClick={() => setModalOpen(true)}
+        onClick={() => setModalPortfolio(true)}
         width={10}
       >
         <Plus weight="bold" size={24} />
         Adicionar Projeto ao portifolio
       </Button>
       <Modal
-        isOpened={modalOpen}
+        isOpened={modalEdit}
         onProceed={() => console.log("proceed")}
-        onClose={() => setModalOpen(false)}
+        onClose={() => setModalEdit(false)}
       >
         <FormEditProfile />
+      </Modal>
+      <Modal
+        isOpened={modalPortfolio}
+        onProceed={() => console.log("proceed")}
+        onClose={() => setModalPortfolio(false)}
+      >
+        <PortfolioHome portfolio={professional.portfolioProjects} />
       </Modal>
     </ManagerContainer>
   );

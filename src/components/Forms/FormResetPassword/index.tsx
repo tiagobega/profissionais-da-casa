@@ -1,15 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CaretLeft } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
-import { useForm } from "react-hook-form";
-import { useTheme } from "styled-components";
-import { resetPasswordSchema } from "./validation";
-import { Form } from "./style";
 import { useUser } from "contexts/User";
-import { useNavigate } from "react-router-dom";
 import { FC } from "react";
-import { CaretLeft } from "@phosphor-icons/react";
+import { useForm } from "react-hook-form";
+import { Form } from "./style";
+import { resetPasswordSchema } from "./validation";
 
 export type FormData = Zod.infer<typeof resetPasswordSchema>;
 interface FormResetPasswordProps {
