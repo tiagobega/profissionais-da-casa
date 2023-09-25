@@ -1,16 +1,16 @@
-import * as PrimitiveTooltip from '@radix-ui/react-tooltip'
-import { ContentContainer, IconContainer } from './styles'
-import { ReactNode } from 'react'
-import { Question } from '@phosphor-icons/react'
-import { Tooltip } from 'components/Tooltip'
-import styled from 'styled-components'
+import * as PrimitiveTooltip from "@radix-ui/react-tooltip";
+import { ContentContainer, IconContainer } from "./styles";
+import { ReactNode } from "react";
+import { Question } from "@phosphor-icons/react";
+import { Tooltip } from "components/Tooltip";
+import styled from "styled-components";
 
 export interface TooltipIconProps {
-  text: string
-  title: string
-  icon?: ReactNode
-  side?: 'top' | 'bottom'
-  boxAlign: 'start' | 'center' | 'end'
+  text: string;
+  title: string;
+  icon?: ReactNode;
+  side?: "top" | "bottom";
+  boxAlign: "start" | "center" | "end";
 }
 export const TooltipIcon: React.FC<TooltipIconProps> = ({
   text,
@@ -24,12 +24,12 @@ export const TooltipIcon: React.FC<TooltipIconProps> = ({
       <PrimitiveTooltip.Trigger asChild>
         <IconContainer>{icon}</IconContainer>
       </PrimitiveTooltip.Trigger>
-      <Tooltip side={side} boxAlign={boxAlign}>
+      {/* <Tooltip side={side} boxAlign={boxAlign}>
         <ContentContainer>
           <p className="title">{title}</p>
           <p>{text}</p>
         </ContentContainer>
-      </Tooltip>
+      </Tooltip> */}
     </PrimitiveTooltip.Root>
-  )
-}
+  );
+};

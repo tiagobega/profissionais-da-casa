@@ -1,14 +1,14 @@
 import { FlexBox } from "components/FlexBox";
 import styled, { css } from "styled-components";
-import { RatingStatusOptions } from "..";
+import { EvaluationStatus } from "constants/evaluation";
 
 const borderColor = (
-  status: RatingStatusOptions,
+  status: EvaluationStatus,
   approvedColor: string,
   refusedColor: string
 ) => {
   switch (status) {
-    case "analysis":
+    case "pending":
       return "black";
     case "approved":
       return approvedColor;
@@ -37,7 +37,7 @@ export const Header = styled.header`
   `}
 `;
 
-export const ContentBox = styled(FlexBox)<{ status: RatingStatusOptions }>`
+export const ContentBox = styled(FlexBox)<{ status: EvaluationStatus }>`
   ${({ theme, status }) => css`
     background-color: white;
     width: 770px;

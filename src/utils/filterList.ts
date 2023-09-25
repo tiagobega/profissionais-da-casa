@@ -14,7 +14,7 @@ export function filterProfessionalFunction(
 
   const filteredList = list?.filter((el) => {
     const values = Object.values(el.professional);
-    
+
     let occurences = 0;
     values.forEach((value) => {
       const stringifiedEntry = JSON.stringify(value);
@@ -28,14 +28,20 @@ export function filterProfessionalFunction(
 
 export function filterRating(list: RatingType[], query: string): RatingType[] {
   const queryRegex = new RegExp(query, "i");
+
   if (query?.length < 3 || query == null) return list;
+
   const filteredList = list?.filter((el) => {
-    const values = Object.values(el);
+    const values = Object.values(el.evaluation);
     let occurences = 0;
+
     values.forEach((value) => {
       const stringifiedEntry = JSON.stringify(value);
       stringifiedEntry.toString().match(queryRegex) && occurences++;
     });
+
+    console.log(occurences);
+
     return occurences > 0;
   });
 

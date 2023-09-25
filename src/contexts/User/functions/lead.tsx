@@ -51,7 +51,7 @@ export const leadFunctions = (errorHandler: ErrorHandler) => {
   };
 
   const getAll = async () => {
-    const response = await UserService.getAll();
+    const response = await UserService.getAllLeads();
     if (response instanceof AxiosError) {
       errorHandler(response);
       return false;

@@ -18,6 +18,7 @@ export const projectList: ProjectType[] = [
   {
     name: "Reforma apartamento Cursino",
     customer: "Antônio Carlos dos Santos",
+    professional: "",
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "not-started",
@@ -28,6 +29,7 @@ export const projectList: ProjectType[] = [
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "ongoing",
+    professional: "",
   },
   {
     name: "Reforma apartamento Cursino",
@@ -35,6 +37,7 @@ export const projectList: ProjectType[] = [
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "ongoing",
+    professional: "",
   },
   {
     name: "Reforma apartamento Cursino",
@@ -42,12 +45,14 @@ export const projectList: ProjectType[] = [
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "not-started",
+    professional: "",
   },
   {
     name: "Reforma apartamento Cursino",
     customer: "Antônio Carlos dos Santos",
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
+    professional: "",
     status: "complete",
   },
   {
@@ -56,6 +61,7 @@ export const projectList: ProjectType[] = [
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "not-started",
+    professional: "",
   },
   {
     name: "Reforma apartamento Cursino",
@@ -63,6 +69,7 @@ export const projectList: ProjectType[] = [
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "ongoing",
+    professional: "",
   },
   {
     name: "Reforma apartamento Cursino",
@@ -70,6 +77,7 @@ export const projectList: ProjectType[] = [
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "not-started",
+    professional: "",
   },
   {
     name: "Reforma apartamento Cursino",
@@ -77,6 +85,7 @@ export const projectList: ProjectType[] = [
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "ongoing",
+    professional: "",
   },
   {
     name: "Reforma apartamento Cursino",
@@ -84,6 +93,7 @@ export const projectList: ProjectType[] = [
     phone: "(11)98765-4321",
     email: "acdossantos@bol.com.br",
     status: "complete",
+    professional: "",
   },
 ];
 

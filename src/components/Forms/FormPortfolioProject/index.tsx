@@ -46,7 +46,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   useEffect(() => {
     setValue("description", project ? project.description : "");
     setValue("title", project ? project.name : "");
-    project && setImageList(project.images);
+    project && setImageList(project.images.split(','));
   }, []);
 
   const imgFile = watch("image");
@@ -87,7 +87,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
       name: data.title,
       description: data.description,
       professionalId: myProfessional?.id,
-      images: imageString,
+      images: imageString.join(","),
     };
     await create(payload);
     handleClose();

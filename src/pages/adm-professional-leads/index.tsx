@@ -13,7 +13,6 @@ export const AdmLeadsList: React.FC<AdmProfessionalListProps> = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { getProfessional } = useUser();
   return (
     <MarginContainer>
       <FlexBox mt={2}>
@@ -27,7 +26,7 @@ export const AdmLeadsList: React.FC<AdmProfessionalListProps> = () => {
         <h3>Contatos de clientes</h3>
       </Header>
 
-      {id && <LeadList professionalId={id} />}
+      {/* {id && <LeadList professionalId={id} />} */}
     </MarginContainer>
   );
 };

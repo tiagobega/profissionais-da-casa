@@ -51,7 +51,7 @@ export const subplanFunctions = (errorHandler: ErrorHandler) => {
   };
 
   const getAll = async () => {
-    const response = await UserService.getAll();
+    const response = await UserService.getAllSubplan();
     if (response instanceof AxiosError) {
       errorHandler(response);
       return false;

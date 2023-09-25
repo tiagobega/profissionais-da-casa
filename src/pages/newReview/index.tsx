@@ -16,8 +16,9 @@ export const NewReviewPage: React.FC<NewReviewPageProps> = () => {
   const { color } = useTheme();
   const navigate = useNavigate();
   const professionalId = useParams();
-  const { currentUser } = useUser();
-  const userId = currentUser?.id;
+  const { me } = useUser();
+  const userId = me?.id;
+
   //TODO - PUXAR O PROFISSIONAL PELO ID DOS PARAMS
 
   return (

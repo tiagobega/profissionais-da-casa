@@ -1,7 +1,8 @@
 import { FlexBox } from "components/FlexBox";
+import { EvaluationStatus } from "constants/evaluation";
 import styled, { css } from "styled-components";
 export const ReviewContainer = styled.div<{
-  status: "approved" | "refused" | "analysis";
+  status: EvaluationStatus;
 }>`
   ${({ theme, status }) => css`
     width: 100%;
