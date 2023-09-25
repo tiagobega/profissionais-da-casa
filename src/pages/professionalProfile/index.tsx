@@ -48,7 +48,7 @@ export const ProfessionalProfilePage: React.FC<
   useEffect(() => {
     async () => {
       if (!id) return;
-      const professional = await getSingle({ id });
+      const professional = await getSingle({ userId: id });
       professional && setPageProfessional(professional);
       if (!myProfessional) {
         setIsOwn(false);
