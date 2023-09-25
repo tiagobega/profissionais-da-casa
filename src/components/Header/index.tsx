@@ -34,21 +34,21 @@ const Header = () => {
         <FlexBox justifyContent="space-between">
           <nav>
             <ul>
-              <li>
+              {/* <li>
                 <a href="#">Casa Fast</a>
-              </li>
+              </li> */}
               <li>
-                <Link to="/catalog/">Profissionais da Casa</Link>
+                <Link to="/catalog">Profissionais da Casa</Link>
               </li>
-              <li>
+              {/* <li>
                 <a href="#">Seguros</a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a href="#">Blog</a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a href="#">Quem somos</a>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </FlexBox>
@@ -66,13 +66,16 @@ const Header = () => {
               {getRole() == "admin" ? (
                 <Button
                   variant="text"
-                  onClick={() => navigate("/admin/")}
+                  onClick={() => navigate("/admin")}
                   color="white"
                 >
                   Painel Admim
                 </Button>
               ) : getRole() == "user" ? (
-                <Button variant="text" onClick={() => navigate("/profile/")}>
+                <Button
+                  variant="text"
+                  onClick={() => navigate(`/profile`)}
+                >
                   Meu perfil
                 </Button>
               ) : (

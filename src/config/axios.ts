@@ -102,7 +102,7 @@ export const API_PUT_ROUTES = {
 
   USER_ME: "/user/me",
   USER_EDIT: "/user/edit",
-  USER_PASSWORD: "/user/me/passowrd",
+  USER_PASSWORD: "/user/me/password",
   USER_RESET_PASSWORD: "/user/resetpass",
 } as const;
 

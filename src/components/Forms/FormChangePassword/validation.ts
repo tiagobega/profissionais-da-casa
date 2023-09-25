@@ -20,6 +20,7 @@ export const changePasswordSchema = z
       ctx.addIssue({
         code: "custom",
         message: "A nova senha deve ser diferente da atual",
+        path: ['newPassword']
       });
     }
   });

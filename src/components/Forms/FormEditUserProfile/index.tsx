@@ -28,7 +28,7 @@ export const FormEditUserProfile: FC<FormEditUserProfileProps> = ({
     resolver: zodResolver(editProfileSchema),
     mode: "onSubmit",
   });
-  const { putMe } = useUser();
+  const { updateMe } = useUser();
 
   const setInitialData = () => {
     setValue("name", user.name);
@@ -42,7 +42,7 @@ export const FormEditUserProfile: FC<FormEditUserProfileProps> = ({
   }, [user]);
 
   const onSubmit = async (data: FormEditUserProfileData) => {
-    await putMe(data);
+    await updateMe(data);
     close();
   };
 

@@ -11,31 +11,38 @@ import { Form } from "./style";
 import { changePasswordSchema } from "./validation";
 
 export type FormData = Zod.infer<typeof changePasswordSchema>;
-interface FormChangePasswordProps {}
+interface FormChangePasswordProps {
+  closeModal: () => void;
+}
 
-export const FormChangePassword: FC<FormChangePasswordProps> = () => {
+export const FormChangePassword: FC<FormChangePasswordProps> = ({
+  closeModal,
+}) => {
   const {
     handleSubmit,
     register,
-    watch,
-    setValue,
-    getValues,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(changePasswordSchema),
     mode: "onSubmit",
   });
-  const { color } = useTheme();
-  const navigate = useNavigate();
+
+  const { updatePassword } = useUser();
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+    const updatePasswordResponse = await updatePassword({
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+    });
+
+    if (!updatePasswordResponse) return;
+
+    closeModal();
   };
 
   return (
     <Form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

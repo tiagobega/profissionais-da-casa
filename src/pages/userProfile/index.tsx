@@ -7,7 +7,7 @@ import { FormEditUserProfile } from "components/Forms/FormEditUserProfile";
 import { Geometry } from "components/Geometry";
 import { Modal } from "components/Modal";
 import { useUser } from "contexts/User";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MarginContainer } from "styles/commonComponents";
 import {
   GeometryContainer,
@@ -17,6 +17,7 @@ import {
   PhotoColumn,
 } from "./styles";
 import { LeadList } from "./components/LeadList";
+import { Loading } from "components/Loading";
 
 export interface CustomerProfileProps {}
 
@@ -24,10 +25,18 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
   const [modalEdit, setModalEdit] = useState(false);
   const [modalPassword, setModalPassword] = useState(false);
   const [modalPicture, setModalPicture] = useState(false);
-  const { currentUser } = useUser();
+  const { me, getMe } = useUser();
+
+  useEffect(() => {
+    if (me) return;
+    getMe();
+  }, [me]);
+
+  if (!me) return <Loading />;
+
   return (
     <>
-      {currentUser && (
+      {me && (
         <>
           <HeaderWrapper>
             <HeaderContainer>
@@ -47,9 +56,9 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
                     >
                       <Camera weight="fill" /> Trocar foto
                     </Button>
-                    {currentUser.profilePicture ? (
+                    {me.profilePicture ? (
                       <img
-                        src={currentUser?.profilePicture}
+                        src={me.profilePicture}
                         alt="Foto de perfil do usuário"
                         className="userPicture"
                       />
@@ -57,7 +66,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
                       <User color="white" weight="light" className="userIcon" />
                     )}
                   </div>
-                  <p className="name">{currentUser.name}</p>
+                  <p className="name">{me.name}</p>
                   <p>Perfil Pessoal</p>
                 </PhotoColumn>
                 <InfoColumn direction="column" gap={1} justifyContent="center">
@@ -65,14 +74,14 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
                     <p className="title">Telefone</p>
                     <FlexBox alignItems="center" gap={0.5} mt={0.5}>
                       <PhoneCall size={30} />
-                      {currentUser.phone}
+                      {me.phone}
                     </FlexBox>
                   </div>
                   <div>
                     <p className="title">Telefone</p>
                     <FlexBox alignItems="center" gap={0.5} mt={0.5}>
                       <Envelope size={30} />
-                      {currentUser.email}
+                      {me.email}
                     </FlexBox>
                   </div>
 
@@ -112,8 +121,8 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
             </GeometryContainer>
           </HeaderWrapper>
           <MarginContainer>
-            <FlexBox my={currentUser.leads.length > 0 ? 2 : 5}>
-              {currentUser.leads && <LeadList leads={currentUser.leads} />}
+            <FlexBox my={me.leads.length > 0 ? 2 : 5}>
+              {me.leads && <LeadList leads={me.leads} />}
             </FlexBox>
           </MarginContainer>
 
@@ -121,7 +130,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
             <FlexBox direction="column" centralized gap={3}>
               <h2>Editar perfil</h2>
               <FormEditUserProfile
-                user={currentUser}
+                user={me}
                 close={() => setModalEdit(false)}
               />
             </FlexBox>
@@ -132,7 +141,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
             small
           >
             <FlexBox direction="column" centralized gap={3}>
-              <FormChangePassword />
+              <FormChangePassword closeModal={() => setModalPassword(false)} />
             </FlexBox>
           </Modal>
           <Modal

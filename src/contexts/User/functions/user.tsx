@@ -6,6 +6,7 @@ import type {
   ResetPasswordData,
   SignInData,
   SignUpData,
+  UpdatePasswordData,
   UpdateUserData,
 } from "services/User/types";
 
@@ -119,6 +120,17 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
     return response;
   };
 
+  const updatePassword = async (data: UpdatePasswordData) => {
+    const response = await UserService.updatePassword(data);
+
+    if (response instanceof AxiosError) {
+      errorHandler(response);
+      return false;
+    }
+
+    return response;
+  };
+
   /**
    * TODO ADMIN FUNCTIONS
    */
@@ -141,6 +153,7 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
     logout,
     forgotPassword,
     resetPassword,
+    updatePassword,
   };
 };
 
