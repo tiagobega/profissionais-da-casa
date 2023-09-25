@@ -5,26 +5,35 @@ import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
 import { useForm } from "react-hook-form";
 import { faqBlockSchema } from "./validation";
+import { useApi } from "contexts/User";
 
 export type FormAddBlock = Zod.infer<typeof faqBlockSchema>;
+interface FormAddBlockProps {
+  close: () => void;
+  fetch: () => void;
+}
 
-export const FormAddBlock: React.FC = () => {
+export const FormAddBlock: React.FC<FormAddBlockProps> = ({ close, fetch }) => {
   const {
     handleSubmit,
     register,
     watch,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<FormAddBlock>({
     resolver: zodResolver(faqBlockSchema),
     mode: "onSubmit",
   });
+  const { faq } = useApi();
+  const { createBlock } = faq;
 
-  const onSubmit = (data: FormAddBlock) => {
-    console.log(data);
-
-    window.alert(JSON.stringify(data));
+  const onSubmit = async (data: FormAddBlock) => {
+    await createBlock({ name: data.title });
+    reset();
+    fetch();
+    close();
   };
 
   return (

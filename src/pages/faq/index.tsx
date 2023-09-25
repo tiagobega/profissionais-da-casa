@@ -1,92 +1,24 @@
+import { Pen, Plus, Trash } from "@phosphor-icons/react";
+import { Button } from "components/Button";
+import { Collapsible } from "components/Collapsable";
 import { FlexBox } from "components/FlexBox";
+import { FormAddBlock } from "components/Forms/FormAddFaqBlock";
+import { FormAddFaqQuestion } from "components/Forms/FormAddFaqQuestion";
+import { FormEditFaqBlock } from "components/Forms/FormEditFaqBlock";
+import { FormEditFaqQuestion } from "components/Forms/FormEditFaqQuestion";
+import { Geometry } from "components/Geometry";
+import { Loading } from "components/Loading";
+import { Modal } from "components/Modal";
+import { useApi } from "contexts/User";
+import { useEffect, useState } from "react";
+import { FaqBlock, FaqQuestion } from "services/User/types";
+import { useTheme } from "styled-components";
 import {
   CollapsibleInformation,
   FAQContainer,
   InformationContainer,
 } from "./styles";
-import { Geometry } from "components/Geometry";
-import { Button } from "components/Button";
-import { useTheme } from "styled-components";
-import { Collapsible } from "components/Collapsable";
-import { useEffect, useState } from "react";
-import { Modal } from "components/Modal";
-import { Pen, Plus } from "@phosphor-icons/react";
-import { Loading } from "components/Loading";
-import { FormAddFaqQuestion } from "components/Forms/FormAddFaqQuestion";
-import { Category, Question } from "Models/faq";
-import { FormAddBlock } from "components/Forms/FormAddFaqBlock";
-import { FormEditFaqBlock } from "components/Forms/FormEditFaqBlock";
-import { FormEditFaqQuestion } from "components/Forms/FormEditFaqQuestion";
-
-const questions: Question[] = [
-  {
-    id: "1",
-    category: "Categoria A",
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt aspernatur tempora debitis corrupti dignissimos! Odio autem illo sunt tempore quasi deserunt voluptas libero molestiae sequi possimus corrupti culpa, quam blanditiis! Ut numquam corrupti possimus, porro distinctio doloribus expedita quasi sed cupiditate nisi id, obcaecati labore quia fugiat at ullam earum, inventore perspiciatis! Doloremque repellendus esse et aperiam suscipit magnam! Numquam!",
-  },
-  {
-    id: "2",
-    category: "Categoria A",
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt aspernatur tempora debitis corrupti dignissimos! Odio autem illo sunt tempore quasi deserunt voluptas libero molestiae sequi possimus corrupti culpa, quam blanditiis! Ut numquam corrupti possimus, porro distinctio doloribus expedita quasi sed cupiditate nisi id, obcaecati labore quia fugiat at ullam earum, inventore perspiciatis! Doloremque repellendus esse et aperiam suscipit magnam! Numquam!",
-  },
-  {
-    id: "3",
-    category: "Categoria A",
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt aspernatur tempora debitis corrupti dignissimos! Odio autem illo sunt tempore quasi deserunt voluptas libero molestiae sequi possimus corrupti culpa, quam blanditiis! Ut numquam corrupti possimus, porro distinctio doloribus expedita quasi sed cupiditate nisi id, obcaecati labore quia fugiat at ullam earum, inventore perspiciatis! Doloremque repellendus esse et aperiam suscipit magnam! Numquam!",
-  },
-  {
-    id: "4",
-    category: "Categoria B",
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt aspernatur tempora debitis corrupti dignissimos! Odio autem illo sunt tempore quasi deserunt voluptas libero molestiae sequi possimus corrupti culpa, quam blanditiis! Ut numquam corrupti possimus, porro distinctio doloribus expedita quasi sed cupiditate nisi id, obcaecati labore quia fugiat at ullam earum, inventore perspiciatis! Doloremque repellendus esse et aperiam suscipit magnam! Numquam!",
-  },
-  {
-    id: "5",
-    category: "Categoria B",
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt aspernatur tempora debitis corrupti dignissimos! Odio autem illo sunt tempore quasi deserunt voluptas libero molestiae sequi possimus corrupti culpa, quam blanditiis! Ut numquam corrupti possimus, porro distinctio doloribus expedita quasi sed cupiditate nisi id, obcaecati labore quia fugiat at ullam earum, inventore perspiciatis! Doloremque repellendus esse et aperiam suscipit magnam! Numquam!",
-  },
-  {
-    id: "6",
-    category: "Categoria B",
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt aspernatur tempora debitis corrupti dignissimos! Odio autem illo sunt tempore quasi deserunt voluptas libero molestiae sequi possimus corrupti culpa, quam blanditiis! Ut numquam corrupti possimus, porro distinctio doloribus expedita quasi sed cupiditate nisi id, obcaecati labore quia fugiat at ullam earum, inventore perspiciatis! Doloremque repellendus esse et aperiam suscipit magnam! Numquam!",
-  },
-  {
-    id: "7",
-    category: "Categoria C",
-    title: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt aspernatur tempora debitis corrupti dignissimos! Odio autem illo sunt tempore quasi deserunt voluptas libero molestiae sequi possimus corrupti culpa, quam blanditiis! Ut numquam corrupti possimus, porro distinctio doloribus expedita quasi sed cupiditate nisi id, obcaecati labore quia fugiat at ullam earum, inventore perspiciatis! Doloremque repellendus esse et aperiam suscipit magnam! Numquam!",
-  },
-];
-
-const categoryListMock: Category[] = [
-  {
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    id: "uwghueh",
-    title: "Categoria A",
-  },
-  {
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    id: "uwghueh",
-    title: "Categoria B",
-  },
-  {
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit?",
-    id: "uwghueh",
-    title: "Categoria C",
-  },
-];
+import { ButtonDelete } from "components/ButtonDelete";
 
 type FormList =
   | "addBlock"
@@ -103,10 +35,29 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [form, setForm] = useState<FormList>(null);
-  const [isAdm, setIsAdm] = useState(true);
-  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
-  const [currentCategory, setCurrentCategory] = useState<Category | null>(null);
+  const [isAdm, setIsAdm] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState<FaqQuestion | null>(
+    null
+  );
+  const [currentBlock, setCurrentBlock] = useState<FaqBlock | null>(null);
 
+  const { faq, user } = useApi();
+  const { me } = user;
+  const { getAllBlock, getAllQuestion, deleteBlock, deleteQuestion } = faq;
+  const [blocks, setBlocks] = useState<FaqBlock[] | null>(null);
+
+  useEffect(() => {
+    getData();
+  }, [getAllBlock]);
+
+  const getData = async () => {
+    const blockList = await getAllBlock();
+    console.log(blockList);
+    blockList && setBlocks(blockList.faqBlocks);
+  };
+  useEffect(() => {
+    me && setIsAdm(me.profileTypeRel.name == "admin" ? true : false);
+  }, [me]);
   useEffect(() => {
     setIsOpen(form != null ? true : false);
   }, [form]);
@@ -114,44 +65,58 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
     currentQuestion && setForm("editQuestion");
   }, [currentQuestion]);
   useEffect(() => {
-    currentCategory && setForm("editBlock");
-  }, [currentCategory]);
+    currentBlock && setForm("editBlock");
+  }, [currentBlock]);
 
-  const categoryList = () => {
-    const list: string[] = new Array();
-    questions.forEach((item) => {
-      if (!list.includes(item.category)) {
-        list.push(item.category);
-      } else {
-        return;
-      }
-    });
-    return list;
+  const handleClose = () => {
+    setIsOpen(false);
+    setForm(null);
   };
 
-  const filterByCategory = (category: string) => {
-    return questions.filter((el) => el.category === category);
+  const handleDeleteQuestion = async (id: string) => {
+    await deleteQuestion({ id });
+    getData();
   };
+  const handleDeleteBlock = async (id: string) => {
+    await deleteBlock({ id });
+    getData();
+  };
+
+  if (!blocks) return <Loading />;
 
   const displayForm = () => {
     switch (form) {
       case "addBlock":
-        return <FormAddBlock />;
+        return <FormAddBlock close={handleClose} fetch={getData} />;
         break;
       case "addQuestion":
-        return <FormAddFaqQuestion categoriesList={categoryListMock} />;
+        return (
+          <FormAddFaqQuestion
+            blockList={blocks}
+            close={handleClose}
+            fetch={getData}
+          />
+        );
         break;
       case "editBlock":
         return (
-          currentCategory && <FormEditFaqBlock category={currentCategory} />
+          currentBlock && (
+            <FormEditFaqBlock
+              block={currentBlock}
+              close={handleClose}
+              fetch={getData}
+            />
+          )
         );
         break;
       case "editQuestion":
         return (
           currentQuestion && (
             <FormEditFaqQuestion
+              close={handleClose}
               question={currentQuestion}
-              categoriesList={categoryListMock}
+              blocks={blocks}
+              fetch={getData}
             />
           )
         );
@@ -162,13 +127,12 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
     }
   };
 
-  const selectQuestion = (id: string) => {
-    const question = questions.filter((el) => el.id == id)[0];
+  const selectQuestion = (question: FaqQuestion) => {
     setCurrentQuestion(question);
   };
-  const selectCategory = (id: string) => {
-    const category = categoryListMock.filter((el) => el.id == id)[0];
-    setCurrentCategory(category);
+  const selectBlock = (id: string) => {
+    const block = blocks.filter((el) => el.id == id)[0];
+    setCurrentBlock(block);
   };
 
   return (
@@ -188,38 +152,67 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
         <h2>FAQ</h2>
 
         <div className="questions">
-          {categoryListMock.map((item) => (
+          {blocks.map((item) => (
             <Collapsible
-              title={item.title}
+              title={item.name}
               variant="faq"
               key={item.id}
               actionButton={
-                <FlexBox gap={2}>
-                  <Button
-                    variant="text"
-                    small
-                    color="white"
-                    onClick={() => selectCategory(item.id)}
-                  >
-                    <Pen />
-                  </Button>
-                </FlexBox>
-              }
-            >
-              <CollapsibleInformation>
-                {filterByCategory(item.title).map((el, index) => (
-                  <div className="question-item" key={el.id}>
+                <>
+                  {isAdm && (
                     <FlexBox gap={2}>
-                      <h4>{el.title}</h4>
                       <Button
                         variant="text"
-                        onClick={() => selectQuestion(el.id)}
+                        small
+                        color="white"
+                        onClick={() => selectBlock(item.id)}
                       >
                         <Pen />
                       </Button>
+                      <ButtonDelete
+                        deleteFn={() => handleDeleteBlock(item.id)}
+                        name={item.name}
+                        variant="text"
+                      >
+                        <Trash />
+                      </ButtonDelete>
+                    </FlexBox>
+                  )}
+                </>
+              }
+            >
+              <CollapsibleInformation>
+                {item.faqQuestions.map((el, index) => (
+                  <div className="question-item" key={el.id}>
+                    <FlexBox gap={2}>
+                      <FlexBox
+                        full
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <h4>{el.name}</h4>
+                      </FlexBox>
+
+                      {isAdm && (
+                        <>
+                          <Button
+                            variant="text"
+                            onClick={() => selectQuestion(el)}
+                          >
+                            <Pen />
+                          </Button>
+                          <ButtonDelete
+                            deleteFn={() => handleDeleteQuestion(el.id)}
+                            name={item.name}
+                            variant="text"
+                          >
+                            <Trash />
+                          </ButtonDelete>
+                        </>
+                      )}
                     </FlexBox>
                     <p>{el.description}</p>
-                    {index <= filterByCategory(item.title).length - 2 && <hr />}
+                    {index <= item.faqQuestions.length - 2 && <hr />}
                   </div>
                 ))}
               </CollapsibleInformation>

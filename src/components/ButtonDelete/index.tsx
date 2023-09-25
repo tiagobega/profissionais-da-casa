@@ -1,3 +1,4 @@
+import { Warning } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { Modal } from "components/Modal";
@@ -8,31 +9,60 @@ export interface ButtonDeleteProps {
   deleteFn: () => void;
   name: string;
   children?: ReactNode;
+  variant?: "primary" | "outline" | "text";
 }
 
 export const ButtonDelete: React.FC<ButtonDeleteProps> = ({
   deleteFn,
   name,
   children,
+  variant,
 }) => {
   const [modalConfirm, setModalConfirm] = useState(false);
   const theme = useTheme();
 
+  const handleDelete = async () => {
+    deleteFn();
+    setModalConfirm(false);
+  };
+
   return (
     <>
-      <Button onClick={deleteFn} variant="outline">
+      <Button
+        onClick={() => setModalConfirm(true)}
+        variant={variant ? variant : `outline`}
+      >
         {children ? children : "Apagar"}
       </Button>
-      <Modal isOpened={modalConfirm} onClose={() => setModalConfirm(false)}>
-        <FlexBox direction="column" gap={1}>
-          <h3>Confirmar</h3>
+      <Modal
+        small
+        isOpened={modalConfirm}
+        onClose={() => setModalConfirm(false)}
+      >
+        <FlexBox direction="column" gap={2} full>
+          <FlexBox alignItems="center" justifyContent="center" full>
+            <Warning color={theme.color.brand.purple} size={48} weight="fill" />
+            <h2>Confirmar?</h2>
+          </FlexBox>
           <p>
-            Você tem certeza que quer apagar <b>${name}</b>?<br />
+            Você tem certeza que quer apagar <b>{name}</b>?<br />
+            <br />
             <b>Esta operação não poderá ser revertida.</b>
           </p>
-          <FlexBox gap={1} mt={2}>
-            <Button onClick={deleteFn}>Apagar</Button>
-            <Button variant="outline" onClick={() => setModalConfirm(false)}>
+          <FlexBox gap={2} full justifyContent="center">
+            <Button
+              onClick={handleDelete}
+              width={10}
+              background={theme.color.brand.purple}
+            >
+              Apagar
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => setModalConfirm(false)}
+              color="black"
+              width={10}
+            >
               Cancelar
             </Button>
           </FlexBox>

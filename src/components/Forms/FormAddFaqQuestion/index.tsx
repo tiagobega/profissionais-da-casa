@@ -6,15 +6,23 @@ import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
 import { useForm } from "react-hook-form";
 import { faqQuestionSchema } from "./validation";
+import { useApi } from "contexts/User";
+import { Loading } from "components/Loading";
+import { useEffect, useState } from "react";
+import { AllFaqBlockResponse, FaqBlock } from "services/User/types";
 
 export type FormAddFaqQuestion = Zod.infer<typeof faqQuestionSchema>;
 
 interface FormAddFaqQuestionProps {
-  categoriesList: Category[];
+  close: () => void;
+  blockList: FaqBlock[];
+  fetch: () => void;
 }
 
 export const FormAddFaqQuestion: React.FC<FormAddFaqQuestionProps> = ({
-  categoriesList,
+  close,
+  blockList,
+  fetch,
 }) => {
   const {
     handleSubmit,
@@ -22,21 +30,30 @@ export const FormAddFaqQuestion: React.FC<FormAddFaqQuestionProps> = ({
     watch,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<FormAddFaqQuestion>({
     resolver: zodResolver(faqQuestionSchema),
     mode: "onSubmit",
   });
+  const { faq } = useApi();
+  const { createQuestion } = faq;
+  const [blocks, setBlocks] = useState<FaqBlock[]>(blockList);
 
-  const categoryOptions: NameValueType[] = categoriesList.map((cat) => {
-    return { name: cat.title, value: cat.id };
-  });
-
-  const onSubmit = (data: FormAddFaqQuestion) => {
-    console.log(data);
-
-    window.alert(JSON.stringify(data));
+  const onSubmit = async (data: FormAddFaqQuestion) => {
+    await createQuestion({
+      name: data.title,
+      description: data.description,
+      blockId: data.category,
+    });
+    reset();
+    close();
+    fetch();
   };
+
+  const categoryOptions: NameValueType[] = blocks?.map((cat) => {
+    return { name: cat.name, value: cat.id };
+  });
 
   return (
     <form

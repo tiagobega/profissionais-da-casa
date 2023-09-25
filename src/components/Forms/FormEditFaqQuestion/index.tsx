@@ -7,17 +7,23 @@ import Input from "components/Input";
 import { useForm } from "react-hook-form";
 import { faqQuestionSchema } from "./validation";
 import { useEffect } from "react";
+import { FaqBlock, FaqQuestion } from "services/User/types";
+import { useApi } from "contexts/User";
 
 export type FormEditFaqQuestion = Zod.infer<typeof faqQuestionSchema>;
 
 interface FormEditFaqQuestionProps {
-  question: Question;
-  categoriesList: Category[];
+  close: () => void;
+  question: FaqQuestion;
+  blocks: FaqBlock[];
+  fetch: () => void;
 }
 
 export const FormEditFaqQuestion: React.FC<FormEditFaqQuestionProps> = ({
+  close,
   question,
-  categoriesList,
+  blocks,
+  fetch,
 }) => {
   const {
     handleSubmit,
@@ -25,26 +31,37 @@ export const FormEditFaqQuestion: React.FC<FormEditFaqQuestionProps> = ({
     watch,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<FormEditFaqQuestion>({
     resolver: zodResolver(faqQuestionSchema),
     mode: "onSubmit",
   });
+  const { faq } = useApi();
+  const { editQuestion } = faq;
 
   useEffect(() => {
-    setValue("category", question.category);
-    setValue("title", question.title);
+    setValue("category", question.blockId);
+    setValue("title", question.name);
     setValue("description", question.description);
   }, []);
 
-  const categoryOptions: NameValueType[] = categoriesList.map((cat) => {
-    return { name: cat.title, value: cat.id };
+  const categoryOptions: NameValueType[] = blocks.map((cat) => {
+    return { name: cat.name, value: cat.id };
   });
 
-  const onSubmit = (data: FormEditFaqQuestion) => {
-    console.log(data);
-
-    window.alert(JSON.stringify(data));
+  const onSubmit = async (data: FormEditFaqQuestion) => {
+    await editQuestion({
+      id: question.id,
+      newBlockId: data.category,
+      currentBlockId: question.blockId,
+      description: data.description,
+      newName: data.title,
+      currentName: question.name,
+    });
+    reset();
+    fetch();
+    close();
   };
 
   return (

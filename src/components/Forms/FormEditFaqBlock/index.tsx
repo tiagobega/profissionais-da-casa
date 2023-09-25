@@ -7,15 +7,21 @@ import Input from "components/Input";
 import { useForm } from "react-hook-form";
 import { faqBlockSchema } from "./validation";
 import { useEffect } from "react";
+import { FaqBlock } from "services/User/types";
+import { useApi } from "contexts/User";
 
 export type FormEditFaqBlock = Zod.infer<typeof faqBlockSchema>;
 
 interface FormEditFaqBlockProps {
-  category: Category;
+  block: FaqBlock;
+  close: () => void;
+  fetch: () => void;
 }
 
 export const FormEditFaqBlock: React.FC<FormEditFaqBlockProps> = ({
-  category,
+  block,
+  close,
+  fetch,
 }) => {
   const {
     handleSubmit,
@@ -23,20 +29,28 @@ export const FormEditFaqBlock: React.FC<FormEditFaqBlockProps> = ({
     watch,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<FormEditFaqBlock>({
     resolver: zodResolver(faqBlockSchema),
     mode: "onSubmit",
   });
+  const { faq } = useApi();
+  const { editBlock } = faq;
 
   useEffect(() => {
-    setValue("title", category.title);
+    setValue("title", block.name);
   }, []);
 
-  const onSubmit = (data: FormEditFaqBlock) => {
-    console.log(data);
-
-    window.alert(JSON.stringify(data));
+  const onSubmit = async (data: FormEditFaqBlock) => {
+    await editBlock({
+      id: block.id,
+      currentName: block.name,
+      newName: data.title,
+    });
+    reset();
+    close();
+    fetch();
   };
 
   return (
