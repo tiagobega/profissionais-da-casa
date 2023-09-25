@@ -7,35 +7,13 @@ import { LeadListLine } from "../ListLine";
 import { List, ListContent, ListHeader } from "./styles";
 
 export interface ProfessionalListProps {
-  professionalId: string;
+  leads: Lead[];
+  admin: true[];
 }
 
-const leadsList: Lead[] = [
-  {
-    name: "Jose Antonio Cavalcante",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, possimus error. Fugit placeat ex eius quia modi odio suscipit dolores repellendus harum obcaecati enim sit exercitationem perspiciatis quo animi facere id, nulla omnis quisquam alias? Quas dignissimos iure sint ut.",
-    id: "123456",
-    professionalId: "990049039",
-    userId: "29849493",
-  },
-  {
-    name: "Alessandra Freitas de lima",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, possimus error. Fugit placeat ex eius quia modi odio suscipit dolores repellendus harum obcaecati enim sit exercitationem perspiciatis quo animi facere id, nulla omnis quisquam alias? Quas dignissimos iure sint ut.",
-    id: "4433322",
-    professionalId: "990049022324239",
-    userId: "2342249849493",
-  },
-];
-
-export const LeadList: React.FC<ProfessionalListProps> = ({
-  professionalId,
-}) => {
+export const LeadList: React.FC<ProfessionalListProps> = ({ leads }) => {
   const [query, setQuery] = useState<string>("");
-  const { getProfessional } = useUser();
-
-  const leads = leadsList; //tem que trazer o profissional
+  const {} = useUser();
 
   const filteredList = () => {
     if (query.length < 3) return leads;

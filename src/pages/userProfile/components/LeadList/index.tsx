@@ -1,6 +1,4 @@
 import Input from "components/Input";
-import { Loading } from "components/Loading";
-import { useUser } from "contexts/User";
 import { useState } from "react";
 import { Lead } from "services/User/types";
 import { LeadListLine } from "../ListLine";
@@ -8,9 +6,10 @@ import { List, ListContent, ListHeader } from "./styles";
 
 export interface ProfessionalListProps {
   leads: Lead[];
+  admin?: boolean;
 }
 
-export const LeadList: React.FC<ProfessionalListProps> = ({ leads }) => {
+export const LeadList: React.FC<ProfessionalListProps> = ({ leads, admin }) => {
   const [query, setQuery] = useState<string>("");
 
   const filteredList = () => {
@@ -25,8 +24,10 @@ export const LeadList: React.FC<ProfessionalListProps> = ({ leads }) => {
       <ListHeader alignItems="center" justifyContent="space-between" p={1}>
         <h3>
           {leads.length > 0
-            ? `O profissional tem ${leads.length} leads registrados`
-            : "O profissional não possui leads registrados"}
+            ? admin
+              ? `Quantidade de contatos: ${leads.length}`
+              : `Meus Contatos: ${leads.length}`
+            : "Não há contatos"}
         </h3>
         <Input.Text
           value={query}

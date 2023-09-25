@@ -1,6 +1,8 @@
 import { Evaluation } from "services/User/types";
 
 export const evaluationAverage = (evaluations: Evaluation[]) => {
+  if (!evaluations.length) return 0;
+
   let sum = 0;
   evaluations.forEach((item) => {
     if (item.status !== "approved") return;

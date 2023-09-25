@@ -693,7 +693,7 @@ export class UserService extends BaseService {
   static async getMe() {
     return await this.request<ST.Me>(API_ROUTES.GET.USER_ME, "get");
   }
-  static async getAll() {
+  static async getAllUsers() {
     return await this.request<ST.AllUserResponse>(
       API_ROUTES.GET.USER_ALL,
       "get"

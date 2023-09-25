@@ -1,12 +1,14 @@
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MarginContainer } from "styles/commonComponents";
 import { ProfessionalList } from "./components/professionalList";
 import { Header } from "./styles";
 import { useNavigate } from "react-router-dom";
 import { CaretLeft } from "@phosphor-icons/react";
+import { Me, Professional } from "services/User/types";
+import { useApi } from "contexts/User";
 
 export interface AdmProfessionalListProps {}
 
@@ -14,7 +16,33 @@ export type ScreenList = "professionals" | "validation";
 
 export const AdmProfessionalList: React.FC<AdmProfessionalListProps> = () => {
   const [screen, setScreen] = useState<ScreenList>("professionals");
+
+  const [allUsers, setAllUsers] = useState<Me[]>();
+  const [allProfessionals, setAllProfessionals] = useState<Professional[]>();
+
+  const { professional, user } = useApi();
+
   const navigate = useNavigate();
+
+  const fetchAll = async () => {
+    const userResponse = await user.getAll();
+    if (!userResponse) return;
+
+    const professionalResponse = await professional.getAll();
+
+    if (!professionalResponse) return;
+
+    setAllUsers(userResponse.users);
+    setAllProfessionals(professionalResponse.proProfiles);
+  };
+
+  useEffect(() => {
+    if (!allProfessionals) fetchAll();
+  }, [allProfessionals]);
+
+  useEffect(() => {
+    if (!allUsers) fetchAll();
+  }, [allProfessionals]);
 
   return (
     <MarginContainer>
@@ -42,7 +70,11 @@ export const AdmProfessionalList: React.FC<AdmProfessionalListProps> = () => {
         </FlexBox>
       </Header>
 
-      <ProfessionalList screen={screen} />
+      <ProfessionalList
+        screen={screen}
+        users={allUsers || []}
+        professionals={allProfessionals || []}
+      />
     </MarginContainer>
   );
 };
