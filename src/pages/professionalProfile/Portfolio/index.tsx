@@ -2,7 +2,7 @@ import { MagnifyingGlass } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { ButtonDelete } from "components/ButtonDelete";
 import { FlexBox } from "components/FlexBox";
-import { FormAddPortfolioProject } from "components/Forms/FormAddPortfolioProject";
+import { FormPortfolioProject } from "components/Forms/FormPortfolioProject";
 import Input from "components/Input";
 import { useApi } from "contexts/User";
 import { useState } from "react";
@@ -34,10 +34,15 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({ portfolio }) => {
     setSelected(null);
   };
 
+  const handleCloseForm = () => {
+    setSelected(null);
+    setAdd(false);
+  };
+
   return (
     <>
       {add ? (
-        <FormAddPortfolioProject close={() => setAdd(false)} />
+        <FormPortfolioProject close={handleCloseForm} />
       ) : !selected ? (
         <>
           <FlexBox full justifyContent="space-between">
@@ -78,7 +83,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({ portfolio }) => {
           </FlexBox>
         </>
       ) : (
-        <>Editar</>
+        <FormPortfolioProject project={selected} close={handleCloseForm} />
       )}
     </>
   );

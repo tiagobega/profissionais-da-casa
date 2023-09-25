@@ -9,7 +9,7 @@ export interface CollapsibleProps {
   children: ReactNode;
   actionButton?: ReactElement;
   titleButton?: ReactElement;
-  variant?: "project" | "faq";
+  variant?: "project" | "faq" | "neutral";
 }
 export const Collapsible: React.FC<CollapsibleProps> = ({
   title,

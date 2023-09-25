@@ -9,12 +9,14 @@ export const CollapsibleContainer = styled.div`
 
 export const TitleContainer = styled(FlexBox)<{
   isOpen: boolean;
-  variant: "project" | "faq";
+  variant: "project" | "faq" | "neutral";
 }>`
   ${({ theme, isOpen, variant }) => css`
     background-color: ${variant == "faq"
       ? theme.color.brand.purple
-      : theme.color.brand.yellowLight};
+      : variant == "project"
+      ? theme.color.brand.yellowLight
+      : theme.color.base[300]};
     z-index: 15;
     color: ${variant == "faq" ? "white" : "black"};
     div {
@@ -45,12 +47,14 @@ export const TitleContainer = styled(FlexBox)<{
 
 export const BodyContainer = styled.div<{
   isOpen: boolean;
-  variant: "project" | "faq";
+  variant: "project" | "faq" | "neutral";
 }>`
   ${({ theme, isOpen, variant }) => css`
-    background-color: ${variant == "faq"
-      ? theme.color.base[200]
-      : theme.color.secondary.lighterYellow};
+    background-color: ${
+      variant == "project"
+        ? theme.color.secondary.lighterYellow
+        : theme.color.base[200]
+    }
     z-index: 10;
     transform-origin: top center;
     display: grid;
