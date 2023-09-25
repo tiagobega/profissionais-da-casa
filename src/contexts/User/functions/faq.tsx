@@ -124,6 +124,11 @@ export const faqFunctions = (errorHandler: ErrorHandler) => {
     deleteQuestion,
     getSingleQuestion,
     getAllQuestion,
+    createBlock,
+    editBlock,
+    deleteBlock,
+    getSingleBlock,
+    getAllBlock,
   };
 };
 
