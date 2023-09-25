@@ -3,9 +3,9 @@ import { FormTest } from 'components/FormTest'
 import { Modal } from 'components/Modal'
 import { useState } from 'react'
 
-export interface EditPortifolioProjectProps {}
-export const EditPortifolioProject: React.FC<
-  EditPortifolioProjectProps
+export interface EditPortfolioProjectProps {}
+export const EditPortfolioProject: React.FC<
+  EditPortfolioProjectProps
 > = () => {
   const [modalOpen, setModalOpen] = useState(false)
 

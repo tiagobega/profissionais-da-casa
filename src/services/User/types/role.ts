@@ -20,3 +20,11 @@ export type SingleRoleData = Pick<Role, "id"> | Pick<Role, "name">;
 export type AllRoleResponse = {
   roles: Role[];
 };
+
+export type ForgotPasswordResponse = {
+  success: boolean;
+};
+
+export type ResetPasswordResponse = {
+  messages: string;
+};

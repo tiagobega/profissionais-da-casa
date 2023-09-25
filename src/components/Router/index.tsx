@@ -7,7 +7,7 @@ import TermsPage from "pages/terms";
 import { FAQPage } from "pages/faq";
 import { ProfessionalsListPage } from "pages/professionalsList";
 import { ProfessionalProfilePage } from "pages/professionalProfile";
-import { PortifolioProjectPage } from "pages/portifolioProject";
+import { PortfolioProjectPage } from "pages/portifolioProject";
 import { MyProjectsPage } from "pages/myProjects";
 import { ProjectPage } from "pages/project";
 import { NewReviewPage } from "pages/newReview";
@@ -20,7 +20,6 @@ import { LoginPage } from "pages/login";
 import { RegisterUser } from "pages/register-user";
 import { RegisterUserConfirm } from "pages/register-user-confirm";
 import { RegisterProfessional } from "pages/register-professionals";
-import { RegisterProfessionalConfirm } from "pages/register-professional-confirm";
 import { AdmHome } from "pages/adm-home";
 
 const HomePage = React.lazy(() => import("pages/home"));
@@ -65,7 +64,7 @@ const Router = () => (
         />
         <Route
           path={"/project/:id"}
-          element={<PublicRoute element={<PortifolioProjectPage />} />}
+          element={<PublicRoute element={<PortfolioProjectPage />} />}
         />
         {/* //CUSTOMER/PROFESSIONAL ROUTES */}
         <Route

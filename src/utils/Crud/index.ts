@@ -1,8 +1,25 @@
-import { AxiosError } from "axios";
-import { api } from "config/axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
+import axios, { api } from "config/axios";
 import * as z from "zod";
 
-const serviceSchema = {
+type ServiceShape<Data extends z.ZodFirstPartySchemaTypes = any> = {
+  name: string;
+  path: string;
+  type: "put" | "get" | "post";
+  errorResponseSchema: z.ZodFirstPartySchemaTypes;
+  successResponseSchema: z.ZodFirstPartySchemaTypes;
+  params?: Data;
+  config?: AxiosRequestConfig<z.infer<Data>>;
+};
+
+const SERVICE_KEYS = {
+  TESTE_1: "teste_1",
+  TESTE_2: "teste_2",
+} as const;
+
+type ServiceKey = (typeof SERVICE_KEYS)[keyof typeof SERVICE_KEYS];
+
+const serviceSchema: Record<ServiceKey, ServiceShape> = {
   teste_1: {
     name: "createLocation",
     path: "/location/path",
@@ -86,7 +103,6 @@ async () => {
 
   if (response.success) {
     response.data;
-
     return;
   }
 

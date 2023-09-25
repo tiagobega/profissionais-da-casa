@@ -15,11 +15,11 @@ import {
 } from './styles'
 import { FlexBox } from 'components/FlexBox'
 import { useTheme } from 'styled-components'
-import { EditPortifolioProject } from './EditProject'
+import { EditPortfolioProject } from './EditProject'
 
-export interface PortifolioProjectPageProps {}
-export const PortifolioProjectPage: React.FC<
-  PortifolioProjectPageProps
+export interface PortfolioProjectPageProps {}
+export const PortfolioProjectPage: React.FC<
+  PortfolioProjectPageProps
 > = () => {
   const navigate = useNavigate()
   const { color } = useTheme()
@@ -50,7 +50,7 @@ export const PortifolioProjectPage: React.FC<
           <Button variant="text" onClick={() => navigate(-1)}>
             <CaretLeft weight="fill" /> Voltar
           </Button>
-          <EditPortifolioProject />
+          <EditPortfolioProject />
         </FlexBox>
       </MarginContainer>
       <GalleryContainer>

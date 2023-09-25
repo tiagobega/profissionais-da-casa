@@ -70,6 +70,6 @@ export type DeleteProfessionalData =
   | Pick<Professional, "id">
   | Pick<Professional, "userId">;
 
-export type AllProfessionalData = {
+export type AllProfessionalResponse = {
   proProfiles: Professional[];
 };

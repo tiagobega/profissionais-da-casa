@@ -1,15 +1,15 @@
 import Input from "components/Input";
 import { useForm } from "react-hook-form";
-import { usePortifolioProjectSchema } from "./validation";
+import { usePortfolioProjectSchema } from "./validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "components/Button";
 
-export interface FormAddPortifolioProjectProps {}
+export interface FormAddPortfolioProjectProps {}
 
-export type FormData = Zod.infer<typeof usePortifolioProjectSchema>;
+export type FormData = Zod.infer<typeof usePortfolioProjectSchema>;
 
-export const FormAddPortifolioProject: React.FC<
-  FormAddPortifolioProjectProps
+export const FormAddPortfolioProject: React.FC<
+  FormAddPortfolioProjectProps
 > = () => {
   const {
     handleSubmit,
@@ -17,7 +17,7 @@ export const FormAddPortifolioProject: React.FC<
     watch,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(usePortifolioProjectSchema),
+    resolver: zodResolver(usePortfolioProjectSchema),
     mode: "onChange",
   });
   return (

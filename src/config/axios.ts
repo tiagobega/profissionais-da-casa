@@ -16,12 +16,15 @@ export const API_POST_ROUTES = {
 
   FILE_UPLOAD: "/file/upload",
 
+  LEAD_CREATE: "/lead/create",
+  LEAD_SINGLE: "/lead/getone",
+  LEAD_DELETE: "/lead/delete",
+
   LOCATION_CREATE_MANY: "/location/createmany",
   LOCATION_CREATE: "/location/create",
-
-  SUBPLAN_CREATE: "/subplan/create",
-  SUBPLAN_SINGLE: "/subplan/getone",
-  SUBPLAN_DELETE: "/subplan/delete",
+  LOCATION_DELETE_MANY: "/location/deletemany",
+  LOCATION_DELETE: "/location/delete",
+  LOCATION_SINGLE: "/location/getone",
 
   PROFESSIONAL_CREATE: "/proprofile/create",
   PROFESSIONAL_SINGLE: "/proprofile/getone",
@@ -34,6 +37,14 @@ export const API_POST_ROUTES = {
   ROLE_SINGLE: "/role/getone",
   ROLE_CREATE: "/role/create",
   ROLE_DELETE: "/role/delete",
+
+  SOCIALMEDIA_SINGLE: "/socialmedia/getone",
+  SOCIALMEDIA_CREATE: "/socialmedia/create",
+  SOCIALMEDIA_DELETE: "/socialmedia/delete",
+
+  SUBPLAN_CREATE: "/subplan/create",
+  SUBPLAN_SINGLE: "/subplan/getone",
+  SUBPLAN_DELETE: "/subplan/delete",
 
   USER_SIGN_IN: "/user/signin",
   USER_SIGN_UP: "/user/signup",
@@ -48,11 +59,17 @@ export const API_GET_ROUTES = {
 
   FAQ_QUESTION_ALL: "/faq_block/getall",
 
+  LEAD_ALL: "/lead/getall",
+
+  LOCATION_ALL: "/location/getall",
+
   PORTFOLIO_PROJECT_ALL: "/portproj/getall",
 
   PROFESSIONAL_ALL: "/proprofile/getall",
 
   ROLE_ALL: "/role/getall",
+
+  SOCIALMEDIA_ALL: "/socialmedia/getall",
 
   SUBPLAN_ALL: "/subplan/getall",
 
@@ -67,11 +84,18 @@ export const API_PUT_ROUTES = {
 
   FAQ_QUESTION_EDIT: "/faq_question/edit",
 
+  LEAD_EDIT: "/lead/edit",
+
+  LOCATION_EDIT_MANY: "/location/editmany",
+  LOCATION_EDIT: "/location/edit",
+
   PORTFOLIO_PROJECT_EDIT: "/portproj/edit",
 
   PROFESSIONAL_EDIT: "/proprofile/edit",
 
   ROLE_EDIT: "/role/edit",
+
+  SOCIALMEDIA_EDIT: "/socialmedia/edit",
 
   SUBPLAN_EDIT: "/subplan/edit",
 
