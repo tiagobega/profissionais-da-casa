@@ -11,6 +11,7 @@ import { useState } from "react";
 import { FormForgotPassword } from "components/Forms/FormForgotPassword";
 import Input from "components/Input";
 import { FormAccountType } from "components/Forms/FormSelectAccountType";
+import { PasswordReset } from "./components/passwordReset";
 
 export interface LoginPageProps {}
 
@@ -44,7 +45,11 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
             {!isForgot && <h2>Login</h2>}
           </div>
 
-          {isForgot ? <FormForgotPassword /> : <FormLogin />}
+          {isForgot ? (
+            <PasswordReset back={() => setIsForgot(false)} />
+          ) : (
+            <FormLogin />
+          )}
           {isForgot ? (
             <Button
               variant="text"

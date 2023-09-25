@@ -77,7 +77,7 @@ const Header = () => {
                   <Button
                     variant="text"
                     onClick={() =>
-                      navigate(`/professional/${myProfessional?.id}`)
+                      navigate(`/professional/${myProfessional.id}`)
                     }
                   >
                     Meu perfil

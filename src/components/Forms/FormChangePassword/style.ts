@@ -1,10 +1,9 @@
 import { FlexBox } from "components/FlexBox";
 import styled, { css } from "styled-components";
+import { FullContainer } from "styles/commonComponents";
 
-export const ProjectContainer = styled(FlexBox)`
+export const Form = styled.form`
   ${({ theme }) => css`
-    display: flex;
-    width: 712px;
-    margin: 0 auto;
+    width: 20rem;
   `}
 `;

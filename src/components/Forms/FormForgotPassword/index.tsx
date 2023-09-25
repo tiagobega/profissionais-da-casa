@@ -6,10 +6,19 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import { forgotSchema } from "./validation";
 import { Form } from "./style";
+import { FC, useEffect } from "react";
 
 export type FormData = Zod.infer<typeof forgotSchema>;
 
-export const FormForgotPassword = () => {
+interface FormForgotPasswordProps {
+  email: string | null;
+  next: (email: string) => void;
+}
+
+export const FormForgotPassword: FC<FormForgotPasswordProps> = ({
+  next,
+  email: stateEmail,
+}) => {
   const {
     handleSubmit,
     register,
@@ -27,7 +36,12 @@ export const FormForgotPassword = () => {
     console.log(data);
 
     window.alert(JSON.stringify(data));
+    next(data.email);
   };
+
+  useEffect(() => {
+    stateEmail && setValue("email", stateEmail);
+  });
 
   return (
     <Form

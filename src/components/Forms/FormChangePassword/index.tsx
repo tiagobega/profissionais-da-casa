@@ -2,25 +2,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
-import { useForm } from "react-hook-form";
-import { useTheme } from "styled-components";
-import { resetPasswordSchema } from "./validation";
-import { Form } from "./style";
 import { useUser } from "contexts/User";
-import { useNavigate } from "react-router-dom";
 import { FC } from "react";
-import { CaretLeft } from "@phosphor-icons/react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "styled-components";
+import { Form } from "./style";
+import { changePasswordSchema } from "./validation";
 
-export type FormData = Zod.infer<typeof resetPasswordSchema>;
-interface FormResetPasswordProps {
-  email: string;
-  back: () => void;
-}
+export type FormData = Zod.infer<typeof changePasswordSchema>;
+interface FormChangePasswordProps {}
 
-export const FormResetPassword: FC<FormResetPasswordProps> = ({
-  email,
-  back,
-}) => {
+export const FormChangePassword: FC<FormChangePasswordProps> = () => {
   const {
     handleSubmit,
     register,
@@ -29,13 +22,11 @@ export const FormResetPassword: FC<FormResetPasswordProps> = ({
     getValues,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(resetPasswordSchema),
-    mode: "onBlur",
+    resolver: zodResolver(changePasswordSchema),
+    mode: "onSubmit",
   });
   const { color } = useTheme();
   const navigate = useNavigate();
-
-  const { login } = useUser();
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
@@ -48,23 +39,23 @@ export const FormResetPassword: FC<FormResetPasswordProps> = ({
         return onSubmit(e);
       })}
     >
-      <h3>Defina sua nova senha</h3>
+      <h3>Troca de senha</h3>
       <FlexBox direction="column" gap={1} full my={1}>
         <Input.Text
-          type="text"
-          label="Código"
-          placeholder="Digite o código recebido via e-mail"
-          aria-label="Código"
-          error={errors.code}
-          {...register("code")}
+          type="password"
+          label="Senha atual"
+          placeholder="Digite a senha atual"
+          aria-label="senha"
+          error={errors.currentPassword}
+          {...register("currentPassword")}
         />
         <Input.Text
           type="password"
           label="Nova senha"
           placeholder="Digite a nova senha"
           aria-label="senha"
-          error={errors.password}
-          {...register("password")}
+          error={errors.newPassword}
+          {...register("newPassword")}
         />
         <Input.Text
           type="password"
@@ -74,12 +65,8 @@ export const FormResetPassword: FC<FormResetPasswordProps> = ({
           error={errors.confirm}
           {...register("confirm")}
         />
-        <Button type="submit">Resetar a senha</Button>
 
-        <Button type="button" onClick={back} variant="text">
-          <CaretLeft weight="fill" />
-          Não recebeu o email? Voltar.
-        </Button>
+        <Button type="submit">Confirmar</Button>
       </FlexBox>
     </Form>
   );
