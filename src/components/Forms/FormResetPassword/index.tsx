@@ -15,11 +15,13 @@ export type FormData = Zod.infer<typeof resetPasswordSchema>;
 interface FormResetPasswordProps {
   email: string;
   back: () => void;
+  backToLogin: () => void;
 }
 
 export const FormResetPassword: FC<FormResetPasswordProps> = ({
   email,
   back,
+  backToLogin,
 }) => {
   const {
     handleSubmit,
@@ -30,15 +32,15 @@ export const FormResetPassword: FC<FormResetPasswordProps> = ({
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(resetPasswordSchema),
-    mode: "onBlur",
+    mode: "onSubmit",
   });
-  const { color } = useTheme();
-  const navigate = useNavigate();
 
-  const { login } = useUser();
+  const { resetPassword } = useUser();
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+    const payload = { ...data, email };
+    await resetPassword(payload);
+    backToLogin();
   };
 
   return (
@@ -71,8 +73,8 @@ export const FormResetPassword: FC<FormResetPasswordProps> = ({
           label="Confirme a nova senha"
           placeholder="Digite novamente a nova senha"
           aria-label="confirme a nova senha"
-          error={errors.confirm}
-          {...register("confirm")}
+          error={errors.passwordConfirmation}
+          {...register("passwordConfirmation")}
         />
         <Button type="submit">Resetar a senha</Button>
 

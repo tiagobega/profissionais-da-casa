@@ -7,6 +7,7 @@ import { useTheme } from "styled-components";
 import { forgotSchema } from "./validation";
 import { Form } from "./style";
 import { FC, useEffect } from "react";
+import { useUser } from "contexts/User";
 
 export type FormData = Zod.infer<typeof forgotSchema>;
 
@@ -30,12 +31,10 @@ export const FormForgotPassword: FC<FormForgotPasswordProps> = ({
     resolver: zodResolver(forgotSchema),
     mode: "onSubmit",
   });
-  const { color } = useTheme();
+  const { forgotPassword } = useUser();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-
-    window.alert(JSON.stringify(data));
+    forgotPassword(data);
     next(data.email);
   };
 

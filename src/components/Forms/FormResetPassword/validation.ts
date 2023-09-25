@@ -5,12 +5,13 @@ export const resetPasswordSchema = z
   .object({
     code: z.string().length(6, exactChars(6)),
     password: z.string().min(6, minChars(6)),
-    confirm: z.string().min(6, minChars(6)),
+    passwordConfirmation: z.string().min(6, minChars(6)),
   })
-  .superRefine(({ password, confirm }, ctx) => {
-    if (password !== confirm) {
+  .superRefine(({ password, passwordConfirmation }, ctx) => {
+    if (password !== passwordConfirmation) {
       ctx.addIssue({
         code: "custom",
+        path: ["passwordConfirmation"],
         message: "As senhas digitadas devem ser iguais",
       });
     }

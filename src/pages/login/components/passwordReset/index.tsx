@@ -27,7 +27,11 @@ export const PasswordReset: React.FC<PasswordResetProps> = ({ back }) => {
         />
       )}
       {step == 2 && email && (
-        <FormResetPassword email={email} back={() => setStep(1)} />
+        <FormResetPassword
+          email={email}
+          back={() => setStep(1)}
+          backToLogin={back}
+        />
       )}
     </FlexBox>
   );
