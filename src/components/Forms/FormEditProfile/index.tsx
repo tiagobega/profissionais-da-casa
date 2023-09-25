@@ -96,7 +96,11 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
     setProfile(null);
   };
 
-  const sendPicture = async (fileList: FileList, filename:string, content:string) => {
+  const sendPicture = async (
+    fileList: FileList,
+    filename: string,
+    content: string
+  ) => {
     if (!profile || !fileList[0]) {
       return;
     }
@@ -109,17 +113,24 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
   };
 
   const onSubmit = async (data: FormEditProfileData) => {
-    const profilePicture = profile?sendPicture(data.profilePicture, 'profile picture', profile):undefined
-    const bgImgPicture = bgImg?sendPicture(data.backgroundPicture, 'bg picture', bgImg):undefined
+    const profilePicture = profile
+      ? sendPicture(data.profilePicture, "profile picture", profile)
+      : undefined;
+    const bgImgPicture = bgImg
+      ? sendPicture(data.backgroundPicture, "bg picture", bgImg)
+      : undefined;
 
-    let payload:ProfessionalUpdateData = {name:data.name, onlineAppointment:data.onlineAppointment}
+    let payload: ProfessionalUpdateData = {
+      name: data.name,
+      onlineAppointment: data.onlineAppointment,
+    };
 
-    profilePicture && ={...payload,profilePicture}
-    bgImgPicture && payload={...payload,bgImgPicture}
+    // profilePicture && ={...payload,profilePicture}
+    // bgImgPicture && payload={...payload,bgImgPicture}
 
-    await updateMe({ profilePicture: fileResponse });
-    close();
-    toNull();
+    // await updateMe({ profilePicture: fileResponse });
+    // close();
+    // toNull();
   };
 
   return (

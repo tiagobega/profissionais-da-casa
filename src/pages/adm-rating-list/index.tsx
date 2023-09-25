@@ -9,6 +9,7 @@ import { ContentContainer, Header } from "./styles";
 import { RatingList } from "./RatingList";
 import { filterRating } from "utils/filterList";
 import { useTheme } from "styled-components";
+import { useApi } from "contexts/User";
 
 export interface AdmRatingListProps {}
 
@@ -117,11 +118,19 @@ const mockRatingList: RatingType[] = [
 type ListOrderType = "userName" | "professionalName" | "rating";
 
 export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
+  const [allEvaluations, setAllEvaluations] = useState();
+  const [allUsers, setAllUsers] = useState();
+  const [allProfessionals, setAllProfessionals] = useState();
+
   const [status, setStatus] = useState<RatingStatusOptions>("analysis");
   const [query, setQuery] = useState<string>("");
   const [order, setOrder] = useState<ListOrderType>("userName");
   const [isDetails, setIsDetails] = useState(false);
+
   const { color } = useTheme();
+  const { evaluation, professional, user } = useApi();
+
+  // const finalList = evaluation.map((evaluation) => {})
 
   const orderOptions: { name: string; value: ListOrderType }[] = [
     { name: "Nome do usuário", value: "userName" },

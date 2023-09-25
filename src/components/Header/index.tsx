@@ -22,10 +22,6 @@ const Header = () => {
     else return me.roleRel.name;
   };
 
-  useEffect(() => {
-    console.log(myProfessional);
-  }, [myProfessional]);
-
   return (
     <HeaderContainer role={getRole()}>
       <FlexBox full justifyContent="space-between" alignItems="center" px={6}>
@@ -72,20 +68,14 @@ const Header = () => {
                   Painel Admim
                 </Button>
               ) : getRole() == "user" ? (
-                <Button
-                  variant="text"
-                  onClick={() => navigate(`/profile`)}
-                >
+                <Button variant="text" onClick={() => navigate(`/profile`)}>
                   Meu perfil
                 </Button>
               ) : (
-                getRole() == "professional" &&
-                myProfessional && (
+                getRole() == "professional" && (
                   <Button
                     variant="text"
-                    onClick={() =>
-                      navigate(`/professional/${myProfessional.id}`)
-                    }
+                    onClick={() => navigate(`/professional/${me.id}`)}
                   >
                     Meu perfil
                   </Button>

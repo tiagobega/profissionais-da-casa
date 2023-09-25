@@ -13,9 +13,12 @@ import profilePlaceholder from "assets/images/profile-placeholder.jpeg";
 import photoPlaceholder from "assets/images/photo-placeholder.jpeg";
 import { Tag } from "components/Tag";
 import { useNavigate } from "react-router-dom";
+import { Professional } from "services/User/types";
 
-export interface CardProfileProps {}
-export const CardProfile: React.FC<CardProfileProps> = () => {
+export interface CardProfileProps {
+  professional: Professional;
+}
+export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
   const { color } = useTheme();
   const navigate = useNavigate();
 
@@ -27,12 +30,22 @@ export const CardProfile: React.FC<CardProfileProps> = () => {
     tags: ["Interiores", "Reformas", "Ambientes pequenos", "Acessibilidade"],
   };
 
+  const tags = professional.tags
+    .split(",")
+    .slice(0, 3)
+    .filter((a) => a !== "");
+
+  console.log(tags);
+
   return (
     <CardContainer>
       <PhotoContainer>
-        <img src={photoPlaceholder} alt="projeto em destaque" />
+        <img src={professional.backgroundPicture} alt="foto background" />
       </PhotoContainer>
-      <ProfileContainer src={profilePlaceholder} alt="foto do profissional" />
+      <ProfileContainer
+        src={professional.profilePicture}
+        alt="foto do profissional"
+      />
       <InformationContainer
         direction="column"
         p={0.5}
@@ -42,26 +55,30 @@ export const CardProfile: React.FC<CardProfileProps> = () => {
         full
       >
         <div>
-          <p>{profile.profession}</p>
-          <h3 className={`${profile.name.length > 22 ? "small" : ""}`}>
-            {profile.name}
+          <p>{professional.formation}</p>
+          <h3 className={`${professional.name.length > 22 ? "small" : ""}`}>
+            {professional.name}
           </h3>
         </div>
+
         <FlexBox alignItems="center" gap={0.5}>
           <Star size={32} weight="fill" color={color.secondary.yellow} />
           <h3>x {profile.rating}</h3>
         </FlexBox>
+
         <FlexBox wrap={"wrap"} gap={0.25}>
-          {profile.tags.slice(0, 3).map((tag, index) => (
-            <Tag tagName={tag} key={`${profile.id}${index}${tag}`} />
-          ))}
-          {profile.tags.length > 3 && <Tag tagName="..." />}
+          {tags.length > 0 &&
+            tags.map((tag, index) => (
+              <Tag tagName={tag} key={`${professional.id}${index}${tag}`} />
+            ))}
+          {professional.tags.length > 3 && <Tag tagName="..." />}
         </FlexBox>
+
         <ButtonContainer full justifyContent="flex-end">
           <Button
             variant="text"
             color={color.secondary.lightTeal}
-            onClick={() => navigate("/professional/1")}
+            onClick={() => navigate(`/professional/${professional.userId}`)}
           >
             Ver mais <CaretRight />
           </Button>
