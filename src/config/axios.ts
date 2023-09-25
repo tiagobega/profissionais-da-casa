@@ -75,7 +75,7 @@ export const API_GET_ROUTES = {
   SUBPLAN_ALL: "/subplan/getall",
 
   USER_ME: "/user/me",
-  USER_ALL: "/user/all",
+  USER_ALL: "/user/getall",
 } as const;
 
 export const API_PUT_ROUTES = {

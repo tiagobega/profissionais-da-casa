@@ -1,45 +1,45 @@
 import { FlexBox } from "components/FlexBox";
-import { ProfessionalPersonalInfo } from "../professionalList";
 import { Star } from "@phosphor-icons/react";
 import { useTheme } from "styled-components";
 import { Button } from "components/Button";
 import { Line } from "./styles";
+import { Me, Professional } from "services/User/types";
+import { useNavigate } from "react-router-dom";
+import { approvedEvaluations } from "utils/EvaluationAverage";
 
 export interface ProfessionalListLineProps {
-  professional: ProfessionalPersonalInfo;
+  professional: Professional;
+  user: Me;
 }
 
 export const ProfessionalListLine: React.FC<ProfessionalListLineProps> = ({
   professional,
+  user,
 }) => {
-  const isApproved = professional.status == "approved";
+  const isApproved = user.active ? "approved" : "inapproved";
   const { color } = useTheme();
 
-  const starsArray = () => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      if (professional.rating <= i) stars.push(0);
-      else if (professional.rating < i + 1) stars.push(1);
-      else if (professional.rating >= i + 1) stars.push(2);
-    }
-    return stars;
-  };
+  const navigate = useNavigate();
+  const { average } = approvedEvaluations(professional.evaluations);
 
   return (
     <Line full justifyContent="space-between" py={0.5} alignItems="center">
       <FlexBox gap={1}>
         <div className="name">{professional.name}</div>
         <div className="birth-date">{professional.birthDate}</div>
-        <div className="email">{professional.email}</div>
-        <div className="phone">{professional.phone}</div>
+        <div className="email">{user.email}</div>
+        <div className="phone">{user.phone}</div>
         {isApproved && (
           <div className="rating">
-            <Star weight="fill" color={color.secondary.yellow} /> :{" "}
-            {professional.rating}
+            <Star weight="fill" color={color.secondary.yellow} /> : {average}
           </div>
         )}
       </FlexBox>
-      <Button variant="outline" small>
+      <Button
+        variant="outline"
+        small
+        onClick={() => window.open(`/professional/${user.id}`)}
+      >
         detalhar
       </Button>
     </Line>

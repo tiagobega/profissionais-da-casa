@@ -1,14 +1,20 @@
-import { ProfessionalPersonalInfo } from "pages/adm-professional-list/components/professionalList";
 import { RatingType } from "pages/adm-rating-list";
+import { Me, Professional } from "services/User/types";
 
 export function filterProfessionalFunction(
-  list: ProfessionalPersonalInfo[],
+  list: {
+    professional: Professional;
+    user: Me;
+  }[],
   query: string
-): ProfessionalPersonalInfo[] {
+) {
   const queryRegex = new RegExp(query, "i");
+
   if (query?.length < 3 || query == null) return list;
+
   const filteredList = list?.filter((el) => {
-    const values = Object.values(el);
+    const values = Object.values(el.professional);
+    
     let occurences = 0;
     values.forEach((value) => {
       const stringifiedEntry = JSON.stringify(value);

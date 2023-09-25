@@ -1,6 +1,7 @@
 import type { ErrorHandler, UserContext } from "../types";
 import type {
   AdminUpdateUserData,
+  AllUserResponse,
   ForgotPasswordData,
   Me,
   ResetPasswordData,
@@ -135,6 +136,17 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
    * TODO ADMIN FUNCTIONS
    */
 
+  const getAll = async () => {
+    const response = await UserService.getAllUsers();
+
+    if (response instanceof AxiosError) {
+      errorHandler(response);
+      return false;
+    }
+
+    return response;
+  };
+
   const adminUpdateMe = async (data: AdminUpdateUserData) => {
     // const response = await UserService.create;
   };
@@ -147,7 +159,7 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
     setMe,
     updateMe,
     getMe,
-
+    getAll,
     register,
     login,
     logout,
