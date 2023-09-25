@@ -8,7 +8,8 @@ import { addImageSchema } from "./validation";
 import { FC, useEffect, useState } from "react";
 import { ImgPreview } from "./styles";
 import { Trash } from "@phosphor-icons/react";
-import { useUser } from "contexts/User";
+import { useApi, useUser } from "contexts/User";
+import { previewUrl } from "utils/ImageBase64Convert";
 
 export type FormEditProfileData = Zod.infer<typeof addImageSchema>;
 interface FormAddImageProps {
@@ -30,7 +31,9 @@ export const FormAddImage: FC<FormAddImageProps> = ({ close }) => {
   });
   const { color } = useTheme();
   const [img, setImg] = useState<string | null>(null);
-  const { sendFile, putMe } = useUser();
+  const { user, file } = useApi();
+  const { updateMe } = user;
+  const { sendFile } = file;
 
   const toNull = () => {
     reset();
@@ -46,7 +49,7 @@ export const FormAddImage: FC<FormAddImageProps> = ({ close }) => {
       contentType: data.picture[0].type,
     });
     if (fileResponse == false) return;
-    await putMe({ profilePicture: fileResponse });
+    await updateMe({ profilePicture: fileResponse });
     close();
     toNull();
   };
@@ -61,26 +64,6 @@ export const FormAddImage: FC<FormAddImageProps> = ({ close }) => {
       setImg(url);
     })();
   }, [imgFile]);
-
-  const previewUrl = async (fileList: FileList) => {
-    const base64 = await convertBase64(fileList[0]);
-    return base64;
-  };
-
-  const convertBase64 = (file: File) => {
-    return new Promise<string>((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result as string);
-      };
-
-      fileReader.onerror = () => {
-        reject("error");
-      };
-    });
-  };
 
   return (
     <form
