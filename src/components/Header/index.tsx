@@ -5,22 +5,26 @@ import { HeaderContainer, LoginContainer, LoginName } from "./styles";
 import { Button } from "components/Button";
 import { useTheme } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "contexts/User";
+import { useApi } from "contexts/User";
 import { SignOut } from "@phosphor-icons/react";
 import { useEffect } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { currentUser, logged, logout, myProfessional } = useUser();
+
+  const { user, professional } = useApi();
+
+  const { me, logged, logout } = user;
+  const { myProfessional } = professional;
 
   const getRole = () => {
-    if (!currentUser) return "logout";
-    else return currentUser.roleRel.name;
+    if (!me) return "logout";
+    else return me.roleRel.name;
   };
 
   useEffect(() => {
-    console.log(currentUser, myProfessional);
-  }, [currentUser, myProfessional]);
+    console.log(myProfessional);
+  }, [myProfessional]);
 
   return (
     <HeaderContainer role={getRole()}>
@@ -50,14 +54,14 @@ const Header = () => {
         </FlexBox>
       </FlexBox>
       <LoginContainer role={getRole()}>
-        {currentUser && logged ? (
+        {me && logged ? (
           <FlexBox
             alignItems="flex-start"
             gap={0.5}
             px={1.5}
             direction="column"
           >
-            <LoginName>{currentUser.name.split(" ")[0]}</LoginName>
+            <LoginName>{me.name.split(" ")[0]}</LoginName>
             <FlexBox gap={0.5} alignItems="center">
               {getRole() == "admin" ? (
                 <Button

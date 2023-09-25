@@ -35,6 +35,7 @@ export type ProfessionalSignUpData = {
   subscriptionPlanId: string;
   name: string;
   professionalRegister: string;
+  professionalLevel: string;
   companyName: string;
   cnpj: string;
   zipCode: string;

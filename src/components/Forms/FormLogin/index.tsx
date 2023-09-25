@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useTheme } from "styled-components";
 import { loginSchema } from "./validation";
 import { Form } from "./style";
-import { useUser } from "contexts/User";
+import { useApi, useUser } from "contexts/User";
 import { useNavigate } from "react-router-dom";
 
 export type FormData = Zod.infer<typeof loginSchema>;
@@ -26,7 +26,10 @@ export const FormLogin = () => {
   const { color } = useTheme();
   const navigate = useNavigate();
 
-  const { login } = useUser();
+  const { user, professional } = useApi();
+
+  const { login } = user;
+  const { getSingle, setMyProfessional } = professional;
 
   const onSubmit = async (data: FormData) => {
     const loginResponse = await login(data);
@@ -35,13 +38,23 @@ export const FormLogin = () => {
 
     switch (loginResponse.me.roleRel.name) {
       case "admin":
-        navigate("/admin");
+        navigate("/admin/");
         break;
       case "user":
-        navigate("/catalog");
+        navigate("/catalog/");
         break;
       case "professional":
-        navigate("/professional");
+        const professionalResponse = await getSingle({
+          userId: loginResponse.me.id,
+        });
+
+        if (!professionalResponse) {
+          return navigate("/catalog/");
+        }
+
+        setMyProfessional(professionalResponse);
+        navigate(`/professional/${professionalResponse.userId}`);
+
         break;
     }
   };
@@ -49,7 +62,6 @@ export const FormLogin = () => {
   return (
     <Form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

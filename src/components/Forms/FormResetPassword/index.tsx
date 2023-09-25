@@ -35,7 +35,11 @@ export const FormResetPassword: FC<FormResetPasswordProps> = ({
     mode: "onSubmit",
   });
 
-  const { resetPassword } = useUser();
+  const { resetPassword, forgotPassword } = useUser();
+
+  const resendEmail = async () => {
+    await forgotPassword({ email });
+  };
 
   const onSubmit = async (data: FormData) => {
     const payload = { ...data, email };
@@ -78,9 +82,9 @@ export const FormResetPassword: FC<FormResetPasswordProps> = ({
         />
         <Button type="submit">Resetar a senha</Button>
 
-        <Button type="button" onClick={back} variant="text">
+        <Button type="button" onClick={resendEmail} variant="text">
           <CaretLeft weight="fill" />
-          Não recebeu o email? Voltar.
+          Clique aqui para reenviar o e-mail.
         </Button>
       </FlexBox>
     </Form>

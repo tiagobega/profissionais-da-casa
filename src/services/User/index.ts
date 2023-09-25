@@ -515,6 +515,17 @@ export class UserService extends BaseService {
       return err as AxiosError<GenericError>;
     }
   }
+  static async createManySocialMedia(data: ST.CreateManySocialMediaData) {
+    try {
+      const response = await axios.api.post<ST.CreateManySocialMediaResponse>(
+        API_ROUTES.POST.SOCIALMEDIA_CREATE_MANY,
+        data
+      );
+      return response.data;
+    } catch (err) {
+      return err as AxiosError<GenericError>;
+    }
+  }
   static async putSocialMedia(data: ST.UpdateSocialMediaData) {
     try {
       const response = await axios.api.put<ST.SocialMedia>(

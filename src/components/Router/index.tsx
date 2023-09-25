@@ -1,6 +1,12 @@
 import { useUser } from "contexts/User";
 import React, { Suspense } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import Layout from "components/Layout";
 import NotFound from "pages/notFound";
 import TermsPage from "pages/terms";
@@ -22,6 +28,7 @@ import { RegisterUserConfirm } from "pages/register-user-confirm";
 import { RegisterProfessional } from "pages/register-professionals";
 import { AdmHome } from "pages/adm-home";
 import { AdmLeadsList } from "pages/adm-professional-leads";
+import { PermissionInactivePage } from "pages/permissionInactive";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -33,90 +40,105 @@ const Router = () => (
         element={<PublicRoute element={<TermsPage />} />}
       />
       <Route path="/login" element={<PublicRoute element={<LoginPage />} />} />
+
       <Route
         path="/reset-password"
         element={<PublicRoute element={<LoginPage />} />}
       />
+
       <Route
         path={"/register/customer"}
         element={<PublicRoute element={<RegisterUser />} />}
       />
-      <Route
-        path={"/register/customer/confirm"}
-        element={<PublicRoute element={<RegisterUserConfirm />} />}
-      />
+
       <Route
         path={"/register/professional"}
         element={<PublicRoute element={<RegisterProfessional />} />}
       />
-      {/* <Route
-        path={"/register/professional/confirm"}
-        element={<PublicRoute element={<RegisterProfessionalConfirm />} />}
-      /> */}
+
+      <Route
+        path={"/account/confirm"}
+        element={<PublicRoute element={<RegisterUserConfirm />} />}
+      />
+
       <Route path="/" element={<Layout />}>
         {/* //OPEN ROUTES */}
-        <Route path="/" element={<PublicRoute element={<HomePage />} />} />
 
         <Route path={"/faq"} element={<PublicRoute element={<FAQPage />} />} />
 
         <Route
+          path={"/permission-inactive"}
+          element={<PublicRoute element={<PermissionInactivePage />} />}
+        />
+
+        <Route
           path={"/catalog"}
-          element={<PublicRoute element={<ProfessionalsListPage />} />}
+          element={<PrivateRoute element={<ProfessionalsListPage />} />}
         />
         <Route
           path={"/professional/:id"}
-          element={<PublicRoute element={<ProfessionalProfilePage />} />}
+          element={
+            <PrivateRoute
+              checkActive={false}
+              element={<ProfessionalProfilePage />}
+            />
+          }
         />
         <Route
           path={"/project/:id"}
-          element={<PublicRoute element={<PortfolioProjectPage />} />}
+          element={<PrivateRoute element={<PortfolioProjectPage />} />}
         />
         {/* //CUSTOMER/PROFESSIONAL ROUTES */}
         <Route
           path={"/my-projects/"}
-          element={<PublicRoute element={<MyProjectsPage />} />}
+          element={<PrivateRoute element={<MyProjectsPage />} />}
         />
         <Route
           path={"/project-details/:id"}
-          element={<PublicRoute element={<ProjectPage status="ongoing" />} />}
+          element={<PrivateRoute element={<ProjectPage status="ongoing" />} />}
         />
         <Route
           path={"/review/:id"}
-          element={<PublicRoute element={<NewReviewPage />} />}
+          element={<PrivateRoute element={<NewReviewPage />} />}
         />
         <Route
           path={"/profile"}
-          element={<PublicRoute element={<UserProfile />} />}
+          element={<PrivateRoute element={<UserProfile />} />}
         />
+
         {/* //ADMIN ROUTES */}
         <Route
           path={"/admin/"}
-          element={<PublicRoute element={<AdmHome />} />}
+          element={<PrivateRoute admin element={<AdmHome />} />}
         />
         <Route
           path={"/admin/reviews"}
-          element={<PublicRoute element={<AdmRatingList />} />}
+          element={<PrivateRoute admin element={<AdmRatingList />} />}
         />
         <Route
           path={"/admin/review/:id"}
-          element={<PublicRoute element={<AdmRatingDetails />} />}
+          element={<PrivateRoute admin element={<AdmRatingDetails />} />}
         />
         <Route
           path={"/admin/professionals-management"}
-          element={<PublicRoute element={<AdmProfessionalList />} />}
+          element={<PrivateRoute admin element={<AdmProfessionalList />} />}
         />
         <Route
           path={"/admin/professionals-management/:id"}
-          element={<PublicRoute element={<AdmProfessionalDetails />} />}
+          element={<PrivateRoute admin element={<AdmProfessionalDetails />} />}
         />
         <Route
           path={"/admin/professionals-management/leads/:id"}
-          element={<PublicRoute element={<AdmLeadsList />} />}
+          element={<PrivateRoute admin element={<AdmLeadsList />} />}
         />
         <Route
           path={"/admin/professionals-management/:id/projects"}
-          element={<PublicRoute element={<HomePage />} />}
+          element={<PrivateRoute admin element={<HomePage />} />}
         />
+
+        {/**
+         * DEFAULT PAGES
+         */}
 
         <Route index element={<PublicRoute element={<HomePage />} />} />
         <Route path={"*"} element={<PublicRoute element={<NotFound />} />} />
@@ -131,23 +153,37 @@ const SuspenseComponent = ({ children }: { children: React.ReactNode }) => (
 
 const PrivateRoute = ({
   element,
-  redirectTo,
   admin = false,
+  checkVerified = true,
+  checkActive = true,
 }: {
   element: React.ReactElement;
   redirectTo?: string;
   admin?: boolean;
+  checkActive?: boolean;
+  checkVerified?: boolean;
 }) => {
-  const { logged } = useUser();
-  const useIsAdmin = true;
+  const navigate = useNavigate();
 
-  if (!logged && redirectTo) {
-    return <Navigate to={redirectTo} />;
+  const { logged, me, logout } = useUser();
+
+  if (!logged) {
+    navigate("/login");
+    return null;
   }
 
-  if (admin && !useIsAdmin) {
-    redirectTo ??= "/";
-    return <Navigate to={redirectTo} />;
+  if (checkVerified && me?.verified) {
+    navigate("/account/confirm");
+    return null;
+  }
+
+  if (checkActive && me?.active) {
+    navigate("/permission-inactive");
+  }
+
+  if (admin && me?.profileTypeRel.name !== "admin") {
+    logout(() => navigate("account/login"));
+    return null;
   }
 
   return <SuspenseComponent>{element}</SuspenseComponent>;
