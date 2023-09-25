@@ -1,39 +1,10 @@
-import { AxiosError, AxiosRequestConfig } from "axios";
+import type * as ST from "./types/";
+import { AxiosError } from "axios";
 
 import axios, { API_ROUTES } from "config/axios";
-
-import type * as ST from "./types/";
-
+import { BaseService, GenericError } from "services/Base";
 import { mimeTypeToExtension } from "constants/mimeTypes";
-
-export type UserServiceRequestOptions = {
-  data?: any;
-  config?: AxiosRequestConfig;
-};
-
-export class UserService {
-  static async request<SuccessResponse, ErrorResponse = ST.GenericError>(
-    path: string,
-    type: "post" | "put" | "get",
-    options: UserServiceRequestOptions = {}
-  ): Promise<SuccessResponse | AxiosError<ErrorResponse>> {
-    const { config, data = {} } = options;
-
-    try {
-      let response;
-
-      if (type === "get") {
-        response = await axios.api.get<SuccessResponse>(path);
-      } else {
-        response = await axios.api[type]<SuccessResponse>(path, data, config);
-      }
-
-      return response.data;
-    } catch (err) {
-      return err as AxiosError<ErrorResponse>;
-    }
-  }
-
+export class UserService extends BaseService {
   //EVALUATIONS
   static async createEvaluation(data: ST.CreateEvaluationData) {
     return await this.request<ST.Evaluation>(
@@ -52,7 +23,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteEvaluation(data: ST.DeleteEvaluationData) {
@@ -63,7 +34,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getEvaluation(data: ST.SingleEvaluationData) {
@@ -74,7 +45,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllEvaluation() {
@@ -84,7 +55,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -97,7 +68,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putFaqBlock(data: ST.UpdateFaqBlockData) {
@@ -108,7 +79,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteFaqBlock(data: ST.DeleteFaqBlockData) {
@@ -119,7 +90,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getFaqBlock(data: ST.SingleFaqBlockData) {
@@ -130,7 +101,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllFaqBlock() {
@@ -140,7 +111,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -153,7 +124,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putFaqQuestion(data: ST.UpdateFaqQuestionData) {
@@ -164,7 +135,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteFaqQuestion(data: ST.DeleteFaqQuestionData) {
@@ -175,7 +146,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getFaqQuestion(data: ST.SingleFaqQuestionData) {
@@ -186,7 +157,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllFaqQuestion() {
@@ -196,7 +167,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -214,7 +185,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -227,7 +198,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putLead(data: ST.UpdateLeadData) {
@@ -238,7 +209,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteLead(data: ST.DeleteLeadData) {
@@ -249,7 +220,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getLead(data: ST.SingleLeadData) {
@@ -260,7 +231,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllLeads() {
@@ -270,7 +241,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -283,7 +254,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async createManyLocation(data: ST.CreateManyLocationData) {
@@ -294,7 +265,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putLocation(data: ST.UpdateLocationData) {
@@ -305,7 +276,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putManyLocation(data: ST.UpdateManyLocationData) {
@@ -316,7 +287,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteLocation(data: ST.DeleteLocationData) {
@@ -327,7 +298,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteManyLocation(data: ST.DeleteManyLocationData) {
@@ -338,7 +309,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getLocation(data: ST.SingleLocationData) {
@@ -349,7 +320,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllLocation() {
@@ -359,7 +330,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -373,7 +344,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putPortfolioProject(data: ST.UpdatePortfolioProjectData) {
@@ -384,7 +355,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deletePortfolioProject(data: ST.DeletePortfolioProjectData) {
@@ -395,7 +366,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getPortfolioProject(data: ST.SinglePortfolioProjectData) {
@@ -406,7 +377,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllPortfolioProject() {
@@ -416,7 +387,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -429,7 +400,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putProfessional(data: ST.ProfessionalUpdateData) {
@@ -440,7 +411,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getProfessional(data: ST.SingleProfessionalData) {
@@ -451,7 +422,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteProfessional(data: ST.DeleteProfessionalData) {
@@ -462,7 +433,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllProfessional() {
@@ -472,7 +443,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -485,7 +456,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putRole(data: ST.UpdateRoleData) {
@@ -496,7 +467,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteRole(data: ST.DeleteRoleData) {
@@ -507,7 +478,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getRole(data: ST.SingleRoleData) {
@@ -518,7 +489,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllRole() {
@@ -528,7 +499,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -541,7 +512,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putSocialMedia(data: ST.UpdateSocialMediaData) {
@@ -552,7 +523,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteSocialMedia(data: ST.DeleteSocialMediaData) {
@@ -563,7 +534,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getSocialMedia(data: ST.SingleSocialMediaData) {
@@ -574,7 +545,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllSocialMedia() {
@@ -584,7 +555,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -597,7 +568,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putSubplan(data: ST.UpdateSubplanData) {
@@ -608,7 +579,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async deleteSubplan(data: ST.DeleteSubplanData) {
@@ -619,7 +590,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getSubplan(data: ST.SingleSubplanData) {
@@ -630,7 +601,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async getAllSubplan() {
@@ -640,7 +611,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
 
@@ -653,7 +624,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async signUp(data: ST.SignUpData) {
@@ -664,7 +635,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async putMe(data: ST.UpdateUserData) {
@@ -672,7 +643,7 @@ export class UserService {
       const response = await axios.api.put<ST.Me>(API_ROUTES.PUT.USER_ME, data);
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async forgotPassword(data: ST.ForgotPasswordData) {
@@ -683,7 +654,7 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
     }
   }
   static async resetPassword(data: ST.ResetPasswordData) {
@@ -694,18 +665,27 @@ export class UserService {
       );
       return response.data;
     } catch (err) {
-      return err as AxiosError<ST.GenericError>;
+      return err as AxiosError<GenericError>;
+    }
+  }
+  static async updatePassword(data: ST.UpdatePasswordData) {
+    try {
+      const response = await axios.api.put<ST.UpdatePasswordResponse>(
+        API_ROUTES.PUT.USER_PASSWORD,
+        data
+      );
+      return response.data;
+    } catch (err) {
+      return err as AxiosError<GenericError>;
     }
   }
   static async getMe() {
-    try {
-      const response = await axios.api.get<ST.Me>(API_ROUTES.GET.USER_ME);
-      return response.data;
-    } catch (err) {
-      return err as AxiosError<ST.GenericError>;
-    }
+    return await this.request<ST.Me>(API_ROUTES.GET.USER_ME, "get");
   }
   static async getAll() {
-    return await this.request(API_ROUTES.GET.USER_ALL, "get");
+    return await this.request<ST.AllUserResponse>(
+      API_ROUTES.GET.USER_ALL,
+      "get"
+    );
   }
 }

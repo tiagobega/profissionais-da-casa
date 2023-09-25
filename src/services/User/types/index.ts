@@ -15,10 +15,6 @@ export interface DeleteResponse {
   messages: string;
 }
 
-export interface GenericError {
-  messages: string[];
-}
-
 export interface AuthCookie {
   accessToken: string;
 }

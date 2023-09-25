@@ -55,7 +55,7 @@ export type UpdatePasswordData = {
   newPassword: string;
 };
 
-export type AllUserResponse = {};
+export type AllUserResponse = { users: Me[] };
 
 export type DeleteUserData = Pick<Me, "id"> | Pick<Me, "email">;
 
@@ -71,6 +71,9 @@ export type AdminUpdateUserData = Partial<
   Omit<Me, "id" | "roleRel" | "profileTypeRel" | "leads" | "createdAt">
 > & { id: string };
 
+export type UpdatePasswordResponse = {
+  messages: string;
+};
 /**
  * Response when sign in
  */

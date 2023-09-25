@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import { tokenRequest } from "config/axios";
 import { useToast } from "contexts/Toast";
-import { GenericError } from "services/User/types";
+import { GenericError } from "services/Base";
 
 import {
   evaluationFunctions,
