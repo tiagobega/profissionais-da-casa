@@ -70,7 +70,10 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
 
     setLogged(true);
 
-    return response;
+    return {
+      accessToken: response.accessToken,
+      me: meResponse,
+    };
   };
 
   const register = async (data: SignUpData) => {

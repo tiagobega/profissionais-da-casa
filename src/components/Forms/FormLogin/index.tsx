@@ -29,14 +29,21 @@ export const FormLogin = () => {
   const { login } = useUser();
 
   const onSubmit = async (data: FormData) => {
-    await login(data, (me) => {
-      switch (me.roleRel.name) {
-        case "admin":
-          navigate("/catalog/");
-        case "user":
-          navigate("/admin/");
-      }
-    });
+    const loginResponse = await login(data);
+
+    if (!loginResponse) return;
+
+    switch (loginResponse.me.roleRel.name) {
+      case "admin":
+        navigate("/admin");
+        break;
+      case "user":
+        navigate("/catalog");
+        break;
+      case "professional":
+        navigate("/professional");
+        break;
+    }
   };
 
   return (
