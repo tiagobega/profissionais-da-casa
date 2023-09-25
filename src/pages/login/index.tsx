@@ -1,17 +1,12 @@
-import { Button } from "components/Button";
-import { FlexBox } from "components/FlexBox";
-import { Geometry } from "components/Geometry";
-import { useTheme } from "styled-components";
-import { RightPannel } from "./styles";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import logo from "assets/images/logoYellowBigger.png";
-import { LoginLayout } from "components/LayoutLoginRegister";
+import { Button } from "components/Button";
 import { FormLogin } from "components/Forms/FormLogin";
-import { useState } from "react";
-import { FormForgotPassword } from "components/Forms/FormForgotPassword";
-import Input from "components/Input";
 import { FormAccountType } from "components/Forms/FormSelectAccountType";
+import { LoginLayout } from "components/LayoutLoginRegister";
+import { useState } from "react";
 import { PasswordReset } from "./components/passwordReset";
+import { RightPannel } from "./styles";
 
 export interface LoginPageProps {}
 

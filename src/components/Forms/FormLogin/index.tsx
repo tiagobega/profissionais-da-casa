@@ -38,10 +38,10 @@ export const FormLogin = () => {
 
     switch (loginResponse.me.roleRel.name) {
       case "admin":
-        navigate("/admin/");
+        navigate("/admin");
         break;
       case "user":
-        navigate("/catalog/");
+        navigate("/catalog");
         break;
       case "professional":
         const professionalResponse = await getSingle({
@@ -49,10 +49,11 @@ export const FormLogin = () => {
         });
 
         if (!professionalResponse) {
-          return navigate("/catalog/");
+          return navigate("/catalog");
         }
 
         setMyProfessional(professionalResponse);
+        
         navigate(`/professional/${professionalResponse.userId}`);
 
         break;

@@ -5,8 +5,9 @@ import { useTheme } from "styled-components";
 import { BlueField, FullPage } from "./styles";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import logo from "assets/images/logoYellowBigger.png";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "contexts/User";
 
 export interface LoginPageProps {
   children: ReactNode;
@@ -15,6 +16,15 @@ export interface LoginPageProps {
 export const LoginLayout: React.FC<LoginPageProps> = ({ children }) => {
   const { color } = useTheme();
   const navigate = useNavigate();
+
+  const { logged } = useUser();
+
+  useEffect(() => {
+    if (!logged) return;
+
+    navigate("/catalog");
+  }, [logged]);
+
   return (
     <FullPage>
       <FlexBox direction="column">

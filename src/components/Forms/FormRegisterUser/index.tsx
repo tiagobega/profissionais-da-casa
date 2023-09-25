@@ -60,7 +60,7 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
     });
 
     if (!registerResponse) return;
-    navigate("/register/confirm");
+    navigate("/account/confirm");
   };
 
   return (

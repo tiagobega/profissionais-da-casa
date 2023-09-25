@@ -57,11 +57,6 @@ const Router = () => (
         element={<PublicRoute element={<RegisterProfessional />} />}
       />
 
-      <Route
-        path={"/account/confirm"}
-        element={<PublicRoute element={<RegisterUserConfirm />} />}
-      />
-
       <Route path="/" element={<Layout />}>
         {/* //OPEN ROUTES */}
 
@@ -70,6 +65,11 @@ const Router = () => (
         <Route
           path={"/permission-inactive"}
           element={<PublicRoute element={<PermissionInactivePage />} />}
+        />
+
+        <Route
+          path={"/account/confirm"}
+          element={<PublicRoute element={<RegisterUserConfirm />} />}
         />
 
         <Route
@@ -177,17 +177,17 @@ const PrivateRoute = ({
     return <Navigate to={"/login"} />;
   }
 
-  if (checkVerified && me?.verified) {
+  if (checkVerified && !me?.verified) {
     return <Navigate to={"/account/confirm"} />;
   }
 
-  if (checkActive && me?.active) {
+  if (checkActive && !me?.active) {
     return <Navigate to={"/permission-inactive"} />;
   }
 
-  if (admin && me?.profileTypeRel.name !== "admin") {
-    return <Navigate to={"/catalog"} />;
-  }
+  // if (admin && me?.profileTypeRel.name !== "admin") {
+  //   return <Navigate to={"/catalog"} />;
+  // }
 
   return <SuspenseComponent>{element}</SuspenseComponent>;
 };
