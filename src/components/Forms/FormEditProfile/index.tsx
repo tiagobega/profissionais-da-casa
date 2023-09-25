@@ -129,8 +129,8 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
     // bgImgPicture && payload={...payload,bgImgPicture}
 
     // await updateMe({ profilePicture: fileResponse });
-    close();
-    toNull();
+    // close();
+    // toNull();
   };
 
   return (

@@ -30,12 +30,14 @@ export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
   ProfessionalProfileProps
 > = () => {
+  const { id } = useParams();
   const { color } = useTheme();
   const navigate = useNavigate();
+
   const theme = useTheme();
-  const { id } = useParams();
-  console.log(id);
+
   const [isOwn, setIsOwn] = useState(false);
+
   const [pageProfessional, setPageProfessional] = useState<Professional>();
 
   const [displayProject, setDisplayProject] = useState(0);
@@ -43,26 +45,33 @@ export const ProfessionalProfilePage: React.FC<
 
   const { user, professional } = useApi();
   const { me } = user;
-  const { getSingle, myProfessional } = professional;
+
+  const { getSingle, setMyProfessional, myProfessional } = professional;
 
   useEffect(() => {
-    async () => {
-      if (!id) return;
-      const professional = await getSingle({ userId: id });
-      professional && setPageProfessional(professional);
-      if (!myProfessional) {
-        setIsOwn(false);
-      } else {
-        myProfessional.id == id && setIsOwn(true);
-      }
-    };
+    if (!me || !id) return navigate("/catalog");
+
+    const ownPage = id === me.id;
+    setIsOwn(ownPage);
+
+    (async () => {
+      const professionalResponse = await getSingle({
+        userId: id,
+      });
+
+      if (!professionalResponse) return;
+
+      setPageProfessional(professionalResponse);
+    })();
   }, [id]);
 
   if (!pageProfessional) return <Loading />;
+
   const carrouselButtonArray = new Array(
     Math.ceil(pageProfessional.portfolioProjects.length / 2)
   ).fill("");
   const publicEvaluations = approvedEvaluations(pageProfessional.evaluations);
+
   return (
     <>
       <GrayContainer isOwn={isOwn}>
@@ -71,6 +80,7 @@ export const ProfessionalProfilePage: React.FC<
             <CaretLeft weight="fill" /> Voltar
           </Button>
         </MarginContainer>
+
         <HeaderContainer>
           <FlexBox
             full
@@ -93,8 +103,9 @@ export const ProfessionalProfilePage: React.FC<
                       <MapPin weight="fill" />
                       <FlexBox>
                         {pageProfessional.locations.map((item) => (
-                          <p key={item.id}>{item.state} | </p>
+                          <p key={item.id}>{`${item.state} |`}</p>
                         ))}
+
                         {pageProfessional.onlineAppointment && (
                           <p>
                             Realiza atendimento online em outras localidades
@@ -117,8 +128,8 @@ export const ProfessionalProfilePage: React.FC<
                 </FlexBox>
               </FlexBox>
               <ul className="category-list">
-                {pageProfessional.tags.split(",").map((item) => (
-                  <li key={Math.random()}>{item}</li>
+                {pageProfessional.tags.split(",").map((item, key) => (
+                  <li key={key}>{item}</li>
                 ))}
               </ul>
             </FlexBox>
@@ -136,6 +147,7 @@ export const ProfessionalProfilePage: React.FC<
           </FlexBox>
         </HeaderContainer>
       </GrayContainer>
+
       {pageProfessional.portfolioProjects.length > 0 && (
         <GalleryContainer>
           <div className="gallery-bg">
@@ -181,6 +193,7 @@ export const ProfessionalProfilePage: React.FC<
           </FlexBox>
         </GalleryContainer>
       )}
+
       {publicEvaluations.evaluations.length > 0 && (
         <ReviewSection>
           <RatingContainer
@@ -250,7 +263,6 @@ export const ProfessionalProfilePage: React.FC<
                       <div className="review-item" key={item.id}>
                         <p>{item.description}</p>
                         <StarMeter rating={evaluationSingleAverage(item)} />
-                        {/* <strong>{item.pe}</strong> */}
                       </div>
                     ))}
                 </FlexBox>

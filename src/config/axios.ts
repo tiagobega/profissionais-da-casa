@@ -58,7 +58,7 @@ export const API_GET_ROUTES = {
 
   FAQ_BLOCK_ALL: "/faq_block/getall",
 
-  FAQ_QUESTION_ALL: "/faq_block/getall",
+  FAQ_QUESTION_ALL: "/faq_question/getall",
 
   LEAD_ALL: "/lead/getall",
 

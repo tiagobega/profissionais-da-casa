@@ -5,7 +5,7 @@ import {
 } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import Input from "components/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "styled-components";
 import {
   Container,
@@ -16,13 +16,17 @@ import {
   Triangle,
 } from "./styles";
 import { CardProfile } from "components/Card";
-import { useUser } from "contexts/User";
+import { useApi, useUser } from "contexts/User";
+import { Professional } from "services/User/types";
+import { Loading } from "components/Loading";
 
 export interface ListProps {}
 
 export const List: React.FC<ListProps> = () => {
   const [filterIsOpen, setFilterIsOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
+  const [allProfessionals, setAllProfesisonals] = useState<Professional[]>();
+
   const { color } = useTheme();
 
   const profissões = ["arquiteto", "engenheiro"];
@@ -57,7 +61,17 @@ export const List: React.FC<ListProps> = () => {
     }
   };
 
-  const { getAllProfessionals } = useUser();
+  const { professional } = useApi();
+
+  const { getAll } = professional;
+
+  useEffect(() => {
+    (async () => {
+      const professionalResponse = await getAll();
+      if (!professionalResponse) return;
+      setAllProfesisonals(professionalResponse.proProfiles);
+    })();
+  }, []);
 
   return (
     <Container>
@@ -88,6 +102,7 @@ export const List: React.FC<ListProps> = () => {
             <XCircle size={24} /> Limpar filtros
           </Button>
         </FilterSearchContainer>
+
         {filterIsOpen && (
           <FilterContainer>
             <Triangle width={32} color={color.brand.purple} triangle />
@@ -134,11 +149,15 @@ export const List: React.FC<ListProps> = () => {
           </FilterContainer>
         )}
       </div>
-      <ProfileList>
-        {categorias.map((el) => (
-          <CardProfile key={`${Math.random()} ${el}`} />
-        ))}
-      </ProfileList>
+      {!allProfessionals ? (
+        <Loading />
+      ) : (
+        <ProfileList>
+          {allProfessionals.map((professional) => (
+            <CardProfile professional={professional}></CardProfile>
+          ))}
+        </ProfileList>
+      )}
     </Container>
   );
 };

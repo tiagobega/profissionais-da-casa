@@ -18,11 +18,13 @@ import {
   socialMediaFunctions,
   subplanFunctions,
 } from "./functions";
+import { Loading } from "components/Loading";
 
 export const userContext = React.createContext<UserContext | null>(null);
 
 export const UserContextProvider = ({ children }: ContextProviderProps) => {
   const { addToast } = useToast();
+  const [loading, setLoading] = useState(true);
   const errorHandler = (responseData: AxiosError<GenericError>) => {
     responseData.response?.data.messages.forEach((message: string) => {
       addToast(message, {
@@ -48,23 +50,25 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
   useEffect(() => {
     (async () => {
       if (!tokenRequest.success) {
-        return;
+        return setLoading(false);
       }
 
       const meResponse = await user.getMe();
 
-      if (!meResponse) return;
+      if (!meResponse) return setLoading(false);
 
-      if (meResponse.role === "professional") {
+      if (meResponse.roleRel.name === "professional") {
         const professionalResponse = await professional.getSingle({
-          id: meResponse.id,
+          userId: meResponse.id,
         });
 
         if (professionalResponse) {
           professional.setMyProfessional(professionalResponse);
         }
       }
+
       user.setLogged(true);
+      setLoading(false);
     })();
   }, []);
 
@@ -84,7 +88,7 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         user,
       }}
     >
-      {children}
+      {loading ? <Loading /> : children}
     </userContext.Provider>
   );
 };
