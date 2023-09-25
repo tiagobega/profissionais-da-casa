@@ -62,21 +62,24 @@ export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
           <EditPortfolioProject />
         </FlexBox>
       </MarginContainer>
-      <GalleryContainer>
-        <div className="carousel-bg">
-          <img src={projectImages[displayImage]} alt="foto do projeto" />
-        </div>
-        <FlexBox full justifyContent="center" gap={1} p={1}>
-          {projectImages.map((item, index) => (
-            <CarouselButton
-              isActive={displayImage == index}
-              className="carousel-btn"
-              onClick={() => setDisplayImage(index)}
-              key={item}
-            />
-          ))}
-        </FlexBox>
-      </GalleryContainer>
+      {!projectImages ||
+        (projectImages.length == 0 && (
+          <GalleryContainer>
+            <div className="carousel-bg">
+              <img src={projectImages[displayImage]} alt="foto do projeto" />
+            </div>
+            <FlexBox full justifyContent="center" gap={1} p={1}>
+              {projectImages.map((item, index) => (
+                <CarouselButton
+                  isActive={displayImage == index}
+                  className="carousel-btn"
+                  onClick={() => setDisplayImage(index)}
+                  key={item}
+                />
+              ))}
+            </FlexBox>
+          </GalleryContainer>
+        ))}
       <InformationContainer>
         <ProfessionalInformation>
           <FlexBox direction="column" gap={1}>
