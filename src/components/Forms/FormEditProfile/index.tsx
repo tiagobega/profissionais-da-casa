@@ -2,61 +2,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { editProfileSchema } from "./validation";
 import { Select } from "components/Input/HTMLSelect";
+import { states } from "constants/states";
+import { ImgPreview } from "../FormAddImage/styles";
+import { Trash } from "@phosphor-icons/react";
+import { previewUrl } from "utils/ImageBase64Convert";
+import { Professional, ProfessionalUpdateData } from "services/User/types";
+import { useApi } from "contexts/User";
 
 export type FormEditProfileData = Zod.infer<typeof editProfileSchema>;
+interface FormEditProfileProps {
+  professional: Professional;
+}
 export type areaType = {
   state: string;
   city: string;
   location: string;
 };
 
-const radioOptions = [
-  { label: "Arquiteto(a)", value: "arquiteto" },
-  { label: "Outros", value: "outros" },
-];
-
-const stateOptions = [
-  {
-    name: "São Paulo",
-    value: "SP",
-  },
-  {
-    name: "Rio de Janeiro",
-    value: "RJ",
-  },
-  {
-    name: "Minas Gerais",
-    value: "MB",
-  },
-  {
-    name: "Paraná",
-    value: "PR",
-  },
-];
-const cityOptions = [
-  {
-    name: "São Paulo",
-    value: "São Paulo",
-  },
-  {
-    name: "Rio de Janeiro",
-    value: "Rio de Janeiro",
-  },
-  {
-    name: "Belo Horizonte",
-    value: "Belo Horizonte",
-  },
-  {
-    name: "Curitiba",
-    value: "Curitiba",
-  },
-];
-
-export const FormEditProfile = () => {
+export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
   const {
     handleSubmit,
     register,
@@ -64,6 +31,7 @@ export const FormEditProfile = () => {
     control,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<FormEditProfileData>({
     resolver: zodResolver(editProfileSchema),
@@ -72,31 +40,86 @@ export const FormEditProfile = () => {
 
   const [areaList, setAreaList] = useState<areaType[]>([]);
   const [categoryList, setCategoryList] = useState<string[]>([]);
-  const onSubmit = (data: FormEditProfileData) => {
-    console.log(data);
+  const [profile, setProfile] = useState<string | null>(null);
+  const [bgImg, setBgImg] = useState<string | null>(null);
 
-    window.alert(JSON.stringify(data));
-  };
+  const [profileChanged, setProfileChanged] = useState(false);
+  const [backgroundChanged, setBackgroundChanged] = useState(false);
+  const { file, professional: professionalApi } = useApi();
+  const { sendFile } = file;
+  const { update } = professionalApi;
 
-  const addArea = () => {
-    const newAreaState = getValues("state");
-    const newAreaCity = getValues("city");
-    const newAreaLocation = getValues("location");
-    newAreaCity != "" &&
-      newAreaState != "" &&
-      newAreaLocation != "" &&
-      setAreaList([
-        ...areaList,
-        { state: newAreaState, city: newAreaCity, location: newAreaLocation },
-      ]);
-    setValue("city", "");
-    setValue("state", "");
-    setValue("location", "");
+  const professionalStates = () => {
+    const states: string[] = [];
+    professional.locations.forEach((state) => {
+      states.push(state.state);
+    });
+    return states;
   };
+  useEffect(() => {
+    setValue("name", professional.name);
+    setValue("onlineAppointment", professional.onlineAppointment);
+    setProfile(professional.profilePicture);
+    setBgImg(professional.backgroundPicture);
+    // setValue('description',professional.description)
+  }, [professional]);
 
   const removeArea = (index: number) => {
     const filteredList = areaList.splice(index, 1);
     setAreaList(filteredList);
+  };
+
+  const imgFileProfile = watch("profilePicture");
+  const imgFileBackground = watch("backgroundPicture");
+
+  useEffect(() => {
+    if (imgFileProfile?.length == 0) return;
+
+    (async () => {
+      const url = await previewUrl(imgFileProfile);
+      setProfile(url);
+    })();
+  }, [imgFileProfile]);
+
+  useEffect(() => {
+    if (imgFileBackground?.length == 0) return;
+
+    (async () => {
+      const url = await previewUrl(imgFileBackground);
+      setBgImg(url);
+    })();
+  }, [imgFileBackground]);
+
+  const toNull = () => {
+    reset();
+    setBgImg(null);
+    setProfile(null);
+  };
+
+  const sendPicture = async (fileList: FileList, filename:string, content:string) => {
+    if (!profile || !fileList[0]) {
+      return;
+    }
+    const fileResponse = await sendFile({
+      filename,
+      content,
+      contentType: fileList[0].type,
+    });
+    return fileResponse;
+  };
+
+  const onSubmit = async (data: FormEditProfileData) => {
+    const profilePicture = profile?sendPicture(data.profilePicture, 'profile picture', profile):undefined
+    const bgImgPicture = bgImg?sendPicture(data.backgroundPicture, 'bg picture', bgImg):undefined
+
+    let payload:ProfessionalUpdateData = {name:data.name, onlineAppointment:data.onlineAppointment}
+
+    profilePicture && ={...payload,profilePicture}
+    bgImgPicture && payload={...payload,bgImgPicture}
+
+    await updateMe({ profilePicture: fileResponse });
+    close();
+    toNull();
   };
 
   return (
@@ -115,26 +138,50 @@ export const FormEditProfile = () => {
           {...register("name")}
         />
 
-        <Input.Area
+        {/* <Input.Area
           label="Sobre"
           placeholder="Escreva um pouco sobre você"
           error={errors.description}
           {...register("description")}
-        />
+        /> */}
 
-        <Input.Select
-          options={stateOptions}
-          placeholder="Estado"
-          error={errors.state}
-          {...register("state")}
+        <Input.Checkbox
+          subject={"onlineAppointment"}
+          label={"Presto serviço a distancia."}
+          {...register("onlineAppointment")}
         />
-
-        <Input.Select
-          error={errors.city}
-          options={cityOptions}
-          placeholder="Cidade"
-          {...register("city")}
+        <hr />
+        <Input.File
+          label="Foto de perfil"
+          error={errors.profilePicture}
+          {...register("profilePicture")}
         />
+        {profile && (
+          <FlexBox gap={1}>
+            <ImgPreview src={profile}></ImgPreview>
+            <Button
+              type="button"
+              variant="text"
+              onClick={() => setProfile(null)}
+            >
+              <Trash size={20} />
+            </Button>
+          </FlexBox>
+        )}
+        <hr />
+        <Input.File
+          label="Foto de perfil"
+          error={errors.backgroundPicture}
+          {...register("backgroundPicture")}
+        />
+        {bgImg && (
+          <FlexBox gap={1}>
+            <ImgPreview src={bgImg}></ImgPreview>
+            <Button type="button" variant="text" onClick={() => setBgImg(null)}>
+              <Trash size={20} />
+            </Button>
+          </FlexBox>
+        )}
 
         <Button type="submit" full>
           Salvar

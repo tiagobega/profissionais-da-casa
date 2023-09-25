@@ -53,7 +53,7 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
         onProceed={() => console.log("proceed")}
         onClose={() => setModalEdit(false)}
       >
-        <FormEditProfile />
+        <FormEditProfile professional={professional} />
       </Modal>
       <Modal
         isOpened={modalPortfolio}

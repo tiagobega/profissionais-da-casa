@@ -1,24 +1,20 @@
 import { CaretLeft, MapPin, Star } from "@phosphor-icons/react";
 import { Button } from "components/Button";
+import { FlexBox } from "components/FlexBox";
+import { Loading } from "components/Loading";
+import { useApi } from "contexts/User";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  CarouselButton,
-  FullContainer,
-  MarginContainer,
-} from "styles/commonComponents";
+import { PortfolioProject, Professional } from "services/User/types";
+import { useTheme } from "styled-components";
+import { CarouselButton, MarginContainer } from "styles/commonComponents";
+import { EditPortfolioProject } from "./EditProject";
 import {
   GalleryContainer,
   InformationContainer,
   ProfessionalInformation,
   ProjectInformation,
 } from "./styles";
-import { FlexBox } from "components/FlexBox";
-import { useTheme } from "styled-components";
-import { EditPortfolioProject } from "./EditProject";
-import { useApi } from "contexts/User";
-import { PortfolioProject, Professional } from "services/User/types";
-import { Loading } from "components/Loading";
 
 export interface PortfolioProjectPageProps {}
 export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
