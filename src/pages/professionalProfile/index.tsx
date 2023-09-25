@@ -16,8 +16,15 @@ import { useEffect, useState } from "react";
 import { CarouselButton, MarginContainer } from "styles/commonComponents";
 import { ProfileManager } from "./ProfileManager";
 import { StarMeter } from "components/StarMeter";
-import { useUser } from "contexts/User";
-import { Professional } from "services/User/types";
+import { useApi, useUser, userContext } from "contexts/User";
+import { Evaluation, Professional } from "services/User/types";
+import { Loading } from "components/Loading";
+import {
+  approvedEvaluations,
+  evaluationAverage,
+  evaluationCategoryAverage,
+  evaluationSingleAverage,
+} from "utils/EvaluationAverage";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -33,79 +40,29 @@ export const ProfessionalProfilePage: React.FC<
 
   const [displayProject, setDisplayProject] = useState(0);
   const [displayReview, setDisplayReview] = useState(0);
-  const { currentUser, myProfessional, getProfessional } = useUser();
+
+  const { user, professional } = useApi();
+  const { me } = user;
+  const { getSingle, myProfessional } = professional;
 
   useEffect(() => {
-    (async () => {
-      if (myProfessional && myProfessional.id == String(id)) {
-        setIsOwn(true);
-        setPageProfessional(myProfessional);
-      } else {
+    async () => {
+      if (!id) return;
+      const professional = await getSingle({ id });
+      professional && setPageProfessional(professional);
+      if (!myProfessional) {
         setIsOwn(false);
-        const response = await getProfessional(String(id));
-        if (!response) return;
-        setPageProfessional(response);
+      } else {
+        myProfessional.id == id && setIsOwn(true);
       }
-    })();
-  }, [myProfessional]);
+    };
+  }, [id]);
 
-  const projectList = [
-    {
-      id: 0,
-      name: "Project 1",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
-      image:
-        "https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    },
-    {
-      id: 1,
-      name: "Project 2",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
-      image:
-        "https://images.pexels.com/photos/6527069/pexels-photo-6527069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    },
-  ];
-
-  const reviewList = [
-    {
-      id: 0,
-      name: "Cliente 1",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
-    },
-    {
-      id: 1,
-      name: "Cliente 2",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
-    },
-    {
-      id: 2,
-      name: "Cliente 3",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
-    },
-    {
-      id: 3,
-      name: "Cliente 4",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
-    },
-    {
-      id: 4,
-      name: "Cliente 5",
-      description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque quaerat libero porro cumque velit. Voluptatem doloribus voluptate non consequuntur adipisci Voluptatem a numquam quod rerum tempore deserunt unde fuga quidem?",
-    },
-  ];
-
-  const carrouselButtonArray = new Array(Math.ceil(reviewList.length / 2)).fill(
-    ""
-  );
-
-  if (!pageProfessional) return null;
+  if (!pageProfessional) return <Loading />;
+  const carrouselButtonArray = new Array(
+    Math.ceil(pageProfessional.portfolioProjects.length / 2)
+  ).fill("");
+  const publicEvaluations = approvedEvaluations(pageProfessional.evaluations);
   return (
     <>
       <GrayContainer isOwn={isOwn}>
@@ -121,28 +78,31 @@ export const ProfessionalProfilePage: React.FC<
             alignItems="center"
             gap={5}
           >
-            {isOwn && <ProfileManager />}
+            {isOwn && <ProfileManager professional={pageProfessional} />}
             <FlexBox full direction="column">
               <FlexBox alignItems="center" gap={2}>
                 <img
-                  src="https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  src={pageProfessional.profilePicture}
                   alt="profile picture"
                   className="profile-img"
                 />
                 <FlexBox direction="column" gap={1}>
                   <FlexBox alignItems="center" gap={2}>
-                    <h2>Nome do Profissional</h2>
+                    <h2>{pageProfessional.name}</h2>
                     <FlexBox alignItems="center" gap={0.5}>
                       <MapPin weight="fill" />
-                      <p>Localização</p>
+                      <FlexBox>
+                        {pageProfessional.locations.map((item) => (
+                          <p key={item.id}>{item.state} | </p>
+                        ))}
+                        {pageProfessional.onlineAppointment && (
+                          <p>
+                            Realiza atendimento online em outras localidades
+                          </p>
+                        )}
+                      </FlexBox>
                     </FlexBox>
                   </FlexBox>
-                  <p className="description-text">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Distinctio est veniam debitis incidunt nobis modi quasi quis
-                    architecto beatae expedita aspernatur, quisquam ipsum
-                    officia. Dicta fugit cum magnam maiores dignissimos.
-                  </p>
                   <RatingHeader alignItems="center" gap={2}>
                     <div className="rating">
                       <Star
@@ -150,16 +110,16 @@ export const ProfessionalProfilePage: React.FC<
                         size={32}
                         color={color.secondary.yellow}
                       />
-                      <p>4.5</p>
-                      <span>(123)</span>
+                      <p>{publicEvaluations.average}</p>
+                      <span>({publicEvaluations.quantity})</span>
                     </div>
                   </RatingHeader>
                 </FlexBox>
               </FlexBox>
               <ul className="category-list">
-                <li>Categoria A</li>
-                <li>Categoria B</li>
-                <li>Categoria C</li>
+                {pageProfessional.tags.split(",").map((item) => (
+                  <li key={Math.random()}>{item}</li>
+                ))}
               </ul>
             </FlexBox>
             {!isOwn && (
@@ -176,110 +136,139 @@ export const ProfessionalProfilePage: React.FC<
           </FlexBox>
         </HeaderContainer>
       </GrayContainer>
-      <GalleryContainer>
-        <div className="gallery-bg">
-          <img
-            src={projectList[displayProject].image}
-            alt="project image"
-            className="gallery-img"
-          />
-          <div className="gallery-info">
-            <FlexBox direction="column" gap={1}>
-              <h5>{projectList[displayProject].name}</h5>
-              <p>{projectList[displayProject].description}</p>
-              <Button variant="text" onClick={() => navigate("/project/1")}>
-                Ver Mais
-                <CaretRight weight="fill" />
-              </Button>
-            </FlexBox>
-          </div>
-        </div>
-        <FlexBox full justifyContent="center" gap={1} p={1}>
-          {projectList.map((item, index) => (
-            <CarouselButton
-              isActive={displayProject == index}
-              className="carousel-btn"
-              onClick={() => setDisplayProject(index)}
-              key={item.id}
+      {pageProfessional.portfolioProjects.length > 0 && (
+        <GalleryContainer>
+          <div className="gallery-bg">
+            <img
+              src={pageProfessional.portfolioProjects[displayProject].images[0]}
+              alt="project image"
+              className="gallery-img"
             />
-          ))}
-        </FlexBox>
-      </GalleryContainer>
-      <ReviewSection>
-        <RatingContainer
-          alignItems="center"
-          direction="column"
-          justifyContent="flex-start"
-          gap={0.5}
-        >
-          <FlexBox full alignItems="center" justifyContent="flex-start" gap={1}>
-            <Star weight="fill" color={color.secondary.yellow} size={45} />
-            <p className="rating">4.5</p>
-            <p className="quantity">(123)</p>
+            <div className="gallery-info">
+              <FlexBox direction="column" gap={1}>
+                <h5>
+                  {pageProfessional.portfolioProjects[displayProject].name}
+                </h5>
+                <p>
+                  {
+                    pageProfessional.portfolioProjects[displayProject]
+                      .description
+                  }
+                </p>
+                <Button
+                  variant="text"
+                  onClick={() =>
+                    navigate(
+                      `/project/${pageProfessional.portfolioProjects[displayProject].id}`
+                    )
+                  }
+                >
+                  Ver Mais
+                  <CaretRight weight="fill" />
+                </Button>
+              </FlexBox>
+            </div>
+          </div>
+          <FlexBox full justifyContent="center" gap={1} p={1}>
+            {pageProfessional.portfolioProjects.map((item, index) => (
+              <CarouselButton
+                isActive={displayProject == index}
+                className="carousel-btn"
+                onClick={() => setDisplayProject(index)}
+                key={item.id}
+              />
+            ))}
           </FlexBox>
+        </GalleryContainer>
+      )}
+      {publicEvaluations.evaluations.length > 0 && (
+        <ReviewSection>
+          <RatingContainer
+            alignItems="center"
+            direction="column"
+            justifyContent="flex-start"
+            gap={0.5}
+          >
+            <FlexBox
+              full
+              alignItems="center"
+              justifyContent="flex-start"
+              gap={1}
+            >
+              <Star weight="fill" color={color.secondary.yellow} size={45} />
+              <p className="rating">{publicEvaluations.average}</p>
+              <p className="quantity">({publicEvaluations.quantity})</p>
+            </FlexBox>
 
-          <FlexBox alignItems="flex-start" gap={0.75} direction="column">
-            <div>
-              <p>Custo</p>
-              <StarMeter rating={4.5} size={16} />
-            </div>
-            <div>
-              <p>Prazo</p>
-              <StarMeter rating={4.5} size={16} />
-            </div>
-            <div>
-              <p>Funcionalidade</p>
-              <StarMeter rating={4.5} size={16} />
-            </div>
-            <div>
-              <p>Qualidade das Entregas</p>
-              <StarMeter rating={4.5} size={16} />
-            </div>
-            <div>
-              <p>Relacionamento com o Cliente</p>
-              <StarMeter rating={4.5} size={16} />
-            </div>
-          </FlexBox>
-        </RatingContainer>
-        <FlexBox direction="column" alignItems="center" gap={3}>
-          <FlexBox full centralized gap={2}>
-            <h3>Depoimentos</h3>
-            {currentUser?.roleRel.name != "professional" && (
-              <Button
-                variant="outline"
-                color={theme.color.secondary.lightTeal}
-                small
-              >
-                Adicionar
-              </Button>
-            )}
-          </FlexBox>
-          <FlexBox full justifyContent="center" alignItems="flex-start" gap={5}>
-            <ReviewContainer direction="column" alignItems="center" gap={1}>
-              <FlexBox gap={2}>
-                {reviewList
-                  .slice(displayReview, displayReview + 2)
-                  .map((item) => (
-                    <div className="review-item" key={item.id}>
-                      <p>{item.description}</p>
-                      <strong>{item.name}</strong>
-                    </div>
+            <FlexBox alignItems="flex-start" gap={0.75} direction="column">
+              <div>
+                <p>Custo</p>
+                <StarMeter rating={publicEvaluations.cost} size={16} />
+              </div>
+              <div>
+                <p>Prazo</p>
+                <StarMeter rating={publicEvaluations.deadlines} size={16} />
+              </div>
+              <div>
+                <p>Funcionalidade</p>
+                <StarMeter rating={publicEvaluations.functionality} size={16} />
+              </div>
+              <div>
+                <p>Qualidade das Entregas</p>
+                <StarMeter rating={publicEvaluations.quality} size={16} />
+              </div>
+              <div>
+                <p>Relacionamento com o Cliente</p>
+                <StarMeter rating={publicEvaluations.relationship} size={16} />
+              </div>
+            </FlexBox>
+          </RatingContainer>
+          <FlexBox direction="column" alignItems="center" gap={3}>
+            <FlexBox full centralized gap={2}>
+              <h3>Depoimentos</h3>
+              {me?.roleRel.name != "professional" && (
+                <Button
+                  variant="outline"
+                  color={theme.color.secondary.lightTeal}
+                  small
+                >
+                  Adicionar
+                </Button>
+              )}
+            </FlexBox>
+            <FlexBox
+              full
+              justifyContent="center"
+              alignItems="flex-start"
+              gap={5}
+            >
+              <ReviewContainer direction="column" alignItems="center" gap={1}>
+                <FlexBox gap={2}>
+                  {publicEvaluations.evaluations
+                    .slice(displayReview, displayReview + 2)
+                    .map((item) => (
+                      <div className="review-item" key={item.id}>
+                        <p>{item.description}</p>
+                        <StarMeter rating={evaluationSingleAverage(item)} />
+                        {/* <strong>{item.pe}</strong> */}
+                      </div>
+                    ))}
+                </FlexBox>
+                <FlexBox full justifyContent="center" gap={1} p={1}>
+                  {carrouselButtonArray.map((item, index) => (
+                    <CarouselButton
+                      isActive={displayReview / 2 == index}
+                      className="carousel-btn"
+                      onClick={() => setDisplayReview(index * 2)}
+                      key={item.id}
+                    />
                   ))}
-              </FlexBox>
-              <FlexBox full justifyContent="center" gap={1} p={1}>
-                {carrouselButtonArray.map((item, index) => (
-                  <CarouselButton
-                    isActive={displayReview / 2 == index}
-                    className="carousel-btn"
-                    onClick={() => setDisplayReview(index * 2)}
-                    key={item.id}
-                  />
-                ))}
-              </FlexBox>
-            </ReviewContainer>
+                </FlexBox>
+              </ReviewContainer>
+            </FlexBox>
           </FlexBox>
-        </FlexBox>
-      </ReviewSection>
+        </ReviewSection>
+      )}
     </>
   );
 };
