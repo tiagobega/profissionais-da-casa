@@ -140,7 +140,6 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
   };
 
   const onSubmit = async (data: FormData) => {
-
     setLoading(true);
 
     const cpf = parseCPF(data.cpf);
@@ -530,10 +529,11 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
                   },
                   { name: "Execução de obras", value: "Execução de obras" },
                   { name: "Instalações", value: "Instalações" },
+                  { name: "Pintor", value: "Pintor" },
                 ]}
                 placeholder="Formação"
                 aria-label="Formação"
-                label={"Selecione a sua formação"}
+                label={"Selecione a sua profissão"}
                 error={errors.formation}
                 {...register("formation")}
               />
@@ -685,7 +685,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
               background={color.secondary.blue}
               disabled={!terms || loading}
             >
-              {!loading ? "Concluir" : "Enviando"} 
+              {!loading ? "Concluir" : "Enviando"}
             </Button>
           </FlexBox>
         </fieldset>

@@ -22,7 +22,7 @@ export const ResetPasswordPage: React.FC<LoginPageProps> = () => {
   return (
     <LoginLayout>
       <RightPannel full pb={10} direction="column">
-        {token ? <FormResetPassword token={token.toString()} /> : <Loading />}
+        {/* {token ? <FormResetPassword email={} /> : <Loading />} */}
       </RightPannel>
     </LoginLayout>
   );

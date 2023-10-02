@@ -33,7 +33,7 @@ export const FormContactProfessional: React.FC<
     resolver: zodResolver(contactProfessionalSchema),
     mode: "onSubmit",
   });
-  const { currentUser } = useUser();
+  const { me } = useUser();
 
   useEffect(() => {
     setValue("byEmail", true);
@@ -42,12 +42,9 @@ export const FormContactProfessional: React.FC<
   }, []);
 
   const emailSignature =
-    currentUser &&
-    `${currentUser?.name}\n${
-      watch("byEmail") && `Email para resposta: ${currentUser?.email}`
-    }\n${
-      watch("byWhatsapp") &&
-      `Responder via whatsapp ou telefone: ${currentUser?.phone}`
+    me &&
+    `${me?.name}\n${watch("byEmail") && `Email para resposta: ${me?.email}`}\n${
+      watch("byWhatsapp") && `Responder via whatsapp ou telefone: ${me?.phone}`
     }`;
   console.log(getValues);
 

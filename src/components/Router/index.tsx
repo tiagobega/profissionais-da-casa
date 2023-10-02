@@ -133,7 +133,7 @@ const Router = () => (
         />
         <Route
           path={"/admin/review/:id"}
-          element={<PrivateRoute admin element={<AdmRatingDetails />} />}
+          // element={<PrivateRoute admin element={<AdmRatingDetails />} />}
         />
         <Route
           path={"/admin/professionals-management"}

@@ -2,7 +2,7 @@ import { NameValueType } from "Models/models";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MarginContainer } from "styles/commonComponents";
 import { ContentContainer, Header } from "./styles";
@@ -10,119 +10,33 @@ import { RatingList } from "./RatingList";
 import { filterRating } from "utils/filterList";
 import { useTheme } from "styled-components";
 import { useApi } from "contexts/User";
+import { Evaluation, Me, Professional } from "services/User/types";
+import { Loading } from "components/Loading";
+import { EVALUATION_STATUS, EvaluationStatus } from "constants/evaluation";
 
 export interface AdmRatingListProps {}
 
 export type RatingStatusOptions = "approved" | "refused" | "analysis";
 export type RatingType = {
-  id: string;
-  userName: string;
-  userMail: string;
-  userPhone: string;
-  date: string;
-  professionalName: string;
-  professionalMail: string;
-  professionalPhone: string;
-  rating: number;
-  review: string;
-  status: RatingStatusOptions;
+  evaluation: Evaluation;
+  professional: Professional;
+  user: Me;
 };
 
-const mockRatingList: RatingType[] = [
-  {
-    id: "h3u22n",
-    userName: "Antonio Silva dos Santos Junior",
-    userMail: "fernanda_aa_martins@zipmail.com",
-    userPhone: "(11) 98765-4321",
-    date: "12/09/2022",
-    professionalName: "Santana Soluções em Projetos",
-    professionalMail: "contato@santanaprojetos.com.br",
-    professionalPhone: "(11) 12345-6789",
-    rating: 4,
-    review:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia pariatur deserunt, impedit dolor tenetur commodi molestiae earum veniam assumenda vero.",
-    status: "approved",
-  },
-  {
-    id: "stefarhr",
-    userName: "Fernanda Araújo de Albuquerque Martins",
-    userMail: "fernanda_aa_martins@zipmail.com",
-    userPhone: "(11) 98765-4321",
-    date: "12/09/2022",
-    professionalName: "Rolim Arquitetos Associados",
-    professionalMail: "contato@rolimarquitetos.com.br",
-    professionalPhone: "(11) 12345-6789",
-    rating: 3,
-    review:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia pariatur deserunt, impedit dolor tenetur commodi molestiae earum veniam assumenda vero.",
-    status: "approved",
-  },
-  {
-    id: "themureeaqh",
-    userName: "Antonio Silva dos Santos Junior",
-    userMail: "fernanda_aa_martins@zipmail.com",
-    userPhone: "(11) 98765-4321",
-    date: "12/09/2022",
-    professionalName: "Santana Soluções em Projetos",
-    professionalMail: "contato@santanaprojetos.com.br",
-    professionalPhone: "(11) 12345-6789",
-    rating: 5,
-    review:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia pariatur deserunt, impedit dolor tenetur commodi molestiae earum veniam assumenda vero.",
-    status: "analysis",
-  },
-  {
-    id: "h3fnrthereu22n",
-    userName: "Fernanda Araújo de Albuquerque Martins",
-    userMail: "fernanda_aa_martins@zipmail.com",
-    userPhone: "(11) 98765-4321",
-    date: "12/09/2022",
-    professionalName: "Rolim Arquitetos Associados",
-    professionalMail: "contato@rolimarquitetos.com.br",
-    professionalPhone: "(11) 12345-6789",
-    rating: 3.5,
-    review:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia pariatur deserunt, impedit dolor tenetur commodi molestiae earum veniam assumenda vero.",
-    status: "analysis",
-  },
-  {
-    id: "ehrwehr",
-    userName: "Antonio Silva dos Santos Junior",
-    userMail: "fernanda_aa_martins@zipmail.com",
-    userPhone: "(11) 98765-4321",
-    date: "12/09/2022",
-    professionalName: "Santana Soluções em Projetos",
-    professionalMail: "contato@santanaprojetos.com.br",
-    professionalPhone: "(11) 12345-6789",
-    rating: 4.25,
-    review:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia pariatur deserunt, impedit dolor tenetur commodi molestiae earum veniam assumenda vero.",
-    status: "refused",
-  },
-  {
-    id: "yk4tjete",
-    userName: "Fernanda Araújo de Albuquerque Martins",
-    userMail: "fernanda_aa_martins@zipmail.com",
-    userPhone: "(11) 98765-4321",
-    date: "12/09/2022",
-    professionalName: "Rolim Arquitetos Associados",
-    professionalMail: "contato@rolimarquitetos.com.br",
-    professionalPhone: "(11) 12345-6789",
-    rating: 2,
-    review:
-      "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia pariatur deserunt, impedit dolor tenetur commodi molestiae earum veniam assumenda vero.",
-    status: "refused",
-  },
+const orderOptions: { name: string; value: ListOrderType }[] = [
+  { name: "Nome do usuário", value: "userName" },
+  { name: "Nome do Profissional", value: "professionalName" },
+  { name: "Avaliação", value: "rating" },
 ];
 
 type ListOrderType = "userName" | "professionalName" | "rating";
 
 export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
-  const [allEvaluations, setAllEvaluations] = useState();
-  const [allUsers, setAllUsers] = useState();
-  const [allProfessionals, setAllProfessionals] = useState();
+  const [allEvaluations, setAllEvaluations] = useState<Evaluation[]>();
+  const [allUsers, setAllUsers] = useState<Me[]>();
+  const [allProfessionals, setAllProfessionals] = useState<Professional[]>();
 
-  const [status, setStatus] = useState<RatingStatusOptions>("analysis");
+  const [status, setStatus] = useState<EvaluationStatus>("pending");
   const [query, setQuery] = useState<string>("");
   const [order, setOrder] = useState<ListOrderType>("userName");
   const [isDetails, setIsDetails] = useState(false);
@@ -130,24 +44,53 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
   const { color } = useTheme();
   const { evaluation, professional, user } = useApi();
 
-  // const finalList = evaluation.map((evaluation) => {})
-
-  const orderOptions: { name: string; value: ListOrderType }[] = [
-    { name: "Nome do usuário", value: "userName" },
-    { name: "Nome do Profissional", value: "professionalName" },
-    { name: "Avaliação", value: "rating" },
-  ];
-
-  const filteredList = mockRatingList.filter((el) => el.status == status);
-  const searchedList = filterRating(filteredList, query);
-  const orderedList = searchedList.sort((a, b) =>
-    a[order] > b[order] ? 1 : -1
-  );
-
   const handleSelectOrder = (value: string) => {
     if (value == "userName" || value == "professionalName" || value == "rating")
       setOrder(value);
   };
+
+  useEffect(() => {
+    (async () => {
+      const evaluationResponse = await evaluation.getAll();
+      const professionalResponse = await professional.getAll();
+      const userResponse = await user.getAll();
+
+      if (!evaluationResponse || !professionalResponse || !userResponse) {
+        setAllEvaluations([]);
+        setAllUsers([]);
+        setAllProfessionals([]);
+        return;
+      }
+
+      setAllEvaluations(evaluationResponse.evaluations);
+      setAllUsers(userResponse.users);
+      setAllProfessionals(professionalResponse.proProfiles);
+    })();
+  }, []);
+
+  if (!allEvaluations || !allProfessionals || !allUsers) {
+    return <Loading />;
+  }
+
+  const finalEvaluations = allEvaluations.map((evaluation) => {
+    const { userId, professionalId } = evaluation;
+
+    const foundedUser = allUsers.find(({ id }) => id === userId);
+    const foundedProfessional = allProfessionals.find(
+      ({ id }) => id === professionalId
+    );
+
+    return {
+      evaluation,
+      user: foundedUser!,
+      professional: foundedProfessional!,
+    };
+  });
+
+  const filteredList: RatingType[] = finalEvaluations.filter(
+    (el) => el.evaluation.status === status
+  );
+  // const searchedList = filterRating(filteredList, query);
 
   return (
     <MarginContainer>
@@ -163,22 +106,34 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
             <FlexBox gap={2}>
               <Button
                 variant="text"
-                onClick={() => setStatus("analysis")}
-                color={status != "analysis" ? color.base[300] : "black"}
+                onClick={() => setStatus(EVALUATION_STATUS.PENDING)}
+                color={
+                  status != EVALUATION_STATUS.PENDING
+                    ? color.base[300]
+                    : "black"
+                }
               >
                 Esperando análise
               </Button>
               <Button
                 variant="text"
-                onClick={() => setStatus("approved")}
-                color={status != "approved" ? color.base[300] : "black"}
+                onClick={() => setStatus(EVALUATION_STATUS.APPROVED)}
+                color={
+                  status != EVALUATION_STATUS.APPROVED
+                    ? color.base[300]
+                    : "black"
+                }
               >
                 Postados
               </Button>
               <Button
                 variant="text"
-                onClick={() => setStatus("refused")}
-                color={status != "refused" ? color.base[300] : "black"}
+                onClick={() => setStatus(EVALUATION_STATUS.REFUSED)}
+                color={
+                  status != EVALUATION_STATUS.REFUSED
+                    ? color.base[300]
+                    : "black"
+                }
               >
                 Excluídos
               </Button>
@@ -203,7 +158,7 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
         }
       </Header>
       <ContentContainer>
-        {!isDetails ? <RatingList list={orderedList} /> : "detalhes"}
+        {!isDetails ? <RatingList list={filteredList} /> : "detalhes"}
       </ContentContainer>
     </MarginContainer>
   );

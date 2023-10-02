@@ -6,6 +6,7 @@ import { useTheme } from "styled-components";
 import { Button } from "components/Button";
 import { starsArray } from "utils/starsArray";
 import { StarMeter } from "components/StarMeter";
+import { EvaluationStatus } from "constants/evaluation";
 
 export type ReviewType = {};
 
@@ -14,7 +15,7 @@ export interface ReviewCardProps {
   professionalName: string;
   rating: number;
   id: string;
-  status: "approved" | "refused" | "analysis";
+  status: EvaluationStatus;
 }
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({
@@ -39,7 +40,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
           <StarMeter rating={rating} />
         </FlexBox>
       </InfoContainer>
-      {status == "analysis" && (
+      {status == "pending" && (
         <Button small background="white">
           Analisar
         </Button>
