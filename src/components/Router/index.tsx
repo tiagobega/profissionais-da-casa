@@ -30,6 +30,8 @@ import { AdmHome } from "pages/adm-home";
 import { AdmLeadsList } from "pages/adm-professional-leads";
 import { PermissionInactivePage } from "pages/permissionInactive";
 import EmailConfirmedPage from "pages/email-confirm";
+import PrivacyPage from "pages/privacy-policy";
+import ReturnPage from "pages/return-policy";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -39,6 +41,14 @@ const Router = () => (
       <Route
         path={"/terms-conditions"}
         element={<PublicRoute element={<TermsPage />} />}
+      />
+      <Route
+        path={"/privacy-policy"}
+        element={<PublicRoute element={<PrivacyPage />} />}
+      />
+      <Route
+        path={"/return-policy"}
+        element={<PublicRoute element={<ReturnPage />} />}
       />
       <Route path="/login" element={<PublicRoute element={<LoginPage />} />} />
 

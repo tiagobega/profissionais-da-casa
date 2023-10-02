@@ -25,26 +25,26 @@ const Header = () => {
   return (
     <HeaderContainer role={getRole()}>
       <FlexBox full justifyContent="space-between" alignItems="center" px={6}>
-        <img src={logo} alt="cada casa" />
+        <img src={logo} alt="cada casa" onClick={() => navigate("/")} />
 
         <FlexBox justifyContent="space-between">
           <nav>
             <ul>
-              {/* <li>
-                <a href="#">Casa Fast</a>
-              </li> */}
+              <li>
+                <a href="https://cadacasa.com.br/casa-fast-inicial/">
+                  Casa Fast
+                </a>
+              </li>
               <li>
                 <Link to="/catalog">Profissionais da Casa</Link>
               </li>
-              {/* <li>
-                <a href="#">Seguros</a>
-              </li> */}
-              {/* <li>
-                <a href="#">Blog</a>
-              </li> */}
-              {/* <li>
-                <a href="#">Quem somos</a>
-              </li> */}
+
+              <li>
+                <a href="https://cadacasa.com.br/blog-2/">Blog</a>
+              </li>
+              <li>
+                <a href="https://cadacasa.com.br/">Quem somos</a>
+              </li>
             </ul>
           </nav>
         </FlexBox>
