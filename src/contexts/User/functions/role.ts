@@ -8,56 +8,32 @@ import type {
 
 import { AxiosError } from "axios";
 import { UserService } from "services/User";
+import { withErrorHandler } from "./withErrorHandler";
 
 export const roleFunctions = (errorHandler: ErrorHandler) => {
   const create = async (data: CreateRoleData) => {
     const response = await UserService.createRole(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const edit = async (data: UpdateRoleData) => {
     const response = await UserService.putRole(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const deleteRole = async (data: DeleteRoleData) => {
     const response = await UserService.deleteRole(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const getSingle = async (data: SingleRoleData) => {
     const response = await UserService.getRole(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const getAll = async () => {
     const response = await UserService.getAllRole();
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   return {

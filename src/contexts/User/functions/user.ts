@@ -4,6 +4,7 @@ import type {
   AllUserResponse,
   ForgotPasswordData,
   Me,
+  ResendEmailData,
   ResetPasswordData,
   SignInData,
   SignUpData,
@@ -19,33 +20,27 @@ import { useState } from "react";
 import { UserService } from "services/User";
 import { UserUtils } from "utils/user";
 import { recreateApiAuthInterceptors } from "config/axios";
+import { withErrorHandler } from "./withErrorHandler";
 
 export const userFunctions = (errorHandler: ErrorHandler) => {
   const [logged, setLogged] = useState(false);
   const [me, setMe] = useState<Me | undefined>();
 
   const getMe = async () => {
-    const response = await UserService.getMe();
+    const response = withErrorHandler(await UserService.getMe(), errorHandler);
 
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    setMe(response);
+    response && setMe(response);
 
     return response;
   };
 
   const updateMe = async (data: UpdateUserData) => {
-    const response = await UserService.putMe(data);
+    const response = withErrorHandler(
+      await UserService.putMe(data),
+      errorHandler
+    );
 
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    setMe(response);
+    response && setMe(response);
 
     return response;
   };
@@ -60,12 +55,11 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
   const login = async (data: SignInData) => {
     const response = await UserService.singIn(data);
 
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
+    const loginResponse = withErrorHandler(response, errorHandler);
 
-    UserUtils.setAuthToken(response.accessToken);
+    if (!loginResponse) return loginResponse;
+
+    UserUtils.setAuthToken(loginResponse.accessToken);
 
     recreateApiAuthInterceptors();
 
@@ -77,18 +71,18 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
     setLogged(true);
 
     return {
-      accessToken: response.accessToken,
+      accessToken: loginResponse.accessToken,
       me: meResponse,
     };
   };
 
   const register = async (data: SignUpData) => {
-    const response = await UserService.signUp(data);
+    const response = withErrorHandler(
+      await UserService.signUp(data),
+      errorHandler
+    );
 
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
+    if (!response) return response;
 
     UserUtils.setAuthToken(response.session.accessToken);
     recreateApiAuthInterceptors();
@@ -102,54 +96,40 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
   const forgotPassword = async (data: ForgotPasswordData) => {
     const response = await UserService.forgotPassword(data);
 
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const resetPassword = async (data: ResetPasswordData) => {
     const response = await UserService.resetPassword(data);
 
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const updatePassword = async (data: UpdatePasswordData) => {
     const response = await UserService.updatePassword(data);
 
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   /**
    * TODO ADMIN FUNCTIONS
    */
 
-  const getAll = async () => {
-    const response = await UserService.getAllUsers();
+  const getAll = async () =>
+    withErrorHandler(await UserService.getAllUsers(), errorHandler);
 
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
+  const adminUpdateMe = async (data: AdminUpdateUserData) => {};
 
-    return response;
-  };
-
-  const adminUpdateMe = async (data: AdminUpdateUserData) => {
-    // const response = await UserService.create;
-  };
+  const resendEmailVerification = async (data: ResendEmailData) =>
+    withErrorHandler(
+      await UserService.resentEmailVerification(data),
+      errorHandler
+    );
+  const resendMeEmailVerification = async () =>
+    withErrorHandler(
+      await UserService.resendMeEmailVerification(),
+      errorHandler
+    );
 
   return {
     logged,
@@ -166,6 +146,9 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
     forgotPassword,
     resetPassword,
     updatePassword,
+    
+    resendMeEmailVerification,
+    resendEmailVerification,
   };
 };
 

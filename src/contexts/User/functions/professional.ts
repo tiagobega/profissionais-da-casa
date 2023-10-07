@@ -10,6 +10,7 @@ import type {
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { UserService } from "services/User";
+import { withErrorHandler } from "./withErrorHandler";
 
 export const professionalFunctions = (errorHandler: ErrorHandler) => {
   const [myProfessional, setMyProfessional] = useState<
@@ -32,12 +33,7 @@ export const professionalFunctions = (errorHandler: ErrorHandler) => {
 
   const update = async (data: ProfessionalUpdateData) => {
     const response = await UserService.putProfessional(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const getSingle = async (data: SingleProfessionalData) => {
@@ -54,22 +50,12 @@ export const professionalFunctions = (errorHandler: ErrorHandler) => {
 
   const getAll = async () => {
     const response = await UserService.getAllProfessional();
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const deleteProfessional = async (data: DeleteProfessionalData) => {
     const response = await UserService.deleteProfessional(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   return {
@@ -78,6 +64,7 @@ export const professionalFunctions = (errorHandler: ErrorHandler) => {
      */
     professional,
     setProfessional,
+    
     /**
      * professional related to the logged user
      */

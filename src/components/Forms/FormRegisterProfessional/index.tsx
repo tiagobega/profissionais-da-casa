@@ -64,12 +64,12 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
           password: "P@ss475866",
           passwordConfirm: "P@ss475866",
           onlineAppointment: true,
-          otherSocials: "outras",
-          facebook: "facebook",
           formation: "Arquiteto",
-          linkedin: "linkedIn",
-          instagram: "instagram",
-          pinterest: "pinterest",
+          otherSocials: "https://outra.com.br",
+          facebook: "https://facebook.com.br",
+          linkedin: "https://linkedIn.com.br",
+          instagram: "https://instagram.com.br",
+          pinterest: "https://pinterest.com.br",
           states: ["SP"],
           terms: true,
           registerTech: "123456789",
@@ -77,16 +77,15 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       })(),
     },
   });
+
   const { color } = useTheme();
+
   const navigate = useNavigate();
 
-  const { user, professional, location, socialMedia, file } = useApi();
-
-  const { register: userRegister, updateMe } = user;
-  const { register: professionalRegister, getSingle } = professional;
-  const { sendFile } = file;
-  const { createMany: createManyLocation } = location;
-  const { createMany: createManySocialMedia } = socialMedia;
+  const {
+    integrated,
+    file: { sendFile },
+  } = useApi();
 
   const createImageFile = async (params: CreateImageFileParams = {}) => {
     const fileReaderQueue = new FileReaderQueue();
@@ -140,32 +139,13 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
   };
 
   const onSubmit = async (data: FormData) => {
-    setLoading(true);
+
+    console.log(data);
 
     const cpf = parseCPF(data.cpf);
     const phone = parsePhone(data.phone);
     const zipCode = parseCEP(data.cep);
     const cnpj = parseCNPJ(data.cnpj);
-
-    /**
-     * REGISTER USER
-     */
-    const userResponse = await userRegister({
-      cpf,
-      zipCode,
-      phone: phone,
-
-      name: data.name,
-      password: data.password,
-      email: data.email,
-
-      role: "professional",
-      profileType: "user",
-
-      profilePicture: "",
-    });
-
-    if (!userResponse) return setLoading(false);
 
     /**
      * CREATE FILES
@@ -197,57 +177,6 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
 
     const imagesResponse = await createImageFile(images);
 
-    /**
-     * UPDATE USER IMAGE
-     */
-    updateMe({
-      profilePicture: imagesResponse.profile || "",
-    });
-
-    /**
-     * CREATE PROFESSIONAL
-     */
-    const professionalResponse = await professionalRegister({
-      cnpj,
-      phone,
-      zipCode,
-
-      caucrea: data.creaCau,
-      name: data.name,
-      companyName: data.companyName,
-      formationDetails: data.formationDetail,
-      formationInstitute: data.institution,
-      professionalRegister: data.registerTech,
-      yearConclusion: data.formationYear,
-      birthDate: data.birthdate,
-      userId: userResponse.user.id,
-      subscriptionPlanId: "e5b7fcc1-86b3-4d63-ab3d-ad4cf8306399",
-      formation: data.formation,
-      onlineAppointment: data.onlineAppointment,
-      professionalLevel: data.formationLevel,
-      tags: "",
-
-      profilePicture: imagesResponse.profile || "",
-      backgroundPicture: imagesResponse.background || "",
-    });
-
-    if (!professionalResponse) return setLoading(false);
-
-    /**
-     * CREATE LOCATIONS
-     */
-
-    if (data.states.length) {
-      await createManyLocation({
-        professionalId: professionalResponse.id,
-        states: data.states.join(","),
-      });
-    }
-
-    /**
-     * CREATE SOCIAL MEDIAS
-     */
-
     const filteredSocialMedias = [
       {
         name: "Instagram",
@@ -271,25 +200,55 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       },
     ].filter((social) => social.link);
 
-    if (filteredSocialMedias.length !== 0) {
-      await createManySocialMedia({
-        professionalId: professionalResponse.id,
+    const registeredProfessional = await integrated.signUp({
+      userParams: {
+        cpf,
+        phone,
+        zipCode,
+        active: false,
+        email: data.email,
+        role: "professional",
+        profileType: "user",
+        profilePicture: imagesResponse.profile || "",
+        password: data.password,
+        name: data.name,
+      },
+      locationParams: {
+        states: data.states.join(","),
+      },
+      proProfileParams: {
+        cnpj,
+        phone,
+        zipCode,
+
+        caucrea: data.creaCau,
+        name: data.name,
+        companyName: data.companyName,
+        formationDetails: data.formationDetail,
+        formationInstitute: data.institution,
+        professionalRegister: data.registerTech,
+        yearConclusion: data.formationYear,
+        birthDate: data.birthdate,
+        subscriptionPlanId: "6c040d30-bdbd-46b8-b665-23704dec0ea0",
+        formation: data.formation,
+        onlineAppointment: data.onlineAppointment,
+        professionalLevel: data.formationLevel,
+        tags: "",
+
+        profilePicture: imagesResponse.profile || "",
+        backgroundPicture: imagesResponse.background || "",
+      },
+      socialMediaParams: {
         names: filteredSocialMedias.map(({ name }) => name).join(","),
         links: filteredSocialMedias.map(({ link }) => link).join(","),
-      });
-    }
-
-    /**
-     * GET FINAL PROFESSIONAL PROFILE
-     */
-
-    const finalProfessional = await getSingle({
-      id: professionalResponse.id,
+      },
     });
 
-    if (!finalProfessional) return setLoading(false);
+    console.log(registeredProfessional);
 
-    navigate("/account/confirm");
+    // if (!finalProfessional) return setLoading(false);
+
+    // navigate("/account/confirm");
   };
 
   const terms = watch("terms");

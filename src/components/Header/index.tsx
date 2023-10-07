@@ -30,21 +30,23 @@ const Header = () => {
         <FlexBox justifyContent="space-between">
           <nav>
             <ul>
-              {/* <li>
-                <a href="#">Casa Fast</a>
-              </li> */}
               <li>
-                <Link to="/catalog">Profissionais da Casa</Link>
+                <a href="https://cadacasa.com.br/blog-2/">Blog</a>
               </li>
-              {/* <li>
-                <a href="#">Seguros</a>
-              </li> */}
-              {/* <li>
-                <a href="#">Blog</a>
-              </li> */}
-              {/* <li>
-                <a href="#">Quem somos</a>
-              </li> */}
+              <li>
+                <a href="https://cadacasa.com.br/ ">Cada casa</a>
+              </li>
+              <li>
+                <a
+                  href="https://cadacasa.com.br/casa-fast-inicial/"
+                  target="_blank"
+                >
+                  Casa Fast
+                </a>
+              </li>
+              <li>
+                <Link to="/catalog">Catalogo</Link>
+              </li>
             </ul>
           </nav>
         </FlexBox>

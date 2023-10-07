@@ -20,6 +20,8 @@ export const API_POST_ROUTES = {
   LEAD_SINGLE: "/lead/getone",
   LEAD_DELETE: "/lead/delete",
 
+  INTEGRATED: "/integrated/signup",
+
   LOCATION_CREATE_MANY: "/location/createmany",
   LOCATION_CREATE: "/location/create",
   LOCATION_DELETE_MANY: "/location/deletemany",
@@ -51,6 +53,8 @@ export const API_POST_ROUTES = {
   USER_SIGN_UP: "/user/signup",
   USER_DELETE: "/user/delete",
   USER_FORGOT_PASSWORD: "/user/forgotpass",
+  USER_ME_RESEND_EMAIL: "/user/me/senduserverify",
+  USER_RESEND_EMAIL: "/user/senduserverify",
 } as const;
 
 export const API_GET_ROUTES = {

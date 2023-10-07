@@ -9,28 +9,27 @@ import { useNavigate } from "react-router-dom";
 import { Form, StyledTooltip } from "./style";
 import { resendSchema } from "./validation";
 import { FC } from "react";
-import { useUser } from "contexts/User";
+import { useApi, useUser } from "contexts/User";
 
 export type FormData = Zod.infer<typeof resendSchema>;
 
 interface FormRegisterUserProps {}
 
 export const FormResendEmail: FC<FormRegisterUserProps> = () => {
-  const { me } = useUser();
+  const { user } = useApi();
+
+  const { resendMeEmailVerification } = user;
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(resendSchema),
     mode: "onSubmit",
-    defaultValues: {
-      email: me?.email,
-    },
   });
 
   const onSubmit = (data: FormData) => {
-    // sendEmailConfirmation({ email: data.email });
+    resendMeEmailVerification();
   };
 
   return (
@@ -47,15 +46,15 @@ export const FormResendEmail: FC<FormRegisterUserProps> = () => {
       </p>
       <p>* Não se esqueça de checar o lixo eletrônico</p>
       <FlexBox direction="column" gap={1} full mt={1} mb={1}>
-        <FlexBox gap={1} alignItems="flex-end">
-          <Input.Text
+        {/* <FlexBox gap={1} alignItems="flex-end"> */}
+        {/* <Input.Text
             type="email"
             aria-label="email"
             placeholder="Email"
             {...register("email", { required: true })}
             error={errors.email}
-          />
-        </FlexBox>
+          /> */}
+        {/* </FlexBox> */}
         <Button type="submit">Reenviar</Button>
       </FlexBox>
     </Form>

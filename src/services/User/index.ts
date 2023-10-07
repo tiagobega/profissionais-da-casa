@@ -4,6 +4,20 @@ import { AxiosError } from "axios";
 import axios, { API_ROUTES } from "config/axios";
 import { BaseService, GenericError } from "services/Base";
 import { mimeTypeToExtension } from "constants/mimeTypes";
+
+function createSignUpIntegratedObj(
+  data: ST.IntegratedSignUpData
+): ST.IntegratedSignUpObj {
+  const obj: Partial<ST.IntegratedSignUpObj> = {};
+  let dataKey: keyof typeof obj;
+
+  for (dataKey in data) {
+    obj[dataKey] = JSON.stringify(data[dataKey]);
+  }
+
+  return obj as Required<typeof obj>;
+}
+
 export class UserService extends BaseService {
   //EVALUATIONS
   static async createEvaluation(data: ST.CreateEvaluationData) {
@@ -187,6 +201,15 @@ export class UserService extends BaseService {
     } catch (err) {
       return err as AxiosError<GenericError>;
     }
+  }
+
+  //INTEGRATED
+  static async signUpIntegrated(data: ST.IntegratedSignUpData) {
+    const dataObj = createSignUpIntegratedObj(data);
+
+    return await this.request(API_ROUTES.POST.INTEGRATED, "post", {
+      data: dataObj,
+    });
   }
 
   //LEADS
@@ -697,6 +720,19 @@ export class UserService extends BaseService {
     return await this.request<ST.AllUserResponse>(
       API_ROUTES.GET.USER_ALL,
       "get"
+    );
+  }
+  static async resendMeEmailVerification() {
+    return await this.request<ST.ResendEmailResponse>(
+      API_ROUTES.POST.USER_ME_RESEND_EMAIL,
+      "post"
+    );
+  }
+  static async resentEmailVerification(data: ST.ResendEmailData) {
+    return await this.request<ST.ResendEmailResponse>(
+      API_ROUTES.POST.USER_RESEND_EMAIL,
+      "post",
+      { data }
     );
   }
 }

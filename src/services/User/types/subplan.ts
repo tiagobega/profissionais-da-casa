@@ -3,12 +3,13 @@ import { SubplanName } from "constants/subPlan";
 export interface Subplan {
   id: string;
   name: SubplanName;
-  isActive: boolean;
+  active: boolean;
 }
 
 export type CreateSubplanData = {
   name: SubplanName;
-  isActive: boolean;
+  active: boolean;
+  createdAt: string;
 };
 
 export type UpdateSubplanData = Partial<Subplan> &

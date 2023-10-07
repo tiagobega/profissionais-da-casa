@@ -19,6 +19,7 @@ import {
   subplanFunctions,
 } from "./functions";
 import { Loading } from "components/Loading";
+import { integratedFunctions } from "./functions/integrated";
 
 export const userContext = React.createContext<UserContext | null>(null);
 
@@ -46,6 +47,7 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
   const role = roleFunctions(errorHandler);
   const socialMedia = socialMediaFunctions(errorHandler);
   const subplan = subplanFunctions(errorHandler);
+  const integrated = integratedFunctions(errorHandler);
 
   useEffect(() => {
     (async () => {
@@ -86,6 +88,7 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         socialMedia,
         subplan,
         user,
+        integrated,
       }}
     >
       {loading ? <Loading /> : children}

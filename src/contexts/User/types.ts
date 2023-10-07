@@ -11,6 +11,7 @@ import {
   LocationFunctionsReturn,
   RoleFunctionsReturn,
   SocialMediaFunctionsReturn,
+  IntegratedFunctionsReturn,
 } from "./functions";
 
 import { SubplanFunctionsReturn } from "./functions/subplan";
@@ -31,6 +32,7 @@ export interface UserContext {
   socialMedia: SocialMediaFunctionsReturn;
   subplan: SubplanFunctionsReturn;
   user: UserFunctionsReturn;
+  integrated: IntegratedFunctionsReturn
 }
 
 export interface ContextProviderProps {

@@ -8,56 +8,32 @@ import type {
 
 import { AxiosError } from "axios";
 import { UserService } from "services/User";
+import { withErrorHandler } from "./withErrorHandler";
 
 export const subplanFunctions = (errorHandler: ErrorHandler) => {
   const create = async (data: CreateSubplanData) => {
     const response = await UserService.createSubplan(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const edit = async (data: UpdateSubplanData) => {
     const response = await UserService.putSubplan(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const deleteSubplan = async (data: DeleteSubplanData) => {
     const response = await UserService.deleteSubplan(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const getSingle = async (data: SingleSubplanData) => {
     const response = await UserService.getSubplan(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const getAll = async () => {
     const response = await UserService.getAllSubplan();
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   return {

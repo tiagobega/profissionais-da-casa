@@ -8,56 +8,32 @@ import type {
 
 import { AxiosError } from "axios";
 import { UserService } from "services/User";
+import { withErrorHandler } from "./withErrorHandler";
 
 export const portfolioProjectFunctions = (errorHandler: ErrorHandler) => {
   const create = async (data: CreatePortfolioProjectData) => {
     const response = await UserService.createPortfolioProject(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const edit = async (data: UpdatePortfolioProjectData) => {
     const response = await UserService.putPortfolioProject(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const deletePortfolioProject = async (data: DeletePortfolioProjectData) => {
     const response = await UserService.deletePortfolioProject(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const getSingle = async (data: SinglePortfolioProjectData) => {
     const response = await UserService.getPortfolioProject(data);
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   const getAll = async () => {
     const response = await UserService.getAllPortfolioProject();
-    if (response instanceof AxiosError) {
-      errorHandler(response);
-      return false;
-    }
-
-    return response;
+    return withErrorHandler(response, errorHandler);
   };
 
   return {

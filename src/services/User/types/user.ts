@@ -36,6 +36,7 @@ export type SignUpData = {
   profileType: string;
   profilePicture: string;
   zipCode: string;
+  active: boolean;
 };
 
 export type UpdateUserData = Partial<
@@ -90,3 +91,7 @@ export type SignUpResponse = {
     accessToken: string;
   };
 };
+
+export type ResendEmailData = Pick<Me, "email"> | Pick<Me, "id">;
+
+export type ResendEmailResponse = string;
