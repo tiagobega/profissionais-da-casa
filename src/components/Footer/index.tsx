@@ -33,26 +33,26 @@ const Footer = (props: FooterProps) => (
           gap={2}
         >
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
-            <Button variant="text" color="white" href="#">
+            <Button variant="text" color="white" href="/faq">
               FAQ
             </Button>
-            <Button variant="text" color="white" href="#">
+            <Button variant="text" color="white" href="/cancel-policy">
               Política de Troca e Cancelamento
             </Button>
           </FlexBox>
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
-            <Button variant="text" color="white" href="#">
+            <Button variant="text" color="white" href="/terms-conditions">
               Termos de uso
             </Button>
             <Button variant="text" color="white" href="#">
               Politica de Privacidade
             </Button>
-            <Button variant="text" color="white" href="#">
+            <Button variant="text" color="white" href="return-policy">
               Politica de Devolução e Reembolso
             </Button>
           </FlexBox>
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
-            <Button variant="text" color="white" href="#">
+            <Button variant="text" color="white" href="/register/professional">
               Seja um Profissional da Casa
             </Button>
           </FlexBox>
@@ -65,7 +65,11 @@ const Footer = (props: FooterProps) => (
         <Button variant="text" color="white" href="#">
           <img src={instagramLogo} alt="instagram" />
         </Button>
-        <Button variant="text" color="white" href="#">
+        <Button
+          variant="text"
+          color="white"
+          href="https://br.linkedin.com/company/cadacasa"
+        >
           <img src={linkedinLogo} alt="linkedin" />
         </Button>
         <Button variant="text" color="white" href="#">

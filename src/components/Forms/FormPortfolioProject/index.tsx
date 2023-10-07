@@ -22,6 +22,14 @@ export interface FormPortfolioProjectProps {
 
 export type FormData = Zod.infer<typeof usePortfolioProjectSchema>;
 
+const loadImgString = (input: string | string[]) => {
+  if (typeof input == "string") {
+    return input.split(",");
+  } else {
+    return input;
+  }
+};
+
 export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   close,
   project,
@@ -46,7 +54,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   useEffect(() => {
     setValue("description", project ? project.description : "");
     setValue("title", project ? project.name : "");
-    project && setImageList(project.images.split(','));
+    project && setImageList(loadImgString(project.images));
   }, []);
 
   const imgFile = watch("image");
@@ -78,16 +86,18 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
 
   const onSubmit = async (data: FormData) => {
     if (!myProfessional) return;
-    const imageString = [imageList[coverIndex]];
-    imageList.forEach((image, index) => index != 0 && imageString.push(image));
-    imageString.join(",");
-    console.log(imageString);
+    const imageStringList = [imageList[coverIndex]];
+    imageList.forEach(
+      (image, index) => index != coverIndex && imageStringList.push(image)
+    );
+    const imageStringJoined = imageStringList.join(",");
+    console.log(imageStringJoined);
 
     const payload: CreatePortfolioProjectData = {
       name: data.title,
       description: data.description,
       professionalId: myProfessional?.id,
-      images: imageString.join(","),
+      images: imageStringJoined,
     };
     await create(payload);
     handleClose();
