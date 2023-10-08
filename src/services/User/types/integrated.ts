@@ -17,7 +17,7 @@ export type IntegratedSignUpResponse = {
     accessToken: string;
   };
   user: Me;
-  professional: Professional;
+  proProfile: Professional;
 };
 
 export type IntegratedSignUpObj = {

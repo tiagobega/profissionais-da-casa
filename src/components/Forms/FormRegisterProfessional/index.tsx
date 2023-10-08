@@ -256,7 +256,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
 
     setMe(integratedRegister.user);
 
-    setMyProfessional(integratedRegister.professional);
+    setMyProfessional(integratedRegister.proProfile);
 
     setLogged(true);
 
