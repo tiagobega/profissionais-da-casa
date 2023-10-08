@@ -2,6 +2,7 @@ export interface Location {
   id: string;
   professionalId: string;
   state: string;
+  createdAt: string;
 }
 
 export type SingleLocationData = {

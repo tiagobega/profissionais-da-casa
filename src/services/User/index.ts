@@ -207,9 +207,13 @@ export class UserService extends BaseService {
   static async signUpIntegrated(data: ST.IntegratedSignUpData) {
     const dataObj = createSignUpIntegratedObj(data);
 
-    return await this.request(API_ROUTES.POST.INTEGRATED, "post", {
-      data: dataObj,
-    });
+    return await this.request<ST.IntegratedSignUpResponse>(
+      API_ROUTES.POST.INTEGRATED,
+      "post",
+      {
+        data: dataObj,
+      }
+    );
   }
 
   //LEADS

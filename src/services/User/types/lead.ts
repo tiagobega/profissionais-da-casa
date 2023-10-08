@@ -4,6 +4,7 @@ export interface Lead {
   userId: string;
   name: string;
   description: string;
+  createdAt: string;
 }
 
 export type CreateLeadData = {

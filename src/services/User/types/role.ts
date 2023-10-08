@@ -3,11 +3,10 @@ import { RoleName } from "constants/roles";
 export interface Role {
   id: string;
   name: RoleName;
+  createdAt: string;
 }
 
-export type CreateRoleData = {
-  name: string;
-};
+export type CreateRoleData = Pick<Role, "name">;
 
 export type UpdateRoleData = (Pick<Role, "id"> | Pick<Role, "name">) & {
   newName: string;

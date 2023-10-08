@@ -3,6 +3,7 @@ export type FaqQuestion = {
   blockId: string;
   name: string;
   description: string;
+  createdAt: string;
 };
 
 export type CreateFaqQuestionData = {
@@ -38,6 +39,7 @@ export type FaqBlock = {
   id: string;
   name: string;
   faqQuestions: FaqQuestion[];
+  createdAt: string;
 };
 
 export type CreateFaqBlockData = {

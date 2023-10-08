@@ -15,6 +15,7 @@ export interface Me {
   profileTypeRel: {
     id: string;
     name: "user" | "admin";
+    createdAt: string;
   };
   email: string;
   createdAt: string;
@@ -26,18 +27,10 @@ export type SignInData = {
   password: string;
 };
 
-export type SignUpData = {
-  cpf: string;
-  role: string;
-  email: string;
-  password: string;
-  phone: string;
-  name: string;
-  profileType: string;
-  profilePicture: string;
-  zipCode: string;
-  active: boolean;
-};
+export type SignUpData = { password: string } & Omit<
+  Me,
+  "id" | "leads" | "createdAt" | "roleRel" | "profileTypeRel"
+>;
 
 export type UpdateUserData = Partial<
   Omit<
