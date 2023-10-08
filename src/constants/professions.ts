@@ -1,8 +1,8 @@
 export const professions = [
   { name: "Arquiteto", value: "Arquiteto" },
   { name: "Engenheiro", value: "Engenheiro" },
-  { name: "Empreiteiro", value: "Empreiteiro" },
-  { name: "Ar condicionado", value: "Ar condicionado" },
-  { name: "Eletricista", value: "Eletricista" },
-  { name: "Encanador", value: "Encanador" },
+  { name: "Designer de interiores", value: "Designer de interiores" },
+  { name: "Execução de obras", value: "Execução de obras" },
+  { name: "Instalações", value: "Instalações" },
+  { name: "Pintor", value: "Pintor" },
 ];
