@@ -122,7 +122,7 @@ export const API_ROUTES = {
 export const api = axios.create({
   baseURL:
     import.meta.env.MODE === "production"
-      ? ""
+      ? "https://api.cadacasa.tiagobega.xyz/v1/"
       : "https://api.cadacasa.tiagobega.xyz/v1/",
 });
 
