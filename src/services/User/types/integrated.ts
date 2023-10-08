@@ -1,7 +1,7 @@
 import { CreateManyLocationData } from "./location";
-import { ProfessionalSignUpData } from "./professional";
-import { CreateManySocialMediaData } from "./socialMedia";
-import { SignUpData } from "./user";
+import { Professional, ProfessionalSignUpData } from "./professional";
+import { CreateManySocialMediaData, SocialMedia } from "./socialMedia";
+import { Me, SignUpData } from "./user";
 
 export interface IntegratedSignUpData {
   userParams: SignUpData;
@@ -11,7 +11,13 @@ export interface IntegratedSignUpData {
 }
 
 export type IntegratedSignUpResponse = {
-  // [key in keyof IntegratedSignUpData]: string;
+  locations: Location[];
+  socialMedias: SocialMedia[];
+  session: {
+    accessToken: string;
+  };
+  user: Me;
+  professional: Professional;
 };
 
 export type IntegratedSignUpObj = {

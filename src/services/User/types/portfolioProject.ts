@@ -4,20 +4,24 @@ export interface PortfolioProject {
   professionalId: string;
   description: string;
   images: string;
+  createdAt: string;
 }
 
 export type SinglePortfolioProjectData = {
   id: string;
 };
 
-export type UpdatePortfolioProjectData = Partial<PortfolioProject> &
+export type UpdatePortfolioProjectData = Partial<
+  Omit<PortfolioProject, "createdAt">
+> &
   Pick<PortfolioProject, "id">;
 
-export type DeletePortfolioProjectData = {
-  id: string;
-};
+export type DeletePortfolioProjectData = Pick<PortfolioProject, "id">;
 
-export type CreatePortfolioProjectData = Omit<PortfolioProject, "id">;
+export type CreatePortfolioProjectData = Omit<
+  PortfolioProject,
+  "id" | "createdAt"
+>;
 
 export type AllPortfolioProjectResponse = {
   portProjs: PortfolioProject[];

@@ -1,7 +1,6 @@
 import type { ErrorHandler, UserContext } from "../types";
 import type {
   AdminUpdateUserData,
-  AllUserResponse,
   ForgotPasswordData,
   Me,
   ResendEmailData,
@@ -12,17 +11,21 @@ import type {
   UpdateUserData,
 } from "services/User/types";
 
-import { AxiosError } from "axios";
-
 import Session from "utils/Session";
+
+import { templates } from "constants/emailTemplate";
 
 import { useState } from "react";
 import { UserService } from "services/User";
 import { UserUtils } from "utils/user";
 import { recreateApiAuthInterceptors } from "config/axios";
 import { withErrorHandler } from "./withErrorHandler";
+import { ProfessionalFunctionsReturn } from "./professional";
 
-export const userFunctions = (errorHandler: ErrorHandler) => {
+export const userFunctions = (
+  errorHandler: ErrorHandler,
+  professional: ProfessionalFunctionsReturn
+) => {
   const [logged, setLogged] = useState(false);
   const [me, setMe] = useState<Me | undefined>();
 
@@ -52,6 +55,24 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
     callback();
   };
 
+  const registerToken = async (accessToken: string) => {
+    UserUtils.setAuthToken(accessToken);
+
+    recreateApiAuthInterceptors();
+  };
+
+  const professionalVerification = async (user: Me) => {
+    if (user.roleRel.name === "professional") {
+      const professionalResponse = await professional.getSingle({
+        userId: user.id,
+      });
+
+      if (professionalResponse) {
+        professional.setMyProfessional(professionalResponse);
+      }
+    }
+  };
+
   const login = async (data: SignInData) => {
     const response = await UserService.singIn(data);
 
@@ -59,20 +80,19 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
 
     if (!loginResponse) return loginResponse;
 
-    UserUtils.setAuthToken(loginResponse.accessToken);
+    registerToken(loginResponse.accessToken);
 
-    recreateApiAuthInterceptors();
+    const me = await getMe();
+    if (!me) return false;
 
-    const meResponse = await getMe();
+    await professionalVerification(me);
 
-    if (!meResponse) return false;
-
-    setMe(meResponse);
+    setMe(me);
     setLogged(true);
 
     return {
+      me,
       accessToken: loginResponse.accessToken,
-      me: meResponse,
     };
   };
 
@@ -142,11 +162,12 @@ export const userFunctions = (errorHandler: ErrorHandler) => {
     getAll,
     register,
     login,
+    registerToken,
     logout,
     forgotPassword,
     resetPassword,
     updatePassword,
-    
+
     resendMeEmailVerification,
     resendEmailVerification,
   };

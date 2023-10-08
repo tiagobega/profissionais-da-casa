@@ -14,6 +14,8 @@ import { mask, parseCEP, parseCNPJ, parseCPF, parsePhone } from "utils/masks";
 import { states } from "constants/states";
 import { formationLevels } from "constants/formationLevels";
 import { FileReaderQueue, QueueFile } from "utils/FileReaderQueue";
+import { recreateApiAuthInterceptors } from "config/axios";
+import { UserUtils } from "utils/user";
 
 export type FormData = Zod.infer<typeof registerProfessionalSchema>;
 
@@ -85,6 +87,8 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
   const {
     integrated,
     file: { sendFile },
+    user: { setMe, setLogged, registerToken },
+    professional: { setMyProfessional },
   } = useApi();
 
   const createImageFile = async (params: CreateImageFileParams = {}) => {
@@ -139,8 +143,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
   };
 
   const onSubmit = async (data: FormData) => {
-
-    console.log(data);
+    setLoading(true);
 
     const cpf = parseCPF(data.cpf);
     const phone = parsePhone(data.phone);
@@ -200,7 +203,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       },
     ].filter((social) => social.link);
 
-    const registeredProfessional = await integrated.signUp({
+    const integratedRegister = await integrated.signUp({
       userParams: {
         cpf,
         phone,
@@ -212,6 +215,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
         profilePicture: imagesResponse.profile || "",
         password: data.password,
         name: data.name,
+        verified: false,
       },
       locationParams: {
         states: data.states.join(","),
@@ -219,8 +223,8 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       proProfileParams: {
         cnpj,
         phone,
-        zipCode,
-
+        active: false,
+        description: "Escreva sobre o seu perfil",
         caucrea: data.creaCau,
         name: data.name,
         companyName: data.companyName,
@@ -244,11 +248,19 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       },
     });
 
-    console.log(registeredProfessional);
+    setLoading(false);
 
-    // if (!finalProfessional) return setLoading(false);
+    if (!integratedRegister) return;
 
-    // navigate("/account/confirm");
+    registerToken(integratedRegister.session.accessToken);
+
+    setMe(integratedRegister.user);
+
+    setMyProfessional(integratedRegister.professional);
+
+    setLogged(true);
+
+    navigate("/account/confirm");
   };
 
   const terms = watch("terms");

@@ -40,8 +40,8 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
   const faq = faqFunctions(errorHandler);
   const file = fileFunctions(errorHandler);
   const lead = leadFunctions(errorHandler);
-  const user = userFunctions(errorHandler);
   const professional = professionalFunctions(errorHandler);
+  const user = userFunctions(errorHandler, professional);
   const location = locationFunctions(errorHandler);
   const portfolioProject = portfolioProjectFunctions(errorHandler);
   const role = roleFunctions(errorHandler);

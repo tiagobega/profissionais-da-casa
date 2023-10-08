@@ -1,11 +1,5 @@
 import type { ErrorHandler } from "../types";
-import type {
-  CreateLeadData,
-  DeleteLeadData,
-  IntegratedSignUpData,
-  SingleLeadData,
-  UpdateLeadData,
-} from "services/User/types";
+import type { IntegratedSignUpData } from "services/User/types";
 
 import { UserService } from "services/User";
 import { withErrorHandler } from "./withErrorHandler";

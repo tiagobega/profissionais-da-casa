@@ -7,22 +7,31 @@ import { SocialMedia } from "./socialMedia";
 export interface Professional {
   id: string;
   userId: string;
-  subscriptionPlanId: string;
+
   name: string;
-  professionalRegister: string;
+
   companyName: string;
   cnpj: string;
-  phone: string;
   formationInstitute: string;
   formationDetails: string;
   formation: string;
   caucrea: string;
   yearConclusion: string;
-  tags: "";
+  phone: string;
+  professionalRegister: string;
+  professionalLevel: string;
+
   profilePicture: string;
   backgroundPicture: string;
+
   onlineAppointment: boolean;
   birthDate: string;
+  createdAt: string;
+  description: string;
+  active: boolean;
+  subscriptionPlanId: string;
+
+  tags: string[];
   locations: Location[];
   socialMedias: SocialMedia[];
   portfolioProjects: PortfolioProject[];
@@ -30,27 +39,17 @@ export interface Professional {
   leads: Lead[];
 }
 
-export type ProfessionalSignUpData = {
-  userId: string;
-  subscriptionPlanId: string;
-  name: string;
-  professionalRegister: string;
-  professionalLevel: string;
-  companyName: string;
-  cnpj: string;
-  zipCode: string;
-  phone: string;
-  formationInstitute: string;
-  formationDetails: string;
-  formation: string;
-  caucrea: string;
-  yearConclusion: string;
-  tags: string;
-  profilePicture: string;
-  backgroundPicture: string;
-  birthDate: string;
-  onlineAppointment: boolean;
-};
+export type ProfessionalSignUpData = Omit<
+  Professional,
+  | "id"
+  | "createdAt"
+  | "leads"
+  | "evaluations"
+  | "portfolioProjects"
+  | "tags"
+  | "locations"
+  | "socialMedias"
+> & { tags: string };
 
 export type ProfessionalUpdateData = Partial<
   Omit<

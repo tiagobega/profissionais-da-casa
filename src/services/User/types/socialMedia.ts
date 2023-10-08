@@ -3,6 +3,7 @@ export interface SocialMedia {
   professionalId: string;
   name: string;
   link: string;
+  createdAt: string;
 }
 
 export type CreateSocialMediaData = {
