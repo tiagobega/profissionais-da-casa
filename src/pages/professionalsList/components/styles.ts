@@ -1,5 +1,6 @@
-import { Geometry } from 'components/Geometry'
-import styled, { css } from 'styled-components'
+import { FlexBox } from "components/FlexBox";
+import { Geometry } from "components/Geometry";
+import styled, { css } from "styled-components";
 
 export const FilterSearchContainer = styled.div`
   ${({ theme }) => css`
@@ -21,9 +22,9 @@ export const FilterSearchContainer = styled.div`
       font-size: 1.25rem;
     }
   `}
-`
+`;
 
-export const FilterContent = styled.div`
+export const FilterContent = styled(FlexBox)`
   ${({ theme }) => css`
     width: 100%;
     padding: 2rem;
@@ -38,7 +39,6 @@ export const FilterContent = styled.div`
       display: flex;
       gap: 0.5rem;
       justify-content: center;
-      margin-bottom: 1.5rem;
     }
     .category-list {
       width: 100%;
@@ -46,7 +46,6 @@ export const FilterContent = styled.div`
       flex-wrap: wrap;
       gap: 0.5rem;
       justify-content: center;
-      margin-bottom: 1.5rem;
     }
     button {
       border-width: 1px;
@@ -67,7 +66,7 @@ export const FilterContent = styled.div`
       opacity: 1;
     }
   }
-`
+`;
 
 export const Container = styled.section`
   ${() => css`
@@ -75,12 +74,12 @@ export const Container = styled.section`
     max-width: 1170px;
     margin: 0 auto;
   `}
-`
+`;
 export const FilterContainer = styled.div`
   ${() => css`
     position: relative;
   `}
-`
+`;
 
 export const Triangle = styled(Geometry)`
   ${({ theme }) => css`
@@ -100,7 +99,7 @@ export const Triangle = styled(Geometry)`
       }
     }
   `}
-`
+`;
 
 export const ProfileList = styled.section`
   ${() => css`
@@ -110,4 +109,4 @@ export const ProfileList = styled.section`
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
   `}
-`
+`;
