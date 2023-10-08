@@ -1,4 +1,4 @@
-import { Pen, Plus, Trash } from "@phosphor-icons/react";
+import { CaretLeft, Pen, Plus, Trash } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { Collapsible } from "components/Collapsable";
 import { FlexBox } from "components/FlexBox";
@@ -19,6 +19,7 @@ import {
   InformationContainer,
 } from "./styles";
 import { ButtonDelete } from "components/ButtonDelete";
+import { useNavigate } from "react-router-dom";
 
 type FormList =
   | "addBlock"
@@ -45,6 +46,7 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
   const { me } = user;
   const { getAllBlock, getAllQuestion, deleteBlock, deleteQuestion } = faq;
   const [blocks, setBlocks] = useState<FaqBlock[] | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getData();
@@ -149,6 +151,11 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
         <Geometry color={color.brand.orange} width={170} triangle angle={270} />
       </FlexBox>
       <InformationContainer direction="column" gap={2} alignItems="flex-start">
+        <FlexBox>
+          <Button variant="text" onClick={() => navigate(-1)}>
+            <CaretLeft weight="fill" /> Voltar
+          </Button>
+        </FlexBox>
         <h2>FAQ</h2>
 
         <div className="questions">
