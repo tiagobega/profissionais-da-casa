@@ -8,7 +8,7 @@ import { Form, StyledTooltip } from "./style";
 import { Tooltip } from "components/Tooltip";
 import { Question } from "@phosphor-icons/react";
 import { FC } from "react";
-import { useUser } from "contexts/User";
+import { useApi } from "contexts/User";
 import { useNavigate } from "react-router-dom";
 import MaskedInput from "react-text-mask";
 import { mask, parseCPF, parsePhone } from "utils/masks";
@@ -24,7 +24,7 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
   toConfirm,
   showTerms,
 }) => {
-  const { register: userRegister } = useUser();
+  const { user } = useApi();
   const {
     handleSubmit,
     register,
@@ -46,7 +46,7 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
     const phone = parsePhone(data.phone);
     const zipCode = parsePhone(data.cep);
 
-    const registerResponse = await userRegister({
+    const registerResponse = await user.register({
       cpf,
       zipCode,
       phone,
@@ -55,8 +55,8 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
       email: data.email,
       role: "user",
       profileType: "user",
-
       profilePicture: "",
+      active: true,
     });
 
     if (!registerResponse) return;
