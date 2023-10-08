@@ -116,8 +116,20 @@ export const List: React.FC<ListProps> = () => {
     }
 
     if (selectedProfession.length > 0) {
-      filteredList.filter((el) => selectedProfession);
+      filteredList.filter((el) => selectedProfession.includes(el.formation));
     }
+    if (selected.length > 0) {
+      filteredList.filter((el) => selected.includes(el.tags));
+    }
+
+    return searchByQuery(filteredList);
+  };
+
+  const searchByQuery = (list: Professional[]) => {
+    if (searchQuery.length > 3) return list;
+    return list.filter((el) =>
+      el.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   };
 
   return (
@@ -249,7 +261,7 @@ export const List: React.FC<ListProps> = () => {
         <Loading />
       ) : (
         <ProfileList>
-          {allProfessionals.map((professional) => (
+          {filteredProfessionals(allProfessionals).map((professional) => (
             <CardProfile professional={professional}></CardProfile>
           ))}
         </ProfileList>
