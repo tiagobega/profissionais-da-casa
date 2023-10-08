@@ -73,8 +73,7 @@ export const FormAccountType = () => {
                           <Check size={"1rem"} weight="bold" />
                         </div>
                         <p>
-                          Encontrar arquitetos ou engenheiros pelo Profissionais
-                          da Casa
+                          Expor o seu trabalho como um arquiteto ou engenheiro
                         </p>
                       </FlexBox>
                     </li>
@@ -84,7 +83,8 @@ export const FormAccountType = () => {
                           <Check size={"1rem"} weight="bold" />
                         </div>
                         <p>
-                          Expor o seu trabalho como um arquiteto ou engenheiro
+                          Encontrar arquitetos ou engenheiros pelo Profissionais
+                          da Casa
                         </p>
                       </FlexBox>
                     </li>
