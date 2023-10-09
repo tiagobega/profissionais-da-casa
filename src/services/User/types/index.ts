@@ -1,3 +1,4 @@
+export * from "./email";
 export * from "./evaluation";
 export * from "./faq";
 export * from "./file";

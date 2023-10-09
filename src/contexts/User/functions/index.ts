@@ -9,4 +9,5 @@ export * from "./role";
 export * from "./socialMedia";
 export * from "./subplan";
 export * from "./user";
-export * from './integrated';
+export * from "./integrated";
+export * from "./email";

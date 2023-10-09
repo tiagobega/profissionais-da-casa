@@ -87,8 +87,9 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
   const {
     integrated,
     file: { sendFile },
-    user: { setMe, setLogged, registerToken },
-    professional: { setMyProfessional },
+    user: { setMe, setLogged, registerToken, updateMe },
+    professional: { setMyProfessional, update },
+    email: { sendEmail },
   } = useApi();
 
   const createImageFile = async (params: CreateImageFileParams = {}) => {
@@ -178,8 +179,6 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       };
     }
 
-    const imagesResponse = await createImageFile(images);
-
     const filteredSocialMedias = [
       {
         name: "Instagram",
@@ -212,7 +211,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
         email: data.email,
         role: "professional",
         profileType: "user",
-        profilePicture: imagesResponse.profile || "",
+        profilePicture: "",
         password: data.password,
         name: data.name,
         verified: false,
@@ -233,14 +232,15 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
         professionalRegister: data.registerTech,
         yearConclusion: data.formationYear,
         birthDate: data.birthdate,
-        subscriptionPlanId: "6c040d30-bdbd-46b8-b665-23704dec0ea0",
+        subscriptionPlanId: "31d76d9e-f3d8-42b7-b398-74bd67ef3674",
         formation: data.formation,
         onlineAppointment: data.onlineAppointment,
         professionalLevel: data.formationLevel,
         tags: "",
 
-        profilePicture: imagesResponse.profile || "",
-        backgroundPicture: imagesResponse.background || "",
+        profilePicture: "",
+        backgroundPicture: "",
+        portfolioFile: "",
       },
       socialMediaParams: {
         names: filteredSocialMedias.map(({ name }) => name).join(","),
@@ -248,17 +248,42 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       },
     });
 
-    setLoading(false);
+    if (!integratedRegister) {
+      setLoading(false);
+      return;
+    }
 
-    if (!integratedRegister) return;
+    const imagesResponse = await createImageFile(images);
+
+    await updateMe({
+      profilePicture: imagesResponse.profile,
+    });
+
+    await update({
+      userId: integratedRegister.proProfile.userId,
+      currentUserId: integratedRegister.proProfile.userId,
+
+      profilePicture: imagesResponse.profile,
+      backgroundPicture: imagesResponse.background,
+      portfolioFile: imagesResponse.portfolio,
+    });
 
     registerToken(integratedRegister.session.accessToken);
-
     setMe(integratedRegister.user);
-
     setMyProfessional(integratedRegister.proProfile);
 
     setLogged(true);
+
+    sendEmail({
+      template: "NEW_PROFESSIONAL",
+      email: "tiago@fillet.com.br",
+      subject: "assunto",
+      text: "texto",
+      params: {
+        PROFILE_LINK: `https://profissionaisdacasa.tiagobega.xyz/profile/${integratedRegister.user.id}`,
+        USER_NAME: `${integratedRegister.user.name}`,
+      },
+    });
 
     navigate("/account/confirm");
   };

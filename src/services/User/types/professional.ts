@@ -21,6 +21,7 @@ export interface Professional {
   professionalRegister: string;
   professionalLevel: string;
 
+  portfolioFile: string;
   profilePicture: string;
   backgroundPicture: string;
 

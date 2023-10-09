@@ -20,6 +20,7 @@ import {
 } from "./functions";
 import { Loading } from "components/Loading";
 import { integratedFunctions } from "./functions/integrated";
+import { emailFunctions } from "./functions/email";
 
 export const userContext = React.createContext<UserContext | null>(null);
 
@@ -48,6 +49,7 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
   const socialMedia = socialMediaFunctions(errorHandler);
   const subplan = subplanFunctions(errorHandler);
   const integrated = integratedFunctions(errorHandler);
+  const email = emailFunctions(errorHandler);
 
   useEffect(() => {
     (async () => {
@@ -89,6 +91,7 @@ export const UserContextProvider = ({ children }: ContextProviderProps) => {
         subplan,
         user,
         integrated,
+        email
       }}
     >
       {loading ? <Loading /> : children}

@@ -2,6 +2,9 @@ import axios from "axios";
 import { UserUtils } from "../utils/user";
 
 export const API_POST_ROUTES = {
+  EMAIL_SEND: "/mail/send",
+  EMAIL_ADD_TEMPLATE: "/mail/addtemplate",
+
   EVALUATION_SINGLE: "/evaluation/getone",
   EVALUATION_CREATE: "/evaluation/create",
   EVALUATION_DELETE: "/evaluation/delete",

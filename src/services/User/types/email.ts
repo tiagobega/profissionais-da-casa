@@ -14,6 +14,7 @@ export type SendEmailParams = {
   subject: string;
   text: string;
   template?: EmailTemplate;
+  params?: unknown;
 } & (
   | {
       template: "NEW_PROFESSIONAL";
@@ -24,11 +25,9 @@ export type SendEmailParams = {
     }
   | {
       template: "ACTIVE_PROFESSIONAL";
-      params: {};
     }
   | {
       template: "INACTIVE_PROFESSIONAL";
-      params: {};
     }
   | {
       template: "LEAD_TO_PROFESSIONAL";

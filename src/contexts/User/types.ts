@@ -12,9 +12,10 @@ import {
   RoleFunctionsReturn,
   SocialMediaFunctionsReturn,
   IntegratedFunctionsReturn,
+  SubplanFunctionsReturn,
+  EmailFunctionsReturn,
 } from "./functions";
 
-import { SubplanFunctionsReturn } from "./functions/subplan";
 import { GenericError } from "services/Base";
 
 export type UserContextPromise<T> = Promise<T | false>;
@@ -32,7 +33,8 @@ export interface UserContext {
   socialMedia: SocialMediaFunctionsReturn;
   subplan: SubplanFunctionsReturn;
   user: UserFunctionsReturn;
-  integrated: IntegratedFunctionsReturn
+  integrated: IntegratedFunctionsReturn;
+  email: EmailFunctionsReturn;
 }
 
 export interface ContextProviderProps {

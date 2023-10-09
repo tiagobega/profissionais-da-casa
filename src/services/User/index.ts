@@ -19,6 +19,11 @@ function createSignUpIntegratedObj(
 }
 
 export class UserService extends BaseService {
+  //EMAIL
+  static async sendEmail(data: ST.SendEmailData) {
+    return await this.request(API_ROUTES.POST.EMAIL_SEND, "post", { data });
+  }
+
   //EVALUATIONS
   static async createEvaluation(data: ST.CreateEvaluationData) {
     return await this.request<ST.Evaluation>(
