@@ -3,7 +3,7 @@ import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MarginContainer } from "styles/commonComponents";
 import { ContentContainer, Header } from "./styles";
 import { RatingList } from "./RatingList";
@@ -13,6 +13,7 @@ import { useApi } from "contexts/User";
 import { Evaluation, Me, Professional } from "services/User/types";
 import { Loading } from "components/Loading";
 import { EVALUATION_STATUS, EvaluationStatus } from "constants/evaluation";
+import { CaretLeft } from "@phosphor-icons/react";
 
 export interface AdmRatingListProps {}
 
@@ -48,6 +49,7 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
     if (value == "userName" || value == "professionalName" || value == "rating")
       setOrder(value);
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -94,6 +96,11 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
 
   return (
     <MarginContainer>
+      <FlexBox mt={2}>
+        <Button variant="text" onClick={() => navigate(-1)}>
+          <CaretLeft weight="fill" /> Voltar
+        </Button>
+      </FlexBox>
       <Header>
         <h1>Depoimentos</h1>
         {

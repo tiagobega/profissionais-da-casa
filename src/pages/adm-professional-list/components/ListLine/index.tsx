@@ -38,9 +38,7 @@ export const ProfessionalListLine: React.FC<ProfessionalListLineProps> = ({
       <Button
         variant="outline"
         small
-        onClick={() =>
-          window.open(`/admin/professionals-management/${user.id}`)
-        }
+        onClick={() => navigate(`/admin/professionals-management/${user.id}`)}
       >
         detalhar
       </Button>

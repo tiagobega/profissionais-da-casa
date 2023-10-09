@@ -50,25 +50,26 @@ export const List: React.FC<ListProps> = () => {
   const toggleTagOnFilter = (item: string) => {
     const currentList = [...selected];
     if (currentList.includes(item)) {
-      currentList.filter((el) => el !== item);
+      const filtered = currentList.filter((el) => el !== item);
+      setSelected(filtered);
     } else {
       currentList.push(item);
+      setSelected(currentList);
     }
-    setSelected(currentList);
   };
   const toggleProfessionOnFilter = (item: string) => {
-    const currentList = [...selectedProfession];
+    let currentList = [...selectedProfession];
     if (currentList.includes(item)) {
-      currentList.filter((el) => el !== item);
+      currentList = currentList.filter((el) => el !== item);
     } else {
       currentList.push(item);
     }
     setSelectedProfession(currentList);
   };
   const toggleLocationOnFilter = (item: string) => {
-    const currentList = [...selectedState];
+    let currentList = [...selectedState];
     if (currentList.includes(item)) {
-      currentList.filter((el) => el !== item);
+      currentList = currentList.filter((el) => el !== item);
     } else {
       currentList.push(item);
     }
@@ -98,14 +99,14 @@ export const List: React.FC<ListProps> = () => {
   }, []);
 
   const filteredProfessionals = (list: Professional[]) => {
-    const filteredList = [...list];
+    let filteredList = [...list].filter((el) => el.active == true);
 
     if (acceptOnline) {
-      filteredList.filter((el) => el.onlineAppointment === true);
+      filteredList = filteredList.filter((el) => el.onlineAppointment === true);
     }
 
     if (selectedState.length > 0) {
-      filteredList.filter(
+      filteredList = filteredList.filter(
         (el) =>
           !!el.locations
             .map((location) =>
@@ -116,17 +117,25 @@ export const List: React.FC<ListProps> = () => {
     }
 
     if (selectedProfession.length > 0) {
-      filteredList.filter((el) => selectedProfession.includes(el.formation));
+      filteredList = filteredList.filter((el) =>
+        selectedProfession.includes(el.formation)
+      );
     }
     if (selected.length > 0) {
-      filteredList.filter((el) => selected.includes(el.tags));
+      filteredList = filteredList.filter((el) => {
+        let isIncluded = false;
+        el.tags.forEach((t) => {
+          if (selected.includes(t)) isIncluded = true;
+        });
+        return isIncluded;
+      });
     }
 
     return searchByQuery(filteredList);
   };
 
   const searchByQuery = (list: Professional[]) => {
-    if (searchQuery.length > 3) return list;
+    if (searchQuery.length < 3) return list;
     return list.filter((el) =>
       el.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -257,6 +266,7 @@ export const List: React.FC<ListProps> = () => {
           </FilterContainer>
         )}
       </div>
+      <p>{selected.toString()}</p>
       {!allProfessionals ? (
         <Loading />
       ) : (

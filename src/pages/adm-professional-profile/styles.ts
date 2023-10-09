@@ -10,5 +10,9 @@ export const Photo = styled.section`
     border-radius: 50%;
     background-color: black;
     margin-top: 1rem;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   `}
 `;

@@ -1,232 +1,208 @@
 import { CaretLeft, Download } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MarginContainer } from "styles/commonComponents";
 import { Photo } from "./styles";
 import { useTheme } from "styled-components";
-import { useState } from "react";
-import { Professional } from "services/User/types";
+import { useEffect, useState } from "react";
+import { Me, Professional } from "services/User/types";
+import { useApi } from "contexts/User";
+import { states } from "constants/states";
 
 export interface ProfessionalDetailsProps {}
 
 export const AdmProfessionalDetails: React.FC<
   ProfessionalDetailsProps
 > = () => {
-  const [currentProfessions, setCurrentProfessional] = useState<Professional>();
+  const [currentProfessional, setCurrentProfessional] =
+    useState<Professional>();
+  const [currentUser, setCurrentUser] = useState<Me>();
+
+  const { professional, user } = useApi();
+  const { getSingle } = professional;
+  const {} = user;
+
+  const { id } = useParams();
 
   const navigate = useNavigate();
   const { color } = useTheme();
 
+  useEffect(() => {
+    if (!id) return;
+    (async () => {
+      const professionalResponse = await getSingle({
+        userId: id,
+      });
+
+      if (!professionalResponse) return;
+
+      setCurrentProfessional(professionalResponse);
+    })();
+  }, [id]);
+
+  useEffect(() => {});
+
+  const stateName = (code: string) => {
+    return states.filter((el) => el.id === code)[0].name;
+  };
+
   return (
-    <div>fazer isso aqui de novo</div>
-    //   <MarginContainer>
-    //     <FlexBox my={2}>
-    //       <Button variant="text" onClick={() => navigate(-1)}>
-    //         <CaretLeft weight="fill" /> Voltar
-    //       </Button>
-    //     </FlexBox>
-    //     <FlexBox direction="column" gap={2} mb={5}>
-    //       <FlexBox gap={5} alignItems="center">
-    //         <Photo className="photo"></Photo>
+    <MarginContainer>
+      {currentProfessional && (
+        <>
+          <FlexBox my={2}>
+            <Button variant="text" onClick={() => navigate(-1)}>
+              <CaretLeft weight="fill" /> Voltar
+            </Button>
+          </FlexBox>
+          <FlexBox direction="column" gap={2} mb={5}>
+            <FlexBox gap={5} alignItems="center">
+              <Photo className="photo">
+                <img src={currentProfessional.profilePicture} alt="" />
+              </Photo>
 
-    //         {currentProfessions ? (
-    //           <FlexBox gap={5}>
-    //             <FlexBox direction="column" gap={1}>
-    //               <Button
-    //                 variant="outline"
-    //                 width={15}
-    //                 onClick={() =>
-    //                   navigate(`/professional/${currentProfessions.userId}`)
-    //                 }
-    //               >
-    //                 Página do Profissonal
-    //               </Button>
-    //               <Button
-    //                 variant="outline"
-    //                 width={15}
-    //                 onClick={() =>
-    //                   navigate(
-    //                     `/admin/professionals-management/leads/${currentProfessions.userId}`
-    //                   )
-    //                 }
-    //               >
-    //                 Leads do Profissonal
-    //               </Button>
-    //             </FlexBox>
-    //             <FlexBox direction="column" gap={1}>
-    //               <Button>Desativar Profissional</Button>
-    //             </FlexBox>
-    //           </FlexBox>
-    //         ) : currentProfessions == "waiting" ? (
-    //           <FlexBox direction="column" gap={1}>
-    //             <Button
-    //               variant="primary"
-    //               color="white"
-    //               background={color.secondary.blue}
-    //               width={15}
-    //             >
-    //               Validar
-    //             </Button>
-    //             <Button variant="outline" width={15}>
-    //               Rejeitar
-    //             </Button>
-    //           </FlexBox>
-    //         ) : (
-    //           <FlexBox direction="column" gap={1}>
-    //             <FlexBox gap={5}>
-    //               <FlexBox direction="column" gap={1}>
-    //                 <Button
-    //                   variant="outline"
-    //                   width={15}
-    //                   onClick={() => navigate(`/professional/${professional.id}`)}
-    //                 >
-    //                   Página do Profissonal
-    //                 </Button>
-    //                 <Button
-    //                   variant="outline"
-    //                   width={15}
-    //                   onClick={() =>
-    //                     navigate(
-    //                       `/admin/professionals-management/leads/${professional.id}`
-    //                     )
-    //                   }
-    //                 >
-    //                   Leads do Profissonal
-    //                 </Button>
-    //               </FlexBox>
-    //               <FlexBox direction="column" gap={1}>
-    //                 <Button>Reativar Profissional</Button>
-    //               </FlexBox>
-    //             </FlexBox>
-    //           </FlexBox>
-    //         )}
-    //       </FlexBox>
-    //       <h2>Informações:</h2>
-    //       <FlexBox gap={10}>
-    //         <FlexBox direction="column" gap={3}>
-    //           <FlexBox direction="column" gap={0.75}>
-    //             <h3>Informações pessoais</h3>
-    //             <p>
-    //               Nome: <strong>{professional.personalInfo.name}</strong>
-    //             </p>
-    //             <p>
-    //               CPF: <strong>{professional.personalInfo.cpf}</strong>
-    //             </p>
-    //             <p>
-    //               CEP: <strong>{professional.personalInfo.cep}</strong>
-    //             </p>
-    //             <p>
-    //               Telefone: <strong>{professional.personalInfo.phone}</strong>
-    //             </p>
-    //             <p>
-    //               Email: <strong>{professional.personalInfo.email}</strong>
-    //             </p>
-    //             <p>
-    //               Data de Nascimento:{" "}
-    //               <strong>{professional.personalInfo.birthDate}</strong>
-    //             </p>
-    //           </FlexBox>
-    //           <FlexBox direction="column" gap={0.75}>
-    //             <h3>Informações de PJ</h3>
-    //             <p>
-    //               Registro do Responsável Técnico:{" "}
-    //               <strong>{professional.businessInfo.responsible}</strong>
-    //             </p>
-    //             <p>
-    //               Nome Fantasia:{" "}
-    //               <strong>{professional.businessInfo.companyName}</strong>
-    //             </p>
-    //             <p>
-    //               CNPJ: <strong>{professional.businessInfo.cnpj}</strong>
-    //             </p>
-    //           </FlexBox>
-    //           <FlexBox direction="column" gap={0.75}>
-    //             <h3>Área de atuação</h3>
-    //             {professional.area.map((a, index) => (
-    //               <FlexBox direction="column" key={index} gap={0.5}>
-    //                 <h4>Area {index + 1}</h4>
-    //                 <p>
-    //                   Estado: <strong>{a.state}</strong>
-    //                 </p>
+              <FlexBox gap={5}>
+                <FlexBox direction="column" gap={1}>
+                  <FlexBox gap={5}>
+                    <FlexBox direction="column" gap={1}>
+                      <Button
+                        variant="outline"
+                        width={15}
+                        onClick={() =>
+                          navigate(`/professional/${currentProfessional.id}`)
+                        }
+                      >
+                        Página do Profissonal
+                      </Button>
+                      <Button
+                        variant="outline"
+                        width={15}
+                        onClick={() =>
+                          navigate(
+                            `/admin/professionals-management/leads/${currentProfessional.id}`
+                          )
+                        }
+                      >
+                        Leads do Profissonal
+                      </Button>
+                    </FlexBox>
+                  </FlexBox>
+                </FlexBox>
+              </FlexBox>
 
-    //                 <p>
-    //                   Cidade: <strong>{a.city}</strong>
-    //                 </p>
+              {currentProfessional?.active == false ? (
+                <FlexBox direction="column" gap={1}>
+                  <Button
+                    variant="primary"
+                    color="white"
+                    background={color.secondary.blue}
+                    width={15}
+                  >
+                    Ativar
+                  </Button>
+                  <Button variant="outline" width={15}>
+                    Rejeitar
+                  </Button>
+                </FlexBox>
+              ) : (
+                <FlexBox direction="column" gap={1}>
+                  <Button
+                    variant="primary"
+                    color="white"
+                    background={color.secondary.blue}
+                    width={15}
+                  >
+                    Desativar
+                  </Button>
+                </FlexBox>
+              )}
+            </FlexBox>
+            <h2>Informações:</h2>
+            <FlexBox gap={10}>
+              <FlexBox direction="column" gap={3}>
+                <FlexBox direction="column" gap={0.75}>
+                  <h3>Informações pessoais</h3>
+                  <p>
+                    Nome: <strong>{currentProfessional.name}</strong>
+                  </p>
+                  {/* <p>
+                CPF: <strong>{currentProfessional.}</strong>
+              </p>
+              <p>
+                CEP: <strong>{currentProfessional.}</strong>
+              </p> */}
+                  <p>
+                    Telefone: <strong>{currentProfessional.phone}</strong>
+                  </p>
+                  {/* <p>
+                Email: <strong>{currentProfessional.email}</strong>
+              </p> */}
+                </FlexBox>
+                <FlexBox direction="column" gap={0.75}>
+                  <h3>Informações de PJ</h3>
 
-    //                 <p>
-    //                   Região específica: <strong>{a.location}</strong>
-    //                 </p>
-    //               </FlexBox>
-    //             ))}
-    //           </FlexBox>
-    //         </FlexBox>
-    //         <FlexBox direction="column" gap={3}>
-    //           <FlexBox direction="column" gap={0.75}>
-    //             <h3>Formação Profissional</h3>
-    //             <p>
-    //               Instituição de formação:{" "}
-    //               <strong>{professional.formation.institution}</strong>
-    //             </p>
-    //             <p>
-    //               CREA / CAU: <strong>{professional.formation.creaCau}</strong>
-    //             </p>
-    //             <p>
-    //               Nível de formação:{" "}
-    //               <strong>{professional.formation.formationLevel}</strong>
-    //             </p>
-    //             <p>
-    //               Ano de conclusão:{" "}
-    //               <strong>{professional.formation.yearOfConclusion}</strong>
-    //             </p>
-    //             <p>
-    //               Detalhamento da formação:{" "}
-    //               <strong>{professional.formation.formationDetails}</strong>
-    //             </p>
-    //           </FlexBox>
-    //           <FlexBox direction="column" gap={0.75}>
-    //             <h3>Redes Sociais</h3>
-    //             {professional.social.linkedin && (
-    //               <p>
-    //                 LinkedIn: <strong>{professional.social.linkedin}</strong>
-    //               </p>
-    //             )}
-    //             {professional.social.instagram && (
-    //               <p>
-    //                 Instagram: <strong>{professional.social.linkedin}</strong>
-    //               </p>
-    //             )}
-    //             {professional.social.pinterest && (
-    //               <p>
-    //                 Pinterest: <strong>{professional.social.pinterest}</strong>
-    //               </p>
-    //             )}
-    //             {professional.social.facebook && (
-    //               <p>
-    //                 Facebook: <strong>{professional.social.facebook}</strong>
-    //               </p>
-    //             )}
-    //             {professional.social.other && (
-    //               <p>
-    //                 Outra: <strong>{professional.social.other}</strong>
-    //               </p>
-    //             )}
-    //           </FlexBox>
-    //           <FlexBox direction="column" gap={0.75}>
-    //             <h3>Anexos</h3>
-    //             {professional.files?.map((f, index) => (
-    //               <FlexBox key={index} gap={1.5}>
-    //                 <em>{f.name}</em>
+                  <p>
+                    Nome Fantasia:{" "}
+                    <strong>{currentProfessional.companyName}</strong>
+                  </p>
+                  <p>
+                    CNPJ: <strong>{currentProfessional.cnpj}</strong>
+                  </p>
+                </FlexBox>
+                <FlexBox direction="column" gap={0.75}>
+                  <h3>Área de atuação</h3>
+                  {currentProfessional.locations.map((a, index) => (
+                    <p key={a.id}>{stateName(a.state)}</p>
+                  ))}
+                  {currentProfessional.onlineAppointment && (
+                    <p>Atende online</p>
+                  )}
+                </FlexBox>
+              </FlexBox>
+              <FlexBox direction="column" gap={3}>
+                <FlexBox direction="column" gap={0.75}>
+                  <h3>Formação Profissional</h3>
+                  <p>
+                    Instituição de formação:{" "}
+                    <strong>{currentProfessional.formationInstitute}</strong>
+                  </p>
+                  <p>
+                    CREA / CAU: <strong>{currentProfessional.caucrea}</strong>
+                  </p>
+                  <p>
+                    Nível de formação:{" "}
+                    <strong>{currentProfessional.professionalLevel}</strong>
+                  </p>
+                  <p>
+                    Ano de conclusão:{" "}
+                    <strong>{currentProfessional.yearConclusion}</strong>
+                  </p>
+                  <p>
+                    Detalhamento da formação:{" "}
+                    <strong>{currentProfessional.formationDetails}</strong>
+                  </p>
+                </FlexBox>
+                <FlexBox direction="column" gap={0.75}>
+                  <h3>Redes Sociais</h3>
+                </FlexBox>
+                <FlexBox direction="column" gap={0.75}>
+                  <h3>Anexos</h3>
+                  {/* {currentProfessional.?.map((f, index) => (
+                <FlexBox key={index} gap={1.5}>
+                  <em>{f.name}</em>
 
-    //                 <Button variant="text">
-    //                   <Download weight="light" size={20} />
-    //                 </Button>
-    //               </FlexBox>
-    //             ))}
-    //           </FlexBox>
-    //         </FlexBox>
-    //       </FlexBox>
-    //     </FlexBox>
-    //   </MarginContainer>
+                  <Button variant="text">
+                    <Download weight="light" size={20} />
+                  </Button>
+                </FlexBox>
+              ))} */}
+                </FlexBox>
+              </FlexBox>
+            </FlexBox>
+          </FlexBox>
+        </>
+      )}
+    </MarginContainer>
   );
 };
