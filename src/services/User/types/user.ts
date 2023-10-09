@@ -32,6 +32,14 @@ export type SignUpData = { password: string } & Omit<
   "id" | "leads" | "createdAt" | "roleRel" | "profileTypeRel"
 >;
 
+export type SingleUserData =
+  | {
+      id: string;
+    }
+  | {
+      email: string;
+    };
+
 export type UpdateUserData = Partial<
   Omit<
     Me,

@@ -744,4 +744,9 @@ export class UserService extends BaseService {
       { data }
     );
   }
+  static async getSingleUser(data: ST.SingleUserData) {
+    return await this.request<ST.Me>(API_ROUTES.POST.USER_SIGLE, "post", {
+      data,
+    });
+  }
 }

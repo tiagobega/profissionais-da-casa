@@ -7,6 +7,7 @@ import type {
   ResetPasswordData,
   SignInData,
   SignUpData,
+  SingleUserData,
   UpdatePasswordData,
   UpdateUserData,
 } from "services/User/types";
@@ -151,10 +152,12 @@ export const userFunctions = (
       errorHandler
     );
 
+  const getSingleUser = async (data: SingleUserData) =>
+    withErrorHandler(await UserService.getSingleUser(data), errorHandler);
+
   return {
     logged,
     setLogged,
-
     me,
     setMe,
     updateMe,
@@ -167,7 +170,7 @@ export const userFunctions = (
     forgotPassword,
     resetPassword,
     updatePassword,
-
+    getSingleUser,
     resendMeEmailVerification,
     resendEmailVerification,
   };

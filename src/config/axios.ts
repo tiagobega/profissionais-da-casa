@@ -52,6 +52,7 @@ export const API_POST_ROUTES = {
   SUBPLAN_SINGLE: "/subplan/getone",
   SUBPLAN_DELETE: "/subplan/delete",
 
+  USER_SIGLE: "/user/getone",
   USER_SIGN_IN: "/user/signin",
   USER_SIGN_UP: "/user/signup",
   USER_DELETE: "/user/delete",

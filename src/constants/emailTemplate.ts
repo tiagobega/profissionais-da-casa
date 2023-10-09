@@ -30,5 +30,3 @@ export const templates: {
     html: newProfessional,
   },
 };
-
-console.log(templates);
