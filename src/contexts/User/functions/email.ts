@@ -4,6 +4,7 @@ import type { SendEmailData, SendEmailParams } from "services/User/types/email";
 import { UserService } from "services/User";
 import { templates } from "constants/emailTemplate";
 import { withErrorHandler } from "./withErrorHandler";
+import { useToast } from "contexts/Toast";
 
 function parseParams(params: { [key: string]: any } | unknown) {
   if (!params) return "";
@@ -13,13 +14,12 @@ function parseParams(params: { [key: string]: any } | unknown) {
 }
 
 export const emailFunctions = (errorHandler: ErrorHandler) => {
-  const sendEmail = async ({
-    subject,
-    text,
-    email,
-    template,
-    params,
-  }: SendEmailParams) => {
+  const { addToast } = useToast();
+
+  const sendEmail = async (
+    { subject, text, email, template, params }: SendEmailParams,
+    showToast = false
+  ) => {
     const data = {
       subject,
       text,
@@ -44,10 +44,19 @@ export const emailFunctions = (errorHandler: ErrorHandler) => {
       }
     }
 
-    return withErrorHandler(
+    const handler = withErrorHandler(
       await UserService.sendEmail({ ...data, ...currentTemplate }),
       errorHandler
     );
+
+    if (handler && showToast) {
+      addToast("e-mail enviado com sucesso", {
+        type: "success",
+        autoDestroy: true,
+      });
+    }
+
+    return handler;
   };
 
   return {

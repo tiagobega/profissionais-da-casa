@@ -24,7 +24,18 @@ export type SendEmailParams = {
       };
     }
   | {
-      template: "ACTIVE_PROFESSIONAL";
+      template: "ACCEPT_PROFESSIONAL";
+      params: {
+        USER_NAME: string;
+        PROFILE_LINK: string;
+      };
+    }
+  | {
+      template: "REJECT_PROFESSIONAL";
+      params: {
+        USER_NAME: string;
+        PROFILE_LINK: string;
+      };
     }
   | {
       template: "INACTIVE_PROFESSIONAL";

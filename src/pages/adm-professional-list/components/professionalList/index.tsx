@@ -30,8 +30,8 @@ export const ProfessionalList: React.FC<ProfessionalListProps> = ({
     };
   });
 
-  const approvedList = finalList.filter((item) => item?.user.active);
-  const waitingList = finalList.filter((item) => !item?.user.active);
+  const approvedList = finalList.filter((item) => item?.professional.active);
+  const waitingList = finalList.filter((item) => !item?.professional.active);
 
   const displayList = approved
     ? filterProfessionalFunction(approvedList, query)

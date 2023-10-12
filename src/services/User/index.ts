@@ -749,4 +749,7 @@ export class UserService extends BaseService {
       data,
     });
   }
+  static async putUser(data: ST.AdminUpdateUserData) {
+    return await this.request<ST.Me>(API_ROUTES.PUT.USER_EDIT, "put", { data });
+  }
 }

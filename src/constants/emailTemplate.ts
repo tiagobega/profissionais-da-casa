@@ -1,10 +1,15 @@
 import newProfessional from "../emails/newProfessional.html?raw";
+import acceptProfessional from "../emails/acceptProfessional.html?raw";
+import rejectProfessional from "../emails/rejectProfessional.html?raw";
+import leadToProfessional from "../emails/leadToProfessional.html?raw";
+import inactiveProfessional from "../emails/inactiveProfessional.html?raw";
 
 export const EMAIL_TEMPLATE = {
   NEW_PROFESSIONAL: "NEW_PROFESSIONAL",
-  INACTIVE_PROFESSIONAL: "INACTIVE_PROFESSIONAL",
-  ACTIVE_PROFESSIONAL: "ACTIVE_PROFESSIONAL",
+  REJECT_PROFESSIONAL: "REJECT_PROFESSIONAL",
+  ACCEPT_PROFESSIONAL: "ACCEPT_PROFESSIONAL",
   LEAD_TO_PROFESSIONAL: "LEAD_TO_PROFESSIONAL",
+  INACTIVE_PROFESSIONAL: "INACTIVE_PROFESSIONAL",
 } as const;
 
 export type EmailTemplate =
@@ -17,16 +22,20 @@ export const templates: {
     type: "local",
     html: newProfessional,
   },
-  ACTIVE_PROFESSIONAL: {
+  ACCEPT_PROFESSIONAL: {
     type: "local",
-    html: newProfessional,
+    html: acceptProfessional,
   },
-  INACTIVE_PROFESSIONAL: {
+  REJECT_PROFESSIONAL: {
     type: "local",
-    html: newProfessional,
+    html: rejectProfessional,
   },
   LEAD_TO_PROFESSIONAL: {
     type: "local",
-    html: newProfessional,
+    html: leadToProfessional,
+  },
+  INACTIVE_PROFESSIONAL: {
+    type: "local",
+    html: inactiveProfessional,
   },
 };
