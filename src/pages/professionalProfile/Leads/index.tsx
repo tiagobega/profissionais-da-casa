@@ -12,7 +12,6 @@ export interface LeadsHomeProps {
 
 export const LeadsHome: React.FC<LeadsHomeProps> = ({ leads }) => {
   const [query, setQuery] = useState<string>("");
-  const [selected, setSelected] = useState<Lead | null>(null);
 
   const filteredList = () => {
     if (query.length > 3) return leads;
@@ -24,9 +23,9 @@ export const LeadsHome: React.FC<LeadsHomeProps> = ({ leads }) => {
 
   return (
     <>
-      <FlexBox>
+      <FlexBox full justifyContent="space-between">
         <h2>Meus contatos</h2>
-        <FlexBox gap={0.5}>
+        <FlexBox gap={0.5} alignItems="center">
           <MagnifyingGlass />
           <Input.Text
             placeholder="Buscar projeto"
@@ -34,23 +33,24 @@ export const LeadsHome: React.FC<LeadsHomeProps> = ({ leads }) => {
             onChange={(e) => setQuery(e.target.value)}
           />
         </FlexBox>
-        {!leads ? (
-          <Loading />
-        ) : (
-          <FlexBox gap={1} mt={2} full>
-            <p>Você tem {leads?.length} contatos.</p>
-            <FlexBox gap={1} full>
-              {filteredList().map((item) => (
-                <Collapsible title={item.name} variant="neutral">
-                  <FlexBox direction="column">
-                    <p>{item.description}</p>
-                  </FlexBox>
-                </Collapsible>
-              ))}
-            </FlexBox>
-          </FlexBox>
-        )}
       </FlexBox>
+
+      {!leads ? (
+        <Loading />
+      ) : (
+        <FlexBox gap={1} mt={2} full>
+          <p>Você tem {leads?.length} contatos.</p>
+          <FlexBox gap={1} full>
+            {filteredList().map((item) => (
+              <Collapsible title={item.name} variant="neutral">
+                <FlexBox direction="column">
+                  <p>{item.description}</p>
+                </FlexBox>
+              </Collapsible>
+            ))}
+          </FlexBox>
+        </FlexBox>
+      )}
     </>
   );
 };

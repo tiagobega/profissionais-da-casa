@@ -32,7 +32,7 @@ export interface Professional {
   active: boolean;
   subscriptionPlanId: string;
 
-  tags: string[];
+  tags: string;
   locations: Location[];
   socialMedias: SocialMedia[];
   portfolioProjects: PortfolioProject[];

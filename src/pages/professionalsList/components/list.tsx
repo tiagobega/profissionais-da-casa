@@ -99,7 +99,7 @@ export const List: React.FC<ListProps> = () => {
   }, []);
 
   const filteredProfessionals = (list: Professional[]) => {
-    let filteredList = [...list].filter((el) => el.active == true);
+    let filteredList = [...list].filter((el) => el.active == false);
 
     if (acceptOnline) {
       filteredList = filteredList.filter((el) => el.onlineAppointment === true);
@@ -124,7 +124,7 @@ export const List: React.FC<ListProps> = () => {
     if (selected.length > 0) {
       filteredList = filteredList.filter((el) => {
         let isIncluded = false;
-        el.tags.forEach((t) => {
+        el.tags.split(",").forEach((t) => {
           if (selected.includes(t)) isIncluded = true;
         });
         return isIncluded;
@@ -272,7 +272,10 @@ export const List: React.FC<ListProps> = () => {
       ) : (
         <ProfileList>
           {filteredProfessionals(allProfessionals).map((professional) => (
-            <CardProfile professional={professional}></CardProfile>
+            <CardProfile
+              professional={professional}
+              key={professional.id}
+            ></CardProfile>
           ))}
         </ProfileList>
       )}

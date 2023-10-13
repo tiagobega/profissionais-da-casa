@@ -1,4 +1,13 @@
-import { CaretLeft, CaretRight, MapPin, Star } from "@phosphor-icons/react";
+import {
+  Camera,
+  CaretLeft,
+  CaretRight,
+  DownloadSimple,
+  MapPin,
+  Star,
+  UploadSimple,
+  User,
+} from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,6 +16,8 @@ import {
   GalleryContainer,
   GrayContainer,
   HeaderContainer,
+  InformationContainer,
+  ProfilePicture,
   RatingContainer,
   RatingHeader,
   ReviewContainer,
@@ -25,6 +36,8 @@ import {
   evaluationCategoryAverage,
   evaluationSingleAverage,
 } from "utils/EvaluationAverage";
+import { FormAddImage } from "components/Forms/FormAddImage";
+import { Modal } from "components/Modal";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -42,6 +55,8 @@ export const ProfessionalProfilePage: React.FC<
 
   const [displayProject, setDisplayProject] = useState(0);
   const [displayReview, setDisplayReview] = useState(0);
+
+  const [modalPicture, setModalPicture] = useState(false);
 
   const { user, professional } = useApi();
   const { me } = user;
@@ -81,51 +96,83 @@ export const ProfessionalProfilePage: React.FC<
           </Button>
         </MarginContainer>
 
-        <HeaderContainer>
+        <HeaderContainer isOwn={true}>
           <FlexBox
             full
             justifyContent="space-between"
             alignItems="center"
-            gap={5}
+            gap={2}
           >
-            {isOwn && <ProfileManager professional={pageProfessional} />}
+            {!isOwn && <ProfileManager professional={pageProfessional} />}
             <FlexBox full direction="column">
               <FlexBox alignItems="center" gap={2}>
-                <img
-                  src={pageProfessional.profilePicture}
-                  alt="profile picture"
-                  className="profile-img"
-                />
-                <FlexBox direction="column" gap={1}>
+                <ProfilePicture centralized>
+                  {isOwn && (
+                    <Button
+                      variant="text"
+                      color="white"
+                      className="pictureButton"
+                      onClick={() => setModalPicture(true)}
+                    >
+                      <Camera weight="fill" /> Trocar foto
+                    </Button>
+                  )}
+                  {pageProfessional.profilePicture ? (
+                    <img
+                      src={pageProfessional.profilePicture}
+                      alt="Foto de perfil do usuário"
+                      className="userPicture"
+                    />
+                  ) : (
+                    <User color="white" weight="light" className="userIcon" />
+                  )}
+                </ProfilePicture>
+                <InformationContainer direction="column" gap={1}>
                   <FlexBox alignItems="center" gap={2}>
                     <h2>{pageProfessional.name}</h2>
                     <FlexBox alignItems="center" gap={0.5}>
                       <MapPin weight="fill" />
                       <FlexBox>
                         {pageProfessional.locations.map((item) => (
-                          <p key={item.id}>{`${item.state} |`}</p>
+                          <p key={item.id}>{`${item.state} |`} </p>
                         ))}
 
                         {pageProfessional.onlineAppointment && (
-                          <p>
-                            Realiza atendimento online em outras localidades
-                          </p>
+                          <p>Atendimento online</p>
                         )}
                       </FlexBox>
                     </FlexBox>
                   </FlexBox>
-                  <RatingHeader alignItems="center" gap={2}>
-                    <div className="rating">
-                      <Star
-                        weight="fill"
-                        size={32}
-                        color={color.secondary.yellow}
-                      />
-                      <p>{publicEvaluations.average}</p>
-                      <span>({publicEvaluations.quantity})</span>
-                    </div>
-                  </RatingHeader>
-                </FlexBox>
+                  <FlexBox full>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Ut ea quibusdam sed beatae temporibus alias iure id
+                      impedit optio inventore illum, accusantium nisi laboriosam
+                      commodi nihil, libero laudantium, dolore vero!
+                    </p>
+                  </FlexBox>
+                  <FlexBox gap={5} alignItems="center">
+                    <RatingHeader alignItems="center" gap={2}>
+                      <div className="rating">
+                        <Star
+                          weight="fill"
+                          size={32}
+                          color={color.secondary.yellow}
+                        />
+                        <p>{publicEvaluations.average}</p>
+                        <span>({publicEvaluations.quantity})</span>
+                      </div>
+                    </RatingHeader>
+                    {pageProfessional.portfolioFile && (
+                      <a href={pageProfessional.portfolioFile} download>
+                        <Button variant="text">
+                          <DownloadSimple weight="bold" size={20} />
+                          Baixar portifólio do profissional
+                        </Button>
+                      </a>
+                    )}
+                  </FlexBox>
+                </InformationContainer>
               </FlexBox>
               <ul className="category-list">
                 {pageProfessional.tags.split(",").map((item, key) => (
@@ -281,6 +328,24 @@ export const ProfessionalProfilePage: React.FC<
           </FlexBox>
         </ReviewSection>
       )}
+      <Modal
+        isOpened={modalPicture}
+        onClose={() => setModalPicture(false)}
+        small
+      >
+        <FlexBox direction="column" centralized gap={3}>
+          <FormAddImage close={() => setModalPicture(false)} />
+        </FlexBox>
+      </Modal>
+      <Modal
+        isOpened={modalPicture}
+        onClose={() => setModalPicture(false)}
+        small
+      >
+        <FlexBox direction="column" centralized gap={3}>
+          <FormAddImage close={() => setModalPicture(false)} />
+        </FlexBox>
+      </Modal>
     </>
   );
 };

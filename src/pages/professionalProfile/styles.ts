@@ -10,17 +10,13 @@ export const GrayContainer = styled.section<{ isOwn: boolean }>`
   `}
 `;
 
-export const HeaderContainer = styled(MarginContainer)`
-  ${({ theme }) => css`
+export const HeaderContainer = styled(MarginContainer)<{ isOwn: boolean }>`
+  ${({ theme, isOwn }) => css`
     height: 235px;
     margin-top: 1rem;
-    .profile-img {
-      width: 180px;
-      height: 180px;
+    background-color: ${!isOwn ? "transparent" : theme.color.base[200]};
+    padding: 2rem;
 
-      background-color: black;
-      object-fit: cover;
-    }
     .description-text {
       width: 470px;
     }
@@ -34,6 +30,61 @@ export const HeaderContainer = styled(MarginContainer)`
         font-size: 14px;
         padding: 0.125rem 0.5rem;
       }
+    }
+  `}
+`;
+export const InformationContainer = styled(FlexBox)`
+  ${({ theme }) => css`
+    display: flex;
+    flex-grow: 1;
+    width: 30rem;
+  `}
+`;
+
+export const ProfilePicture = styled(FlexBox)`
+  ${({ theme }) => css`
+    
+      position: relative;
+      width: 166px;
+      height: 166px;
+      border: 10px solid white;
+      border-radius: 50%;
+      background-color: ${theme.color.brand.purple};
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        object-fit: cover;
+        z-index: 5;
+      }
+    }
+    p {
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .name {
+      font-size: 20px;
+    }
+    .pictureButton {
+      z-index: 10;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transition: 200ms;
+      border-radius: 50%;
+      color: transparent;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+      }
+    }
+    .userIcon {
+      width: 8rem;
+      height: 8rem;
+      position: absolute;
+      opacity: 0.5;
     }
   `}
 `;

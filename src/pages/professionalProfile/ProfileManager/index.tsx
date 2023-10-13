@@ -7,6 +7,7 @@ import { ManagerContainer } from "./styles";
 import { Professional } from "services/User/types";
 import { PortfolioHome } from "../Portfolio";
 import { LeadsHome } from "../Leads";
+import { FormAddImage } from "components/Forms/FormAddImage";
 
 export interface ProfileManagerProps {
   professional: Professional;
@@ -17,6 +18,7 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
   const [modalEdit, setModalEdit] = useState(false);
   const [modalPortfolio, setModalPortfolio] = useState(false);
   const [modalLeads, setModalLeads] = useState(false);
+  const [modalBg, setModalBg] = useState(false);
 
   return (
     <ManagerContainer direction="column" gap={1}>
@@ -31,22 +33,31 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
       </Button>
 
       <Button
-        variant="outline"
+        variant="primary"
+        background="white"
         small
         onClick={() => setModalPortfolio(true)}
         width={10}
       >
-        <Plus weight="bold" size={24} />
         Meu portifolio
       </Button>
       <Button
-        variant="outline"
+        variant="primary"
+        background="white"
         small
-        onClick={() => setModalPortfolio(true)}
+        onClick={() => setModalLeads(true)}
         width={10}
       >
-        <Plus weight="bold" size={24} />
         Meus contatos
+      </Button>
+      <Button
+        variant="primary"
+        background="white"
+        small
+        onClick={() => setModalBg(true)}
+        width={10}
+      >
+        Foto de fundo
       </Button>
       <Modal
         isOpened={modalEdit}
@@ -60,7 +71,7 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
         onProceed={() => console.log("proceed")}
         onClose={() => setModalPortfolio(false)}
       >
-        <PortfolioHome portfolio={professional.portfolioProjects} />
+        <PortfolioHome professional={professional} />
       </Modal>
       <Modal
         isOpened={modalLeads}
@@ -68,6 +79,13 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
         onClose={() => setModalLeads(false)}
       >
         <LeadsHome leads={professional.leads} />
+      </Modal>
+      <Modal
+        isOpened={modalBg}
+        onProceed={() => console.log("proceed")}
+        onClose={() => setModalBg(false)}
+      >
+        <FormAddImage close={() => setModalBg(false)} />
       </Modal>
     </ManagerContainer>
   );

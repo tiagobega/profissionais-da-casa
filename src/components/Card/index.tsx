@@ -14,6 +14,7 @@ import photoPlaceholder from "assets/images/photo-placeholder.jpeg";
 import { Tag } from "components/Tag";
 import { useNavigate } from "react-router-dom";
 import { Professional } from "services/User/types";
+import { approvedEvaluations } from "utils/EvaluationAverage";
 
 export interface CardProfileProps {
   professional: Professional;
@@ -22,18 +23,7 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
   const { color } = useTheme();
   const navigate = useNavigate();
 
-  const profile = {
-    id: 1,
-    name: "Andréa Albuquerque de OliveiraaaaAAAAAAAAA",
-    profession: "Arquiteto(a)",
-    rating: 4.5,
-    tags: ["Interiores", "Reformas", "Ambientes pequenos", "Acessibilidade"],
-  };
-
-  const tags = professional.tags
-    .split(",")
-    .slice(0, 3)
-    .filter((a) => a !== "");
+  const tags = professional.tags.slice(0, 3);
 
   console.log(tags);
 
@@ -61,16 +51,20 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
           </h3>
         </div>
 
-        <FlexBox alignItems="center" gap={0.5}>
-          <Star size={32} weight="fill" color={color.secondary.yellow} />
-          <h3>x {profile.rating}</h3>
-        </FlexBox>
+        {approvedEvaluations(professional.evaluations).quantity > 0 && (
+          <FlexBox alignItems="center" gap={0.5}>
+            <Star size={32} weight="fill" color={color.secondary.yellow} />
+            <h3>x {approvedEvaluations(professional.evaluations).average}</h3>
+          </FlexBox>
+        )}
 
         <FlexBox wrap={"wrap"} gap={0.25}>
           {tags.length > 0 &&
-            tags.map((tag, index) => (
-              <Tag tagName={tag} key={`${professional.id}${index}${tag}`} />
-            ))}
+            tags
+              .split(",")
+              .map((tag, index) => (
+                <Tag tagName={tag} key={`${professional.id}${index}${tag}`} />
+              ))}
           {professional.tags.length > 3 && <Tag tagName="..." />}
         </FlexBox>
 

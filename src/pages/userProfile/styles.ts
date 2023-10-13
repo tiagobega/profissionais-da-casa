@@ -28,6 +28,7 @@ export const PhotoColumn = styled(FlexBox)`
   ${({ theme }) => css`
     width: 166px;
     height: 100%;
+    min-width: 166px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -36,6 +37,8 @@ export const PhotoColumn = styled(FlexBox)`
       position: relative;
       width: 166px;
       height: 166px;
+      min-width: 166px;
+      min-height: 166px;
       border: 10px solid white;
       border-radius: 50%;
       background-color: ${theme.color.brand.purple};

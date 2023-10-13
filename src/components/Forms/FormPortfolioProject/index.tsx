@@ -18,6 +18,7 @@ import { PhotoPreview } from "./photoPreview";
 export interface FormPortfolioProjectProps {
   close: () => void;
   project?: PortfolioProject;
+  id: string;
 }
 
 export type FormData = Zod.infer<typeof usePortfolioProjectSchema>;
@@ -33,6 +34,7 @@ const loadImgString = (input: string | string[]) => {
 export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   close,
   project,
+  id,
 }) => {
   const {
     handleSubmit,
@@ -47,9 +49,8 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   });
   const [imageList, setImageList] = useState<string[]>([]);
   const [coverIndex, setCoverIndex] = useState<number>(0);
-  const { professional, portfolioProject } = useApi();
-  const { myProfessional } = professional;
-  const { create } = portfolioProject;
+  const { portfolioProject } = useApi();
+  const { create, edit } = portfolioProject;
 
   useEffect(() => {
     setValue("description", project ? project.description : "");
@@ -57,19 +58,27 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
     project && setImageList(loadImgString(project.images));
   }, []);
 
+  useEffect(() => {
+    console.log(imageList.length);
+  }, [imageList]);
+
   const imgFile = watch("image");
 
   const addPhoto = async (fileList: FileList) => {
+    console.log(fileList);
     const imgUrl = await previewUrl(fileList);
     const newArray = imageList;
-    newArray.unshift(imgUrl);
+    newArray.push(imgUrl);
     setImageList(newArray);
+    setValue("image", null as unknown as FileList);
   };
 
   const removePhoto = (index: number) => {
+    console.log(index, imageList);
     const newArray = imageList;
     newArray.splice(index, 1);
     if (index == coverIndex) setCoverIndex(0);
+    console.log(newArray);
     setImageList(newArray);
   };
 
@@ -85,7 +94,6 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   };
 
   const onSubmit = async (data: FormData) => {
-    if (!myProfessional) return;
     const imageStringList = [imageList[coverIndex]];
     imageList.forEach(
       (image, index) => index != coverIndex && imageStringList.push(image)
@@ -96,7 +104,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
     const payload: CreatePortfolioProjectData = {
       name: data.title,
       description: data.description,
-      professionalId: myProfessional?.id,
+      professionalId: id,
       images: imageStringJoined,
     };
     await create(payload);
@@ -104,15 +112,15 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   };
 
   return (
-    <>
-      {myProfessional ? (
-        <form onSubmit={() => handleSubmit(onSubmit)}>
-          <FlexBox justifyContent="space-between">
-            <h2>Adicionar Projeto</h2>
-            <Button type="button" variant="outline" onClick={handleClose}>
-              Voltar para lista
-            </Button>
-          </FlexBox>
+    <FlexBox full direction="column">
+      <FlexBox justifyContent="space-between" full gap={4}>
+        <h2>Adicionar Projeto</h2>
+        <Button type="button" variant="outline" onClick={handleClose}>
+          Voltar para lista
+        </Button>
+      </FlexBox>
+      <form onSubmit={() => handleSubmit(onSubmit)()} style={{ flex: 1 }}>
+        <FlexBox direction="column" gap={2} full mt={2}>
           <Input.Text
             placeholder="Nome do projeto"
             {...register("title")}
@@ -122,33 +130,36 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
             placeholder="Descrição do projeto"
             {...register("description")}
           />
+        </FlexBox>
+        <FlexBox alignItems="flex-end" gap={10} my={2}>
           <Input.File
             placeholder="Selecione uma foto"
             label="Adicione uma foto"
+            {...register("image")}
           />
           <Button
             type="button"
             onClick={() => addPhoto(imgFile)}
-            disabled={watch("image").length == 0}
+            disabled={!imgFile || imgFile.length == 0}
           >
             <Plus />
           </Button>
-          <FlexBox gap={1}>
-            {imageList.map((image, index) => (
-              <PhotoPreview
-                isCover={index == coverIndex}
-                removePicture={() => removePhoto(index)}
-                toggleCover={() => setCover(index)}
-                url={image}
-              />
-            ))}
-          </FlexBox>
+        </FlexBox>
 
-          <Button>Enviar</Button>
-        </form>
-      ) : (
-        <Loading />
-      )}
-    </>
+        <FlexBox gap={1} mb={3}>
+          {imageList.map((image, index) => (
+            <PhotoPreview
+              key={image}
+              isCover={index == coverIndex}
+              removePicture={() => removePhoto(index)}
+              toggleCover={() => setCover(index)}
+              url={image}
+            />
+          ))}
+        </FlexBox>
+
+        <Button>Enviar</Button>
+      </form>
+    </FlexBox>
   );
 };
