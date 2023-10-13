@@ -77,7 +77,7 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
 
     (async () => {
       const url = await previewUrl(imgFileProfile);
-      setProfile(url);
+      setProfile(url.base64);
     })();
   }, [imgFileProfile]);
 
@@ -86,7 +86,7 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
 
     (async () => {
       const url = await previewUrl(imgFileBackground);
-      setBgImg(url);
+      setBgImg(url.base64);
     })();
   }, [imgFileBackground]);
 

@@ -75,7 +75,7 @@ export const FormAddProfessionalProfilePicture: FC<
 
     (async () => {
       const url = await previewUrl(imgFile);
-      setImg(url);
+      setImg(url.base64);
     })();
   }, [imgFile]);
 
