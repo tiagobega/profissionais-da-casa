@@ -96,14 +96,14 @@ export const ProfessionalProfilePage: React.FC<
           </Button>
         </MarginContainer>
 
-        <HeaderContainer isOwn={true}>
+        <HeaderContainer isOwn={isOwn}>
           <FlexBox
             full
             justifyContent="space-between"
             alignItems="center"
             gap={2}
           >
-            {!isOwn && <ProfileManager professional={pageProfessional} />}
+            {isOwn && <ProfileManager professional={pageProfessional} />}
             <FlexBox full direction="column">
               <FlexBox alignItems="center" gap={2}>
                 <ProfilePicture centralized>
