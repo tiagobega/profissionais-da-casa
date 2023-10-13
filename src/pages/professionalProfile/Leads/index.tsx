@@ -1,10 +1,11 @@
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlass, SmileySad } from "@phosphor-icons/react";
 import { Collapsible } from "components/Collapsable";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
 import { Loading } from "components/Loading";
 import { useState } from "react";
 import { Lead } from "services/User/types";
+import { useTheme } from "styled-components";
 
 export interface LeadsHomeProps {
   leads: Lead[];
@@ -12,6 +13,8 @@ export interface LeadsHomeProps {
 
 export const LeadsHome: React.FC<LeadsHomeProps> = ({ leads }) => {
   const [query, setQuery] = useState<string>("");
+
+  const theme = useTheme();
 
   const filteredList = () => {
     if (query.length > 3) return leads;
@@ -38,17 +41,34 @@ export const LeadsHome: React.FC<LeadsHomeProps> = ({ leads }) => {
       {!leads ? (
         <Loading />
       ) : (
-        <FlexBox gap={1} mt={2} full>
-          <p>Você tem {leads?.length} contatos.</p>
-          <FlexBox gap={1} full>
-            {filteredList().map((item) => (
-              <Collapsible title={item.name} variant="neutral">
-                <FlexBox direction="column">
-                  <p>{item.description}</p>
-                </FlexBox>
-              </Collapsible>
-            ))}
-          </FlexBox>
+        <FlexBox gap={1} mt={2} full direction="column">
+          {leads.length == 0 ? (
+            <FlexBox full my={4} centralized direction="column" gap={1}>
+              <FlexBox alignItems="center" gap={1}>
+                <SmileySad
+                  weight="bold"
+                  size={32}
+                  color={theme.color.brand.orange}
+                />
+                <h2 style={{ color: theme.color.brand.orange }}>
+                  Ainda não há contatos registrados
+                </h2>
+              </FlexBox>
+            </FlexBox>
+          ) : (
+            <FlexBox gap={1} full>
+              <>
+                <p>Você tem {leads?.length} contatos.</p>
+                {filteredList().map((item) => (
+                  <Collapsible title={item.name} variant="neutral">
+                    <FlexBox direction="column">
+                      <p>{item.description}</p>
+                    </FlexBox>
+                  </Collapsible>
+                ))}
+              </>
+            </FlexBox>
+          )}
         </FlexBox>
       )}
     </>

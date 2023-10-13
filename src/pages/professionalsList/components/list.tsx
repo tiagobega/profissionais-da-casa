@@ -99,7 +99,7 @@ export const List: React.FC<ListProps> = () => {
   }, []);
 
   const filteredProfessionals = (list: Professional[]) => {
-    let filteredList = [...list].filter((el) => el.active == false);
+    let filteredList = [...list].filter((el) => el.active == true);
 
     if (acceptOnline) {
       filteredList = filteredList.filter((el) => el.onlineAppointment === true);

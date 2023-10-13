@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { PortfolioProject, Professional } from "services/User/types";
 import { useTheme } from "styled-components";
 import { PortfolioFileContainer } from "./styles";
+import { FormAddPortfolio } from "components/Forms/FormAddPortfolio";
 
 export interface PortfolioHomeProps {
   professional: Professional;
@@ -20,8 +21,9 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
   const [query, setQuery] = useState<string>("");
   const [selected, setSelected] = useState<PortfolioProject | null>(null);
   const [add, setAdd] = useState(false);
-  const { portfolioProject } = useApi();
+  const { portfolioProject, professional: professionalApi } = useApi();
   const { deletePortfolioProject } = portfolioProject;
+  const { update } = professionalApi;
   const theme = useTheme();
 
   const portfolio = professional.portfolioProjects;
@@ -33,6 +35,10 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
       el.name.toLowerCase().includes(query.toLowerCase())
     );
     return filteredList;
+  };
+
+  const deletePortfolioFile = async () => {
+    await update({ id: professional.id, portfolioFile: "" });
   };
 
   const handleDelete = async (id: string) => {
@@ -106,14 +112,22 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
             <h3>Arquivo de portfólio</h3>
 
             {file ? (
-              <FlexBox>
-                <Button>Visualizar</Button>
-                <ButtonDelete deleteFn={() => {}} name="Portifólio">
-                  Deletar
+              <FlexBox full justifyContent="space-between">
+                <Button
+                  disabled={!professional.portfolioFile}
+                  href={professional.portfolioFile}
+                >
+                  Visualizar portifólio
+                </Button>
+                <ButtonDelete
+                  deleteFn={() => deletePortfolioFile()}
+                  name="Portifólio"
+                >
+                  Deletar portifólio
                 </ButtonDelete>
               </FlexBox>
             ) : (
-              <p>Form</p>
+              <FormAddPortfolio id={professional.id} />
             )}
           </PortfolioFileContainer>
         </>

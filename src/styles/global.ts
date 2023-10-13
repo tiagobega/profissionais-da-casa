@@ -112,4 +112,7 @@ export const GlobalStyle = createGlobalStyle`
       appearance: none;
       border-radius: 0;
     }
+    form {
+      width: 100%;
+    }
   `}`;
