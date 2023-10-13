@@ -48,27 +48,32 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
     mode: "onChange",
   });
   const [imageList, setImageList] = useState<string[]>([]);
+
   const [coverIndex, setCoverIndex] = useState<number>(0);
+
+  const [newImagesList, setNewImageList] = useState<
+    {
+      base64: string;
+      fileList: FileList;
+    }[]
+  >([]);
+
   const { portfolioProject } = useApi();
   const { create, edit } = portfolioProject;
 
   useEffect(() => {
     setValue("description", project ? project.description : "");
     setValue("title", project ? project.name : "");
+
     project && setImageList(loadImgString(project.images));
   }, []);
-
-  useEffect(() => {
-    console.log(imageList.length);
-  }, [imageList]);
 
   const imgFile = watch("image");
 
   const addPhoto = async (fileList: FileList) => {
-    console.log(fileList);
     const imgUrl = await previewUrl(fileList);
     const newArray = imageList;
-    newArray.push(imgUrl);
+    newArray.push(imgUrl.base64);
     setImageList(newArray);
     setValue("image", null as unknown as FileList);
   };
@@ -95,20 +100,28 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
 
   const onSubmit = async (data: FormData) => {
     const imageStringList = [imageList[coverIndex]];
-    imageList.forEach(
-      (image, index) => index != coverIndex && imageStringList.push(image)
-    );
-    const imageStringJoined = imageStringList.join(",");
-    console.log(imageStringJoined);
 
-    const payload: CreatePortfolioProjectData = {
-      name: data.title,
-      description: data.description,
-      professionalId: id,
-      images: imageStringJoined,
-    };
-    await create(payload);
-    handleClose();
+    console.log(data, imageList);
+
+    // imageList.forEach(
+    //   (image, index) => index != coverIndex && imageStringList.push(image)
+    // );
+    // const imageStringJoined = imageStringList.join(",");
+
+    // if (imageStringJoined === "") {
+    //   return;
+    // }
+
+    // const payload: CreatePortfolioProjectData = {
+    //   name: data.title,
+    //   description: data.description,
+    //   professionalId: id,
+    //   images: imageStringJoined,
+    // };
+
+    // await create(payload);
+
+    // handleClose();
   };
 
   return (

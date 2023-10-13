@@ -60,7 +60,7 @@ export const FormAddPortfolio: FC<FormAddImageProps> = ({ id }) => {
 
     (async () => {
       const url = await previewUrl(imgFile);
-      setImg(url);
+      setImg(url.base64);
     })();
   }, [imgFile]);
 
