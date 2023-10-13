@@ -2,21 +2,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import Input from "components/Input";
-import { FC, useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { editProfileSchema } from "./validation";
-import { Select } from "components/Input/HTMLSelect";
-import { states } from "constants/states";
-import { ImgPreview } from "../FormAddImage/styles";
-import { Trash } from "@phosphor-icons/react";
-import { previewUrl } from "utils/ImageBase64Convert";
-import { Professional, ProfessionalUpdateData } from "services/User/types";
-import { useApi } from "contexts/User";
 import { tags } from "constants/tags";
+import { useApi } from "contexts/User";
+import { FC, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Professional, ProfessionalUpdateData } from "services/User/types";
+import { editProfileSchema } from "./validation";
 
 export type FormEditProfileData = Zod.infer<typeof editProfileSchema>;
 interface FormEditProfileProps {
   professional: Professional;
+  close: () => void;
 }
 export type areaType = {
   state: string;
@@ -24,7 +20,10 @@ export type areaType = {
   location: string;
 };
 
-export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
+export const FormEditProfile: FC<FormEditProfileProps> = ({
+  professional,
+  close,
+}) => {
   const {
     handleSubmit,
     register,
@@ -33,40 +32,35 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
     setValue,
     getValues,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<FormEditProfileData>({
     resolver: zodResolver(editProfileSchema),
     mode: "onSubmit",
   });
 
-  const [areaList, setAreaList] = useState<areaType[]>([]);
-
   const { file, professional: professionalApi } = useApi();
   const { update } = professionalApi;
 
-  const professionalStates = () => {
-    const states: string[] = [];
-    professional.locations.forEach((state) => {
-      states.push(state.state);
-    });
-    return states;
-  };
   useEffect(() => {
     setValue("name", professional.name);
     setValue("onlineAppointment", professional.onlineAppointment);
     setValue("description", professional.description);
     setValue("tags", professional.tags.split(","));
-    // setValue('description',professional.description)
   }, [professional]);
 
   const onSubmit = async (data: FormEditProfileData) => {
+    if (!isDirty) {
+      close();
+      return;
+    }
     let payload: ProfessionalUpdateData = {
       name: data.name,
       description: data.description,
       onlineAppointment: data.onlineAppointment,
       tags: data.tags.join(","),
     };
-    console.log(payload);
+    await update({ id: professional.id, ...payload });
+    close();
   };
 
   return (
@@ -86,7 +80,9 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
         />
 
         <Input.Area
-          label="Sobre"
+          label={`Sobre (${
+            watch("description") ? watch("description").length : 0
+          }/300 caracteres)`}
           placeholder="Escreva um pouco sobre você"
           error={errors.description}
           {...register("description")}
@@ -98,7 +94,6 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
           {...register("onlineAppointment")}
         />
         <FlexBox direction="column" gap={2} mt={2}>
-          {" "}
           <h3>Categorias:</h3>
           <FlexBox gap={2} full wrap={"wrap"}>
             {tags.map((tag) => (

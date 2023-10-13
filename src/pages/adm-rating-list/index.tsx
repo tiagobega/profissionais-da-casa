@@ -92,7 +92,7 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
   const filteredList: RatingType[] = finalEvaluations.filter(
     (el) => el.evaluation.status === status
   );
-  // const searchedList = filterRating(filteredList, query);
+  const searchedList = filterRating(filteredList, query);
 
   return (
     <MarginContainer>
@@ -165,7 +165,7 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
         }
       </Header>
       <ContentContainer>
-        {!isDetails ? <RatingList list={filteredList} /> : "detalhes"}
+        {!isDetails ? <RatingList list={searchedList} /> : "detalhes"}
       </ContentContainer>
     </MarginContainer>
   );

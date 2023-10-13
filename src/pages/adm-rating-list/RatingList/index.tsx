@@ -24,6 +24,7 @@ export const RatingList: React.FC<RatingListProps> = ({ list }) => {
           key={item.evaluation.id}
           rating={evaluationSingleAverage(item.evaluation)}
           status={item.evaluation.status}
+          evaluation={item.evaluation}
         />
       ))}
     </ScrollingList>

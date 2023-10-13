@@ -12,7 +12,7 @@ export const GrayContainer = styled.section<{ isOwn: boolean }>`
 
 export const HeaderContainer = styled(MarginContainer)<{ isOwn: boolean }>`
   ${({ theme, isOwn }) => css`
-    height: 235px;
+    height: 275px;
     margin-top: 1rem;
     background-color: ${!isOwn ? "transparent" : theme.color.base[200]};
     padding: 2rem;
@@ -37,7 +37,7 @@ export const InformationContainer = styled(FlexBox)`
   ${({ theme }) => css`
     display: flex;
     flex-grow: 1;
-    width: 30rem;
+    width: 50rem;
   `}
 `;
 
