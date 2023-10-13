@@ -119,7 +119,12 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           Voltar para lista
         </Button>
       </FlexBox>
-      <form onSubmit={() => handleSubmit(onSubmit)()} style={{ flex: 1 }}>
+      <form
+        onSubmit={handleSubmit((e) => {
+          return onSubmit(e);
+        })}
+        style={{ flex: 1 }}
+      >
         <FlexBox direction="column" gap={2} full mt={2}>
           <Input.Text
             placeholder="Nome do projeto"

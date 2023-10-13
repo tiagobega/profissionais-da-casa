@@ -58,6 +58,7 @@ export const AdmProfessionalDetails: React.FC<
     await updateUser({
       id: currentUser.id,
       active: true,
+      verified: currentUser.verified,
     });
 
     sendEmail(
@@ -88,6 +89,7 @@ export const AdmProfessionalDetails: React.FC<
     await updateUser({
       id: currentUser.id,
       active: false,
+      verified: currentUser.verified,
     });
 
     sendEmail(
@@ -118,6 +120,7 @@ export const AdmProfessionalDetails: React.FC<
     await updateUser({
       id: currentUser.id,
       active: false,
+      verified: currentUser.verified,
     });
 
     sendEmail(
