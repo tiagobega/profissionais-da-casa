@@ -13,13 +13,13 @@ import { previewUrl } from "utils/ImageBase64Convert";
 import { Professional } from "services/User/types";
 
 export type FormData = Zod.infer<typeof addImageSchema>;
-interface FormAddProfessionalProfilePictureProps {
+interface FormAddProfessionalBgPictureProps {
   close: () => void;
   professionalProfile: Professional;
 }
 
-export const FormAddProfessionalProfilePicture: FC<
-  FormAddProfessionalProfilePictureProps
+export const FormAddProfessionalBgPicture: FC<
+  FormAddProfessionalBgPictureProps
 > = ({ close, professionalProfile }) => {
   const {
     handleSubmit,
@@ -48,9 +48,9 @@ export const FormAddProfessionalProfilePicture: FC<
 
   const onSubmit = async (data: FormData) => {
     if (!img || img.length == 0 || !data.picture[0]) return;
-    console.log(data);
+
     const fileResponse = await sendFile({
-      filename: "background picture",
+      filename: `${professionalProfile.name}_background_picture`,
       content: img,
       contentType: data.picture[0].type,
     });
@@ -82,9 +82,9 @@ export const FormAddProfessionalProfilePicture: FC<
       })}
     >
       <FlexBox direction="column" gap={1.5} full>
-        <h3>Trocar foto de perfil</h3>
+        <h3>Trocar foto de fundo</h3>
         <Input.File
-          label="Foto de perfil"
+          label="Foto de fundo"
           error={errors.picture}
           {...register("picture")}
         />

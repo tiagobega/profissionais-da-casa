@@ -39,6 +39,7 @@ import {
 import { FormAddImage } from "components/Forms/FormAddImage";
 import { Modal } from "components/Modal";
 import { FormAddProfessionalProfilePicture } from "components/Forms/FormAddProfessionalProfilePicture";
+import { FormContactProfessional } from "components/Forms/FormSendContact";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -58,6 +59,7 @@ export const ProfessionalProfilePage: React.FC<
   const [displayReview, setDisplayReview] = useState(0);
 
   const [modalPicture, setModalPicture] = useState(false);
+  const [modalContact, setModalContact] = useState(false);
 
   const { user, professional } = useApi();
   const { me } = user;
@@ -147,12 +149,7 @@ export const ProfessionalProfilePage: React.FC<
                     </FlexBox>
                   </FlexBox>
                   <FlexBox full>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Ut ea quibusdam sed beatae temporibus alias iure id
-                      impedit optio inventore illum, accusantium nisi laboriosam
-                      commodi nihil, libero laudantium, dolore vero!
-                    </p>
+                    <p>{pageProfessional.description}</p>
                   </FlexBox>
                   <FlexBox gap={5} alignItems="center">
                     <RatingHeader alignItems="center" gap={2}>
@@ -193,6 +190,7 @@ export const ProfessionalProfilePage: React.FC<
                   variant="primary"
                   background={color.brand.yellowLight}
                   width={10}
+                  onClick={() => setModalContact(true)}
                 >
                   Entrar em contato
                 </Button>
@@ -347,6 +345,23 @@ export const ProfessionalProfilePage: React.FC<
             close={() => setModalPicture(false)}
             onSuccess={(professional) => setPageProfessional(professional)}
             professionalProfile={pageProfessional}
+          />
+        </FlexBox>
+      </Modal>
+
+      <Modal
+        isOpened={modalContact}
+        onClose={() => {
+          setModalContact(false);
+        }}
+        small
+      >
+        <FlexBox direction="column" centralized gap={3}>
+          <FormContactProfessional
+            professional={pageProfessional}
+            onClose={() => {
+              setModalContact(false);
+            }}
           />
         </FlexBox>
       </Modal>

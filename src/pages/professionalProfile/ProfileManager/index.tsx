@@ -8,12 +8,15 @@ import { Professional } from "services/User/types";
 import { PortfolioHome } from "../Portfolio";
 import { LeadsHome } from "../Leads";
 import { FormAddImage } from "components/Forms/FormAddImage";
+import { FormAddProfessionalBgPicture } from "components/Forms/FormAddProfessionalBgPicture";
 
 export interface ProfileManagerProps {
   professional: Professional;
+  refetch: () => void;
 }
 export const ProfileManager: React.FC<ProfileManagerProps> = ({
   professional,
+  refetch,
 }) => {
   const [modalEdit, setModalEdit] = useState(false);
   const [modalPortfolio, setModalPortfolio] = useState(false);
@@ -62,14 +65,20 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
       <Modal
         isOpened={modalEdit}
         onProceed={() => console.log("proceed")}
-        onClose={() => setModalEdit(false)}
+        onClose={() => {
+          refetch();
+          setModalEdit(false);
+        }}
       >
         <FormEditProfile professional={professional} />
       </Modal>
       <Modal
         isOpened={modalPortfolio}
         onProceed={() => console.log("proceed")}
-        onClose={() => setModalPortfolio(false)}
+        onClose={() => {
+          setModalPortfolio(false);
+          refetch();
+        }}
       >
         <PortfolioHome professional={professional} />
       </Modal>
@@ -83,9 +92,18 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
       <Modal
         isOpened={modalBg}
         onProceed={() => console.log("proceed")}
-        onClose={() => setModalBg(false)}
+        onClose={() => {
+          setModalBg(false);
+          refetch();
+        }}
       >
-        <FormAddImage close={() => setModalBg(false)} />
+        <FormAddProfessionalBgPicture
+          professionalProfile={professional}
+          close={() => {
+            setModalBg(false);
+            refetch();
+          }}
+        />
       </Modal>
     </ManagerContainer>
   );
