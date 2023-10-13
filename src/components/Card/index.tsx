@@ -9,8 +9,7 @@ import {
   PhotoContainer,
   ProfileContainer,
 } from "./styles";
-import profilePlaceholder from "assets/images/profile-placeholder.jpeg";
-import photoPlaceholder from "assets/images/photo-placeholder.jpeg";
+import photoPlaceholder from "assets/images/fundo.png";
 import { Tag } from "components/Tag";
 import { useNavigate } from "react-router-dom";
 import { Professional } from "services/User/types";
@@ -30,7 +29,14 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
   return (
     <CardContainer>
       <PhotoContainer>
-        <img src={professional.backgroundPicture} alt="foto background" />
+        <img
+          src={
+            professional.backgroundPicture.length > 0
+              ? professional.backgroundPicture
+              : photoPlaceholder
+          }
+          alt="foto background"
+        />
       </PhotoContainer>
       <ProfileContainer
         src={professional.profilePicture}
