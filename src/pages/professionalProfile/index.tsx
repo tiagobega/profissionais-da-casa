@@ -38,6 +38,7 @@ import {
 } from "utils/EvaluationAverage";
 import { FormAddImage } from "components/Forms/FormAddImage";
 import { Modal } from "components/Modal";
+import { FormAddProfessionalProfilePicture } from "components/Forms/FormAddProfessionalProfilePicture";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -164,7 +165,11 @@ export const ProfessionalProfilePage: React.FC<
                       </div>
                     </RatingHeader>
                     {pageProfessional.portfolioFile && (
-                      <a href={pageProfessional.portfolioFile} download>
+                      <a
+                        href={pageProfessional.portfolioFile}
+                        target="_blank"
+                        download
+                      >
                         <Button variant="text">
                           <DownloadSimple weight="bold" size={20} />
                           Baixar portifólio do profissional
@@ -334,7 +339,10 @@ export const ProfessionalProfilePage: React.FC<
         small
       >
         <FlexBox direction="column" centralized gap={3}>
-          <FormAddImage close={() => setModalPicture(false)} />
+          <FormAddProfessionalProfilePicture
+            close={() => setModalPicture(false)}
+            professionalProfile={pageProfessional}
+          />
         </FlexBox>
       </Modal>
       <Modal
