@@ -25,9 +25,9 @@ export type FormData = Zod.infer<typeof usePortfolioProjectSchema>;
 
 const loadImgString = (input: string | string[]) => {
   if (typeof input == "string") {
-    return input.split(",");
+    return input.split(",").map((imageUrl) => ({ imageUrl }));
   } else {
-    return input;
+    return input.map((imageUrl) => ({ imageUrl }));
   }
 };
 
@@ -47,19 +47,19 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
     resolver: zodResolver(usePortfolioProjectSchema),
     mode: "onChange",
   });
-  const [imageList, setImageList] = useState<string[]>([]);
 
-  const [coverIndex, setCoverIndex] = useState<number>(0);
-
-  const [newImagesList, setNewImageList] = useState<
+  const [imageList, setImageList] = useState<
     {
-      base64: string;
-      fileList: FileList;
+      imageUrl: string;
+      file?: File;
     }[]
   >([]);
 
-  const { portfolioProject } = useApi();
-  const { create, edit } = portfolioProject;
+  const [coverIndex, setCoverIndex] = useState<number>(0);
+  const {
+    portfolioProject: { create, edit },
+    file: { sendFile },
+  } = useApi();
 
   useEffect(() => {
     setValue("description", project ? project.description : "");
@@ -71,19 +71,15 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   const imgFile = watch("image");
 
   const addPhoto = async (fileList: FileList) => {
-    const imgUrl = await previewUrl(fileList);
-    const newArray = imageList;
-    newArray.push(imgUrl.base64);
-    setImageList(newArray);
+    const { base64, file } = await previewUrl(fileList);
+    setImageList((old) => [...old, { imageUrl: base64, file }]);
     setValue("image", null as unknown as FileList);
   };
 
   const removePhoto = (index: number) => {
-    console.log(index, imageList);
     const newArray = imageList;
     newArray.splice(index, 1);
     if (index == coverIndex) setCoverIndex(0);
-    console.log(newArray);
     setImageList(newArray);
   };
 
@@ -99,29 +95,49 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   };
 
   const onSubmit = async (data: FormData) => {
-    const imageStringList = [imageList[coverIndex]];
+    const lastImageList: string[] = [];
 
-    console.log(data, imageList);
+    const promises: Promise<{ url: string; isCover: boolean }>[] = [];
 
-    // imageList.forEach(
-    //   (image, index) => index != coverIndex && imageStringList.push(image)
-    // );
-    // const imageStringJoined = imageStringList.join(",");
+    imageList.forEach(({ imageUrl, file }, index) => {
+      if (!file) {
+        index === coverIndex
+          ? lastImageList.unshift(imageUrl)
+          : lastImageList.push(imageUrl);
 
-    // if (imageStringJoined === "") {
-    //   return;
-    // }
+        return;
+      }
 
-    // const payload: CreatePortfolioProjectData = {
-    //   name: data.title,
-    //   description: data.description,
-    //   professionalId: id,
-    //   images: imageStringJoined,
-    // };
+      promises.push(
+        new Promise(async (resolve, reject) => {
+          const fileRespose = await sendFile({
+            content: imageUrl,
+            contentType: file.type,
+            filename: `portfolio_image_${index}`,
+          });
 
-    // await create(payload);
+          if (!fileRespose) return reject("");
+          return resolve({ url: fileRespose, isCover: index === coverIndex });
+        })
+      );
+    });
 
-    // handleClose();
+    const executedPromises = await Promise.all(promises);
+
+    executedPromises.forEach(({ url, isCover }) => {
+      if (!isCover) {
+        lastImageList.push(url);
+      } else {
+        lastImageList.unshift(url);
+      }
+    });
+
+    await create({
+      description: data.description,
+      name: data.title,
+      images: lastImageList.join(","),
+      professionalId: id,
+    });
   };
 
   return (
@@ -167,11 +183,11 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
         <FlexBox gap={1} mb={3}>
           {imageList.map((image, index) => (
             <PhotoPreview
-              key={image}
+              key={image.imageUrl}
               isCover={index == coverIndex}
               removePicture={() => removePhoto(index)}
               toggleCover={() => setCover(index)}
-              url={image}
+              url={image.imageUrl}
             />
           ))}
         </FlexBox>
