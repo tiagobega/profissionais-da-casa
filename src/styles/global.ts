@@ -29,6 +29,7 @@ export const GlobalStyle = createGlobalStyle`
     }
     main {
       flex-grow: 1;
+      min-height: calc(100vh - 468px);
     }
 
     a {
