@@ -22,9 +22,7 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
   const { color } = useTheme();
   const navigate = useNavigate();
 
-  const tags = professional.tags.slice(0, 3);
-
-  console.log(tags);
+  const tags = professional.tags.split(",").slice(0, 3);
 
   return (
     <CardContainer>
@@ -69,11 +67,9 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
 
         <FlexBox wrap={"wrap"} gap={0.25}>
           {tags.length > 0 &&
-            tags
-              .split(",")
-              .map((tag, index) => (
-                <Tag tagName={tag} key={`${professional.id}${index}${tag}`} />
-              ))}
+            tags.map((tag, index) => (
+              <Tag tagName={tag} key={`${professional.id}${index}${tag}`} />
+            ))}
           {professional.tags.length > 3 && <Tag tagName="..." />}
         </FlexBox>
 
