@@ -43,10 +43,8 @@ export type SendEmailParams = {
   | {
       template: "LEAD_TO_PROFESSIONAL";
       params: {
-        professionalName: string;
-        description: string;
-        phoneContact: string;
-        emailContact: string;
+        SIGNATURE: string;
+        DESCRIPTION: string;
       };
     }
 );

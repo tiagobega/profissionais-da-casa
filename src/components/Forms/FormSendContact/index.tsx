@@ -7,7 +7,7 @@ import Input from "components/Input";
 import { useForm } from "react-hook-form";
 import { contactProfessionalSchema } from "./validation";
 import { Professional } from "services/User/types";
-import { useUser } from "contexts/User";
+import { useApi, useUser } from "contexts/User";
 import { useEffect, useState } from "react";
 
 export type FormContactProfessional = Zod.infer<
@@ -15,13 +15,13 @@ export type FormContactProfessional = Zod.infer<
 >;
 
 interface FormContactProfessionalProps {
-  name: string;
-  email: string;
+  professional: Professional;
+  onClose: () => void;
 }
 
 export const FormContactProfessional: React.FC<
   FormContactProfessionalProps
-> = ({ name, email }) => {
+> = ({ professional, onClose }) => {
   const {
     handleSubmit,
     register,
@@ -33,25 +33,52 @@ export const FormContactProfessional: React.FC<
     resolver: zodResolver(contactProfessionalSchema),
     mode: "onSubmit",
   });
-  const { me } = useUser();
+
+  const {
+    user: { me, getSingleUser },
+    professional: {},
+    email: { sendEmail },
+  } = useApi();
 
   useEffect(() => {
     setValue("byEmail", true);
     setValue("byWhatsapp", true);
-    setValue("recipient", email);
-  }, []);
+  }, [professional]);
 
-  const emailSignature =
-    me &&
-    `${me?.name}\n${watch("byEmail") && `Email para resposta: ${me?.email}`}\n${
-      watch("byWhatsapp") && `Responder via whatsapp ou telefone: ${me?.phone}`
-    }`;
-  console.log(getValues);
-
-  const onSubmit = (data: FormContactProfessional) => {
-    const emailBody = `${data.description}\n\n${emailSignature}`;
+  const onSubmit = async (data: FormContactProfessional) => {
+    const emailSignature =
+      (me &&
+        `${me?.name}<br/>${
+          (watch("byEmail") && `Email para resposta: ${me?.email}`) || ""
+        }<br/>${
+          (watch("byWhatsapp") &&
+            `Responder via whatsapp ou telefone: ${me?.phone}`) ||
+          ""
+        }`) ||
+      "";
     const subject = "Profissionais da Casa - Contato de cliente";
-    console.log(email, subject, emailBody);
+
+    const userResponse = await getSingleUser({ id: professional.userId });
+
+    if (!userResponse) {
+      return;
+    }
+
+    const mailResponse = await sendEmail(
+      {
+        subject,
+        template: "LEAD_TO_PROFESSIONAL",
+        email: userResponse.email,
+        text: "text",
+        params: {
+          DESCRIPTION: data.description,
+          SIGNATURE: emailSignature,
+        },
+      },
+      true
+    );
+
+    onClose();
   };
 
   return (
@@ -63,7 +90,7 @@ export const FormContactProfessional: React.FC<
       style={{ width: "100%" }}
     >
       <FlexBox direction="column" gap={1.5} full>
-        <h2>Entre em contato com {name}</h2>
+        <h2>Entre em contato com {professional.name}</h2>
         <Input.Area
           rows={20}
           label="Descrição do projeto"

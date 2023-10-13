@@ -94,7 +94,7 @@ export const FormAddProfessionalProfilePicture: FC<
         />
         {img && (
           <FlexBox gap={1}>
-            <ImgPreview src={img}></ImgPreview>
+            <ImgPreview src={img} />
             <Button type="button" variant="text" onClick={() => setImg(null)}>
               <Trash size={20} />
             </Button>

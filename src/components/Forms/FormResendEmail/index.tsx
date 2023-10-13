@@ -33,7 +33,7 @@ export const FormResendEmail: FC<FormRegisterUserProps> = () => {
   };
 
   return (
-    <Form
+    <Form style={{width: 'auto'}}
       onSubmit={handleSubmit((e) => {
         return onSubmit(e);
       })}
