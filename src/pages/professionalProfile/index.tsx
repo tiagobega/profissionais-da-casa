@@ -3,6 +3,9 @@ import {
   CaretLeft,
   CaretRight,
   DownloadSimple,
+  FacebookLogo,
+  InstagramLogo,
+  LinkedinLogo,
   MapPin,
   Star,
   UploadSimple,
@@ -91,6 +94,28 @@ export const ProfessionalProfilePage: React.FC<
   ).fill("");
   const publicEvaluations = approvedEvaluations(pageProfessional.evaluations);
 
+  const socialMediaIcon = (name: string) => {
+    switch (name) {
+      case "Facebook":
+        return <FacebookLogo size={40} weight="fill" />;
+        break;
+
+      case "LinkedIn":
+        return <LinkedinLogo size={40} weight="fill" />;
+        break;
+
+      case "Instagram":
+        return <InstagramLogo size={40} weight="fill" />;
+        break;
+
+      case "Facebook":
+        return <FacebookLogo size={40} weight="fill" />;
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <GrayContainer isOwn={isOwn}>
@@ -146,6 +171,11 @@ export const ProfessionalProfilePage: React.FC<
                         )}
                       </FlexBox>
                     </FlexBox>
+                    {pageProfessional.socialMedias.map((media) => (
+                      <a key={media.id} href={media.link} target="_blank">
+                        {socialMediaIcon(media.name)}
+                      </a>
+                    ))}
                   </FlexBox>
                   <FlexBox full>
                     <p>{pageProfessional.description}</p>
