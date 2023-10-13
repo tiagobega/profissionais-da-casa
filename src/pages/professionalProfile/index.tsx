@@ -8,14 +8,27 @@ import {
   LinkedinLogo,
   MapPin,
   Star,
-  UploadSimple,
   User,
   Warehouse,
 } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
+import { FormAddProfessionalProfilePicture } from "components/Forms/FormAddProfessionalProfilePicture";
+import { FormContactProfessional } from "components/Forms/FormSendContact";
+import { Loading } from "components/Loading";
+import { Modal } from "components/Modal";
+import { StarMeter } from "components/StarMeter";
+import { useApi } from "contexts/User";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Professional } from "services/User/types";
 import { useTheme } from "styled-components";
+import { CarouselButton, MarginContainer } from "styles/commonComponents";
+import {
+  approvedEvaluations,
+  evaluationSingleAverage,
+} from "utils/EvaluationAverage";
+import { ProfileManager } from "./ProfileManager";
 import {
   GalleryContainer,
   GrayContainer,
@@ -27,23 +40,6 @@ import {
   ReviewContainer,
   ReviewSection,
 } from "./styles";
-import { useEffect, useState } from "react";
-import { CarouselButton, MarginContainer } from "styles/commonComponents";
-import { ProfileManager } from "./ProfileManager";
-import { StarMeter } from "components/StarMeter";
-import { useApi, useUser, userContext } from "contexts/User";
-import { Evaluation, Professional } from "services/User/types";
-import { Loading } from "components/Loading";
-import {
-  approvedEvaluations,
-  evaluationAverage,
-  evaluationCategoryAverage,
-  evaluationSingleAverage,
-} from "utils/EvaluationAverage";
-import { FormAddImage } from "components/Forms/FormAddImage";
-import { Modal } from "components/Modal";
-import { FormAddProfessionalProfilePicture } from "components/Forms/FormAddProfessionalProfilePicture";
-import { FormContactProfessional } from "components/Forms/FormSendContact";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -417,7 +413,6 @@ export const ProfessionalProfilePage: React.FC<
         onClose={() => {
           setModalContact(false);
         }}
-        small
       >
         <FlexBox direction="column" centralized gap={3}>
           <FormContactProfessional
