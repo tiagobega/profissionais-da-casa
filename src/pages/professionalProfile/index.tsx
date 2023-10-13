@@ -345,15 +345,6 @@ export const ProfessionalProfilePage: React.FC<
           />
         </FlexBox>
       </Modal>
-      <Modal
-        isOpened={modalPicture}
-        onClose={() => setModalPicture(false)}
-        small
-      >
-        <FlexBox direction="column" centralized gap={3}>
-          <FormAddImage close={() => setModalPicture(false)} />
-        </FlexBox>
-      </Modal>
     </>
   );
 };
