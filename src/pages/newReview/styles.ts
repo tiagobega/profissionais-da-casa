@@ -12,6 +12,13 @@ export const Profile = styled(FlexBox)`
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+      }
     }
   `}
 `;

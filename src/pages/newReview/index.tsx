@@ -89,7 +89,10 @@ export const NewReviewPage: React.FC<NewReviewPageProps> = () => {
                   </FlexBox>
                 </FlexBox>
                 <div className="photo-container">
-                  <img src={profile} alt="professional photo" />
+                  <img
+                    src={pageProfessional.profilePicture}
+                    alt="professional photo"
+                  />
                 </div>
               </Profile>
             </FlexBox>
