@@ -1,8 +1,9 @@
 export const previewUrl = async (fileList: FileList) => {
   const base64 = await convertBase64(fileList[0]);
+
   return {
     base64,
-    fileList,
+    file: fileList[0],
   };
 };
 
