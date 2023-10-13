@@ -9,14 +9,19 @@ import { Star } from "@phosphor-icons/react";
 import { ConfirmModal, Form, Information, StarContainer } from "./style";
 import { FC, useEffect, useState } from "react";
 import { ProjectType } from "Models/models";
+import { Me, Professional } from "services/User/types";
 
 export interface FormSendReviewProps {
-  project: ProjectType;
+  user: Me;
+  professional: Professional;
 }
 
-export type FormEditProfileData = Zod.infer<typeof sendReviewSchema>;
+export type FormData = Zod.infer<typeof sendReviewSchema>;
 
-export const FormSendReview: FC<FormSendReviewProps> = ({ project }) => {
+export const FormSendReview: FC<FormSendReviewProps> = ({
+  user,
+  professional,
+}) => {
   const {
     handleSubmit,
     register,
@@ -24,7 +29,7 @@ export const FormSendReview: FC<FormSendReviewProps> = ({ project }) => {
     setValue,
     getValues,
     formState: { errors },
-  } = useForm<FormEditProfileData>({
+  } = useForm<FormData>({
     resolver: zodResolver(sendReviewSchema),
     mode: "onSubmit",
   });
@@ -41,8 +46,10 @@ export const FormSendReview: FC<FormSendReviewProps> = ({ project }) => {
 
   const { color } = useTheme();
 
-  const onSubmit = (data: FormEditProfileData) => {
-    window.alert(data);
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+    setModalConfirm(true);
+    return;
   };
 
   const categories: {
@@ -62,21 +69,15 @@ export const FormSendReview: FC<FormSendReviewProps> = ({ project }) => {
   ];
 
   return (
-    <Form
-      onSubmit={handleSubmit((e) => {
-        console.log(e);
-        setModalConfirm(true);
-        return onSubmit(e);
-      })}
-    >
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FlexBox direction="column" gap={1} full>
         <h2>Avaliação do profissional</h2>
         <Information direction="column" mb={1} full pb={1}>
           <p>
-            Profissional: <strong>{project.professional}</strong>
+            Profissional: <strong>{professional.name}</strong>
           </p>
           <p>
-            Projeto: <strong>{project.name}</strong>
+            Usuário: <strong>{user.name}</strong>
           </p>
         </Information>
         {categories.map((cat, index) => (

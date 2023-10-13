@@ -13,6 +13,9 @@ export const formErrors = {
 export const minChars = (number: number) => {
   return `Pelo menos ${number} caracteres`;
 };
+export const maxChars = (number: number) => {
+  return `No máximo ${number} caracteres`;
+};
 
 export const exactChars = (number: number) => {
   return `Este campo deve ter exatamente ${number} caracteres`;

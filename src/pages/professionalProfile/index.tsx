@@ -7,6 +7,7 @@ import {
   Star,
   UploadSimple,
   User,
+  Warehouse,
 } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
@@ -147,12 +148,7 @@ export const ProfessionalProfilePage: React.FC<
                     </FlexBox>
                   </FlexBox>
                   <FlexBox full>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Ut ea quibusdam sed beatae temporibus alias iure id
-                      impedit optio inventore illum, accusantium nisi laboriosam
-                      commodi nihil, libero laudantium, dolore vero!
-                    </p>
+                    <p>{pageProfessional.description}</p>
                   </FlexBox>
                   <FlexBox gap={5} alignItems="center">
                     <RatingHeader alignItems="center" gap={2}>
@@ -174,7 +170,7 @@ export const ProfessionalProfilePage: React.FC<
                       >
                         <Button variant="text">
                           <DownloadSimple weight="bold" size={20} />
-                          Baixar portifólio do profissional
+                          Abrir portifólio do profissional
                         </Button>
                       </a>
                     )}
@@ -182,9 +178,10 @@ export const ProfessionalProfilePage: React.FC<
                 </InformationContainer>
               </FlexBox>
               <ul className="category-list">
-                {pageProfessional.tags.split(",").map((item, key) => (
-                  <li key={key}>{item}</li>
-                ))}
+                {pageProfessional.tags.length > 0 &&
+                  pageProfessional.tags
+                    .split(",")
+                    .map((item, key) => <li key={key}>{item}</li>)}
               </ul>
             </FlexBox>
             {!isOwn && (
@@ -202,7 +199,7 @@ export const ProfessionalProfilePage: React.FC<
         </HeaderContainer>
       </GrayContainer>
 
-      {pageProfessional.portfolioProjects.length > 0 && (
+      {pageProfessional.portfolioProjects.length > 0 ? (
         <GalleryContainer>
           <div className="gallery-bg">
             <img
@@ -246,95 +243,125 @@ export const ProfessionalProfilePage: React.FC<
             ))}
           </FlexBox>
         </GalleryContainer>
+      ) : (
+        <FlexBox full centralized mb={2} gap={2}>
+          <Warehouse size={64} color={theme.color.brand.orange} />
+          <h2>
+            O profissional ainda não adicionou nenhum projeto
+            <br />
+            ao seu portifólio do profissionais da casa.
+          </h2>
+        </FlexBox>
       )}
 
-      {publicEvaluations.evaluations.length > 0 && (
-        <ReviewSection>
-          <RatingContainer
-            alignItems="center"
-            direction="column"
-            justifyContent="flex-start"
-            gap={0.5}
-          >
-            <FlexBox
-              full
+      <ReviewSection>
+        {publicEvaluations.evaluations.length > 0 ? (
+          <>
+            <RatingContainer
               alignItems="center"
+              direction="column"
               justifyContent="flex-start"
-              gap={1}
+              gap={0.5}
             >
-              <Star weight="fill" color={color.secondary.yellow} size={45} />
-              <p className="rating">{publicEvaluations.average}</p>
-              <p className="quantity">({publicEvaluations.quantity})</p>
-            </FlexBox>
+              <FlexBox
+                full
+                alignItems="center"
+                justifyContent="flex-start"
+                gap={1}
+              >
+                <Star weight="fill" color={color.secondary.yellow} size={45} />
+                <p className="rating">{publicEvaluations.average}</p>
+                <p className="quantity">({publicEvaluations.quantity})</p>
+              </FlexBox>
 
-            <FlexBox alignItems="flex-start" gap={0.75} direction="column">
-              <div>
-                <p>Custo</p>
-                <StarMeter rating={publicEvaluations.cost} size={16} />
-              </div>
-              <div>
-                <p>Prazo</p>
-                <StarMeter rating={publicEvaluations.deadlines} size={16} />
-              </div>
-              <div>
-                <p>Funcionalidade</p>
-                <StarMeter rating={publicEvaluations.functionality} size={16} />
-              </div>
-              <div>
-                <p>Qualidade das Entregas</p>
-                <StarMeter rating={publicEvaluations.quality} size={16} />
-              </div>
-              <div>
-                <p>Relacionamento com o Cliente</p>
-                <StarMeter rating={publicEvaluations.relationship} size={16} />
-              </div>
-            </FlexBox>
-          </RatingContainer>
-          <FlexBox direction="column" alignItems="center" gap={3}>
-            <FlexBox full centralized gap={2}>
-              <h3>Depoimentos</h3>
-              {me?.roleRel.name != "professional" && (
-                <Button
-                  variant="outline"
-                  color={theme.color.secondary.lightTeal}
-                  small
-                >
-                  Adicionar
-                </Button>
-              )}
-            </FlexBox>
-            <FlexBox
-              full
-              justifyContent="center"
-              alignItems="flex-start"
-              gap={5}
-            >
-              <ReviewContainer direction="column" alignItems="center" gap={1}>
-                <FlexBox gap={2}>
-                  {publicEvaluations.evaluations
-                    .slice(displayReview, displayReview + 2)
-                    .map((item) => (
-                      <div className="review-item" key={item.id}>
-                        <p>{item.description}</p>
-                        <StarMeter rating={evaluationSingleAverage(item)} />
-                      </div>
+              <FlexBox alignItems="flex-start" gap={0.75} direction="column">
+                <div>
+                  <p>Custo</p>
+                  <StarMeter rating={publicEvaluations.cost} size={16} />
+                </div>
+                <div>
+                  <p>Prazo</p>
+                  <StarMeter rating={publicEvaluations.deadlines} size={16} />
+                </div>
+                <div>
+                  <p>Funcionalidade</p>
+                  <StarMeter
+                    rating={publicEvaluations.functionality}
+                    size={16}
+                  />
+                </div>
+                <div>
+                  <p>Qualidade das Entregas</p>
+                  <StarMeter rating={publicEvaluations.quality} size={16} />
+                </div>
+                <div>
+                  <p>Relacionamento com o Cliente</p>
+                  <StarMeter
+                    rating={publicEvaluations.relationship}
+                    size={16}
+                  />
+                </div>
+              </FlexBox>
+            </RatingContainer>
+            <FlexBox direction="column" alignItems="center" gap={3}>
+              <FlexBox full centralized gap={2}>
+                <h3>Depoimentos</h3>
+                {me?.roleRel.name != "professional" && (
+                  <Button
+                    variant="outline"
+                    color={theme.color.secondary.lightTeal}
+                    small
+                  >
+                    Adicionar
+                  </Button>
+                )}
+              </FlexBox>
+              <FlexBox
+                full
+                justifyContent="center"
+                alignItems="flex-start"
+                gap={5}
+              >
+                <ReviewContainer direction="column" alignItems="center" gap={1}>
+                  <FlexBox gap={2}>
+                    {publicEvaluations.evaluations
+                      .slice(displayReview, displayReview + 2)
+                      .map((item) => (
+                        <div className="review-item" key={item.id}>
+                          <p>{item.description}</p>
+                          <StarMeter rating={evaluationSingleAverage(item)} />
+                        </div>
+                      ))}
+                  </FlexBox>
+                  <FlexBox full justifyContent="center" gap={1} p={1}>
+                    {carrouselButtonArray.map((item, index) => (
+                      <CarouselButton
+                        isActive={displayReview / 2 == index}
+                        className="carousel-btn"
+                        onClick={() => setDisplayReview(index * 2)}
+                        key={item.id}
+                      />
                     ))}
-                </FlexBox>
-                <FlexBox full justifyContent="center" gap={1} p={1}>
-                  {carrouselButtonArray.map((item, index) => (
-                    <CarouselButton
-                      isActive={displayReview / 2 == index}
-                      className="carousel-btn"
-                      onClick={() => setDisplayReview(index * 2)}
-                      key={item.id}
-                    />
-                  ))}
-                </FlexBox>
-              </ReviewContainer>
+                  </FlexBox>
+                </ReviewContainer>
+              </FlexBox>
             </FlexBox>
+          </>
+        ) : (
+          <FlexBox gap={2} alignItems="center">
+            <h2>Ainda não há depoimentos para este profissional</h2>{" "}
+            {!isOwn && (
+              <Button
+                variant="outline"
+                color={theme.color.secondary.lightTeal}
+                onClick={() => navigate(`/review/${pageProfessional.id}`)}
+              >
+                Adicionar
+              </Button>
+            )}
           </FlexBox>
-        </ReviewSection>
-      )}
+        )}
+      </ReviewSection>
       <Modal
         isOpened={modalPicture}
         onClose={() => {
