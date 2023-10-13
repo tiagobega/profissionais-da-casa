@@ -78,7 +78,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
                     </FlexBox>
                   </div>
                   <div>
-                    <p className="title">Telefone</p>
+                    <p className="title">E-mail</p>
                     <FlexBox alignItems="center" gap={0.5} mt={0.5}>
                       <Envelope size={30} />
                       {me.email}

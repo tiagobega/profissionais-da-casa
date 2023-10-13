@@ -139,7 +139,8 @@ export const userFunctions = (
   const getAll = async () =>
     withErrorHandler(await UserService.getAllUsers(), errorHandler);
 
-  const adminUpdateMe = async (data: AdminUpdateUserData) => {};
+  const updateUser = async (data: AdminUpdateUserData) =>
+    withErrorHandler(await UserService.putUser(data), errorHandler);
 
   const resendEmailVerification = async (data: ResendEmailData) =>
     withErrorHandler(
@@ -173,6 +174,7 @@ export const userFunctions = (
     getSingleUser,
     resendMeEmailVerification,
     resendEmailVerification,
+    updateUser,
   };
 };
 

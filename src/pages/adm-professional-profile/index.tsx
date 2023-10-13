@@ -17,31 +17,126 @@ export const AdmProfessionalDetails: React.FC<
 > = () => {
   const [currentProfessional, setCurrentProfessional] =
     useState<Professional>();
+
   const [currentUser, setCurrentUser] = useState<Me>();
 
-  const { professional, user } = useApi();
-  const { getSingle } = professional;
-  const {} = user;
+  const {
+    professional: { update, getSingle },
+    email: { sendEmail },
+    user: { getSingleUser, updateUser },
+  } = useApi();
 
   const { id } = useParams();
 
   const navigate = useNavigate();
   const { color } = useTheme();
 
+  async function getInfo(userId: string) {
+    const professionalResponse = await getSingle({
+      userId,
+    });
+
+    if (!professionalResponse) return;
+
+    setCurrentProfessional(professionalResponse);
+
+    const userResponse = await getSingleUser({ id: userId });
+
+    if (!userResponse) return;
+
+    setCurrentUser(userResponse);
+  }
+
+  async function handleProfessionalAccept() {
+    if (!currentUser) return;
+
+    await update({
+      currentUserId: currentUser.id,
+      active: true,
+    });
+
+    await updateUser({
+      id: currentUser.id,
+      active: true,
+    });
+
+    sendEmail(
+      {
+        subject: "Verificação profissional: Perfil aprovado",
+        email: currentUser.email,
+        template: "ACCEPT_PROFESSIONAL",
+        text: "text",
+        params: {
+          USER_NAME: currentUser.name,
+          PROFILE_LINK: `https://profissionaisdacasa.tiagobega.xyz/professional/${currentUser.id}`,
+        },
+      },
+      true
+    );
+
+    getInfo(currentUser.id);
+  }
+
+  async function handleProfessionalReject() {
+    if (!currentUser) return;
+
+    await update({
+      currentUserId: currentUser.id,
+      active: false,
+    });
+
+    await updateUser({
+      id: currentUser.id,
+      active: false,
+    });
+
+    sendEmail(
+      {
+        subject: "Verificação profissional: Perfil rejeitado",
+        email: currentUser.email,
+        template: "REJECT_PROFESSIONAL",
+        text: "text",
+        params: {
+          USER_NAME: currentUser.name,
+          PROFILE_LINK: `https://profissionaisdacasa.tiagobega.xyz/professional/${currentUser.id}`,
+        },
+      },
+      true
+    );
+
+    getInfo(currentUser.id);
+  }
+
+  async function handleProfessionalInactive() {
+    if (!currentUser) return;
+
+    await update({
+      currentUserId: currentUser.id,
+      active: false,
+    });
+
+    await updateUser({
+      id: currentUser.id,
+      active: false,
+    });
+
+    sendEmail(
+      {
+        subject: "Perfil inativado",
+        email: currentUser.email,
+        template: "INACTIVE_PROFESSIONAL",
+        text: "text",
+      },
+      true
+    );
+
+    getInfo(currentUser.id);
+  }
+
   useEffect(() => {
     if (!id) return;
-    (async () => {
-      const professionalResponse = await getSingle({
-        userId: id,
-      });
-
-      if (!professionalResponse) return;
-
-      setCurrentProfessional(professionalResponse);
-    })();
+    getInfo(id);
   }, [id]);
-
-  useEffect(() => {});
 
   const stateName = (code: string) => {
     return states.filter((el) => el.id === code)[0].name;
@@ -70,7 +165,9 @@ export const AdmProfessionalDetails: React.FC<
                         variant="outline"
                         width={15}
                         onClick={() =>
-                          navigate(`/professional/${currentProfessional.id}`)
+                          navigate(
+                            `/professional/${currentProfessional.userId}`
+                          )
                         }
                       >
                         Página do Profissonal
@@ -91,17 +188,22 @@ export const AdmProfessionalDetails: React.FC<
                 </FlexBox>
               </FlexBox>
 
-              {currentProfessional?.active == false ? (
+              {!currentProfessional?.active ? (
                 <FlexBox direction="column" gap={1}>
                   <Button
                     variant="primary"
                     color="white"
                     background={color.secondary.blue}
                     width={15}
+                    onClick={handleProfessionalAccept}
                   >
                     Ativar
                   </Button>
-                  <Button variant="outline" width={15}>
+                  <Button
+                    variant="outline"
+                    width={15}
+                    onClick={handleProfessionalReject}
+                  >
                     Rejeitar
                   </Button>
                 </FlexBox>
@@ -112,6 +214,7 @@ export const AdmProfessionalDetails: React.FC<
                     color="white"
                     background={color.secondary.blue}
                     width={15}
+                    onClick={handleProfessionalInactive}
                   >
                     Desativar
                   </Button>
