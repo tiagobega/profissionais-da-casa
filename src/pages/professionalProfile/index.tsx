@@ -62,7 +62,17 @@ export const ProfessionalProfilePage: React.FC<
   const { user, professional } = useApi();
   const { me } = user;
 
-  const { getSingle, setMyProfessional, myProfessional } = professional;
+  const { getSingle } = professional;
+
+  const fetchProfessional = async (id: string) => {
+    const professionalResponse = await getSingle({
+      userId: id,
+    });
+
+    if (!professionalResponse) return;
+
+    setPageProfessional(professionalResponse);
+  };
 
   useEffect(() => {
     if (!me || !id) return navigate("/catalog");
@@ -70,15 +80,7 @@ export const ProfessionalProfilePage: React.FC<
     const ownPage = id === me.id;
     setIsOwn(ownPage);
 
-    (async () => {
-      const professionalResponse = await getSingle({
-        userId: id,
-      });
-
-      if (!professionalResponse) return;
-
-      setPageProfessional(professionalResponse);
-    })();
+    fetchProfessional(id);
   }, [id]);
 
   if (!pageProfessional) return <Loading />;
@@ -335,23 +337,17 @@ export const ProfessionalProfilePage: React.FC<
       )}
       <Modal
         isOpened={modalPicture}
-        onClose={() => setModalPicture(false)}
+        onClose={() => {
+          setModalPicture(false);
+        }}
         small
       >
         <FlexBox direction="column" centralized gap={3}>
           <FormAddProfessionalProfilePicture
             close={() => setModalPicture(false)}
+            onSuccess={(professional) => setPageProfessional(professional)}
             professionalProfile={pageProfessional}
           />
-        </FlexBox>
-      </Modal>
-      <Modal
-        isOpened={modalPicture}
-        onClose={() => setModalPicture(false)}
-        small
-      >
-        <FlexBox direction="column" centralized gap={3}>
-          <FormAddImage close={() => setModalPicture(false)} />
         </FlexBox>
       </Modal>
     </>

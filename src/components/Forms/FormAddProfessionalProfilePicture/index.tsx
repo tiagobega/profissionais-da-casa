@@ -15,12 +15,13 @@ import { Professional } from "services/User/types";
 export type FormData = Zod.infer<typeof addImageSchema>;
 interface FormAddProfessionalProfilePictureProps {
   close: () => void;
+  onSuccess: (professional: Professional) => void;
   professionalProfile: Professional;
 }
 
 export const FormAddProfessionalProfilePicture: FC<
   FormAddProfessionalProfilePictureProps
-> = ({ close, professionalProfile }) => {
+> = ({ close, professionalProfile, onSuccess }) => {
   const {
     handleSubmit,
     register,
@@ -45,15 +46,24 @@ export const FormAddProfessionalProfilePicture: FC<
   };
 
   const onSubmit = async (data: FormData) => {
+    console.log("asdfasdfasd", data);
+
     if (!img || !data.picture[0]) return;
-    console.log(data);
     const fileResponse = await sendFile({
       filename: "profile picture",
       content: img,
       contentType: data.picture[0].type,
     });
     if (fileResponse == false) return;
-    await update({ id: professionalProfile.id, profilePicture: fileResponse });
+    const updateResponse = await update({
+      id: professionalProfile.id,
+      profilePicture: fileResponse,
+    });
+
+    if (updateResponse) {
+      onSuccess(updateResponse);
+    }
+
     close();
     toNull();
   };
@@ -72,7 +82,6 @@ export const FormAddProfessionalProfilePicture: FC<
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >
