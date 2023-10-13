@@ -130,7 +130,12 @@ export const ProfessionalProfilePage: React.FC<
             alignItems="center"
             gap={2}
           >
-            {isOwn && <ProfileManager professional={pageProfessional} />}
+            {isOwn && (
+              <ProfileManager
+                professional={pageProfessional}
+                refetch={() => id && fetchProfessional(id)}
+              />
+            )}
             <FlexBox full direction="column">
               <FlexBox alignItems="center" gap={2}>
                 <ProfilePicture centralized>
