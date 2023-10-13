@@ -57,6 +57,7 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
       profileType: "user",
       profilePicture: "",
       active: true,
+      verified: false,
     });
 
     if (!registerResponse) return;

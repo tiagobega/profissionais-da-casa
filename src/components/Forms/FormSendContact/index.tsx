@@ -38,6 +38,7 @@ export const FormContactProfessional: React.FC<
     user: { me, getSingleUser },
     professional: {},
     email: { sendEmail },
+    lead: { create },
   } = useApi();
 
   useEffect(() => {
@@ -61,8 +62,17 @@ export const FormContactProfessional: React.FC<
     const userResponse = await getSingleUser({ id: professional.userId });
 
     if (!userResponse) {
-      return;
+      return onClose();
     }
+
+    const leadResponse = await create({
+      professionalId: professional.id,
+      userId: userResponse.id,
+      description: data.description,
+      name: userResponse.name,
+    });
+
+    if (!leadResponse) return onClose();
 
     const mailResponse = await sendEmail(
       {
