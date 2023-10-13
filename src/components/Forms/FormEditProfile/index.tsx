@@ -12,6 +12,7 @@ import { Trash } from "@phosphor-icons/react";
 import { previewUrl } from "utils/ImageBase64Convert";
 import { Professional, ProfessionalUpdateData } from "services/User/types";
 import { useApi } from "contexts/User";
+import { tags } from "constants/tags";
 
 export type FormEditProfileData = Zod.infer<typeof editProfileSchema>;
 interface FormEditProfileProps {
@@ -39,14 +40,8 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
   });
 
   const [areaList, setAreaList] = useState<areaType[]>([]);
-  const [categoryList, setCategoryList] = useState<string[]>([]);
-  const [profile, setProfile] = useState<string | null>(null);
-  const [bgImg, setBgImg] = useState<string | null>(null);
 
-  const [profileChanged, setProfileChanged] = useState(false);
-  const [backgroundChanged, setBackgroundChanged] = useState(false);
   const { file, professional: professionalApi } = useApi();
-  const { sendFile } = file;
   const { update } = professionalApi;
 
   const professionalStates = () => {
@@ -59,71 +54,19 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
   useEffect(() => {
     setValue("name", professional.name);
     setValue("onlineAppointment", professional.onlineAppointment);
-    setProfile(professional.profilePicture);
-    setBgImg(professional.backgroundPicture);
+    setValue("description", professional.description);
+    setValue("tags", professional.tags.split(","));
     // setValue('description',professional.description)
   }, [professional]);
 
-  const removeArea = (index: number) => {
-    const filteredList = areaList.splice(index, 1);
-    setAreaList(filteredList);
-  };
-
-  const imgFileProfile = watch("profilePicture");
-  const imgFileBackground = watch("backgroundPicture");
-
-  useEffect(() => {
-    if (imgFileProfile?.length == 0) return;
-
-    (async () => {
-      const url = await previewUrl(imgFileProfile);
-      setProfile(url.base64);
-    })();
-  }, [imgFileProfile]);
-
-  useEffect(() => {
-    if (imgFileBackground?.length == 0) return;
-
-    (async () => {
-      const url = await previewUrl(imgFileBackground);
-      setBgImg(url.base64);
-    })();
-  }, [imgFileBackground]);
-
-  const toNull = () => {
-    reset();
-    setBgImg(null);
-    setProfile(null);
-  };
-
-  const sendPicture = async (
-    fileList: FileList,
-    filename: string,
-    content: string
-  ) => {
-    if (!profile || !fileList[0]) {
-      return;
-    }
-    const fileResponse = await sendFile({
-      filename,
-      content,
-      contentType: fileList[0].type,
-    });
-    return fileResponse;
-  };
-
   const onSubmit = async (data: FormEditProfileData) => {
-    const profilePicture = profile
-      ? sendPicture(data.profilePicture, "profile picture", profile)
-      : undefined;
-    const bgImgPicture = bgImg
-      ? sendPicture(data.backgroundPicture, "bg picture", bgImg)
-      : undefined;
-
     let payload: ProfessionalUpdateData = {
       name: data.name,
+      description: data.description,
       onlineAppointment: data.onlineAppointment,
+      tags: data.tags.join(","),
     };
+    console.log(payload);
   };
 
   return (
@@ -154,12 +97,21 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
           label={"Presto serviço a distancia."}
           {...register("onlineAppointment")}
         />
-        <hr />
-        <Input.File
-          label="Foto de perfil"
-          error={errors.profilePicture}
-          {...register("profilePicture")}
-        />
+        <FlexBox direction="column" gap={2} mt={2}>
+          {" "}
+          <h3>Categorias:</h3>
+          <FlexBox gap={2} full wrap={"wrap"}>
+            {tags.map((tag) => (
+              <Input.Checkbox
+                key={tag}
+                subject={tag}
+                label={tag}
+                value={tag}
+                {...register(`tags`)}
+              />
+            ))}
+          </FlexBox>
+        </FlexBox>
 
         <Button type="submit" full>
           Salvar
