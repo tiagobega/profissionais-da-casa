@@ -311,6 +311,7 @@ export const ProfessionalProfilePage: React.FC<
                     variant="outline"
                     color={theme.color.secondary.lightTeal}
                     small
+                    onClick={() => navigate(`/review/${pageProfessional.id}`)}
                   >
                     Adicionar
                   </Button>

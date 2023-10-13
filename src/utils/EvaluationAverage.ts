@@ -8,7 +8,8 @@ export const evaluationAverage = (evaluations: Evaluation[]) => {
     if (item.status !== "approved") return;
     sum = sum + evaluationSingleAverage(item);
   });
-  return sum / evaluations.length;
+  const avg = sum / evaluations.length;
+  return avg.toFixed(1);
 };
 
 export const evaluationSingleAverage = (evaluation: Evaluation) => {
@@ -25,7 +26,7 @@ export const evaluationSingleAverage = (evaluation: Evaluation) => {
 export const approvedEvaluations = (evaluations: Evaluation[]) => {
   const approved = evaluations.filter((el) => el.status == "approved");
   const catAvg = evaluationCategoryAverage(approved);
-  const totalAverage = evaluationAverage(evaluations);
+  const totalAverage = evaluationAverage(approved);
   return {
     evaluations: approved,
     average: totalAverage,

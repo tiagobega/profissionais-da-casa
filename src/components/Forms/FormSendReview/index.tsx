@@ -11,6 +11,7 @@ import { FC, useEffect, useState } from "react";
 import { ProjectType } from "Models/models";
 import { Me, Professional } from "services/User/types";
 import { useApi } from "contexts/User";
+import { useNavigate } from "react-router-dom";
 
 export interface FormSendReviewProps {
   user: Me;
@@ -37,7 +38,7 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
   const { evaluation } = useApi();
   const { create } = evaluation;
   const [modalConfirm, setModalConfirm] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setValue("cost", 0);
     setValue("relationship", 0);
@@ -57,6 +58,7 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
       status: "pending",
     });
     setModalConfirm(true);
+    navigate(-1);
     return;
   };
 
