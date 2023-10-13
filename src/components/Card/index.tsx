@@ -1,4 +1,4 @@
-import { CaretRight, Star } from "@phosphor-icons/react";
+import { CaretRight, Star, User } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { useTheme } from "styled-components";
@@ -38,10 +38,13 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
           alt="foto background"
         />
       </PhotoContainer>
-      <ProfileContainer
-        src={professional.profilePicture}
-        alt="foto do profissional"
-      />
+      <ProfileContainer centralized>
+        {professional.profilePicture.length == 0 ? (
+          <User color="white" size={64} weight="light" />
+        ) : (
+          <img src={professional.profilePicture} alt="foto do profissional" />
+        )}
+      </ProfileContainer>
       <InformationContainer
         direction="column"
         p={0.5}

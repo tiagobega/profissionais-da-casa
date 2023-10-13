@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components'
-import { FlexBox } from 'components/FlexBox'
+import styled, { css } from "styled-components";
+import { FlexBox } from "components/FlexBox";
 
 export const CardContainer = styled.div`
   ${({ theme }) => css`
@@ -11,12 +11,12 @@ export const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
   `}
-`
+`;
 export const PhotoContainer = styled.div`
   ${({ theme }) => css`
     width: 100%;
     height: 150px;
-    background-color: black;
+    background-color: ${theme.color.brand.purple};
     overflow: hidden;
     img {
       width: 100%;
@@ -27,30 +27,35 @@ export const PhotoContainer = styled.div`
       }
     }
   `}
-`
-export const ProfileContainer = styled.img`
+`;
+export const ProfileContainer = styled(FlexBox)`
   ${({ theme }) => css`
     position: absolute;
+    background-color: ${theme.color.brand.purple};
     width: 84px;
     height: 84px;
-    background-color: black;
     border-radius: 50%;
     border: 4px solid ${theme.color.brand.purple};
     overflow: hidden;
     right: 1rem;
     top: 105px;
     object-fit: cover;
+    img {
+      width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+    }
   `}
-`
+`;
 
 export const InformationContainer = styled(FlexBox)`
   ${({ theme }) => css`
     height: 240px;
   `}
-`
+`;
 
 export const ButtonContainer = styled(FlexBox)`
   ${({ theme }) => css`
     height: 24px;
   `}
-`
+`;
