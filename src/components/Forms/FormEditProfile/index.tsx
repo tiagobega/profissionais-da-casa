@@ -124,13 +124,6 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
       name: data.name,
       onlineAppointment: data.onlineAppointment,
     };
-
-    // profilePicture && ={...payload,profilePicture}
-    // bgImgPicture && payload={...payload,bgImgPicture}
-
-    // await updateMe({ profilePicture: fileResponse });
-    // close();
-    // toNull();
   };
 
   return (
@@ -149,12 +142,12 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
           {...register("name")}
         />
 
-        {/* <Input.Area
+        <Input.Area
           label="Sobre"
           placeholder="Escreva um pouco sobre você"
           error={errors.description}
           {...register("description")}
-        /> */}
+        />
 
         <Input.Checkbox
           subject={"onlineAppointment"}
@@ -167,32 +160,6 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({ professional }) => {
           error={errors.profilePicture}
           {...register("profilePicture")}
         />
-        {profile && (
-          <FlexBox gap={1}>
-            <ImgPreview src={profile}></ImgPreview>
-            <Button
-              type="button"
-              variant="text"
-              onClick={() => setProfile(null)}
-            >
-              <Trash size={20} />
-            </Button>
-          </FlexBox>
-        )}
-        <hr />
-        <Input.File
-          label="Foto de perfil"
-          error={errors.backgroundPicture}
-          {...register("backgroundPicture")}
-        />
-        {bgImg && (
-          <FlexBox gap={1}>
-            <ImgPreview src={bgImg}></ImgPreview>
-            <Button type="button" variant="text" onClick={() => setBgImg(null)}>
-              <Trash size={20} />
-            </Button>
-          </FlexBox>
-        )}
 
         <Button type="submit" full>
           Salvar
