@@ -56,7 +56,7 @@ export const LeadsHome: React.FC<LeadsHomeProps> = ({ leads }) => {
               </FlexBox>
             </FlexBox>
           ) : (
-            <FlexBox gap={1} full>
+            <FlexBox gap={1} full direction="column">
               <>
                 <p>Você tem {leads?.length} contatos.</p>
                 {filteredList().map((item) => (
