@@ -10,6 +10,7 @@ import { ConfirmModal, Form, Information, StarContainer } from "./style";
 import { FC, useEffect, useState } from "react";
 import { ProjectType } from "Models/models";
 import { Me, Professional } from "services/User/types";
+import { useApi } from "contexts/User";
 
 export interface FormSendReviewProps {
   user: Me;
@@ -27,45 +28,47 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
     register,
     watch,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(sendReviewSchema),
     mode: "onSubmit",
   });
 
+  const { evaluation } = useApi();
+  const { create } = evaluation;
   const [modalConfirm, setModalConfirm] = useState(false);
 
   useEffect(() => {
     setValue("cost", 0);
-    setValue("customerRelationship", 0);
-    setValue("deadline", 0);
+    setValue("relationship", 0);
+    setValue("deadlines", 0);
     setValue("functionality", 0);
-    setValue("handedOver", 0);
+    setValue("quality", 0);
   }, []);
 
   const { color } = useTheme();
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    console.log(data, user);
+    await create({
+      ...data,
+      professionalId: professional.id,
+      userId: user.id,
+      status: "pending",
+    });
     setModalConfirm(true);
     return;
   };
 
   const categories: {
     name: string;
-    value:
-      | "cost"
-      | "deadline"
-      | "functionality"
-      | "handedOver"
-      | "customerRelationship";
+    value: "cost" | "deadlines" | "functionality" | "quality" | "relationship";
   }[] = [
     { name: "Custo", value: "cost" },
-    { name: "Prazo", value: "deadline" },
+    { name: "Prazo", value: "deadlines" },
     { name: "Funcionalidade", value: "functionality" },
-    { name: "Qualidade das Entregas", value: "handedOver" },
-    { name: "Relacionamento com o Cliente", value: "customerRelationship" },
+    { name: "Qualidade das Entregas", value: "quality" },
+    { name: "Relacionamento com o Cliente", value: "relationship" },
   ];
 
   return (
@@ -110,8 +113,8 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
         <FlexBox full mt={0.5}>
           <Input.Area
             label="Depoimento"
-            error={errors.testimonial}
-            {...register("testimonial")}
+            error={errors.description}
+            {...register("description")}
           />
         </FlexBox>
 
