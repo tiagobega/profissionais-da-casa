@@ -71,8 +71,7 @@ export const FormAddProfessionalProfilePicture: FC<
   const imgFile = watch("picture");
 
   useEffect(() => {
-    if (imgFile?.length == 0) return;
-
+    if (!imgFile?.length) return;
     (async () => {
       const url = await previewUrl(imgFile);
       setImg(url.base64);

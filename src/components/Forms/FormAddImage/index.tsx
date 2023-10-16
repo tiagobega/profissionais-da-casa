@@ -57,8 +57,9 @@ export const FormAddImage: FC<FormAddImageProps> = ({ close }) => {
   const imgFile = watch("picture");
 
   useEffect(() => {
-    if (imgFile?.length == 0) return;
+    console.log(imgFile);
 
+    if (!imgFile?.length) return;
     (async () => {
       const url = await previewUrl(imgFile);
       setImg(url.base64);
