@@ -31,7 +31,9 @@ export const LeadList: React.FC<ProfessionalListProps> = ({
           {leads.length > 0
             ? admin
               ? `Quantidade de contatos: ${leads.length}`
-              : `Meus Contatos: ${leads.length}`
+              : `${
+                  professional ? "Contatos do profissional" : "Meus Contatos"
+                }: ${leads.length}`
             : "Não há contatos"}
         </h3>
         <Input.Text

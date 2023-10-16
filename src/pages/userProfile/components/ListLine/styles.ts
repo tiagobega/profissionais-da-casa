@@ -6,7 +6,13 @@ export const Line = styled(FlexBox)`
     padding-right: 2rem;
 
     .name {
-      width: 300px;
+      width: 100%;
+      padding-left: 2rem;
+      display: flex;
+      gap: 2rem;
+      .date {
+        font-style: italic;
+      }
     }
     .birth-date {
       width: 120px;

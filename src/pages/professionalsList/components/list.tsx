@@ -266,7 +266,6 @@ export const List: React.FC<ListProps> = () => {
           </FilterContainer>
         )}
       </div>
-      <p>{selected.toString()}</p>
       {!allProfessionals ? (
         <Loading />
       ) : (

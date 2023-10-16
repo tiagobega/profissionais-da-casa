@@ -39,7 +39,8 @@ export const LeadListLine: React.FC<ProfessionalListLineProps> = ({
         <Line full justifyContent="space-between" py={0.5} alignItems="center">
           <FlexBox gap={1}>
             <div className="name">
-              {professional ? formatLongDate(lead.createdAt) : lead.name}
+              <p>{professional ? leadUser.name : lead.name}</p>
+              <p className="date">{formatLongDate(lead.createdAt)}</p>
             </div>
           </FlexBox>
           <Button variant="outline" small onClick={() => setIsModalOpen(true)}>
