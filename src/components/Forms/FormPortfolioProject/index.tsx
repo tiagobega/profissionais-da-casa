@@ -198,8 +198,8 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
         <Button
           type="submit"
           disabled={
-            watch("description").length == 0 ||
-            watch("description").length > 300
+            watch("description")?.length == 0 ||
+            watch("description")?.length > 300
           }
         >
           Enviar
