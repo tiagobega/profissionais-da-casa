@@ -122,7 +122,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
           </HeaderWrapper>
           <MarginContainer>
             <FlexBox my={me.leads.length > 0 ? 2 : 5}>
-              {me.leads && <LeadList leads={me.leads} />}
+              {me.leads && <LeadList professional={false} leads={me.leads} />}
             </FlexBox>
           </MarginContainer>
 
