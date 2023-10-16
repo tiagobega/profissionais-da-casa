@@ -7,9 +7,14 @@ import { List, ListContent, ListHeader } from "./styles";
 export interface ProfessionalListProps {
   leads: Lead[];
   admin?: boolean;
+  professional: boolean;
 }
 
-export const LeadList: React.FC<ProfessionalListProps> = ({ leads, admin }) => {
+export const LeadList: React.FC<ProfessionalListProps> = ({
+  leads,
+  admin,
+  professional,
+}) => {
   const [query, setQuery] = useState<string>("");
 
   const filteredList = () => {
@@ -41,7 +46,7 @@ export const LeadList: React.FC<ProfessionalListProps> = ({ leads, admin }) => {
       {leads.length > 0 && (
         <ListContent>
           {filteredList().map((el) => (
-            <LeadListLine lead={el} />
+            <LeadListLine lead={el} professional={professional} />
           ))}
         </ListContent>
       )}

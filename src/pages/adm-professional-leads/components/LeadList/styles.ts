@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 
 export const List = styled.section`
   ${({ theme }) => css`
-    width: 1171px;
+    width: 100%;
     display: flex;
     flex-direction: column;
   `}

@@ -1,19 +1,21 @@
 import Input from "components/Input";
 import { Loading } from "components/Loading";
-import { useUser } from "contexts/User";
-import { useState } from "react";
+import { useApi, useUser } from "contexts/User";
+import { useEffect, useState } from "react";
 import { Lead } from "services/User/types";
 import { LeadListLine } from "../ListLine";
 import { List, ListContent, ListHeader } from "./styles";
+import { useParams } from "react-router-dom";
 
 export interface ProfessionalListProps {
   leads: Lead[];
-  admin: true[];
 }
 
 export const LeadList: React.FC<ProfessionalListProps> = ({ leads }) => {
+  const { id } = useParams();
   const [query, setQuery] = useState<string>("");
-  const {} = useUser();
+  const { lead } = useApi();
+  const { getAll } = lead;
 
   const filteredList = () => {
     if (query.length < 3) return leads;

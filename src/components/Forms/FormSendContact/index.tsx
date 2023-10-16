@@ -118,6 +118,12 @@ export const FormContactProfessional: React.FC<
           label="Quero disponibilizar o meu telefone para resposta"
         />
 
+        <p style={{ fontSize: 12, fontStyle: "italic" }}>
+          Profissionais da Casa compartilhará suas informações apenas para o
+          profissional escolhido por você. Seus dados permanecerão protegidos,
+          segundo a LGPD.
+        </p>
+
         <Button type="submit" full width={5}>
           Enviar e-mail
         </Button>
