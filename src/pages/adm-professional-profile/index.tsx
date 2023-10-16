@@ -1,4 +1,4 @@
-import { CaretLeft, Download } from "@phosphor-icons/react";
+import { CaretLeft, Download, DownloadSimple } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,6 +9,9 @@ import { useEffect, useState } from "react";
 import { Me, Professional } from "services/User/types";
 import { useApi } from "contexts/User";
 import { states } from "constants/states";
+import { LeadList } from "pages/userProfile/components/LeadList";
+import { Modal } from "components/Modal";
+import { socialMediaIcon } from "utils/socialMediaLogo";
 
 export interface ProfessionalDetailsProps {}
 
@@ -19,6 +22,7 @@ export const AdmProfessionalDetails: React.FC<
     useState<Professional>();
 
   const [currentUser, setCurrentUser] = useState<Me>();
+  const [leads, setList] = useState(false);
 
   const {
     professional: { update, getSingle },
@@ -178,13 +182,9 @@ export const AdmProfessionalDetails: React.FC<
                       <Button
                         variant="outline"
                         width={15}
-                        onClick={() =>
-                          navigate(
-                            `/admin/professionals-management/leads/${currentProfessional.id}`
-                          )
-                        }
+                        onClick={() => setList(!leads)}
                       >
-                        Leads do Profissonal
+                        {leads ? <>Informações</> : <>Leads do Profissonal</>}
                       </Button>
                     </FlexBox>
                   </FlexBox>
@@ -225,76 +225,90 @@ export const AdmProfessionalDetails: React.FC<
               )}
             </FlexBox>
             <h2>Informações:</h2>
-            <FlexBox gap={10}>
-              <FlexBox direction="column" gap={3}>
-                <FlexBox direction="column" gap={0.75}>
-                  <h3>Informações pessoais</h3>
-                  <p>
-                    Nome: <strong>{currentProfessional.name}</strong>
-                  </p>
-                  {/* <p>
+            {!leads ? (
+              <FlexBox gap={10}>
+                <FlexBox direction="column" gap={3}>
+                  <FlexBox direction="column" gap={0.75}>
+                    <h3>Informações pessoais</h3>
+                    <p>
+                      Nome: <strong>{currentProfessional.name}</strong>
+                    </p>
+                    {/* <p>
                 CPF: <strong>{currentProfessional.}</strong>
               </p>
               <p>
                 CEP: <strong>{currentProfessional.}</strong>
               </p> */}
-                  <p>
-                    Telefone: <strong>{currentProfessional.phone}</strong>
-                  </p>
-                  {/* <p>
+                    <p>
+                      Telefone: <strong>{currentProfessional.phone}</strong>
+                    </p>
+                    {/* <p>
                 Email: <strong>{currentProfessional.email}</strong>
               </p> */}
-                </FlexBox>
-                <FlexBox direction="column" gap={0.75}>
-                  <h3>Informações de PJ</h3>
+                  </FlexBox>
+                  <FlexBox direction="column" gap={0.75}>
+                    <h3>Informações de PJ</h3>
 
-                  <p>
-                    Nome Fantasia:{" "}
-                    <strong>{currentProfessional.companyName}</strong>
-                  </p>
-                  <p>
-                    CNPJ: <strong>{currentProfessional.cnpj}</strong>
-                  </p>
+                    <p>
+                      Nome Fantasia:{" "}
+                      <strong>{currentProfessional.companyName}</strong>
+                    </p>
+                    <p>
+                      CNPJ: <strong>{currentProfessional.cnpj}</strong>
+                    </p>
+                  </FlexBox>
+                  <FlexBox direction="column" gap={0.75}>
+                    <h3>Área de atuação</h3>
+                    {currentProfessional.locations.map((a, index) => (
+                      <p key={a.id}>{stateName(a.state)}</p>
+                    ))}
+                    {currentProfessional.onlineAppointment && (
+                      <p>Atende online</p>
+                    )}
+                  </FlexBox>
                 </FlexBox>
-                <FlexBox direction="column" gap={0.75}>
-                  <h3>Área de atuação</h3>
-                  {currentProfessional.locations.map((a, index) => (
-                    <p key={a.id}>{stateName(a.state)}</p>
-                  ))}
-                  {currentProfessional.onlineAppointment && (
-                    <p>Atende online</p>
-                  )}
-                </FlexBox>
-              </FlexBox>
-              <FlexBox direction="column" gap={3}>
-                <FlexBox direction="column" gap={0.75}>
-                  <h3>Formação Profissional</h3>
-                  <p>
-                    Instituição de formação:{" "}
-                    <strong>{currentProfessional.formationInstitute}</strong>
-                  </p>
-                  <p>
-                    CREA / CAU: <strong>{currentProfessional.caucrea}</strong>
-                  </p>
-                  <p>
-                    Nível de formação:{" "}
-                    <strong>{currentProfessional.professionalLevel}</strong>
-                  </p>
-                  <p>
-                    Ano de conclusão:{" "}
-                    <strong>{currentProfessional.yearConclusion}</strong>
-                  </p>
-                  <p>
-                    Detalhamento da formação:{" "}
-                    <strong>{currentProfessional.formationDetails}</strong>
-                  </p>
-                </FlexBox>
-                <FlexBox direction="column" gap={0.75}>
-                  <h3>Redes Sociais</h3>
-                </FlexBox>
-                <FlexBox direction="column" gap={0.75}>
-                  <h3>Anexos</h3>
-                  {/* {currentProfessional.?.map((f, index) => (
+                <FlexBox direction="column" gap={3}>
+                  <FlexBox direction="column" gap={0.75}>
+                    <h3>Formação Profissional</h3>
+                    <p>
+                      Instituição de formação:{" "}
+                      <strong>{currentProfessional.formationInstitute}</strong>
+                    </p>
+                    <p>
+                      CREA / CAU: <strong>{currentProfessional.caucrea}</strong>
+                    </p>
+                    <p>
+                      Nível de formação:{" "}
+                      <strong>{currentProfessional.professionalLevel}</strong>
+                    </p>
+                    <p>
+                      Ano de conclusão:{" "}
+                      <strong>{currentProfessional.yearConclusion}</strong>
+                    </p>
+                    <p>
+                      Detalhamento da formação:{" "}
+                      <strong>{currentProfessional.formationDetails}</strong>
+                    </p>
+                  </FlexBox>
+                  <FlexBox direction="column" gap={0.75}>
+                    <h3>Redes Sociais</h3>
+                    <FlexBox>
+                      {currentProfessional.socialMedias.map((media) => (
+                        <a key={media.id} href={media.link} target="_blank">
+                          {socialMediaIcon(media.name)}
+                        </a>
+                      ))}
+                    </FlexBox>
+                  </FlexBox>
+                  <FlexBox direction="column" gap={0.75}>
+                    <h3>Anexos</h3>
+                    <a href={currentProfessional.portfolioFile} target="_blank">
+                      <Button variant="text">
+                        <DownloadSimple />
+                        Visualizar arquivo de portifolio
+                      </Button>
+                    </a>
+                    {/* {currentProfessional.?.map((f, index) => (
                 <FlexBox key={index} gap={1.5}>
                   <em>{f.name}</em>
 
@@ -303,9 +317,17 @@ export const AdmProfessionalDetails: React.FC<
                   </Button>
                 </FlexBox>
               ))} */}
+                  </FlexBox>
                 </FlexBox>
               </FlexBox>
-            </FlexBox>
+            ) : (
+              <LeadList
+                leads={currentProfessional.leads.filter(
+                  (el) => el.professionalId === currentProfessional.id
+                )}
+                professional
+              />
+            )}
           </FlexBox>
         </>
       )}
