@@ -61,15 +61,15 @@ export const FormContactProfessional: React.FC<
 
     const userResponse = await getSingleUser({ id: professional.userId });
 
-    if (!userResponse) {
+    if (!userResponse || !me) {
       return onClose();
     }
 
     const leadResponse = await create({
       professionalId: professional.id,
-      userId: userResponse.id,
+      userId: me.id,
       description: data.description,
-      name: userResponse.name,
+      name: me.name,
     });
 
     if (!leadResponse) return onClose();
