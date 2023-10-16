@@ -14,10 +14,12 @@ import { FormEditPortfolioProject } from "components/Forms/FormEditPortfolioProj
 
 export interface PortfolioHomeProps {
   professional: Professional;
+  refetch: () => void;
 }
 
 export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
   professional,
+  refetch,
 }) => {
   const [query, setQuery] = useState<string>("");
   const [selectedProject, setSelectedProject] =
@@ -51,6 +53,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
   const handleCloseForm = () => {
     setSelectedProject(null);
     setAdd(false);
+    refetch();
   };
 
   return (
