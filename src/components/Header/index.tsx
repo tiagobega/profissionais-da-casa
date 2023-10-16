@@ -25,7 +25,12 @@ const Header = () => {
   return (
     <HeaderContainer role={getRole()}>
       <FlexBox full justifyContent="space-between" alignItems="center" px={6}>
-        <img src={logo} alt="cada casa" onClick={() => navigate("/")} />
+        <img
+          src={logo}
+          alt="cada casa"
+          onClick={() => navigate("/")}
+          className="logo"
+        />
 
         <FlexBox justifyContent="space-between">
           <nav>

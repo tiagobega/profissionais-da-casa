@@ -22,6 +22,9 @@ export const HeaderContainer = styled.header<RoleProps>`
         font-size: 0.875rem;
       }
     }
+    .logo {
+      cursor: pointer;
+    }
   `}
 `;
 
