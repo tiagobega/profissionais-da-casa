@@ -2,7 +2,7 @@ import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { Modal } from "components/Modal";
 import { useEffect, useState } from "react";
-import { Lead, Me } from "services/User/types";
+import { Lead, Me, Professional } from "services/User/types";
 import { Line } from "./styles";
 import { useApi } from "contexts/User";
 import { formatLongDate } from "utils/dateFormat";
@@ -18,16 +18,17 @@ export const LeadListLine: React.FC<ProfessionalListLineProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user } = useApi();
-  const { getSingleUser } = user;
+  const { professional: professionalAPI } = useApi();
+  const { getSingle } = professionalAPI;
 
-  const [leadUser, setLeadUser] = useState<Me | null>(null);
+  const [leadUser, setLeadUser] = useState<Professional | null>(null);
 
   const getUserInfo = async () => {
-    const response = await getSingleUser({ id: lead.userId });
-    console.log(response);
+    const response = await getSingle({ id: lead.professionalId });
     response && setLeadUser(response);
   };
+
+  console.log(lead);
 
   useEffect(() => {
     getUserInfo();
@@ -39,7 +40,7 @@ export const LeadListLine: React.FC<ProfessionalListLineProps> = ({
         <Line full justifyContent="space-between" py={0.5} alignItems="center">
           <FlexBox gap={1}>
             <div className="name">
-              <p>{professional ? leadUser.name : lead.name}</p>
+              <p>{professional ? lead.name : leadUser.name}</p>
               <p className="date">{formatLongDate(lead.createdAt)}</p>
             </div>
           </FlexBox>
