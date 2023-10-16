@@ -8,8 +8,9 @@ import { useApi } from "contexts/User";
 import { useEffect, useState } from "react";
 import { PortfolioProject, Professional } from "services/User/types";
 import { useTheme } from "styled-components";
-import { PortfolioFileContainer } from "./styles";
+import { PortfolioCard, PortfolioFileContainer } from "./styles";
 import { FormAddPortfolio } from "components/Forms/FormAddPortfolio";
+import { FormEditPortfolioProject } from "components/Forms/FormEditPortfolioProject";
 
 export interface PortfolioHomeProps {
   professional: Professional;
@@ -19,7 +20,8 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
   professional,
 }) => {
   const [query, setQuery] = useState<string>("");
-  const [selected, setSelected] = useState<PortfolioProject | null>(null);
+  const [selectedProject, setSelectedProject] =
+    useState<PortfolioProject | null>(null);
   const [add, setAdd] = useState(false);
   const { portfolioProject, professional: professionalApi } = useApi();
   const { deletePortfolioProject } = portfolioProject;
@@ -43,11 +45,11 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
 
   const handleDelete = async (id: string) => {
     await deletePortfolioProject({ id });
-    setSelected(null);
+    setSelectedProject(null);
   };
 
   const handleCloseForm = () => {
-    setSelected(null);
+    setSelectedProject(null);
     setAdd(false);
   };
 
@@ -55,7 +57,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
     <>
       {add ? (
         <FormPortfolioProject id={professional.id} close={handleCloseForm} />
-      ) : !selected ? (
+      ) : !selectedProject ? (
         <>
           <FlexBox full justifyContent="space-between" alignItems="center">
             <h2>Meu portifolio</h2>
@@ -76,7 +78,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
             </FlexBox>
           </FlexBox>
 
-          <FlexBox gap={1} full>
+          <FlexBox gap={1} full mt={2}>
             {portfolio.length == 0 && (
               <FlexBox full my={4} centralized direction="column" gap={1}>
                 <FlexBox alignItems="center" gap={1}>
@@ -92,21 +94,35 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
                 <p>Clique em "Adicionar" para criar um projeto </p>
               </FlexBox>
             )}
-            {filteredPortfolio().map((item) => (
-              <FlexBox full>
-                <FlexBox gap={1}>
-                  <img src={item.images[0]} />
-                  <h3>{item.name}</h3>
-                </FlexBox>
-                <FlexBox gap={1}>
-                  <Button onClick={() => setSelected(item)}>Editar</Button>
-                  <ButtonDelete
-                    deleteFn={() => handleDelete(item.id)}
-                    name={item.name}
-                  />
-                </FlexBox>
-              </FlexBox>
-            ))}
+            <FlexBox direction="column">
+              {filteredPortfolio().map((item) => (
+                <PortfolioCard
+                  full
+                  alignItems="center"
+                  justifyContent="space-between"
+                  gap={6}
+                >
+                  <FlexBox gap={1} alignItems="center">
+                    <img src={item.images.split(",")[0]} />
+                    <h4>{item.name}</h4>
+                  </FlexBox>
+                  <FlexBox gap={1}>
+                    <Button
+                      type="button"
+                      small
+                      onClick={() => setSelectedProject(item)}
+                    >
+                      Editar
+                    </Button>
+                    <ButtonDelete
+                      small
+                      deleteFn={() => handleDelete(item.id)}
+                      name={item.name}
+                    />
+                  </FlexBox>
+                </PortfolioCard>
+              ))}
+            </FlexBox>
           </FlexBox>
           <PortfolioFileContainer direction="column" gap={2} mt={3} pt={2} full>
             <h3>Arquivo de portfólio</h3>
@@ -132,7 +148,11 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
           </PortfolioFileContainer>
         </>
       ) : (
-        <FormPortfolioProject id={professional.id} close={handleCloseForm} />
+        <FormEditPortfolioProject
+          id={professional.id}
+          close={handleCloseForm}
+          project={selectedProject}
+        />
       )}
     </>
   );

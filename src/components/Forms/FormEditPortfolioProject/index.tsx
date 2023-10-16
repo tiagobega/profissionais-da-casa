@@ -17,7 +17,7 @@ import { PhotoPreview } from "./photoPreview";
 
 export interface FormPortfolioProjectProps {
   close: () => void;
-  project?: PortfolioProject;
+  project: PortfolioProject;
   id: string;
 }
 
@@ -31,7 +31,7 @@ const loadImgString = (input: string | string[]) => {
   }
 };
 
-export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
+export const FormEditPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   close,
   project,
   id,
@@ -132,7 +132,8 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
       }
     });
 
-    await create({
+    await edit({
+      id: project.id,
       description: data.description,
       name: data.title,
       images: lastImageList.join(","),
@@ -198,8 +199,8 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
         <Button
           type="submit"
           disabled={
-            watch("description").length == 0 ||
-            watch("description").length > 300
+            watch("description")?.length == 0 ||
+            watch("description")?.length > 300
           }
         >
           Enviar

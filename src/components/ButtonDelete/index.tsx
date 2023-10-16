@@ -1,5 +1,5 @@
 import { Warning } from "@phosphor-icons/react";
-import { Button } from "components/Button";
+import { Button, ButtonProps } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { Modal } from "components/Modal";
 import { ReactNode, useState } from "react";
@@ -8,8 +8,9 @@ import { useTheme } from "styled-components";
 export interface ButtonDeleteProps {
   deleteFn: () => void;
   name: string;
-  children?: ReactNode;
   variant?: "primary" | "outline" | "text";
+  small?: boolean;
+  children?: ReactNode;
 }
 
 export const ButtonDelete: React.FC<ButtonDeleteProps> = ({
@@ -17,6 +18,7 @@ export const ButtonDelete: React.FC<ButtonDeleteProps> = ({
   name,
   children,
   variant,
+  small,
 }) => {
   const [modalConfirm, setModalConfirm] = useState(false);
   const theme = useTheme();
@@ -29,6 +31,7 @@ export const ButtonDelete: React.FC<ButtonDeleteProps> = ({
   return (
     <>
       <Button
+        small={small}
         onClick={() => setModalConfirm(true)}
         variant={variant ? variant : `outline`}
       >

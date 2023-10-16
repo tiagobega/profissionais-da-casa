@@ -15,6 +15,7 @@ import {
   ProfessionalInformation,
   ProjectInformation,
 } from "./styles";
+import { approvedEvaluations } from "utils/EvaluationAverage";
 
 export interface PortfolioProjectPageProps {}
 export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
@@ -32,22 +33,29 @@ export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
   const [currentProfessional, setCurrentProfessional] =
     useState<Professional | null>(null);
 
+  const getInfo = async () => {
+    if (!id) return;
+    const project = await getSingle({ id });
+    if (!project) return;
+    setCurrentProject(project);
+    const professional = await getSingleProfessional({
+      id: project.professionalId,
+    });
+    professional && setCurrentProfessional(professional);
+  };
+
   useEffect(() => {
-    async () => {
-      if (!id) return;
-      const project = await getSingle({ id });
-      if (!project) return;
-      setCurrentProject(project);
-      const professional = await getSingleProfessional({
-        id: project.professionalId,
-      });
-      professional && setCurrentProfessional(professional);
-    };
+    getInfo();
   }, [id]);
+
+  const ratings =
+    currentProfessional &&
+    approvedEvaluations(currentProfessional?.evaluations);
 
   if (!currentProject) return <Loading />;
   if (!currentProfessional) return <Loading />;
   const projectImages = currentProject?.images.split(",");
+  console.log(projectImages);
   return (
     <>
       <MarginContainer>
@@ -55,27 +63,25 @@ export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
           <Button variant="text" onClick={() => navigate(-1)}>
             <CaretLeft weight="fill" /> Voltar
           </Button>
-          <EditPortfolioProject />
         </FlexBox>
       </MarginContainer>
-      {!projectImages ||
-        (projectImages.length == 0 && (
-          <GalleryContainer>
-            <div className="carousel-bg">
-              <img src={projectImages[displayImage]} alt="foto do projeto" />
-            </div>
-            <FlexBox full justifyContent="center" gap={1} p={1}>
-              {projectImages.map((item, index) => (
-                <CarouselButton
-                  isActive={displayImage == index}
-                  className="carousel-btn"
-                  onClick={() => setDisplayImage(index)}
-                  key={item}
-                />
-              ))}
-            </FlexBox>
-          </GalleryContainer>
-        ))}
+      {projectImages && (
+        <GalleryContainer>
+          <div className="carousel-bg">
+            <img src={projectImages[displayImage]} alt="foto do projeto" />
+          </div>
+          <FlexBox full justifyContent="center" gap={1} p={1}>
+            {projectImages.map((item, index) => (
+              <CarouselButton
+                isActive={displayImage == index}
+                className="carousel-btn"
+                onClick={() => setDisplayImage(index)}
+                key={item}
+              />
+            ))}
+          </FlexBox>
+        </GalleryContainer>
+      )}
       <InformationContainer>
         <ProfessionalInformation>
           <FlexBox direction="column" gap={1}>
@@ -88,8 +94,8 @@ export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
             </FlexBox>
             <FlexBox alignItems="center" gap={0.5} mb={1.5}>
               <Star weight="fill" color={color.secondary.yellow} size={40} />
-              <p className="rating">4.5</p>
-              <p className="quantity">(123)</p>
+              <p className="rating">{ratings?.average}</p>
+              <p className="quantity">{`(${ratings?.quantity})`}</p>
             </FlexBox>
             <Button variant="text">
               <CaretLeft

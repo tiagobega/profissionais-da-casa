@@ -218,7 +218,11 @@ export const ProfessionalProfilePage: React.FC<
         <GalleryContainer>
           <div className="gallery-bg">
             <img
-              src={pageProfessional.portfolioProjects[displayProject].images[0]}
+              src={
+                pageProfessional.portfolioProjects[displayProject].images.split(
+                  ","
+                )[0]
+              }
               alt="project image"
               className="gallery-img"
             />
