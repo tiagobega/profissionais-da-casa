@@ -36,19 +36,10 @@ const Footer = (props: FooterProps) => (
             <Button variant="text" color="white" href="/faq">
               FAQ
             </Button>
-            <Button variant="text" color="white" href="/cancel-policy">
-              Política de Troca e Cancelamento
-            </Button>
           </FlexBox>
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
             <Button variant="text" color="white" href="/terms-conditions">
-              Termos de uso
-            </Button>
-            <Button variant="text" color="white" href="#">
-              Politica de Privacidade
-            </Button>
-            <Button variant="text" color="white" href="return-policy">
-              Politica de Devolução e Reembolso
+              Termos de uso e politica de privacidade
             </Button>
           </FlexBox>
           <FlexBox justifyContent="center" alignItems="center" gap={2}>
@@ -59,10 +50,18 @@ const Footer = (props: FooterProps) => (
         </FlexBox>
       </FlexBox>
       <FlexBox centralized gap={2}>
-        <Button variant="text" color="white" href="#">
+        <Button
+          variant="text"
+          color="white"
+          href="https://www.facebook.com/people/Viva-Cada-Casa/100083397247781/"
+        >
           <img src={facebookLogo} alt="facebook" />
         </Button>
-        <Button variant="text" color="white" href="#">
+        <Button
+          variant="text"
+          color="white"
+          href="https://www.instagram.com/vivacadacasa/"
+        >
           <img src={instagramLogo} alt="instagram" />
         </Button>
         <Button
@@ -72,10 +71,14 @@ const Footer = (props: FooterProps) => (
         >
           <img src={linkedinLogo} alt="linkedin" />
         </Button>
-        <Button variant="text" color="white" href="#">
+        {/* <Button variant="text" color="white" href="https://br.pinterest.com/">
           <img src={pinterestLogo} alt="pinterest" />
-        </Button>
-        <Button variant="text" color="white" href="#">
+        </Button> */}
+        <Button
+          variant="text"
+          color="white"
+          href="https://www.youtube.com/@cadacasa7844"
+        >
           <img src={youtubeLogo} alt="youtube" />
         </Button>
       </FlexBox>
