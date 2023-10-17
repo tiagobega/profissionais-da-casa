@@ -6,8 +6,8 @@ import { Button } from "components/Button";
 import { StarMeter } from "components/StarMeter";
 import { EvaluationStatus } from "constants/evaluation";
 import { Modal } from "components/Modal";
-import { useState } from "react";
-import { Evaluation } from "services/User/types";
+import { useEffect, useState } from "react";
+import { Evaluation, Professional } from "services/User/types";
 import { useApi } from "contexts/User";
 
 export type ReviewType = {};
@@ -31,6 +31,19 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 }) => {
   const { color } = useTheme();
   const [modalDetails, setModalDetails] = useState(false);
+  const { professional } = useApi();
+  const { getSingle } = professional;
+  const [prof, setProf] = useState<Professional | null>(null);
+
+  const getProfessional = async () => {
+    const professional = await getSingle({ id: evaluation.professionalId });
+    professional && setProf(professional);
+  };
+
+  useEffect(() => {
+    getProfessional();
+  });
+
   const openDetails = () => {
     setModalDetails(true);
   };
@@ -72,7 +85,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
   return (
     <ReviewContainer status={status}>
-      <img src={profile} alt="" />
+      <img src={prof?.backgroundPicture} alt="" />
       <InfoContainer direction="column" gap={0.5}>
         <p>
           <strong>{customerName}</strong>
