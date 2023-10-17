@@ -83,7 +83,7 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
           refetch();
         }}
       >
-        <PortfolioHome professional={professional} />
+        <PortfolioHome professional={professional} refetch={refetch} />
       </Modal>
       <Modal
         isOpened={modalLeads}

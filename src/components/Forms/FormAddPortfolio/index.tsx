@@ -56,7 +56,7 @@ export const FormAddPortfolio: FC<FormAddImageProps> = ({ id }) => {
   const imgFile = watch("portfolio");
 
   useEffect(() => {
-    if (imgFile?.length == 0) return;
+    if (!imgFile?.length) return;
 
     (async () => {
       const url = await previewUrl(imgFile);
