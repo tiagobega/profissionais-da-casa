@@ -17,7 +17,7 @@ export const PhotoPreview: React.FC<PhotoPreviewProps> = ({
 }) => {
   return (
     <ImageContainer isCover={isCover}>
-      <img src={url} onClick={toggleCover}  loading="lazy"/>
+      <img src={url} onClick={toggleCover} loading="lazy" />
       <X className="delete" onClick={removePicture} />
       <Button
         className="cover"

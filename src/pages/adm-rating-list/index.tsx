@@ -36,6 +36,7 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
   const [allEvaluations, setAllEvaluations] = useState<Evaluation[]>();
   const [allUsers, setAllUsers] = useState<Me[]>();
   const [allProfessionals, setAllProfessionals] = useState<Professional[]>();
+  const [isFetching, setIsFetching] = useState<boolean>();
 
   const [status, setStatus] = useState<EvaluationStatus>("pending");
   const [query, setQuery] = useState<string>("");
@@ -49,9 +50,11 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
     if (value == "userName" || value == "professionalName" || value == "rating")
       setOrder(value);
   };
+
   const navigate = useNavigate();
 
   const fetchEvaluations = async () => {
+    setIsFetching(true);
     const evaluationResponse = await evaluation.getAll();
     const professionalResponse = await professional.getAll();
     const userResponse = await user.getAll();
@@ -60,12 +63,13 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
       setAllEvaluations([]);
       setAllUsers([]);
       setAllProfessionals([]);
-      return;
+      return setIsFetching(false);
     }
 
     setAllEvaluations(evaluationResponse.evaluations);
     setAllUsers(userResponse.users);
     setAllProfessionals(professionalResponse.proProfiles);
+    setIsFetching(false);
   };
 
   useEffect(() => {
@@ -165,6 +169,7 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
         }
       </Header>
       <ContentContainer>
+        {isFetching && <Loading />}
         {!isDetails ? (
           <RatingList list={searchedList()} refetch={fetchEvaluations} />
         ) : (

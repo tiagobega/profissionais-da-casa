@@ -6,6 +6,6 @@ export const ScrollingList = styled(FlexBox)`
     width: 809px;
     height: 410px;
     padding-right: 1rem;
-    overflow-y: scroll;
+    overflow-y: auto;
   `}
 `;

@@ -7,19 +7,18 @@ import { StarMeter } from "components/StarMeter";
 import { EvaluationStatus } from "constants/evaluation";
 import { Modal } from "components/Modal";
 import { useEffect, useState } from "react";
-import { Evaluation, Professional } from "services/User/types";
+import { Evaluation, Me, Professional } from "services/User/types";
 import { useApi } from "contexts/User";
+import { evaluationSingleAverage } from "utils/EvaluationAverage";
 
 export type ReviewType = {};
 
 export interface ReviewCardProps {
-  customerName: string;
-  professionalName: string;
-  rating: number;
   id: string;
-  status: EvaluationStatus;
   evaluation: Evaluation;
   refetch: () => void;
+  professional: Professional;
+  user: Me;
 }
 
 const statusName = {
@@ -29,28 +28,13 @@ const statusName = {
 };
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({
-  customerName,
-  professionalName,
-  rating,
-  id,
-  status,
   evaluation,
   refetch,
+  professional,
+  user,
 }) => {
   const { color } = useTheme();
   const [modalDetails, setModalDetails] = useState(false);
-  const { professional } = useApi();
-  const { getSingle } = professional;
-  const [prof, setProf] = useState<Professional | null>(null);
-
-  const getProfessional = async () => {
-    const professional = await getSingle({ id: evaluation.professionalId });
-    professional && setProf(professional);
-  };
-
-  useEffect(() => {
-    getProfessional();
-  });
 
   const openDetails = () => {
     setModalDetails(true);
@@ -79,38 +63,24 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   };
 
   return (
-    <ReviewContainer status={status}>
-      <img src={prof?.backgroundPicture} alt="" loading="lazy" />
+    <ReviewContainer status={evaluation.status}>
+      <img src={user.profilePicture} alt="" loading="lazy" />
       <InfoContainer direction="column" gap={0.5}>
         <p>
-          <strong>{customerName}</strong>
+          <strong>{user.name}</strong>
           <br />
           sobre
-          <strong> {professionalName}</strong>
+          <strong> {professional.name}</strong>
         </p>
         <FlexBox gap={1}>
-          <StarMeter rating={rating} />
+          <StarMeter rating={evaluationSingleAverage(evaluation)} />
         </FlexBox>
       </InfoContainer>
-      {status == "pending" && (
-        <Button small background="white" onClick={openDetails}>
-          Analisar
-        </Button>
-      )}
-      {status == "approved" && (
-        <FlexBox direction="column" gap={1}>
-          <Button small background="white" onClick={openDetails}>
-            Analisar
-          </Button>
-        </FlexBox>
-      )}
-      {status == "refused" && (
-        <FlexBox direction="column" gap={1}>
-          <Button small background="white" onClick={openDetails}>
-            Analisar
-          </Button>
-        </FlexBox>
-      )}
+
+      <Button small background="white" onClick={openDetails}>
+        {statusName[evaluation.status]}
+      </Button>
+
       <Modal
         isOpened={modalDetails}
         onProceed={() => console.log("proceed")}
@@ -121,11 +91,11 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
           <FlexBox direction="column">
             <p>
               <b>Profissional: </b>
-              {professionalName}
+              {professional.name}
             </p>
             <p>
               <b>Usuário: </b>
-              {customerName}
+              {user.name}
             </p>
             <p>
               <b>Status: </b>
@@ -161,6 +131,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
             <p>{evaluation.description}</p>
           </FlexBox>
         </FlexBox>
+
         <FlexBox gap={2}>
           {evaluation.status == "pending" && (
             <>
