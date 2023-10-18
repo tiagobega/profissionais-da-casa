@@ -19,7 +19,14 @@ export interface ReviewCardProps {
   id: string;
   status: EvaluationStatus;
   evaluation: Evaluation;
+  refetch: () => void;
 }
+
+const statusName = {
+  approved: "Aprovado",
+  refused: "Excluído",
+  pending: "Esperando análise",
+};
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({
   customerName,
@@ -28,6 +35,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   id,
   status,
   evaluation,
+  refetch,
 }) => {
   const { color } = useTheme();
   const [modalDetails, setModalDetails] = useState(false);
@@ -43,31 +51,18 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
   const handleApprove = async () => {
     await edit({ id: evaluation.id, status: "approved" });
+    refetch();
     closeDetails();
   };
   const handlePending = async () => {
     await edit({ id: evaluation.id, status: "pending" });
+    refetch();
     closeDetails();
   };
   const handleRefuse = async () => {
     await edit({ id: evaluation.id, status: "refused" });
+    refetch();
     closeDetails();
-  };
-
-  const statusName = (status: "approved" | "refused" | "pending") => {
-    switch (status) {
-      case "approved":
-        return "Aprovado";
-        break;
-      case "refused":
-        return "Excluído";
-        break;
-      case "pending":
-        return "Esperando análise";
-        break;
-      default:
-        break;
-    }
   };
 
   return (
@@ -121,7 +116,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
             </p>
             <p>
               <b>Status: </b>
-              {statusName(evaluation.status)}
+              {statusName[evaluation.status]}
             </p>
           </FlexBox>
 

@@ -51,23 +51,25 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
   };
   const navigate = useNavigate();
 
+  const fetchEvaluations = async () => {
+    const evaluationResponse = await evaluation.getAll();
+    const professionalResponse = await professional.getAll();
+    const userResponse = await user.getAll();
+
+    if (!evaluationResponse || !professionalResponse || !userResponse) {
+      setAllEvaluations([]);
+      setAllUsers([]);
+      setAllProfessionals([]);
+      return;
+    }
+
+    setAllEvaluations(evaluationResponse.evaluations);
+    setAllUsers(userResponse.users);
+    setAllProfessionals(professionalResponse.proProfiles);
+  };
+
   useEffect(() => {
-    (async () => {
-      const evaluationResponse = await evaluation.getAll();
-      const professionalResponse = await professional.getAll();
-      const userResponse = await user.getAll();
-
-      if (!evaluationResponse || !professionalResponse || !userResponse) {
-        setAllEvaluations([]);
-        setAllUsers([]);
-        setAllProfessionals([]);
-        return;
-      }
-
-      setAllEvaluations(evaluationResponse.evaluations);
-      setAllUsers(userResponse.users);
-      setAllProfessionals(professionalResponse.proProfiles);
-    })();
+    fetchEvaluations();
   }, []);
 
   if (!allEvaluations || !allProfessionals || !allUsers) {
@@ -165,7 +167,11 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
         }
       </Header>
       <ContentContainer>
-        {!isDetails ? <RatingList list={searchedList} /> : "detalhes"}
+        {!isDetails ? (
+          <RatingList list={searchedList} refetch={fetchEvaluations} />
+        ) : (
+          "detalhes"
+        )}
       </ContentContainer>
     </MarginContainer>
   );
