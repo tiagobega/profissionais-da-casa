@@ -133,6 +133,7 @@ export const ProfessionalProfilePage: React.FC<
                       src={pageProfessional.profilePicture}
                       alt="Foto de perfil do usuário"
                       className="userPicture"
+                      loading="lazy"
                     />
                   ) : (
                     <User color="white" weight="light" className="userIcon" />
@@ -225,6 +226,7 @@ export const ProfessionalProfilePage: React.FC<
               }
               alt="project image"
               className="gallery-img"
+              loading="lazy"
             />
             <div className="gallery-info">
               <FlexBox direction="column" gap={1}>

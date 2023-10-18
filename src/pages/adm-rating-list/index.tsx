@@ -94,7 +94,13 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
   const filteredList: RatingType[] = finalEvaluations.filter(
     (el) => el.evaluation.status === status
   );
-  const searchedList = filterRating(filteredList, query);
+  const searchedList = () => {
+    if (query.length > 2) return filteredList;
+
+    return filteredList.filter((el) =>
+      el.user.name.toLowerCase().includes(query.toLowerCase())
+    );
+  };
 
   return (
     <MarginContainer>
@@ -147,20 +153,12 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
                 Excluídos
               </Button>
             </FlexBox>
-            <FlexBox gap={2}>
+            <FlexBox>
               <Input.Text
                 placeholder="Buscar"
                 aria-label="buscar-depoimento"
                 onChange={(e) => setQuery(e.target.value)}
                 value={query}
-              />
-
-              <Input.Select
-                options={orderOptions}
-                placeholder="Ordenar por"
-                aria-label="Ordenar por"
-                onChange={(e) => handleSelectOrder(e.target.value)}
-                value={order}
               />
             </FlexBox>
           </FlexBox>
@@ -168,7 +166,7 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
       </Header>
       <ContentContainer>
         {!isDetails ? (
-          <RatingList list={searchedList} refetch={fetchEvaluations} />
+          <RatingList list={searchedList()} refetch={fetchEvaluations} />
         ) : (
           "detalhes"
         )}

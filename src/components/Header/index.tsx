@@ -30,6 +30,7 @@ const Header = () => {
           alt="cada casa"
           onClick={() => navigate("/")}
           className="logo"
+          loading="lazy"
         />
 
         <FlexBox justifyContent="space-between">

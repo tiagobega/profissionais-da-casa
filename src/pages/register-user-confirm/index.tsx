@@ -12,8 +12,8 @@ export const RegisterUserConfirm: React.FC<LoginPageProps> = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = async () => {
-    await getMe()
-    navigate('/catalog')
+    await getMe();
+    navigate("/catalog");
   };
 
   return (
@@ -28,6 +28,7 @@ export const RegisterUserConfirm: React.FC<LoginPageProps> = () => {
         <img
           src={logo}
           alt="coração feito de formas geométricas - logo da cada casa"
+          loading="lazy"
         />
         <FlexBox gap={1} mt={1} direction="column">
           <h2>Confirmação de registro</h2>

@@ -61,6 +61,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
                         src={me.profilePicture}
                         alt="Foto de perfil do usuário"
                         className="userPicture"
+                        loading="lazy"
                       />
                     ) : (
                       <User color="white" weight="light" className="userIcon" />

@@ -82,7 +82,7 @@ export const FormAddImage: FC<FormAddImageProps> = ({ close }) => {
         />
         {img && (
           <FlexBox gap={1}>
-            <ImgPreview src={img}></ImgPreview>
+            <ImgPreview src={img} loading="lazy"></ImgPreview>
             <Button type="button" variant="text" onClick={() => setImg(null)}>
               <Trash size={20} />
             </Button>

@@ -27,7 +27,7 @@ export const CardStyledProfile: React.FC<CardProfileProps> = () => {
   return (
     <CardContainer>
       <PhotoContainer>
-        <img src={photoPlaceholder} alt="projeto em destaque" />
+        <img src={photoPlaceholder} alt="projeto em destaque" loading="lazy" />
       </PhotoContainer>
       <ProfileContainer src={profilePlaceholder} alt="foto do profissional" />
       <InformationContainer

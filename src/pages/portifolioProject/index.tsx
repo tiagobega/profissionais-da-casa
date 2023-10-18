@@ -68,7 +68,11 @@ export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
       {projectImages && (
         <GalleryContainer>
           <div className="carousel-bg">
-            <img src={projectImages[displayImage]} alt="foto do projeto" />
+            <img
+              src={projectImages[displayImage]}
+              alt="foto do projeto"
+              loading="lazy"
+            />
           </div>
           <FlexBox full justifyContent="center" gap={1} p={1}>
             {projectImages.map((item, index) => (

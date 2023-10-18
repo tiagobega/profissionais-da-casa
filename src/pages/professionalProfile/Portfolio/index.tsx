@@ -106,7 +106,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
                   gap={6}
                 >
                   <FlexBox gap={1} alignItems="center">
-                    <img src={item.images.split(",")[0]} />
+                    <img src={item.images.split(",")[0]} loading="lazy" />
                     <h4>{item.name}</h4>
                   </FlexBox>
                   <FlexBox gap={1}>

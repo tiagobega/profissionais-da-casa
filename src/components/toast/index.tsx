@@ -94,7 +94,7 @@ const ToastItem: React.FC<Toast> = (props) => {
             }
           )}
         >
-          <img src={imageMap[type]} />
+          <img src={imageMap[type]} loading="lazy" />
         </div>
 
         <div className="ToastItem__Content__Message">

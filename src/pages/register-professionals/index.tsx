@@ -38,6 +38,7 @@ export const RegisterProfessional: React.FC<RegisterProfessionalProps> = () => {
               <img
                 src={logo}
                 alt="logo da cada casa, um coração formado por diferentes polígonos"
+                loading="lazy"
               />
               <h2>
                 Conta
@@ -51,9 +52,7 @@ export const RegisterProfessional: React.FC<RegisterProfessionalProps> = () => {
               <p>e engenheiros</p>
             </div>
           </Header>
-          <h3>
-            Preencha o formulário para se tornar um Profissional da Casa
-          </h3>
+          <h3>Preencha o formulário para se tornar um Profissional da Casa</h3>
           {!benefits ? (
             <FormRegisterProfessional showTerms={() => setTerms(true)} />
           ) : (

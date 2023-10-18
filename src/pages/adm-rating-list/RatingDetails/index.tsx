@@ -38,7 +38,7 @@ export const AdmRatingDetails: React.FC<AdmRatingListProps> = ({
               alignItems="center"
             >
               <FlexBox gap={1} alignItems="center">
-                <img src={photo1} />
+                <img src={photo1} loading="lazy" />
                 <InfoContainer direction="column" wrap={"wrap"}>
                   <strong>{evaluation.user.name}</strong>
                   <p className="contact">{evaluation.user.email}</p>
@@ -46,7 +46,7 @@ export const AdmRatingDetails: React.FC<AdmRatingListProps> = ({
                 </InfoContainer>
               </FlexBox>
               <FlexBox gap={1}>
-                <img src={photo2} />
+                <img src={photo2} loading="lazy" />
                 <InfoContainer direction="column">
                   <strong>{evaluation.professional.name}</strong>
                   {/* <p className="contact">{evaluation.professional.email}</p> */}
