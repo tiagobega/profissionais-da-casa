@@ -27,48 +27,50 @@ export const LoginLayout: React.FC<LoginPageProps> = ({ children }) => {
 
   return (
     <FullPage>
-      <FlexBox direction="column">
-        <FlexBox full mb={2} pl={7}>
-          <Button variant="text" onClick={() => navigate("/")}>
-            <CaretLeft weight="fill" />
-            Página inical
-          </Button>
+      <div className="orientation">
+        <FlexBox direction="column">
+          <FlexBox full mb={2} pl={7}>
+            <Button variant="text" onClick={() => navigate("/")}>
+              <CaretLeft weight="fill" />
+              Página inical
+            </Button>
+          </FlexBox>
+          <BlueField>
+            <div className="shape1">
+              <Geometry color={color.base[100]} triangle width={170} />
+            </div>
+            <div className="shape2">
+              <Geometry color={color.brand.yellowLight} triangle width={170} />
+            </div>
+            <div className="shape3">
+              <Geometry color={color.brand.yellowLight} triangle width={170} />
+            </div>
+            <div className="shape4">
+              <Geometry color={color.brand.pinkLight} width={170} />
+            </div>
+            <div className="shape5">
+              <Geometry
+                color={color.brand.yellowLight}
+                width={340}
+                height={170}
+              />
+            </div>
+            <div className="shape6">
+              <Geometry color={color.brand.orange} width={170} />
+            </div>
+            <h2>
+              Encontre
+              <br />
+              os melhores
+              <br />
+              materiais e<br />
+              profissionais para
+              <br />a sua reforma
+            </h2>
+          </BlueField>
         </FlexBox>
-        <BlueField>
-          <div className="shape1">
-            <Geometry color={color.base[100]} triangle width={170} />
-          </div>
-          <div className="shape2">
-            <Geometry color={color.brand.yellowLight} triangle width={170} />
-          </div>
-          <div className="shape3">
-            <Geometry color={color.brand.yellowLight} triangle width={170} />
-          </div>
-          <div className="shape4">
-            <Geometry color={color.brand.pinkLight} width={170} />
-          </div>
-          <div className="shape5">
-            <Geometry
-              color={color.brand.yellowLight}
-              width={340}
-              height={170}
-            />
-          </div>
-          <div className="shape6">
-            <Geometry color={color.brand.orange} width={170} />
-          </div>
-          <h2>
-            Encontre
-            <br />
-            os melhores
-            <br />
-            materiais e<br />
-            profissionais para
-            <br />a sua reforma
-          </h2>
-        </BlueField>
-      </FlexBox>
-      {children}
+        {children}
+      </div>
     </FullPage>
   );
 };

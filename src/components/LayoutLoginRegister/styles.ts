@@ -42,8 +42,33 @@ export const BlueField = styled.div`
     h2 {
       color: white;
       font-size: 40px;
-      & @media screen and (max-width:1200px) {
+      @media screen and (max-width: 1200px) {
         font-size: 32px;
+      }
+    }
+    @media screen and (max-width: 850px) {
+      width: 100vw;
+      margin: 0;
+      padding: 1rem;
+      height: 18rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .shape2 {
+        display: none;
+      }
+      .shape3 {
+        display: none;
+      }
+      .shape4 {
+        display: none;
+      }
+      .shape5 {
+        display: none;
+      }
+      .shape6 {
+        display: none;
       }
     }
   `}
@@ -51,12 +76,20 @@ export const BlueField = styled.div`
 
 export const FullPage = styled(FullContainer)`
   ${({ theme }) => css`
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    gap: 10rem;
-    align-items: flex-end;
-    justify-content: space-between;
+    .orientation {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+      gap: 10rem;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      @media screen and (max-width: 850px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+    }
   `}
 `;

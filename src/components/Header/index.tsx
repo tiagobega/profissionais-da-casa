@@ -12,10 +12,9 @@ import { useEffect } from "react";
 const Header = () => {
   const navigate = useNavigate();
 
-  const { user, professional } = useApi();
+  const { user } = useApi();
 
   const { me, logged, logout } = user;
-  const { myProfessional } = professional;
 
   const getRole = () => {
     if (!me) return "logout";
@@ -24,37 +23,39 @@ const Header = () => {
 
   return (
     <HeaderContainer role={getRole()}>
-      <FlexBox full justifyContent="space-between" alignItems="center" px={6}>
-        <img
-          src={logo}
-          alt="cada casa"
-          onClick={() => navigate("/")}
-          className="logo"
-        />
+      <FlexBox full justifyContent="space-between" alignItems="center">
+        <div className="listLogo">
+          <img
+            src={logo}
+            alt="cada casa"
+            onClick={() => navigate("/")}
+            className="logo"
+          />
 
-        <FlexBox justifyContent="space-between">
-          <nav>
-            <ul>
-              <li>
-                <a href="https://cadacasa.com.br/blog-2/">Blog</a>
-              </li>
-              <li>
-                <a href="https://cadacasa.com.br/ ">Cada casa</a>
-              </li>
-              <li>
-                <a
-                  href="https://cadacasa.com.br/casa-fast-inicial/"
-                  target="_blank"
-                >
-                  Casa Fast
-                </a>
-              </li>
-              <li>
-                <Link to="/catalog">Catalogo</Link>
-              </li>
-            </ul>
-          </nav>
-        </FlexBox>
+          <FlexBox justifyContent="space-between">
+            <nav>
+              <ul>
+                <li>
+                  <a href="https://cadacasa.com.br/blog-2/">Blog</a>
+                </li>
+                <li>
+                  <a href="https://cadacasa.com.br/ ">Cada casa</a>
+                </li>
+                <li>
+                  <a
+                    href="https://cadacasa.com.br/casa-fast-inicial/"
+                    target="_blank"
+                  >
+                    Casa Fast
+                  </a>
+                </li>
+                <li>
+                  <Link to="/catalog">Catalogo</Link>
+                </li>
+              </ul>
+            </nav>
+          </FlexBox>
+        </div>
       </FlexBox>
       <LoginContainer role={getRole()}>
         {me && logged ? (
