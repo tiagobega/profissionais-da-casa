@@ -36,6 +36,7 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
             <img
               src={logo}
               alt="coração feito de formas geométricas - logo da cada casa"
+              loading="lazy"
             />
             {!isForgot && <h2>Login</h2>}
           </div>
@@ -74,6 +75,7 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
             <img
               src={logo}
               alt="coração feito de formas geométricas - logo da cada casa"
+              loading="lazy"
             />
           </div>
           <FormAccountType />

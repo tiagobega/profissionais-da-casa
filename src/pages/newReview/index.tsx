@@ -92,6 +92,7 @@ export const NewReviewPage: React.FC<NewReviewPageProps> = () => {
                   <img
                     src={pageProfessional.profilePicture}
                     alt="professional photo"
+                    loading="lazy"
                   />
                 </div>
               </Profile>

@@ -161,7 +161,11 @@ export const AdmProfessionalDetails: React.FC<
           <FlexBox direction="column" gap={2} mb={5}>
             <FlexBox gap={5} alignItems="center">
               <Photo className="photo">
-                <img src={currentProfessional.profilePicture} alt="" />
+                <img
+                  src={currentProfessional.profilePicture}
+                  alt=""
+                  loading="lazy"
+                />
               </Photo>
 
               <FlexBox gap={5}>

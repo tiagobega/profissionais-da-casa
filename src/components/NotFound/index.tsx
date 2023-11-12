@@ -7,7 +7,7 @@ export interface NotFoundContentProps {}
 export const NotFoundContent: React.FC<NotFoundContentProps> = () => {
   return (
     <FlexBox full gap={4} centralized py={9}>
-      <img src={NotFound} alt="piled shapes" />
+      <img src={NotFound} alt="piled shapes" loading="lazy" />
       <TextContainer direction="column" gap={2}>
         <h2>Página não encontrada</h2>
         <FlexBox full alignItems="flex-end" justifyContent="space-between">

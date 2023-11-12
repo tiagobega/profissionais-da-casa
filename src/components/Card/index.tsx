@@ -33,6 +33,7 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
               ? professional.backgroundPicture
               : photoPlaceholder
           }
+          loading="lazy"
           alt="foto background"
         />
       </PhotoContainer>
@@ -40,7 +41,11 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
         {professional.profilePicture.length == 0 ? (
           <User color="white" size={64} weight="light" />
         ) : (
-          <img src={professional.profilePicture} alt="foto do profissional" />
+          <img
+            src={professional.profilePicture}
+            alt="foto do profissional"
+            loading="lazy"
+          />
         )}
       </ProfileContainer>
       <InformationContainer

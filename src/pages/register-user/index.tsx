@@ -22,6 +22,7 @@ export const RegisterUser: React.FC<LoginPageProps> = () => {
           <img
             src={logo}
             alt="coração feito de formas geométricas - logo da cada casa"
+            loading="lazy"
           />
         </div>
 

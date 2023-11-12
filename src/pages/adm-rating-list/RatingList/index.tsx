@@ -10,21 +10,21 @@ import {
 
 export interface RatingListProps {
   list: { evaluation: Evaluation; user: Me; professional: Professional }[];
+  refetch: () => void;
 }
 
-export const RatingList: React.FC<RatingListProps> = ({ list }) => {
+export const RatingList: React.FC<RatingListProps> = ({ list, refetch }) => {
   return (
     <ScrollingList direction="column" gap={1}>
       {!list.length && <FlexBox>Sem avaliações para mostrar!</FlexBox>}
       {list.map((item) => (
         <ReviewCard
-          customerName={item.user.name}
-          professionalName={item.professional.name}
           id={item.evaluation.id}
           key={item.evaluation.id}
-          rating={evaluationSingleAverage(item.evaluation)}
-          status={item.evaluation.status}
           evaluation={item.evaluation}
+          user={item.user}
+          professional={item.professional}
+          refetch={refetch}
         />
       ))}
     </ScrollingList>

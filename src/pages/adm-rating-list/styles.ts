@@ -10,6 +10,15 @@ export const ContentContainer = styled.section`
     justify-content: center;
     background-color: ${theme.color.secondary.lighterYellow};
     margin-bottom: 3rem;
+    position: relative;
+
+    .loading {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.32);
+      display: "flex";
+      position: absolute;
+    }
   `}
 `;
 

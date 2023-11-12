@@ -17,7 +17,7 @@ const Footer = (props: FooterProps) => {
     <FooterContainer>
       <FooterContent>
         <FlexBox full centralized gap={1.25}>
-          <img src={logoText} alt="" />
+          <img src={logoText} alt="" loading="lazy" />
           <h6>Seu lar, nossa casa</h6>
         </FlexBox>
         <FlexBox full justifyContent="space-between" my={3} gap={5}>
@@ -71,21 +71,21 @@ const Footer = (props: FooterProps) => {
             color="white"
             href="https://www.facebook.com/people/Viva-Cada-Casa/100083397247781/"
           >
-            <img src={facebookLogo} alt="facebook" />
+            <img src={facebookLogo} alt="facebook" loading="lazy" />
           </Button>
           <Button
             variant="text"
             color="white"
             href="https://www.instagram.com/vivacadacasa/"
           >
-            <img src={instagramLogo} alt="instagram" />
+            <img src={instagramLogo} alt="instagram" loading="lazy" />
           </Button>
           <Button
             variant="text"
             color="white"
             href="https://br.linkedin.com/company/cadacasa"
           >
-            <img src={linkedinLogo} alt="linkedin" />
+            <img src={linkedinLogo} alt="linkedin" loading="lazy" />
           </Button>
           {/* <Button variant="text" color="white" href="https://br.pinterest.com/">
           <img src={pinterestLogo} alt="pinterest" />
@@ -95,7 +95,7 @@ const Footer = (props: FooterProps) => {
             color="white"
             href="https://www.youtube.com/@cadacasa7844"
           >
-            <img src={youtubeLogo} alt="youtube" />
+            <img src={youtubeLogo} alt="youtube" loading="lazy" />
           </Button>
         </FlexBox>
       </FooterContent>
