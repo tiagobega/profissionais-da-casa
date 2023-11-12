@@ -166,18 +166,19 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
             placeholder="Descrição do projeto"
             {...register("description")}
           />
-          <p>{watch("description")?.length}/300 caracteres</p>
+          <p>{watch("description")?.length}/400 caracteres</p>
         </FlexBox>
         <FlexBox alignItems="flex-end" gap={10} my={2}>
           <Input.File
             placeholder="Selecione uma foto"
-            label="Adicione uma foto"
+            label={`Adicione uma foto (${imageList.length}/6)`}
             {...register("image")}
+            disabled={imageList.length == 6}
           />
           <Button
             type="button"
             onClick={() => addPhoto(imgFile)}
-            disabled={!imgFile || imgFile?.length == 0}
+            disabled={!imgFile || imgFile?.length == 0 || imageList.length == 6}
           >
             <Plus />
           </Button>
@@ -199,7 +200,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           type="submit"
           disabled={
             watch("description")?.length == 0 ||
-            watch("description")?.length > 300
+            watch("description")?.length > 400
           }
         >
           Enviar
