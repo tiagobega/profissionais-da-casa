@@ -58,7 +58,7 @@ export const LoginLayout: React.FC<LoginPageProps> = ({ children }) => {
             <div className="shape6">
               <Geometry color={color.brand.orange} width={170} />
             </div>
-            <h2>
+            <h2 className="motto">
               Encontre
               <br />
               os melhores

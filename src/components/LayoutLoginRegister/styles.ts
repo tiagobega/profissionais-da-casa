@@ -42,9 +42,10 @@ export const BlueField = styled.div`
     h2 {
       color: white;
       font-size: 40px;
-      @media screen and (max-width: 1200px) {
+      @media screen and (max-width: 1400px) {
         font-size: 32px;
       }
+      z-index: 1000;
     }
     @media screen and (max-width: 850px) {
       width: 100vw;
@@ -69,6 +70,28 @@ export const BlueField = styled.div`
       }
       .shape6 {
         display: none;
+      }
+    }
+    @media screen and (max-height: 800px) {
+      .shape2 {
+        scale: 0.8;
+        transform: translateY(106px) translateX(22px);
+      }
+      .shape3 {
+        scale: 0.8;
+        transform: translateY(64px) translateX(66px);
+      }
+      .shape4 {
+        scale: 0.8;
+        transform: translateY(64px) translateX(22px);
+      }
+      .shape5 {
+        scale: 0.8;
+        transform: translateY(20px);
+      }
+      .shape6 {
+        scale: 0.8;
+        transform: translateY(64px) translateX(22px);
       }
     }
   `}
