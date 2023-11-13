@@ -1,5 +1,5 @@
-import { FlexBox } from 'components/FlexBox'
-import styled, { css } from 'styled-components'
+import { FlexBox } from "components/FlexBox";
+import styled, { css } from "styled-components";
 
 export const TermsContainer = styled.section`
   ${({ theme }) => css`
@@ -15,7 +15,7 @@ export const TermsContainer = styled.section`
       padding-inline: 72px;
     }
   `}
-`
+`;
 export const InformationContainer = styled.section`
   ${({ theme }) => css`
     width: 100%;
@@ -38,5 +38,8 @@ export const InformationContainer = styled.section`
       overflow-y: scroll;
       padding-inline-end: 2rem;
     }
+    h3 {
+      margin-top: 1rem;
+    }
   `}
-`
+`;
