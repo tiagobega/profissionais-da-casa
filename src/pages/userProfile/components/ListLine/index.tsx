@@ -6,6 +6,7 @@ import { Lead, Me, Professional } from "services/User/types";
 import { Line } from "./styles";
 import { useApi } from "contexts/User";
 import { formatLongDate } from "utils/dateFormat";
+import { useNavigate } from "react-router-dom";
 
 export interface ProfessionalListLineProps {
   lead: Lead;
@@ -16,6 +17,7 @@ export const LeadListLine: React.FC<ProfessionalListLineProps> = ({
   lead,
   professional,
 }) => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { professional: professionalAPI } = useApi();
@@ -40,7 +42,12 @@ export const LeadListLine: React.FC<ProfessionalListLineProps> = ({
         <Line full justifyContent="space-between" py={0.5} alignItems="center">
           <FlexBox gap={1}>
             <div className="name">
-              <p>{professional ? lead.name : leadUser.name}</p>
+              <Button
+                variant="text"
+                onClick={() => navigate(`/professional/${leadUser.userId}`)}
+              >
+                {professional ? lead.name : leadUser.name}
+              </Button>
               <p className="date">{formatLongDate(lead.createdAt)}</p>
             </div>
           </FlexBox>

@@ -91,6 +91,8 @@ export const FormContactProfessional: React.FC<
     onClose();
   };
 
+  const nothingSelected = !watch("byEmail") && !watch("byWhatsapp");
+
   return (
     <form
       onSubmit={handleSubmit((e) => {
@@ -124,7 +126,7 @@ export const FormContactProfessional: React.FC<
           segundo a LGPD.
         </p>
 
-        <Button type="submit" full width={5}>
+        <Button type="submit" full width={5} disabled={nothingSelected}>
           Enviar e-mail
         </Button>
       </FlexBox>
