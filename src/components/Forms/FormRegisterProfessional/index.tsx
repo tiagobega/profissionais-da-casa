@@ -569,9 +569,9 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
               />
               <Input.Text
                 type="text"
-                placeholder="Detalhamento de formação"
-                aria-label="Detalhamento de formação"
-                label="Detalhamento de formação"
+                placeholder="Outra formação"
+                aria-label="Outra formação"
+                label="Outra formação"
                 error={errors.formationDetail}
                 {...register("formationDetail")}
               />
