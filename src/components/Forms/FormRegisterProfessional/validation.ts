@@ -76,11 +76,19 @@ export const registerProfessionalSchema = z
     terms: z.boolean(),
     creaCau: z.string(),
     onlineAppointment: z.boolean(),
-    linkedin: z.string(),
-    facebook: z.string(),
-    instagram: z.string(),
-    pinterest: z.string(),
-    otherSocials: z.string(),
+    linkedin: z.string().url({ message: formErrors.ERROR_INVALID }),
+    facebook: z.string().url({
+      message: formErrors.ERROR_INVALID,
+    }),
+    instagram: z.string().url({
+      message: formErrors.ERROR_INVALID,
+    }),
+    pinterest: z.string().url({
+      message: formErrors.ERROR_INVALID,
+    }),
+    otherSocials: z.string().url({
+      message: formErrors.ERROR_INVALID,
+    }),
 
     portfolio: fileRefine({
       size: 5,
@@ -100,10 +108,7 @@ export const registerProfessionalSchema = z
     message: "É obrigatório o aceite dos termos e condições",
     path: ["agree"],
   })
-  .refine(
-    (data) => data.onlineAppointment || !!data.states.length,
-    {
-      message: "Pelo menos um dos campos abaixo deve ser preenchido",
-      path: ["states"],
-    }
-  );
+  .refine((data) => data.onlineAppointment || !!data.states.length, {
+    message: "Pelo menos um dos campos abaixo deve ser preenchido",
+    path: ["states"],
+  });

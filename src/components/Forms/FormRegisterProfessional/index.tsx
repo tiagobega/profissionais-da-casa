@@ -623,7 +623,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
               />
             </FlexBox>
 
-            <h4>Coloque abaixo o link de suas redes sociais</h4>
+            <h4>Coloque abaixo o link de suas redes sociais (opcional)</h4>
             <FlexBox gap={1} full>
               <FlexBox direction="column" gap={1} full>
                 <Input.Text
@@ -631,17 +631,20 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
                   placeholder="LinkedIn"
                   aria-label="LinkedIn"
                   {...register("linkedin")}
+                  error={errors.linkedin}
                 />
                 <Input.Text
                   placeholder="Facebook"
                   aria-label="Facebook"
                   {...register("facebook")}
+                  error={errors.facebook}
                 />
                 <Input.Text
                   type="text"
                   placeholder="Instagram"
                   aria-label="Instagram"
                   {...register("instagram")}
+                  error={errors.instagram}
                 />
               </FlexBox>
               <FlexBox direction="column" gap={1} full>
@@ -650,12 +653,14 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
                   placeholder="Pinterest"
                   aria-label="Pinterest"
                   {...register("pinterest")}
+                  error={errors.pinterest}
                 />
                 <Input.Text
                   type="text"
                   placeholder="Outra rede profissional"
                   aria-label="Outra rede profissional"
                   {...register("otherSocials")}
+                  error={errors.otherSocials}
                 />
               </FlexBox>
             </FlexBox>
