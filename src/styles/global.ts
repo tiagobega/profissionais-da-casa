@@ -60,6 +60,9 @@ export const GlobalStyle = createGlobalStyle`
       &:focus {
         border: 3px solid ${theme.color.brand.purple};
       }
+      &:disabled {
+        cursor: not-allowed;
+      }
     }
 
     label {
@@ -104,6 +107,12 @@ export const GlobalStyle = createGlobalStyle`
       }
       &[type="radio"] {
         border-radius: 50%;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        * {
+          cursor: not-allowed;
+        }
       }
     }
     select {

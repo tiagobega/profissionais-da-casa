@@ -99,6 +99,7 @@ export const List: React.FC<ListProps> = () => {
   }, []);
 
   const filteredProfessionals = (list: Professional[]) => {
+    console.log(list);
     let filteredList = [...list].filter((el) => el.active == true);
 
     if (acceptOnline) {
@@ -134,10 +135,21 @@ export const List: React.FC<ListProps> = () => {
     return searchByQuery(filteredList);
   };
 
+  function locationString(professional: Professional) {
+    const nameList: string[] = [];
+    professional.locations.forEach((el) => nameList.push(el.state));
+    return nameList;
+  }
+
   const searchByQuery = (list: Professional[]) => {
-    if (searchQuery.length < 3) return list;
-    return list.filter((el) =>
-      el.name.toLowerCase().includes(searchQuery.toLowerCase())
+    if (searchQuery.length < 2) return list;
+    return list.filter(
+      (el) =>
+        el.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        locationString(el)
+          .toString()
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
     );
   };
 

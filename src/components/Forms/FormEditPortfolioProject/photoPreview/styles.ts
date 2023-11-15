@@ -18,7 +18,7 @@ export const ImageContainer = styled.div<{ isCover: boolean }>`
         scale: 1.05;
       }
     }
-    .coverButton {
+    button {
       z-index: 5;
       position: absolute;
       top: 0;
@@ -27,10 +27,12 @@ export const ImageContainer = styled.div<{ isCover: boolean }>`
       height: 100%;
       cursor: pointer;
       opacity: 0;
+      transition: 0.1s;
 
       &:hover {
         opacity: 1;
         background-color: rgba(0, 0, 0, 0.4);
+        color: white;
       }
     }
     img {

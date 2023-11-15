@@ -13,18 +13,20 @@ const HomePage = () => {
   return (
     <HomeContainer>
       <FlexBox direction="column">
-        <Geometry
-          color={color.secondary.lightTeal}
-          width={170}
-          triangle
-          angle={90}
-        />
-        <Geometry
-          color={color.brand.yellowLight}
-          width={170}
-          triangle
-          angle={180}
-        />
+        <div className="geometry">
+          <Geometry
+            color={color.secondary.lightTeal}
+            width={170}
+            triangle
+            angle={90}
+          />
+          <Geometry
+            color={color.brand.yellowLight}
+            width={170}
+            triangle
+            angle={180}
+          />
+        </div>
       </FlexBox>
       <InformationContainer direction="column" gap={2} alignItems="center">
         <h2>Diversas soluções para a sua reforma</h2>
@@ -42,8 +44,10 @@ const HomePage = () => {
         </Button>
       </InformationContainer>
       <FlexBox direction="column">
-        <Geometry color={color.brand.yellowLight} width={170} triangle />
-        <Geometry color={color.base[200]} width={170} triangle angle={270} />
+        <div className="geometry">
+          <Geometry color={color.brand.yellowLight} width={170} triangle />
+          <Geometry color={color.base[200]} width={170} triangle angle={270} />
+        </div>
       </FlexBox>
     </HomeContainer>
   );

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from "styled-components";
 export const InputContainer = styled.div`
   ${({ theme }) => css`
     width: 100%;
@@ -14,15 +14,17 @@ export const InputContainer = styled.div`
       padding: 0.75rem 20px;
       display: flex;
       flex-direction: column;
-      &::-webkit-file-upload-button {
+      cursor: pointer;
+      &:hovere &::-webkit-file-upload-button {
         border: 0;
         background: transparent;
         font-size: 1rem;
+        cursor: pointer;
       }
     }
 
-    input[type=file] {
-      
+    input[type="file"] {
+      cursor: pointer;
     }
 
     p {
@@ -31,6 +33,7 @@ export const InputContainer = styled.div`
       left: -2px;
       font-size: 0.75rem;
       color: red;
+      cursor: pointer;
     }
 
     label {
@@ -38,6 +41,7 @@ export const InputContainer = styled.div`
       width: 100%;
       align-items: center;
       z-index: 100;
+      cursor: pointer;
     }
   `}
-`
+`;

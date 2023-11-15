@@ -1,5 +1,5 @@
-import { FlexBox } from 'components/FlexBox'
-import styled, { css } from 'styled-components'
+import { FlexBox } from "components/FlexBox";
+import styled, { css } from "styled-components";
 
 export const HomeContainer = styled.section`
   ${({ theme }) => css`
@@ -9,8 +9,13 @@ export const HomeContainer = styled.section`
     align-items: center;
     min-height: calc(100vh - 96px - 372px);
     background-color: ${theme.color.brand.purple};
+    @media screen and (max-width: 850px) {
+      .geometry {
+        display: none;
+      }
+    }
   `}
-`
+`;
 
 export const InformationContainer = styled(FlexBox)`
   ${() => css`
@@ -25,4 +30,4 @@ export const InformationContainer = styled(FlexBox)`
       font-size: 1.25rem;
     }
   `}
-`
+`;

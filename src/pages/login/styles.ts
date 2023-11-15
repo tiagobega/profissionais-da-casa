@@ -6,6 +6,7 @@ export const RightPannel = styled(FlexBox)`
   ${({ theme }) => css`
     flex-grow: 1;
     min-width: 600px;
+
     .orange {
       background-color: ${theme.color.brand.orange};
       padding: 1.5rem;
@@ -26,6 +27,12 @@ export const RightPannel = styled(FlexBox)`
       height: 1px;
       background-color: ${theme.color.base[300]};
       width: 20rem;
+    }
+
+    @media screen and (max-width: 850px) {
+      .geometry {
+        display: none;
+      }
     }
   `}
 `;

@@ -10,20 +10,36 @@ export const HeaderContainer = styled.header<RoleProps>`
     font-weight: 700;
     display: flex;
     justify-content: space-between;
+
     background-color: white;
     background-color: ${role == "admin"
       ? theme.color.brand.yellowLight
       : "white"};
+
+    .listLogo {
+      display: flex;
+      padding: 0 6rem;
+      @media screen and (max-width: 850px) {
+        padding: 0 2rem;
+      }
+    }
     nav ul {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 3rem;
       button {
         font-size: 0.875rem;
       }
+      @media screen and (max-width: 850px) {
+        gap: 2rem;
+      }
     }
     .logo {
       cursor: pointer;
+      @media screen and (max-width: 850px) {
+        margin-right: 2rem;
+      }
     }
   `}
 `;

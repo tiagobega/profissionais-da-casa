@@ -1,6 +1,7 @@
-import { Star, X } from "@phosphor-icons/react";
+import { Star, X, XCircle } from "@phosphor-icons/react";
 import { ImageContainer } from "./styles";
 import { Button } from "components/Button";
+import { useTheme } from "styled-components";
 
 export interface PhotoPreviewProps {
   isCover: boolean;
@@ -15,10 +16,17 @@ export const PhotoPreview: React.FC<PhotoPreviewProps> = ({
   removePicture,
   toggleCover,
 }) => {
+  const theme = useTheme();
   return (
     <ImageContainer isCover={isCover}>
       <img src={url} onClick={toggleCover} loading="lazy" />
-      <X className="delete" onClick={removePicture} />
+      <XCircle
+        className="delete"
+        onClick={removePicture}
+        weight="fill"
+        color={theme.color.brand.yellowLight}
+        size={18}
+      />
       <Button
         className="cover"
         onClick={toggleCover}
@@ -26,7 +34,6 @@ export const PhotoPreview: React.FC<PhotoPreviewProps> = ({
         disabled={isCover}
       >
         <Star />
-        Capa
       </Button>
     </ImageContainer>
   );
