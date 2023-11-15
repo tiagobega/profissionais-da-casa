@@ -277,12 +277,19 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
     sendEmail({
       template: "NEW_PROFESSIONAL",
       email: "tiago@fillet.com.br",
-      subject: "assunto",
+      subject: "Novo Profissional Registrado",
       text: "texto",
       params: {
         PROFILE_LINK: `https://profissionaisdacasa.tiagobega.xyz/profile/${integratedRegister.user.id}`,
         USER_NAME: `${integratedRegister.user.name}`,
       },
+    });
+
+    sendEmail({
+      template: "WELCOME_PROFESSIONAL",
+      text: "texto",
+      email: integratedRegister.user.email,
+      subject: "Seja bem vindo a equipe dos Profissionais da Casa",
     });
 
     navigate("/account/confirm");

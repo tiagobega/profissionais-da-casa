@@ -47,4 +47,6 @@ export type SendEmailParams = {
         DESCRIPTION: string;
       };
     }
+  | { template: "WELCOME_PROFESSIONAL" }
+  | { template: "WELCOME_USER" }
 );

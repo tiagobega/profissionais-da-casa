@@ -24,7 +24,10 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
   toConfirm,
   showTerms,
 }) => {
-  const { user } = useApi();
+  const {
+    user,
+    email: { sendEmail },
+  } = useApi();
   const {
     handleSubmit,
     register,
@@ -61,6 +64,14 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
     });
 
     if (!registerResponse) return;
+
+    sendEmail({
+      template: "WELCOME_USER",
+      text: "texto",
+      email: registerResponse.user.email,
+      subject: "Seja bem vindo ao Profissionais da Casa",
+    });
+
     navigate("/account/confirm");
   };
 
