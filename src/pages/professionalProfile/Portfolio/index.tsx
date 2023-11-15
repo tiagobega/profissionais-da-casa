@@ -104,6 +104,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
                   alignItems="center"
                   justifyContent="space-between"
                   gap={6}
+                  key={item.id}
                 >
                   <FlexBox gap={1} alignItems="center">
                     <img src={item.images.split(",")[0]} loading="lazy" />

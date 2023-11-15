@@ -77,7 +77,7 @@ export const FormEditPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   };
 
   const removePhoto = (index: number) => {
-    const newArray = imageList;
+    const newArray = [...imageList];
     newArray.splice(index, 1);
     if (index == coverIndex) setCoverIndex(0);
     setImageList(newArray);
@@ -188,7 +188,7 @@ export const FormEditPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
         <FlexBox gap={1} mb={3}>
           {imageList.map((image, index) => (
             <PhotoPreview
-              key={image.imageUrl}
+              key={index}
               isCover={index == coverIndex}
               removePicture={() => removePhoto(index)}
               toggleCover={() => setCover(index)}
