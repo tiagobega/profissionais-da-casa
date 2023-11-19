@@ -56,6 +56,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   >([]);
 
   const [coverIndex, setCoverIndex] = useState<number>(0);
+  const [disableSubmit, setDisableSubmit] = useState(false);
   const {
     portfolioProject: { create, edit },
     file: { sendFile },
@@ -89,12 +90,14 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
 
   const handleClose = () => {
     setCoverIndex(0);
+    setDisableSubmit(false);
     setImageList([]);
     reset();
     close();
   };
 
   const onSubmit = async (data: FormData) => {
+    setDisableSubmit(true);
     const lastImageList: string[] = [];
 
     const promises: Promise<{ url: string; isCover: boolean }>[] = [];
@@ -145,7 +148,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   return (
     <FlexBox full direction="column">
       <FlexBox justifyContent="space-between" full gap={4}>
-        <h2>Adicionar Projeto</h2>
+        <h2>Adicionar Projeto </h2>
         <Button type="button" variant="outline" onClick={handleClose}>
           Voltar para lista
         </Button>
@@ -165,6 +168,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           <Input.Area
             placeholder="Descrição do projeto"
             {...register("description")}
+            error={errors.description}
           />
           <p>{watch("description")?.length}/400 caracteres</p>
         </FlexBox>
@@ -200,7 +204,8 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           type="submit"
           disabled={
             watch("description")?.length == 0 ||
-            watch("description")?.length > 400
+            watch("description")?.length > 400 ||
+            disableSubmit
           }
         >
           Enviar

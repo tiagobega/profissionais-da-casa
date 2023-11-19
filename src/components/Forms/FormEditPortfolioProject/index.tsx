@@ -56,6 +56,7 @@ export const FormEditPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   >([]);
 
   const [coverIndex, setCoverIndex] = useState<number>(0);
+  const [disableSubmit, setDisableSubmit] = useState(false);
   const {
     portfolioProject: { create, edit },
     file: { sendFile },
@@ -90,12 +91,14 @@ export const FormEditPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   const handleClose = () => {
     setCoverIndex(0);
     setImageList([]);
+    setDisableSubmit(false);
     reset();
     close();
   };
 
   const onSubmit = async (data: FormData) => {
     const lastImageList: string[] = [];
+    setDisableSubmit(true);
 
     const promises: Promise<{ url: string; isCover: boolean }>[] = [];
 
@@ -201,7 +204,8 @@ export const FormEditPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           type="submit"
           disabled={
             watch("description")?.length == 0 ||
-            watch("description")?.length > 400
+            watch("description")?.length > 400 ||
+            disableSubmit
           }
         >
           Enviar
