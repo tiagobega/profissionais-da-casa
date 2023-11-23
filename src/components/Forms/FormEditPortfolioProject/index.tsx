@@ -205,6 +205,7 @@ export const FormEditPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           disabled={
             watch("description")?.length == 0 ||
             watch("description")?.length > 400 ||
+            watch("title")?.length < 3 ||
             disableSubmit
           }
         >

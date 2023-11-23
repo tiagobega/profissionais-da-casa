@@ -78,7 +78,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
   };
 
   const removePhoto = (index: number) => {
-    const newArray = imageList;
+    const newArray = [...imageList];
     newArray.splice(index, 1);
     if (index == coverIndex) setCoverIndex(0);
     setImageList(newArray);
@@ -205,6 +205,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           disabled={
             watch("description")?.length == 0 ||
             watch("description")?.length > 400 ||
+            watch("title")?.length < 3 ||
             disableSubmit
           }
         >
