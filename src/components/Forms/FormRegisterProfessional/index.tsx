@@ -280,7 +280,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       subject: "Novo Profissional Registrado",
       text: "texto",
       params: {
-        PROFILE_LINK: `https://profissionaisdacasa.tiagobega.xyz/profile/${integratedRegister.user.id}`,
+        PROFILE_LINK: `https://profissionais.cadacasa.com.br/profile/${integratedRegister.user.id}`,
         USER_NAME: `${integratedRegister.user.name}`,
       },
     });

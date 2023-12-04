@@ -73,7 +73,7 @@ export const AdmProfessionalDetails: React.FC<
         text: "text",
         params: {
           USER_NAME: currentUser.name,
-          PROFILE_LINK: `https://profissionaisdacasa.tiagobega.xyz/professional/${currentUser.id}`,
+          PROFILE_LINK: `https://profissionais.cadacasa.com.br/professional/${currentUser.id}`,
         },
       },
       true
@@ -104,7 +104,7 @@ export const AdmProfessionalDetails: React.FC<
         text: "text",
         params: {
           USER_NAME: currentUser.name,
-          PROFILE_LINK: `https://profissionaisdacasa.tiagobega.xyz/professional/${currentUser.id}`,
+          PROFILE_LINK: `https://profissionais.cadacasa.com.br/professional/${currentUser.id}`,
         },
       },
       true
