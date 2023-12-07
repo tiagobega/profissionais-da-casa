@@ -13,33 +13,41 @@ export const BlueField = styled.div`
       top: 0;
       right: 0;
       rotate: -90deg;
+      z-index: 10;
     }
     .shape2 {
       position: absolute;
       bottom: 340px;
       right: 0;
+
+      z-index: 10;
     }
     .shape3 {
       position: absolute;
       bottom: 170px;
       right: 560px;
+      z-index: 10;
     }
     .shape4 {
       position: absolute;
       bottom: 170px;
       right: 0;
+      z-index: 10;
     }
     .shape5 {
       position: absolute;
       bottom: 0px;
       right: 220px;
+      z-index: 10;
     }
     .shape6 {
       position: absolute;
       bottom: 170px;
       right: 390px;
+      z-index: 10;
     }
     h2 {
+      z-index: 100;
       color: white;
       font-size: 40px;
       @media screen and (max-width: 1400px) {
@@ -92,6 +100,23 @@ export const BlueField = styled.div`
       .shape6 {
         scale: 0.8;
         transform: translateY(64px) translateX(22px);
+      }
+    }
+    @media screen and (max-height: 700px) {
+      .shape2 {
+        display: none;
+      }
+      .shape3 {
+        display: none;
+      }
+      .shape4 {
+        display: none;
+      }
+      .shape5 {
+        display: none;
+      }
+      .shape6 {
+        display: none;
       }
     }
   `}
