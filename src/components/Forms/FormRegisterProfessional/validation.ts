@@ -76,20 +76,46 @@ export const registerProfessionalSchema = z
     terms: z.boolean(),
     creaCau: z.string(),
     onlineAppointment: z.boolean(),
-    linkedin: z.string().url({ message: formErrors.ERROR_INVALID }),
-    facebook: z.string().url({
-      message: formErrors.ERROR_INVALID,
-    }),
-    instagram: z.string().url({
-      message: formErrors.ERROR_INVALID,
-    }),
-    pinterest: z.string().url({
-      message: formErrors.ERROR_INVALID,
-    }),
-    otherSocials: z.string().url({
-      message: formErrors.ERROR_INVALID,
-    }),
-
+    linkedin: z
+      .string()
+      .max(0, formErrors.ERROR_INVALID)
+      .or(
+        z.string().url({
+          message: formErrors.ERROR_INVALID,
+        })
+      ),
+    facebook: z
+      .string()
+      .max(0, formErrors.ERROR_INVALID)
+      .or(
+        z.string().url({
+          message: formErrors.ERROR_INVALID,
+        })
+      ),
+    instagram: z
+      .string()
+      .max(0, formErrors.ERROR_INVALID)
+      .or(
+        z.string().url({
+          message: formErrors.ERROR_INVALID,
+        })
+      ),
+    pinterest: z
+      .string()
+      .max(0, formErrors.ERROR_INVALID)
+      .or(
+        z.string().url({
+          message: formErrors.ERROR_INVALID,
+        })
+      ),
+    otherSocials: z
+      .string()
+      .max(0, formErrors.ERROR_INVALID)
+      .or(
+        z.string().url({
+          message: formErrors.ERROR_INVALID,
+        })
+      ),
     portfolio: fileRefine({
       size: 5,
       mimeTypeList: ["application/pdf", ...ACCEPTED_IMAGE_TYPES],
