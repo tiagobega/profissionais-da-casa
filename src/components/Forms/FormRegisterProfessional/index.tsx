@@ -648,7 +648,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
                 />
                 <Input.Text
                   type="text"
-                  placeholder="Instagram"
+                  placeholder="Instagram (URL ou @)"
                   aria-label="Instagram"
                   {...register("instagram")}
                   error={errors.instagram}

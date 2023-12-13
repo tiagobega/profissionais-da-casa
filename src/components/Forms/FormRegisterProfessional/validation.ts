@@ -99,6 +99,9 @@ export const registerProfessionalSchema = z
         z.string().url({
           message: formErrors.ERROR_INVALID,
         })
+      )
+      .or(
+        z.string().startsWith("@", "O handle do instagram deve começar por ˜@˜")
       ),
     pinterest: z
       .string()
