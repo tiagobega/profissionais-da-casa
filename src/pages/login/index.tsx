@@ -22,7 +22,7 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
   return (
     <LoginLayout>
       {!isRegister ? (
-        <RightPannel full pb={10} direction="column">
+        <RightPannel full direction="column">
           {!isForgot && (
             <div className="orange">
               <strong>
