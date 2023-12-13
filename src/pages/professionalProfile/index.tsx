@@ -86,6 +86,14 @@ export const ProfessionalProfilePage: React.FC<
     fetchProfessional(id);
   }, [id]);
 
+  const socialMediaLink = (link: string) => {
+    if (link[0] == "@") {
+      return `https://www.instagram.com/${link.substring(1)}`;
+    } else {
+      return link;
+    }
+  };
+
   if (!pageProfessional) return <Loading />;
 
   const carrouselButtonArray = new Array(
@@ -156,7 +164,11 @@ export const ProfessionalProfilePage: React.FC<
                     </FlexBox>
                     <FlexBox>
                       {pageProfessional.socialMedias.map((media) => (
-                        <a key={media.id} href={media.link} target="_blank">
+                        <a
+                          key={media.id}
+                          href={socialMediaLink(media.link)}
+                          target="_blank"
+                        >
                           {socialMediaIcon(media.name)}
                         </a>
                       ))}
