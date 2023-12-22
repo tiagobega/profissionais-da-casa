@@ -32,21 +32,48 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({
     setValue,
     getValues,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, dirtyFields },
   } = useForm<FormEditProfileData>({
     resolver: zodResolver(editProfileSchema),
     mode: "onSubmit",
   });
 
-  const { file, professional: professionalApi } = useApi();
+  const { file, professional: professionalApi, socialMedia } = useApi();
   const { update } = professionalApi;
+  const { createMany, deleteSocialMedia } = socialMedia;
 
   useEffect(() => {
     setValue("name", professional.name);
     setValue("onlineAppointment", professional.onlineAppointment);
     setValue("description", professional.description);
     setValue("tags", professional.tags.split(","));
+    setSocials();
   }, [professional]);
+
+  const setSocials = () => {
+    professional.socialMedias.forEach((social) => {
+      switch (social.name) {
+        case "Facebook":
+          setValue("facebook", social.link);
+          break;
+        case "Instagram":
+          setValue("instagram", social.link);
+          break;
+        case "Pinterest":
+          setValue("pinterest", social.link);
+          break;
+        case "LinkedIn":
+          setValue("linkedin", social.link);
+          break;
+        case "Outra":
+          setValue("otherSocials", social.link);
+          break;
+
+        default:
+          break;
+      }
+    });
+  };
 
   const onSubmit = async (data: FormEditProfileData) => {
     if (!isDirty) {
@@ -59,8 +86,75 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({
       onlineAppointment: data.onlineAppointment,
       tags: data.tags.join(","),
     };
+
+    const filteredSocialMedias = [
+      {
+        name: "Instagram",
+        link: data.instagram,
+      },
+      {
+        name: "Facebook",
+        link: data.facebook,
+      },
+      {
+        name: "Pinterest",
+        link: data.pinterest,
+      },
+      {
+        name: "LinkedIn",
+        link: data.linkedin,
+      },
+      {
+        name: "Outra",
+        link: data.otherSocials,
+      },
+    ].filter((social) => social.link);
+
+    const socialNameMap = {
+      Pinterest: "pinterest",
+      LinkedIn: "linkedin",
+      Instagram: "instagram",
+      Facebook: "facebook",
+      Outra: "otherSocials",
+    };
+
+    const socialIsEdited = () => {
+      let isDirty = false;
+      filteredSocialMedias.forEach((social) => {
+        const professionalSocialMedia = professional.socialMedias.find(
+          ({ name }) => name == social.name
+        );
+
+        if (!professionalSocialMedia) return;
+
+        if (
+          professionalSocialMedia.link !=
+          (data as any)[(socialNameMap as any)[social.name]]
+        ) {
+          isDirty = true;
+        }
+      });
+
+      return isDirty;
+    };
+
+    if (socialIsEdited()) {
+      await updateSocialMedia(filteredSocialMedias);
+    }
+
     await update({ id: professional.id, ...payload });
     close();
+  };
+
+  const updateSocialMedia = async (
+    filteredSocialMedias: { name: string; link: string }[]
+  ) => {
+    await deleteSocialMedia({ professionalId: professional.id });
+    await createMany({
+      professionalId: professional.id,
+      names: filteredSocialMedias.map(({ name }) => name).join(","),
+      links: filteredSocialMedias.map(({ link }) => link).join(","),
+    });
   };
 
   return (

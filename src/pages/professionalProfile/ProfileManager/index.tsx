@@ -72,7 +72,10 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
       >
         <FormEditProfile
           professional={professional}
-          close={() => setModalEdit(false)}
+          close={() => {
+            refetch();
+            setModalEdit(false);
+          }}
         />
       </Modal>
       <Modal
