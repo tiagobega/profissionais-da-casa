@@ -26,9 +26,13 @@ export type SingleSocialMediaData = {
   id: string;
 };
 
-export type DeleteSocialMediaData = {
-  id: string;
-};
+export type DeleteSocialMediaData =
+  | {
+      id: string;
+    }
+  | {
+      professionalId: string;
+    };
 
 export type AllSocialMediaResponse = {
   socialMedias: SocialMedia[];
