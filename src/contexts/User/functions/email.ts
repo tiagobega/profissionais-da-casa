@@ -1,6 +1,6 @@
 import type { ErrorHandler } from "../types";
 import type { SendEmailData, SendEmailParams } from "services/User/types/email";
-
+import cssTemplate from "../../../emails/style.css?raw";
 import { UserService } from "services/User";
 import { templates } from "constants/emailTemplate";
 import { withErrorHandler } from "./withErrorHandler";
@@ -35,7 +35,13 @@ export const emailFunctions = (errorHandler: ErrorHandler) => {
 
       switch (selectedTemplate.type) {
         case "local":
-          currentTemplate.html = selectedTemplate.html;
+          currentTemplate.html = selectedTemplate.html.replace(
+            `<link rel="stylesheet" href="styles.css" />`,
+            `<style>${cssTemplate}</style>`
+          );;
+
+          console.log(currentTemplate.html);
+
           break;
 
         case "space":
