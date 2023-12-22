@@ -572,7 +572,7 @@ export class UserService extends BaseService {
   static async deleteSocialMedia(data: ST.DeleteSocialMediaData) {
     try {
       const response = await axios.api.post<ST.DeleteResponse>(
-        API_ROUTES.PUT.SOCIALMEDIA_EDIT,
+        API_ROUTES.POST.SOCIALMEDIA_DELETE,
         data
       );
       return response.data;
