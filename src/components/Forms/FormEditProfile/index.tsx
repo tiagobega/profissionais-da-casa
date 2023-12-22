@@ -80,6 +80,7 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({
       close();
       return;
     }
+    
     let payload: ProfessionalUpdateData = {
       name: data.name,
       description: data.description,
@@ -87,80 +88,82 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({
       tags: data.tags.join(","),
     };
 
-    const filteredSocialMedias = [
-      {
-        name: "Instagram",
-        link: data.instagram,
-      },
-      {
-        name: "Facebook",
-        link: data.facebook,
-      },
+    const finalSocialMedias: { name: string; link: string }[] = [];
+
+    const socialNameMap = [
       {
         name: "Pinterest",
         link: data.pinterest,
+        key: "pinterest",
       },
       {
+        key: "linkedin",
         name: "LinkedIn",
         link: data.linkedin,
       },
       {
+        key: "instagram",
+        name: "Instagram",
+        link: data.instagram,
+      },
+      {
+        key: "facebook",
+        name: "Facebook",
+        link: data.facebook,
+      },
+      {
+        key: "otherSocials",
         name: "Outra",
         link: data.otherSocials,
       },
-    ].filter((social) => social.link);
+    ];
 
-    const socialNameMap = {
-      Pinterest: "pinterest",
-      LinkedIn: "linkedin",
-      Instagram: "instagram",
-      Facebook: "facebook",
-      Outra: "otherSocials",
-    };
+    socialNameMap.forEach((currentSocialMedia) => {
+      const professionalSocialMedia = professional.socialMedias.find(
+        ({ name }) => name === currentSocialMedia.name
+      );
 
-    const socialIsEdited = () => {
-      let isDirty = false;
-      filteredSocialMedias.forEach((social) => {
-        const professionalSocialMedia = professional.socialMedias.find(
-          ({ name }) => name == social.name
-        );
-
-        if (!professionalSocialMedia) return;
-
-        if (
-          professionalSocialMedia.link !=
-          (data as any)[(socialNameMap as any)[social.name]]
-        ) {
-          isDirty = true;
+      if (!professionalSocialMedia) {
+        if (currentSocialMedia.link) {
+          finalSocialMedias.push({
+            name: currentSocialMedia.name,
+            link: currentSocialMedia.link,
+          });
         }
-      });
+        return;
+      }
 
-      return isDirty;
-    };
+      if (currentSocialMedia.link !== professionalSocialMedia.link || currentSocialMedia.link) {
+        finalSocialMedias.push({
+          name: currentSocialMedia.name,
+          link: currentSocialMedia.link,
+        });
+      }
+    });
 
-    if (socialIsEdited()) {
-      await updateSocialMedia(filteredSocialMedias);
+
+    if (finalSocialMedias.length > 0) {
+      if (professional.socialMedias.length > 0) {
+        await deleteSocialMedia({ professionalId: professional.id });
+      }
+
+      const filtered = finalSocialMedias.filter((sm) => sm.link);
+      if (filtered.length > 0) {
+        await createMany({
+          professionalId: professional.id,
+          names: filtered.map(({ name }) => name).join(","),
+          links: filtered.map(({ link }) => link).join(","),
+        });
+      }
     }
 
     await update({ id: professional.id, ...payload });
     close();
   };
 
-  const updateSocialMedia = async (
-    filteredSocialMedias: { name: string; link: string }[]
-  ) => {
-    await deleteSocialMedia({ professionalId: professional.id });
-    await createMany({
-      professionalId: professional.id,
-      names: filteredSocialMedias.map(({ name }) => name).join(","),
-      links: filteredSocialMedias.map(({ link }) => link).join(","),
-    });
-  };
-
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >
