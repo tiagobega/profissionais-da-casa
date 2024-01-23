@@ -276,7 +276,7 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
 
     sendEmail({
       template: "NEW_PROFESSIONAL",
-      email: "tiago@fillet.com.br",
+      email: "profissionais@vivacadacasa.com.br",
       subject: "Novo Profissional Registrado",
       text: "texto",
       params: {
