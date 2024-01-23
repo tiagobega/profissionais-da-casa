@@ -11,6 +11,10 @@ export interface ButtonDeleteProps {
   variant?: "primary" | "outline" | "text";
   small?: boolean;
   children?: ReactNode;
+  width?: number;
+  color?: string;
+  background?: string;
+  disabled?: boolean;
 }
 
 export const ButtonDelete: React.FC<ButtonDeleteProps> = ({
@@ -19,6 +23,10 @@ export const ButtonDelete: React.FC<ButtonDeleteProps> = ({
   children,
   variant,
   small,
+  width,
+  color,
+  background,
+  disabled,
 }) => {
   const [modalConfirm, setModalConfirm] = useState(false);
   const theme = useTheme();
@@ -34,6 +42,10 @@ export const ButtonDelete: React.FC<ButtonDeleteProps> = ({
         small={small}
         onClick={() => setModalConfirm(true)}
         variant={variant ? variant : `outline`}
+        width={width}
+        color={color}
+        background={background}
+        disabled={disabled}
       >
         {children ? children : "Apagar"}
       </Button>
