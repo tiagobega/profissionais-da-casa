@@ -54,7 +54,7 @@ export const ProfessionalList: React.FC<ProfessionalListProps> = ({
       <ListLegend full>
         <FlexBox gap={1}>
           <div className="name">Nome</div>
-          <div className="birth-date">Data de Cadastro</div>
+          <div className="birth-date">Data de Nascimento</div>
           <div className="email">Email</div>
           <div className="phone">Telefone</div>
           {approved && <div className="rating">Avaliação</div>}
@@ -62,7 +62,11 @@ export const ProfessionalList: React.FC<ProfessionalListProps> = ({
       </ListLegend>
       <ListContent>
         {displayList.map((el) => (
-          <ProfessionalListLine professional={el.professional} user={el.user} />
+          <ProfessionalListLine
+            professional={el.professional}
+            user={el.user}
+            key={el.user.id}
+          />
         ))}
       </ListContent>
     </List>
