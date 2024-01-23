@@ -32,7 +32,7 @@ export const LoginLayout: React.FC<LoginPageProps> = ({ children }) => {
           <FlexBox full mb={2} pl={7}>
             <Button variant="text" onClick={() => navigate("/")}>
               <CaretLeft weight="fill" />
-              Página inical
+              Página inicial
             </Button>
           </FlexBox>
           <BlueField>
@@ -63,7 +63,6 @@ export const LoginLayout: React.FC<LoginPageProps> = ({ children }) => {
               <br />
               os melhores
               <br />
-              materiais e<br />
               profissionais para
               <br />a sua reforma
             </h2>
