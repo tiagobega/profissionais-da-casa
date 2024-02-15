@@ -51,6 +51,10 @@ export const registerProfessionalSchema = z
       .string()
       .min(1, formErrors.ERROR_REQUIRED)
       .email(formErrors.ERROR_INVALID),
+    emailConfirm: z
+      .string()
+      .min(1, formErrors.ERROR_REQUIRED)
+      .email(formErrors.ERROR_INVALID),
     phone: z
       .string({ required_error: formErrors.ERROR_REQUIRED })
       .min(15, formErrors.ERROR_INVALID),
@@ -140,4 +144,8 @@ export const registerProfessionalSchema = z
   .refine((data) => data.onlineAppointment || !!data.states.length, {
     message: "Pelo menos um dos campos abaixo deve ser preenchido",
     path: ["states"],
+  })
+  .refine((data) => data.email == data.emailConfirm, {
+    message: "Os e-mails digitados náo conferem",
+    path: ["emailConfirm"],
   });

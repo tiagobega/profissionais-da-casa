@@ -12,6 +12,7 @@ import { states } from "constants/states";
 import { LeadList } from "pages/userProfile/components/LeadList";
 import { Modal } from "components/Modal";
 import { socialMediaIcon } from "utils/socialMediaLogo";
+import { ButtonDelete } from "components/ButtonDelete";
 
 export interface ProfessionalDetailsProps {}
 
@@ -194,39 +195,49 @@ export const AdmProfessionalDetails: React.FC<
                   </FlexBox>
                 </FlexBox>
               </FlexBox>
-
-              {!currentProfessional?.active ? (
-                <FlexBox direction="column" gap={1}>
-                  <Button
-                    variant="primary"
-                    color="white"
-                    background={color.secondary.blue}
-                    width={15}
-                    onClick={handleProfessionalAccept}
-                  >
-                    Ativar
-                  </Button>
-                  <Button
-                    variant="outline"
-                    width={15}
-                    onClick={handleProfessionalReject}
-                  >
-                    Rejeitar
-                  </Button>
-                </FlexBox>
-              ) : (
-                <FlexBox direction="column" gap={1}>
-                  <Button
-                    variant="primary"
-                    color="white"
-                    background={color.secondary.blue}
-                    width={15}
-                    onClick={handleProfessionalInactive}
-                  >
-                    Desativar
-                  </Button>
-                </FlexBox>
-              )}
+              <FlexBox direction="column" gap={1}>
+                {!currentProfessional?.active ? (
+                  <FlexBox direction="column" gap={1}>
+                    <Button
+                      variant="primary"
+                      color="white"
+                      background={color.secondary.blue}
+                      width={15}
+                      onClick={handleProfessionalAccept}
+                    >
+                      Ativar
+                    </Button>
+                    <Button
+                      variant="outline"
+                      width={15}
+                      onClick={handleProfessionalReject}
+                    >
+                      Rejeitar
+                    </Button>
+                  </FlexBox>
+                ) : (
+                  <FlexBox direction="column" gap={1}>
+                    <Button
+                      variant="primary"
+                      color="white"
+                      background={color.secondary.blue}
+                      width={15}
+                      onClick={handleProfessionalInactive}
+                    >
+                      Desativar
+                    </Button>
+                  </FlexBox>
+                )}
+                <ButtonDelete
+                  deleteFn={() => {}}
+                  name={currentProfessional.name}
+                  width={15}
+                  color={color.brand.orange}
+                  disabled
+                >
+                  Deletar usuário
+                </ButtonDelete>
+              </FlexBox>
             </FlexBox>
             <h2>Informações:</h2>
             {!leads ? (
@@ -249,6 +260,11 @@ export const AdmProfessionalDetails: React.FC<
                     {/* <p>
                 Email: <strong>{currentProfessional.email}</strong>
               </p> */}
+                    {currentUser && (
+                      <p>
+                        E-mail: <strong>{currentUser?.email}</strong>
+                      </p>
+                    )}
                   </FlexBox>
                   <FlexBox direction="column" gap={0.75}>
                     <h3>Informações de PJ</h3>

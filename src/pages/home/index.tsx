@@ -31,9 +31,7 @@ const HomePage = () => {
       <InformationContainer direction="column" gap={2} alignItems="center">
         <h2>Diversas soluções para a sua reforma</h2>
         <p>
-          Calcule o material certo pelo Casa Fast ou encontre o melhor
-          profissional pelo Profissionais da Casa. Você também pode conferir
-          seus pedidos na aba “Meu Perfil”
+          Encontre o melhor profissional na plataforma do Profissionais da Casa
         </p>
         <Button
           variant="primary"

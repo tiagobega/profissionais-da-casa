@@ -27,7 +27,7 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
             <div className="orange">
               <strong>
                 Quer participar de uma plataforma de <br />
-                divulgação de arquitetos e engenheiros?
+                divulgação de arquitetos, engenheiros e técnicos?
               </strong>
               <p>Crie uma conta como Profissional da Casa.</p>
             </div>

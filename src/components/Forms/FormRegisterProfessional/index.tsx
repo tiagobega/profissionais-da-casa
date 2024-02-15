@@ -330,6 +330,14 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
                 error={errors.email}
                 {...register("email")}
               />
+              <Input.Text
+                type="email"
+                placeholder="Email"
+                aria-label="Email confirm"
+                label={"Confirmar E-mail"}
+                error={errors.emailConfirm}
+                {...register("emailConfirm")}
+              />
 
               {/* CPF */}
               <Controller

@@ -17,6 +17,8 @@ export const PhotoContainer = styled.div`
     width: 100%;
     height: 150px;
     background-color: ${theme.color.brand.purple};
+    display: flex;
+    align-items: center;
     overflow: hidden;
     img {
       width: 100%;

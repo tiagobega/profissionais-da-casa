@@ -60,7 +60,7 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
         onClick={() => setModalBg(true)}
         width={10}
       >
-        Foto de fundo
+        Foto do card
       </Button>
       <Modal
         isOpened={modalEdit}

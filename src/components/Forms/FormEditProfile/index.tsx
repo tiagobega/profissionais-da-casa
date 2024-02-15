@@ -46,6 +46,7 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({
     setValue("name", professional.name);
     setValue("onlineAppointment", professional.onlineAppointment);
     setValue("description", professional.description);
+    setValue("formation", professional.formation);
     setValue("tags", professional.tags.split(","));
     setSocials();
   }, [professional]);
@@ -80,11 +81,12 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({
       close();
       return;
     }
-    
+
     let payload: ProfessionalUpdateData = {
       name: data.name,
       description: data.description,
       onlineAppointment: data.onlineAppointment,
+      formation: data.formation,
       tags: data.tags.join(","),
     };
 
@@ -133,14 +135,16 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({
         return;
       }
 
-      if (currentSocialMedia.link !== professionalSocialMedia.link || currentSocialMedia.link) {
+      if (
+        currentSocialMedia.link !== professionalSocialMedia.link ||
+        currentSocialMedia.link
+      ) {
         finalSocialMedias.push({
           name: currentSocialMedia.name,
           link: currentSocialMedia.link,
         });
       }
     });
-
 
     if (finalSocialMedias.length > 0) {
       if (professional.socialMedias.length > 0) {
@@ -183,6 +187,25 @@ export const FormEditProfile: FC<FormEditProfileProps> = ({
           placeholder="Escreva um pouco sobre você"
           error={errors.description}
           {...register("description")}
+        />
+
+        <Input.Select
+          options={[
+            { name: "Arquiteto", value: "Arquiteto" },
+            { name: "Engenheiro", value: "Engenheiro" },
+            {
+              name: "Designer de interiores",
+              value: "Designer de interiores",
+            },
+            { name: "Execução de obras", value: "Execução de obras" },
+            { name: "Instalações", value: "Instalações" },
+            { name: "Pintor", value: "Pintor" },
+          ]}
+          placeholder="Formação"
+          aria-label="Formação"
+          label={"Selecione a sua profissão"}
+          error={errors.formation}
+          {...register("formation")}
         />
 
         <Input.Checkbox
