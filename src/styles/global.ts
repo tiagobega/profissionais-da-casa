@@ -1,9 +1,19 @@
 import { createGlobalStyle, css } from "styled-components";
+import { media } from "./utils";
+import { SCREEN_SIZE } from "./contants";
 
 const checkedIcon = "/assets/check.svg";
 
 export const GlobalStyle = createGlobalStyle`
   ${({ theme }) => css`
+    :root {
+      --currentScreenWidth: ${SCREEN_SIZE.MOBILE};
+      ${media.sm`--currentScreenWidth: ${SCREEN_SIZE.MOBILE_BIG}`}
+      ${media.md`--currentScreenWidth: ${SCREEN_SIZE.TABLET}`}
+      ${media.lg`--currentScreenWidth: ${SCREEN_SIZE.DESKTOP}`}
+      ${media.xl`--currentScreenWidth: ${SCREEN_SIZE.DESKTOP_BIG}`};
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -13,6 +23,11 @@ export const GlobalStyle = createGlobalStyle`
         border: 2px solid ${theme.color.brand.purple};
       }
     }
+
+    #root {
+      width: 100vw;
+    }
+
     body {
       background-color: ${theme.color.base[100]};
       color: ${theme.color.base[500]};

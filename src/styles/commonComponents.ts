@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { FlexBox } from "components/FlexBox";
+import { media } from "./utils";
 
 export const MarginContainer = styled.div`
   ${({ theme }) => css`
@@ -9,9 +10,11 @@ export const MarginContainer = styled.div`
     /* border: 1px solid red; */
   `}
 `;
+
 export const FullContainer = styled.div`
   ${({ theme }) => css`
     width: 100%;
+    ${media.lg`width: 80%`}
   `}
 `;
 export const CarouselButton = styled.div<{ isActive: boolean }>`

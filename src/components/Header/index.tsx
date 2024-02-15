@@ -1,86 +1,121 @@
-import { FlexBox } from "components/FlexBox";
-import type { HeaderProps } from "./types";
-import logo from "assets/images/logo.png";
-import { HeaderContainer, LoginContainer, LoginName } from "./styles";
-import { Button } from "components/Button";
-import { useTheme } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { SignOut, X } from "@phosphor-icons/react";
+import cn from "classnames";
+
+import {
+  HeaderContainer,
+  LoginContainer,
+  LoginName,
+  RoleProps,
+} from "./styles";
 import { useApi } from "contexts/User";
-import { SignOut } from "@phosphor-icons/react";
-import { useEffect } from "react";
+import { FlexBox } from "components/FlexBox";
+import { Button } from "components/Button";
+
+import logo from "assets/images/logo.png";
+import { HeaderLink, headerLinks } from "constants/header";
+import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const { user } = useApi();
 
   const { me, logged, logout } = user;
 
-  const getRole = () => {
-    if (!me) return "logout";
-    else return me.roleRel.name;
-  };
+  const currentRole = me ? me.roleRel.name : "logout";
+
+  const headerLinkKeys = Object.keys(headerLinks);
 
   return (
-    <HeaderContainer role={getRole()}>
-      <FlexBox full justifyContent="space-between" alignItems="center">
-        <div className="listLogo">
+    <HeaderContainer role={currentRole}>
+      <FlexBox full justifyContent="space-between" alignItems="center" gap={2}>
+        <div className="logo">
           <img
             src={logo}
             alt="cada casa"
             onClick={() => navigate("/")}
             className="logo"
           />
-
-          <FlexBox justifyContent="space-between">
-            <nav>
-              <ul>
-                <li>
-                  <a href="https://cadacasa.com.br/blog-2/">Blog</a>
-                </li>
-                <li>
-                  <a href="https://cadacasa.com.br/ ">Cada casa</a>
-                </li>
-                <li>
-                  <a
-                    href="https://cadacasa.com.br/casa-fast-inicial/"
-                    target="_blank"
-                  >
-                    Casa Fast
-                  </a>
-                </li>
-                <li>
-                  <Link to="/catalog">Catalogo</Link>
-                </li>
-              </ul>
-            </nav>
-          </FlexBox>
+        </div>
+        <div className={cn("list", { "list--open": open })}>
+          <nav>
+            <ul>
+              {headerLinkKeys.map((headerLinkKey) => (
+                <HeaderLinkComponent
+                  headerLinkKey={headerLinkKey as HeaderLink}
+                />
+              ))}
+            </ul>
+          </nav>
+          <div className="list__user">
+            <HeaderUser role={currentRole} />
+          </div>
+        </div>
+        <button
+          className={cn("sandwich", { "sandwich--open": open })}
+          onClick={() => setOpen((oldOpen) => !oldOpen)}
+        />
+        <div className="user">
+          <HeaderUser role={currentRole} />
         </div>
       </FlexBox>
-      <LoginContainer role={getRole()}>
-        {me && logged ? (
-          <FlexBox
-            alignItems="flex-start"
-            gap={0.5}
-            px={1.5}
-            direction="column"
-          >
+    </HeaderContainer>
+  );
+};
+
+const HeaderLinkComponent = ({
+  headerLinkKey,
+}: {
+  headerLinkKey: HeaderLink;
+}) => {
+  const { external, link, name } = headerLinks[headerLinkKey];
+
+  if (external) {
+    return (
+      <li>
+        <a href={link}>{name}</a>
+      </li>
+    );
+  }
+
+  return (
+    <li>
+      <Link to={link}>{name}</Link>
+    </li>
+  );
+};
+
+const HeaderUser = ({ role }: RoleProps) => {
+  const navigate = useNavigate();
+
+  const { user } = useApi();
+  const { me, logged, logout } = user;
+
+  return (
+    <LoginContainer role={role}>
+      {me && logged ? (
+        <FlexBox
+          alignItems="center"
+          justifyContent="space-between"
+          gap={2}
+          px={2}
+          full
+        >
+          <FlexBox gap={0.5} direction="column">
             <LoginName>{me.name.split(" ")[0]}</LoginName>
             <FlexBox gap={0.5} alignItems="center">
-              {getRole() == "admin" ? (
-                <Button
-                  variant="text"
-                  onClick={() => navigate("/admin")}
-                  color="white"
-                >
+              {role == "admin" ? (
+                <Button variant="text" onClick={() => navigate("/admin")}>
                   Painel Admim
                 </Button>
-              ) : getRole() == "user" ? (
+              ) : role == "user" ? (
                 <Button variant="text" onClick={() => navigate(`/profile`)}>
                   Meu perfil
                 </Button>
               ) : (
-                getRole() == "professional" && (
+                role == "professional" && (
                   <Button
                     variant="text"
                     onClick={() => navigate(`/professional/${me.id}`)}
@@ -89,32 +124,33 @@ const Header = () => {
                   </Button>
                 )
               )}
-              <Button small onClick={() => logout(() => navigate("/"))}>
-                <SignOut size={20} weight="bold" />
-              </Button>
             </FlexBox>
           </FlexBox>
-        ) : (
-          <Button variant="primary" onClick={() => navigate("/login")}>
-            <svg
-              width="16"
-              height="21"
-              viewBox="0 0 16 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M10.7389 9.70152C12.1184 8.73839 13.0208 7.1391 13.0208 5.32903C13.0208 2.38589 10.635 0 7.69181 0C4.74867 0 2.36278 2.38589 2.36278 5.32903C2.36278 7.13908 3.26521 8.73837 4.64469 9.7015L0 20.4279H15.3836L10.7389 9.70152Z"
-                fill="black"
-              />
-            </svg>
-            Login
+          <Button small onClick={() => logout(() => navigate("/"))}>
+            <SignOut size={20} weight="bold" />
           </Button>
-        )}
-      </LoginContainer>
-    </HeaderContainer>
+        </FlexBox>
+      ) : (
+        <Button variant="primary" onClick={() => navigate("/login")}>
+          <svg
+            width="16"
+            height="21"
+            viewBox="0 0 16 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M10.7389 9.70152C12.1184 8.73839 13.0208 7.1391 13.0208 5.32903C13.0208 2.38589 10.635 0 7.69181 0C4.74867 0 2.36278 2.38589 2.36278 5.32903C2.36278 7.13908 3.26521 8.73837 4.64469 9.7015L0 20.4279H15.3836L10.7389 9.70152Z"
+              fill="black"
+            />
+          </svg>
+          Login
+        </Button>
+      )}
+    </LoginContainer>
   );
 };
+
 export default Header;
