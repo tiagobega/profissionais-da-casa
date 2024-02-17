@@ -1,6 +1,7 @@
 import { FlexBox } from "components/FlexBox";
 import { Geometry } from "components/Geometry";
 import styled, { css } from "styled-components";
+import { media } from "styles/utils";
 
 export const FilterSearchContainer = styled.div`
   ${({ theme }) => css`
@@ -10,12 +11,15 @@ export const FilterSearchContainer = styled.div`
     gap: 2rem;
     align-items: center;
     position: relative;
+
     div {
       width: 270px;
     }
+
     input {
       width: 270px;
     }
+
     .icon-button {
       position: absolute;
       left: 230px;
@@ -68,13 +72,15 @@ export const FilterContent = styled(FlexBox)`
   }
 `;
 
-export const Container = styled.section`
+export const Container = styled.div`
   ${() => css`
-    width: calc(100vw - 12rem);
+    width: 100%;
+    // width: calc(100vw - 12rem);
     max-width: 1170px;
     margin: 0 auto;
   `}
 `;
+
 export const FilterContainer = styled.div`
   ${() => css`
     position: relative;
@@ -101,12 +107,20 @@ export const Triangle = styled(Geometry)`
   `}
 `;
 
-export const ProfileList = styled.section`
+export const ProfileList = styled.ul`
   ${() => css`
-    width: 1170px;
+    // width: 1170px;
+    width: 100%;
     margin-top: 2rem;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
+
+    ${media.md`
+        grid-template-columns: repeat(2, 1fr);
+      `}
+    ${media.lg`
+        grid-template-columns: repeat(4, 1fr);
+      `}
   `}
 `;

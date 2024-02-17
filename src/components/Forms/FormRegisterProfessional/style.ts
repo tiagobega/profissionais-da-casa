@@ -8,9 +8,11 @@ export const Form = styled.form`
       padding-block: 2rem;
       border-bottom: 1px solid black;
     }
+    
     fieldset {
       width: 100%;
     }
+    
     fieldset:last-child {
       padding-block: 2rem;
       border-bottom: none;

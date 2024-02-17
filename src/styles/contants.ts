@@ -11,9 +11,13 @@ export const SCREEN_SIZE = {
   MOBILE_BIG: 576,
   TABLET: 768,
   DESKTOP: 1280,
-  DESKLTOP_BIG: 1440,
+  DESKTOP_BIG: 1440,
 } as const;
 export type ScreenSize = (typeof SCREEN_SIZE)[keyof typeof SCREEN_SIZE];
+
+export const screenSizeConfig = {
+
+}
 
 export const MEDIA_QUERY_KEY = {
   sm: "sm",

@@ -4,18 +4,13 @@ import { FullContainer } from "styles/commonComponents";
 
 export const Form = styled.form`
   ${({ theme }) => css`
-    width: 20rem;
+    width: 100%;
     display: relative;
     strong {
       font-size: 1.2rem;
     }
     .tooltip-list {
       list-style: circle;
-    }
-    input[type="text"],
-    [type="email"],
-    [type="password"] {
-      width: 18rem;
     }
   `}
 `;

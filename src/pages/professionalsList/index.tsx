@@ -1,13 +1,14 @@
-import { HeaderList } from 'components/HeaderList'
-import { List } from './components/list'
-import { FlexBox } from 'components/FlexBox'
+import { HeaderList } from "components/HeaderList";
+import { List } from "./components/list";
+import { FlexBox } from "components/FlexBox";
+import { ProfessionalsListPageContainer } from "components/HeaderList/styles";
 
 export interface ProfessionalsListProps {}
 export const ProfessionalsListPage: React.FC<ProfessionalsListProps> = () => {
   return (
-    <FlexBox direction="column" gap={2} my={2}>
+    <ProfessionalsListPageContainer direction="column" gap={2} p={2}>
       <HeaderList />
       <List />
-    </FlexBox>
-  )
-}
+    </ProfessionalsListPageContainer>
+  );
+};

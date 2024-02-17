@@ -307,7 +307,17 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
         <fieldset className="fieldsetDivider">
           <legend>1) Informações Pessoa Física </legend>
 
-          <FlexBox gap={2} mb={2} full direction="row">
+          <FlexBox
+            direction={"column"}
+            gap={2}
+            mb={2}
+            full
+            media={{
+              lg: {
+                direction: "row",
+              },
+            }}
+          >
             <FlexBox
               gap={2}
               full
@@ -528,7 +538,16 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
 
         <fieldset className="fieldsetDivider">
           <legend>3) Registro profissional / Acadêmico</legend>
-          <FlexBox gap={2} full direction="row">
+          <FlexBox
+            gap={2}
+            full
+            direction="column"
+            media={{
+              lg: {
+                direction: "row",
+              },
+            }}
+          >
             <FlexBox direction="column" gap={2} full>
               <Input.Select
                 options={[
@@ -639,7 +658,16 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
             </FlexBox>
 
             <h4>Coloque abaixo o link de suas redes sociais (opcional)</h4>
-            <FlexBox gap={1} full>
+            <FlexBox
+              direction="column"
+              gap={1}
+              full
+              media={{
+                lg: {
+                  direction: "row",
+                },
+              }}
+            >
               <FlexBox direction="column" gap={1} full>
                 <Input.Text
                   type="text"

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { media } from "styles/utils";
 
 export interface ButtonContainerStyle {
   shadow?: boolean;
@@ -40,7 +41,9 @@ export const ButtonContainer = styled.button<ButtonContainerStyle>`
     font-family: 'Lexend', sans-serif;
     font-weight: 700;
     text-underline-offset: 8px;
+    
     font-size: 1rem;
+
     background-color: ${
       variant != "primary"
         ? "transparent"
@@ -57,7 +60,6 @@ export const ButtonContainer = styled.button<ButtonContainerStyle>`
     ${variant != "text" && shadow && `box-shadow: -3px 3px 0 black;`};
     ${disabled && "pointer-events:none"};
     ${disabled && "opacity: 0.5"};
-
     &:hover {
       transition: 200ms;
       color: ${variant != "text" ? "white" : color};

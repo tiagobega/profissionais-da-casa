@@ -53,7 +53,7 @@ export const FormLogin = () => {
         }
 
         setMyProfessional(professionalResponse);
-        
+
         navigate(`/professional/${professionalResponse.userId}`);
 
         break;
@@ -71,7 +71,19 @@ export const FormLogin = () => {
         <br />
         serviços da Cada Casa
       </p>
-      <FlexBox direction="column" gap={1} full my={1}>
+
+      <FlexBox
+        direction="column"
+        gap={1}
+        full
+        my={1}
+        alignItems="center"
+        media={{
+          lg: {
+            alignItems: "flex-start",
+          },
+        }}
+      >
         <Input.Text
           type="email"
           placeholder="Email"

@@ -25,7 +25,7 @@ export const RightPannel = styled(FlexBox)`
       margin: 1rem 0;
       height: 1px;
       background-color: ${theme.color.base[300]};
-      width: 20rem;
+      width: 100%;
     }
   `}
 `;

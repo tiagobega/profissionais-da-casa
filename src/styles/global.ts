@@ -25,7 +25,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     #root {
-      width: 100vw;
+      width: 100%;
     }
 
     body {
@@ -41,10 +41,6 @@ export const GlobalStyle = createGlobalStyle`
       &.modal-open {
         overflow: hidden;
       }
-    }
-    main {
-      flex-grow: 1;
-      min-height: calc(100vh - 468px);
     }
 
     a {
@@ -139,5 +135,46 @@ export const GlobalStyle = createGlobalStyle`
     }
     form {
       width: 100%;
+    }
+
+    &[open] {
+      opacity: 1;
+      transform: none;
+    }
+
+    dialog[open] {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+
+    dialog {
+      opacity: 0;
+      transform: scaleY(0);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out,
+        overlay 0.7s ease-out allow-discrete,
+        display 0.7s ease-out allow-discrete;
+    }
+
+    @starting-style {
+      dialog[open] {
+        opacity: 0;
+        transform: scaleY(0);
+      }
+    }
+
+    dialog::backdrop {
+      background-color: rgb(0 0 0 / 0%);
+      transition: display 0.7s allow-discrete, overlay 0.7s allow-discrete,
+        background-color 0.7s;
+    }
+
+    dialog[open]::backdrop {
+      background-color: rgb(0 0 0 / 25%);
+    }
+
+    @starting-style {
+      dialog[open]::backdrop {
+        background-color: rgb(0 0 0 / 0%);
+      }
     }
   `}`;

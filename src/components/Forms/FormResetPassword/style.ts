@@ -4,6 +4,6 @@ import { FullContainer } from "styles/commonComponents";
 
 export const Form = styled.form`
   ${({ theme }) => css`
-    width: 20rem;
+    width: 100%;
   `}
 `;

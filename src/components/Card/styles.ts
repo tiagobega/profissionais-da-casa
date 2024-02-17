@@ -3,9 +3,8 @@ import { FlexBox } from "components/FlexBox";
 
 export const CardContainer = styled.div`
   ${({ theme }) => css`
+    width: 100%;
     position: relative;
-    min-width: 270px;
-    width: 270px;
     height: 400px;
     border: 5px solid ${theme.color.base[500]};
     display: flex;

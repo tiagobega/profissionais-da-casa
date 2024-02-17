@@ -1,5 +1,12 @@
 import { FlexBox } from "components/FlexBox";
-import { FooterContainer, FooterContent } from "./styles";
+import {
+  FooterContainer,
+  FooterContent,
+  FooterHeader,
+  FooterHeaderContainer,
+  FooterMain,
+  FooterSocial,
+} from "./styles";
 import type { FooterProps } from "./types";
 import logoText from "assets/images/logoText.png";
 import facebookLogo from "assets/images/facebookLogo.png";
@@ -10,17 +17,49 @@ import youtubeLogo from "assets/images/youtubeLogo.png";
 import { Button } from "components/Button";
 import { useNavigate } from "react-router-dom";
 
+const footerSocialImages = [
+  {
+    image: facebookLogo,
+    link: "https://www.facebook.com/people/Viva-Cada-Casa/100083397247781/",
+    alt: "facebook",
+  },
+  {
+    image: instagramLogo,
+    link: "https://www.instagram.com/vivacadacasa/",
+    alt: "instagram",
+  },
+  {
+    image: linkedinLogo,
+    link: "https://br.linkedin.com/company/cadacasa",
+    alt: "linkeIn",
+  },
+  {
+    image: youtubeLogo,
+    link: "https://www.youtube.com/@cadacasa7844",
+    alt: "youtube",
+  },
+];
+
 const Footer = (props: FooterProps) => {
   const navigate = useNavigate();
 
   return (
     <FooterContainer>
       <FooterContent>
-        <FlexBox full centralized gap={1.25}>
-          <img src={logoText} alt="" loading="lazy" />
-          <h6>Seu lar, nossa casa</h6>
-        </FlexBox>
-        <FlexBox full justifyContent="space-between" my={3} gap={5}>
+        <FooterHeader>
+          <FooterHeaderContainer>
+            <img src={logoText} alt="" loading="lazy" />
+          </FooterHeaderContainer>
+          <FooterHeaderContainer>
+            <h6>
+              Seu lar,
+              <br />
+              nossa casa
+            </h6>
+          </FooterHeaderContainer>
+        </FooterHeader>
+
+        <FooterMain>
           <FlexBox
             direction="column"
             justifyContent="space-between"
@@ -30,6 +69,7 @@ const Footer = (props: FooterProps) => {
             <span>+55 11 5197-6500</span>
             <span>contato@vivacadacasa.com.br</span>
           </FlexBox>
+
           <FlexBox
             direction="column"
             justifyContent="space-between"
@@ -64,40 +104,15 @@ const Footer = (props: FooterProps) => {
               </Button>
             </FlexBox>
           </FlexBox>
-        </FlexBox>
-        <FlexBox centralized gap={2}>
-          <Button
-            variant="text"
-            color="white"
-            href="https://www.facebook.com/people/Viva-Cada-Casa/100083397247781/"
-          >
-            <img src={facebookLogo} alt="facebook" loading="lazy" />
-          </Button>
-          <Button
-            variant="text"
-            color="white"
-            href="https://www.instagram.com/vivacadacasa/"
-          >
-            <img src={instagramLogo} alt="instagram" loading="lazy" />
-          </Button>
-          <Button
-            variant="text"
-            color="white"
-            href="https://br.linkedin.com/company/cadacasa"
-          >
-            <img src={linkedinLogo} alt="linkedin" loading="lazy" />
-          </Button>
-          {/* <Button variant="text" color="white" href="https://br.pinterest.com/">
-          <img src={pinterestLogo} alt="pinterest" />
-        </Button> */}
-          <Button
-            variant="text"
-            color="white"
-            href="https://www.youtube.com/@cadacasa7844"
-          >
-            <img src={youtubeLogo} alt="youtube" loading="lazy" />
-          </Button>
-        </FlexBox>
+        </FooterMain>
+
+        <FooterSocial>
+          {footerSocialImages.map(({ image, link }, index) => (
+            <Button color="white" variant="text" href={link} key={index}>
+              <img src={image} alt="" loading="lazy" />
+            </Button>
+          ))}
+        </FooterSocial>
       </FooterContent>
     </FooterContainer>
   );

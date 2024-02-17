@@ -9,32 +9,29 @@ export interface RoleProps {
 export const HeaderContainer = styled.header<RoleProps>`
   ${({ theme, role }) => css`
     width: 100%;
-    height: ${vw(crossm(HEADER_SIZE.MOBILE, SCREEN_SIZE.MOBILE))};
+    height: ${px(HEADER_SIZE.MOBILE)};
     font-weight: 700;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    z-index: 1000;
+    position: sticky;
+    top: 0px;
     background-color: white;
     background-color: ${role == "admin"
       ? theme.color.brand.yellowLight
       : "white"};
-
     padding: 0 2em;
 
     ${media.sm`
-      height: ${vw(crossm(HEADER_SIZE.MOBILE, SCREEN_SIZE.MOBILE_BIG))};
+      height: ${px(HEADER_SIZE.MOBILE)};
       `}
 
     ${media.md`
-      height: ${vw(crossm(HEADER_SIZE.TABLET, SCREEN_SIZE.TABLET))};
+      height: ${px(HEADER_SIZE.TABLET)};
     `}
 
     ${media.lg`
-      height: ${vw(crossm(HEADER_SIZE.DESKTOP, SCREEN_SIZE.DESKTOP))};
-    `}
-    
-    ${media.xl`
       height: ${px(HEADER_SIZE.DESKTOP)};
     `}
 
@@ -58,7 +55,9 @@ export const HeaderContainer = styled.header<RoleProps>`
       background: transparent;
       border: none;
 
-      ${media.md`display:none`}
+      ${media.md`
+        display:none
+      `}
 
       &:after,
       &:before {
@@ -99,7 +98,7 @@ export const HeaderContainer = styled.header<RoleProps>`
       position: fixed;
       display: flex;
       flex-grow: 1;
-      top: ${HEADER_SIZE.MOBILE}px;
+      top: ${px(HEADER_SIZE.MOBILE)};
       left: 0;
       background: ${theme.color.base[100]};
       flex-direction: column;
@@ -158,8 +157,10 @@ export const HeaderContainer = styled.header<RoleProps>`
             border-bottom: 1px solid black;
             align-item: center;
             display: flex;
+            width: 100%;
 
             ${media.md`
+              width: auto;
               padding: 0;
               border-bottom: none;
             `}

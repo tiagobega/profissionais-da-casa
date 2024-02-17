@@ -45,17 +45,28 @@ export const FormForgotPassword: FC<FormForgotPasswordProps> = ({
   return (
     <Form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >
-      <strong>Esqueceu a senha? Sem problemas!</strong>
-      <p>
-        Forneça um email, vamos enviar
-        <br />
-        instruções para redefinir a sua senha
-      </p>
-      <FlexBox direction="column" gap={1} full mt={1} mb={3.75}>
+      <FlexBox
+        direction="column"
+        gap={1}
+        full
+        mt={1}
+        mb={3.75}
+        alignItems="center"
+        media={{
+          lg: {
+            alignItems: "flex-start",
+          },
+        }}
+      >
+        <p>
+          <strong>Esqueceu a senha? Sem problemas!</strong>
+        </p>
+        <p>
+          Forneça um email, vamos enviar instruções para redefinir a sua senha
+        </p>
         <Input.Text
           type="email"
           placeholder="Email"

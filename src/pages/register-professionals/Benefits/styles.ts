@@ -3,7 +3,9 @@ import styled, { css } from "styled-components";
 
 export const Card = styled(FlexBox)`
   ${({ theme }) => css`
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
+
     header {
       background-color: ${theme.color.brand.purple};
       width: 100%;
@@ -21,6 +23,7 @@ export const Benefit = styled(FlexBox)`
     background-color: ${theme.color.base[100]};
     align-items: center;
     border-bottom: 2px solid ${theme.color.brand.purple};
+
     .icon-container {
       width: 20px;
     }

@@ -1,41 +1,67 @@
 import styled, { css } from "styled-components";
 import { FlexBox } from "components/FlexBox";
 import { FullContainer, MarginContainer } from "styles/commonComponents";
+import { media } from "styles/utils";
 
 export const Header = styled(FlexBox)`
   ${({ theme }) => css`
     padding-bottom: 1.5rem;
     border-bottom: 3px solid black;
-    width: 618px;
+    width: 100%;
+
     h2 {
       width: 216px;
-      font-size: 2.25rem;
+      font-size: 1.5rem;
+      text-align: left !important;
+
+      ${media.md`
+        font-size: 2.25rem;
+      `}
     }
+
     p {
       width: 172px;
-      font-size: 1.5rem;
       font-weight: 200;
+      width: 100%;
+      text-align: center;
+
+      ${media.lg`
+        text-align: left;
+        font-size: 1.5rem;
+        width: min-content;
+      `}
     }
   `}
 `;
 
 export const ContentContainer = styled(FlexBox)`
   ${({ theme }) => css`
-    width: 618px;
-    height: 100%;
-  `}
-`;
-export const LinkBackContainer = styled(FlexBox)`
-  ${({ theme }) => css`
-    height: 42px;
-    padding-left: 72px;
+    width: 100%;
+    max-width: 618px;
+
+    h3 {
+      text-align: center;
+      width: 100%;
+
+      ${media.lg`
+        text-align: left;
+      `}
+    }
+
+    h2 {
+      width: 100%;
+      text-align: center;
+    }
+
+    .label {
+      width: 100%;
+      display: inline;
+    }
   `}
 `;
 
 export const BodyContainer = styled(FlexBox)`
   ${({ theme }) => css`
     background-color: ${theme.color.base[200]};
-    padding: 3rem;
-    min-height: calc(100vh - 42px);
   `}
 `;

@@ -7,8 +7,9 @@ import { LoginLayout } from "components/LayoutLoginRegister";
 import { Modal } from "components/Modal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { RightPannel } from "./styles";
+
 import { Terms } from "components/Terms";
+import { RightPannel } from "pages/login/styles";
 
 export interface LoginPageProps {}
 
@@ -18,26 +19,39 @@ export const RegisterUser: React.FC<LoginPageProps> = () => {
 
   return (
     <LoginLayout>
-      <RightPannel full pb={10} direction="column">
-        <div className="logo">
-          <img
-            src={logo}
-            alt="coração feito de formas geométricas - logo da cada casa"
-            loading="lazy"
+      <RightPannel>
+        <FlexBox
+          direction="column"
+          justifyContent={"center"}
+          alignItems={"center"}
+          grow={1}
+          full
+          media={{
+            lg: {
+              alignItems: "flex-start",
+            },
+          }}
+        >
+          <div className="logo">
+            <img
+              src={logo}
+              alt="coração feito de formas geométricas - logo da cada casa"
+              loading="lazy"
+            />
+          </div>
+
+          <FormRegisterUser
+            toConfirm={() => navigate("/register/customer/confirm")}
+            showTerms={() => setConditionsModal(true)}
           />
-        </div>
 
-        <FormRegisterUser
-          toConfirm={() => navigate("/register/customer/confirm")}
-          showTerms={() => setConditionsModal(true)}
-        />
+          <div className="divider" />
 
-        <div className="divider" />
-
-        <Button variant="text" onClick={() => navigate("/login")}>
-          <CaretLeft weight="fill" />
-          Voltar para login
-        </Button>
+          <Button variant="text" onClick={() => navigate("/login")}>
+            <CaretLeft weight="fill" />
+            Voltar para login
+          </Button>
+        </FlexBox>
       </RightPannel>
       <Modal
         isOpened={conditionsModal}

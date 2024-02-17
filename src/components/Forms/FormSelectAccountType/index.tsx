@@ -11,6 +11,11 @@ import { accountSchema } from "./validation";
 
 export type FormData = Zod.infer<typeof accountSchema>;
 
+const accountOptions = [
+  { label: "Me tornar um Profissional da Casa", value: "professional" },
+  { label: "Utilizar os serviços da Cada Casa", value: "customer" },
+];
+
 export const FormAccountType = () => {
   const navigate = useNavigate();
   const {
@@ -32,91 +37,42 @@ export const FormAccountType = () => {
       : window.alert("Selecione uma opção antes de continuar");
   };
 
-  const accountOptions = [
-    { label: "Me tornar um Profissional da Casa", value: "professional" },
-    { label: "Utilizar os serviços da Cada Casa", value: "customer" },
-  ];
-
   return (
     <Form
       onSubmit={handleSubmit((e) => {
         return onSubmit(e);
       })}
     >
-      <strong>Crie sua conta Cada Casa!</strong>
+      <p>
+        <strong>Crie sua conta Cada Casa!</strong>
+      </p>
       <p>
         Tenha acesso a diversas soluções
         <br />
         para reformas.
       </p>
-      <FlexBox direction="column" gap={1} full mt={2} mb={1}>
-        <FlexBox gap={1} alignItems="flex-end">
-          <Input.Radio
-            direction="column"
-            groupLegend="Quero criar uma conta para"
-            options={accountOptions}
-            groupName="account-option"
-            bold
-            {...register("type", { required: true })}
-            error={errors.type}
-          />
-          <FlexBox gap={1.4} direction="column" mb={0.2}>
-            <Tooltip
-              maxWidth={200}
-              content={
-                <StyledTooltip full direction="column" gap={1}>
-                  <strong>Profissional da Casa</strong>
-                  <ul className="tooltip-list">
-                    <li>
-                      <FlexBox full gap={0.5}>
-                        <div className="icon-div">
-                          <Check size={"1rem"} weight="bold" />
-                        </div>
-                        <p>
-                          Expor o seu trabalho como um arquiteto ou engenheiro
-                        </p>
-                      </FlexBox>
-                    </li>
-                    <li>
-                      <FlexBox full gap={0.5}>
-                        <div className="icon-div">
-                          <Check size={"1rem"} weight="bold" />
-                        </div>
-                        <p>
-                          Encontrar arquitetos ou engenheiros pelo Profissionais
-                          da Casa
-                        </p>
-                      </FlexBox>
-                    </li>
-                  </ul>
-                </StyledTooltip>
-              }
-              trigger={<Question size={"1.25rem"} weight="bold" />}
-            />
-            <Tooltip
-              maxWidth={200}
-              content={
-                <StyledTooltip full direction="column" gap={1}>
-                  <strong>Conta de usuário</strong>
-                  <ul className="tooltip-list">
-                    <li>
-                      <FlexBox full gap={0.5}>
-                        <div className="icon-div">
-                          <Check size={"1rem"} weight="bold" />
-                        </div>
-                        <p>
-                          Encontrar arquitetos ou engenheiros pelo Profissionais
-                          da Casa
-                        </p>
-                      </FlexBox>
-                    </li>
-                  </ul>
-                </StyledTooltip>
-              }
-              trigger={<Question size={"1.25rem"} weight="bold" />}
-            />
-          </FlexBox>
-        </FlexBox>
+      <FlexBox
+        direction="column"
+        gap={1}
+        full
+        mt={2}
+        mb={1}
+        alignItems="center"
+        media={{
+          lg: {
+            alignItems: "flex-start",
+          },
+        }}
+      >
+        <Input.Radio
+          direction="column"
+          groupLegend="Quero criar uma conta para"
+          options={accountOptions}
+          groupName="account-option"
+          bold
+          {...register("type", { required: true })}
+          error={errors.type}
+        />
         <Button type="submit">Continuar</Button>
       </FlexBox>
     </Form>

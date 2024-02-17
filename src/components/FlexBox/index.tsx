@@ -1,13 +1,13 @@
-import React, { ReactNode } from 'react'
-import { FlexBoxContainer, FlexBoxStyleProps } from './styled'
+import React, { ReactNode } from "react";
+import { FlexBoxContainer, FlexBoxStyleProps } from "./styled";
 interface FlexBoxProps extends FlexBoxStyleProps {
-  children: ReactNode
-  onClick?: () => void
+  children: ReactNode;
+  onClick?: () => void;
 }
 export const FlexBox: React.FC<FlexBoxProps> = ({
-  direction = 'row',
-  alignItems = 'flex-start',
-  justifyContent = 'flex-start',
+  direction = "row",
+  alignItems = "flex-start",
+  justifyContent = "flex-start",
   centralized = false,
   gap = 0,
   m = 0,
@@ -25,7 +25,13 @@ export const FlexBox: React.FC<FlexBoxProps> = ({
   pl = 0,
   pr = 0,
   children,
-  onClick = () => {},
+  flex,
+  full,
+  grow,
+  h,
+  media,
+  shrink,
+  wrap,
   ...rest
 }) => {
   return (
@@ -49,10 +55,16 @@ export const FlexBox: React.FC<FlexBoxProps> = ({
       alignItems={alignItems}
       justifyContent={justifyContent}
       centralized={centralized}
-      onClick={onClick}
+      flex={flex}
+      full={full}
+      grow={grow}
+      h={h}
+      media={media}
+      shrink={shrink}
+      wrap={wrap}
       {...rest}
     >
       {children}
     </FlexBoxContainer>
-  )
-}
+  );
+};

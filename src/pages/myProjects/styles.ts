@@ -7,7 +7,7 @@ export const Content = styled(FlexBox)`
     background-color: ${theme.color.base[200]};
     margin-bottom: 3rem;
     input {
-      width: 20rem;
+      width: 100%;
     }
   `}
 `;

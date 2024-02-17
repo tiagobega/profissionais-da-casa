@@ -147,43 +147,26 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
           }}
         />
 
-        <FlexBox gap={1} alignItems="center">
-          <Controller
-            control={control}
-            name={"cep"}
-            render={({ field }) => (
-              <MaskedInput
-                {...field}
-                mask={mask.zipCode}
-                render={(ref, props) => (
-                  <Input.Text
-                    type="text"
-                    placeholder="CEP"
-                    aria-label="CEP"
-                    error={errors.cep}
-                    ref={ref as any}
-                    {...props}
-                  />
-                )}
-              />
-            )}
-          />
-
-          {/* <Tooltip
-            maxWidth={170}
-            content={
-              <StyledTooltip full direction="column" gap={1}>
-                <strong>Por que pedimos CEP</strong>
-                <p>
-                  Caso utilize o Casa Fast, esta informação será empregada para
-                  calcular o valor do frete de seus materiais, garantindo um
-                  orçamento muito mais preciso
-                </p>
-              </StyledTooltip>
-            }
-            trigger={<Question size={"1.5rem"} weight="bold" />}
-          /> */}
-        </FlexBox>
+        <Controller
+          control={control}
+          name={"cep"}
+          render={({ field }) => (
+            <MaskedInput
+              {...field}
+              mask={mask.zipCode}
+              render={(ref, props) => (
+                <Input.Text
+                  type="text"
+                  placeholder="CEP"
+                  aria-label="CEP"
+                  error={errors.cep}
+                  ref={ref as any}
+                  {...props}
+                />
+              )}
+            />
+          )}
+        />
 
         <Input.Text
           type="password"

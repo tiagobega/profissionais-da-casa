@@ -17,7 +17,7 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
   const { color } = useTheme();
   return (
     <HeaderContainer>
-      <TextContainer direction="column" justifyContent="space-between">
+      <TextContainer direction="column" justifyContent="space-between" gap={1}>
         <h2>Encontre o profissional certo para a sua reforma</h2>
         <div>
           <p>
@@ -27,16 +27,20 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
           <p>Depois, deixe a sua avaliação.</p>
         </div>
       </TextContainer>
+
       <RightContainer>
         <InviteContainer
+          direction="column"
           alignItems="center"
           p={2}
           px={1.5}
           justifyContent="space-between"
+          gap={1}
         >
           <h2>Seja um profissional da casa</h2>
+
           <FlexBox gap={1.5} alignItems="center">
-            <div>
+            <FlexBox direction="column" gap={0.5}>
               <p>
                 Estamos sempre procurando novos profissionais de arquitetura e
                 engenharia.
@@ -45,7 +49,7 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
                 Faça o cadastro como Profissional da Casa para expor seu
                 trabalho e se conectar com clientes em potencial.
               </p>
-            </div>
+            </FlexBox>
             <ButtonContainer centralized>
               <Button
                 background="white"

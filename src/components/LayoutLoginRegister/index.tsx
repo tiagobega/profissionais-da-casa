@@ -1,12 +1,21 @@
+import { ReactNode, useEffect } from "react";
+import { useTheme } from "styled-components";
+import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { useNavigate } from "react-router-dom";
+
+import {
+  BlankField,
+  BlueField,
+  FullPage,
+  LoginHeader,
+  LoginMain,
+} from "./styles";
+
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { Geometry } from "components/Geometry";
-import { useTheme } from "styled-components";
-import { BlueField, FullPage } from "./styles";
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import logo from "assets/images/logoYellowBigger.png";
-import { ReactNode, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 import { useUser } from "contexts/User";
 
 export interface LoginPageProps {
@@ -15,9 +24,8 @@ export interface LoginPageProps {
 
 export const LoginLayout: React.FC<LoginPageProps> = ({ children }) => {
   const { color } = useTheme();
-  const navigate = useNavigate();
-
   const { logged } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!logged) return;
@@ -27,49 +35,50 @@ export const LoginLayout: React.FC<LoginPageProps> = ({ children }) => {
 
   return (
     <FullPage>
-      <div className="orientation">
-        <FlexBox direction="column">
-          <FlexBox full mb={2} pl={7}>
-            <Button variant="text" onClick={() => navigate("/")}>
-              <CaretLeft weight="fill" />
-              Página inicial
-            </Button>
-          </FlexBox>
-          <BlueField>
-            <div className="shape1">
-              <Geometry color={color.base[100]} triangle width={170} />
-            </div>
-            <div className="shape2">
-              <Geometry color={color.brand.yellowLight} triangle width={170} />
-            </div>
-            <div className="shape3">
-              <Geometry color={color.brand.yellowLight} triangle width={170} />
-            </div>
-            <div className="shape4">
-              <Geometry color={color.brand.pinkLight} width={170} />
-            </div>
-            <div className="shape5">
-              <Geometry
-                color={color.brand.yellowLight}
-                width={340}
-                height={170}
-              />
-            </div>
-            <div className="shape6">
-              <Geometry color={color.brand.orange} width={170} />
-            </div>
-            <h2 className="motto">
-              Encontre
-              <br />
-              os melhores
-              <br />
-              profissionais para
-              <br />a sua reforma
-            </h2>
-          </BlueField>
-        </FlexBox>
-        {children}
-      </div>
+      <LoginHeader>
+        <Button variant="text" onClick={() => navigate("/")}>
+          <CaretLeft weight="fill" />
+          Página inicial
+        </Button>
+      </LoginHeader>
+
+      <LoginMain>
+        <BlueField>
+          <div className="shape shape--1">
+            <Geometry
+              color={color.base[100]}
+              triangle
+              width={170}
+              responsive
+              sizes={{
+                lg: 80,
+                xl: 250,
+              }}
+            />
+          </div>
+          <div className="shape shape--2">
+            <Geometry color={color.brand.yellowLight} triangle width={170} />
+          </div>
+          <div className="shape shape--3">
+            <Geometry color={color.brand.yellowLight} triangle width={170} />
+          </div>
+          <div className="shape shape--4">
+            <Geometry color={color.brand.pinkLight} width={170} />
+          </div>
+          <div className="shape shape--5">
+            <Geometry color={color.brand.yellowLight} width={170} />
+          </div>
+          <div className="shape shape--6">
+            <Geometry color={color.brand.orange} width={170} />
+          </div>
+          <div className="shape shape--7">
+            <Geometry color={color.brand.yellowLight} width={170} />
+          </div>
+
+          <h2>Encontre os melhores profissionais para a sua reforma.</h2>
+        </BlueField>
+        <BlankField>{children}</BlankField>
+      </LoginMain>
     </FullPage>
   );
 };

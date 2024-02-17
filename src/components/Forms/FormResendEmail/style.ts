@@ -10,7 +10,7 @@ export const Form = styled.form`
       font-size: 1.2rem;
     }
     input {
-      width: 20rem;
+      width: 100%;
     }
   `}
 `;

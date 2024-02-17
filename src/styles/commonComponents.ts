@@ -14,7 +14,6 @@ export const MarginContainer = styled.div`
 export const FullContainer = styled.div`
   ${({ theme }) => css`
     width: 100%;
-    ${media.lg`width: 80%`}
   `}
 `;
 export const CarouselButton = styled.div<{ isActive: boolean }>`

@@ -44,6 +44,7 @@ const Header = () => {
             <ul>
               {headerLinkKeys.map((headerLinkKey) => (
                 <HeaderLinkComponent
+                  key={headerLinkKey}
                   headerLinkKey={headerLinkKey as HeaderLink}
                 />
               ))}

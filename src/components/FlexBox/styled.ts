@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+import { media } from "styles/utils";
 
-export interface FlexBoxStyleProps {
+export interface FlexBoxStyles {
   /**
    * flex-direction
    */
@@ -109,6 +110,18 @@ export interface FlexBoxStyleProps {
   wrap?: "wrap" | "nowrap" | "wrap-reverse";
 }
 
+export interface FlexBoxStyleProps extends FlexBoxStyles {
+  /**
+   * Medias
+   */
+  media?: {
+    sm?: FlexBoxStyles;
+    md?: FlexBoxStyles;
+    lg?: FlexBoxStyles;
+    xl?: FlexBoxStyles;
+  };
+}
+
 const setMargin = (
   m: number,
   my: number,
@@ -196,33 +209,59 @@ const setPadding = (
 };
 
 export const FlexBoxContainer = styled.div<FlexBoxStyleProps>`
-  ${({
-    centralized = false,
-    alignItems = "flex-start",
-    justifyContent = "flex-start",
-    h,
-    m = 0,
-    mx = 0,
-    my = 0,
-    mt = 0,
-    mb = 0,
-    mr = 0,
-    ml = 0,
-    pt = 0,
-    pb = 0,
-    pr = 0,
-    pl = 0,
-    p = 0,
-    px = 0,
-    py = 0,
-    gap = 0,
-    direction = "row",
-    full = false,
-    flex,
-    shrink,
-    grow,
-    wrap,
-  }) => css`
+  ${({ media: mediaQuery, ...props }) => css`
+    ${mountStyles({ ...props })}
+
+    ${mediaQuery?.sm &&
+    media.sm`
+      ${mountStyles({ ...props, ...mediaQuery.sm })}
+    `}
+    
+    ${mediaQuery?.md &&
+    media.md`
+      ${mountStyles({ ...props, ...mediaQuery.md })}
+    `}
+    
+    ${mediaQuery?.lg &&
+    media.lg`
+      ${mountStyles({ ...props, ...mediaQuery.lg })}
+    `}
+
+    ${mediaQuery?.xl &&
+    media.xl`
+      ${mountStyles({ ...mediaQuery.xl })}
+    `}
+  `}
+`;
+
+const mountStyles = ({
+  centralized = false,
+  alignItems = "flex-start",
+  justifyContent = "flex-start",
+  h,
+  m = 0,
+  mx = 0,
+  my = 0,
+  mt = 0,
+  mb = 0,
+  mr = 0,
+  ml = 0,
+  pt = 0,
+  pb = 0,
+  pr = 0,
+  pl = 0,
+  p = 0,
+  px = 0,
+  py = 0,
+  gap = 0,
+  direction = "row",
+  full = false,
+  flex,
+  shrink,
+  grow,
+  wrap,
+}: FlexBoxStyles) => {
+  return css`
     height: ${h || "auto"};
     flex-direction: ${direction};
     display: flex;
@@ -236,5 +275,5 @@ export const FlexBoxContainer = styled.div<FlexBoxStyleProps>`
     ${flex && `flex:${flex};`}
     ${shrink && `flex-shrink:${shrink};`}
     ${grow && `flex-grow:${grow};`}
-  `}
-`;
+  `;
+};

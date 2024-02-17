@@ -31,9 +31,7 @@ export const Benefits: React.FC<BenefitsProps> = ({ showForm, showTerms }) => {
   return (
     <FlexBox direction="column" gap={2} full>
       <FlexBox direction="column" centralized full gap={2} mt={1}>
-        <div>
-          <h2>Benefícios de ser um profissional da casa</h2>
-        </div>
+        <h2>Benefícios de ser um profissional da casa</h2>
         <Card direction="column" gap={0}>
           <header>
             <h3>Assinatura Starter | R$149,99/mês</h3>
@@ -117,7 +115,20 @@ export const Benefits: React.FC<BenefitsProps> = ({ showForm, showTerms }) => {
         etapa de análise para aprovação do perfil do profissional para a
         comunidade dos Profissionais da Casa.
       </p>
-      <FlexBox justifyContent="space-between" full alignItems="flex-start">
+
+      <FlexBox
+        direction="column"
+        justifyContent="space-between"
+        gap={2}
+        full
+        alignItems="flex-start"
+        media={{
+          lg: {
+            direction: "row",
+            alignItems: "center",
+          },
+        }}
+      >
         <Input.Checkbox
           {...register("terms")}
           error={errors.terms}
