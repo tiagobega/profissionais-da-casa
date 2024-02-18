@@ -7,6 +7,7 @@ export const List = styled.section`
     width: 100%;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
     ${media.lg`
     width: 1171px;
     `}
