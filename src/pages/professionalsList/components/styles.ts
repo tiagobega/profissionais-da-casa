@@ -7,6 +7,7 @@ export const FilterSearchContainer = styled.div`
   ${({ theme }) => css`
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     gap: 2rem;
     align-items: center;
@@ -25,6 +26,9 @@ export const FilterSearchContainer = styled.div`
       left: 230px;
       font-size: 1.25rem;
     }
+    ${media.md`
+      flex-direction:row
+    `}
   `}
 `;
 
@@ -37,7 +41,6 @@ export const FilterContent = styled(FlexBox)`
     transition: ${theme.transition.short};
     animation: slideDown;
     animation-duration: ${theme.transition.short};
-
     .profession-list {
       width: 100%;
       display: flex;
@@ -88,10 +91,12 @@ export const FilterContainer = styled.div`
 export const Triangle = styled(Geometry)`
   ${({ theme }) => css`
     position: absolute;
-    left: 350px;
+    left: 175px;
     top: -32px;
     animation: slideDown;
     animation-duration: ${theme.transition.short};
+    ${media.md`
+    left: 350px;`}
     @keyframes slideDown {
       0% {
         transform: translateY(-10px);

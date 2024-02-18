@@ -157,46 +157,45 @@ export const List: React.FC<ListProps> = () => {
     <Container>
       <div>
         <FilterSearchContainer>
-          <Input.Text
-            placeholder="Buscar"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Button
-            className="icon-button"
-            variant="text"
-            name="busca"
-            onClick={() => console.log("search")}
-          >
+          <FlexBox>
+            <Input.Text
+              placeholder="Buscar"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <MagnifyingGlass />
-          </Button>
-          <Button
-            background={color.brand.purple}
-            color="white"
-            onClick={() => setFilterIsOpen(!filterIsOpen)}
-          >
-            <SlidersHorizontal /> Filtrar
-          </Button>
-          <Button
-            variant="text"
-            color={color.brand.purple}
-            disabled={
-              selected.length == 0 &&
-              selectedProfession.length == 0 &&
-              acceptOnline == false &&
-              selectedState.length == 0
-            }
-            onClick={clearFilter}
-          >
-            <XCircle size={24} /> Limpar filtros
-          </Button>
+          </FlexBox>
+
+          <FlexBox alignItems="center" gap={3}>
+            <Button
+              background={color.brand.purple}
+              color="white"
+              onClick={() => setFilterIsOpen(!filterIsOpen)}
+            >
+              <SlidersHorizontal /> Filtrar
+            </Button>
+            <Button
+              variant="text"
+              color={color.brand.purple}
+              disabled={
+                selected.length == 0 &&
+                selectedProfession.length == 0 &&
+                acceptOnline == false &&
+                selectedState.length == 0
+              }
+              onClick={clearFilter}
+              width={30}
+            >
+              <XCircle size={24} /> Limpar filtros
+            </Button>
+          </FlexBox>
         </FilterSearchContainer>
 
         {filterIsOpen && (
           <FilterContainer>
             <Triangle width={32} color={color.brand.purple} triangle />
             <FilterContent direction="column" full gap={2}>
-              <li className="profession-list">
+              <li className="category-list">
                 {profissões.map((item) => (
                   <Button
                     variant={
