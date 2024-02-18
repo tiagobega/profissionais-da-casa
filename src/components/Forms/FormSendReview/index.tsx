@@ -86,16 +86,16 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
           </p>
         </Information>
         {categories.map((cat, index) => (
-          <FlexBox key={index} direction="column">
-            <StarContainer
-              full
-              justifyContent="center"
-              gap={1}
-              alignItems="center"
-            >
-              <div className="cat-name">
-                <p>{cat.name}</p>
-              </div>
+          <StarContainer
+            full
+            justifyContent="center"
+            gap={1}
+            alignItems="center"
+          >
+            <div className="cat-name">
+              <p>{cat.name}</p>
+            </div>
+            <div>
               {[1, 2, 3, 4, 5].map((rating) => (
                 <Star
                   weight={"fill"}
@@ -109,8 +109,8 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
                   }
                 />
               ))}
-            </StarContainer>
-          </FlexBox>
+            </div>
+          </StarContainer>
         ))}
         <FlexBox full mt={0.5}>
           <Input.Area

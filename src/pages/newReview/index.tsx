@@ -50,53 +50,45 @@ export const NewReviewPage: React.FC<NewReviewPageProps> = () => {
               <CaretLeft weight="fill" /> Voltar
             </Button>
           </FlexBox>
-          <Header direction="column">
-            <FlexBox justifyContent="space-between" alignItems="center" full>
-              <Title direction="column" gap={1.5}>
-                <h2>Deixe sua Avaliação</h2>
-                <p>
-                  Melhore a experiência de outros usuários por meio de uma
-                  avaliação rápida
-                  <br />
-                  Agradecemos por utilizar o Profissionais da Casa.
-                </p>
-              </Title>
-              <Profile gap={2} alignItems="center">
-                <FlexBox direction="column" alignItems="flex-end" gap={1.5}>
-                  <h3>{pageProfessional.name}</h3>
-                  <FlexBox>
-                    <MapPin weight="fill" />
-                    {pageProfessional.locations.map((item) => (
-                      <p key={item.id}>{`${item.state} |`} </p>
-                    ))}
-                  </FlexBox>
-                  <FlexBox gap={0.5} alignItems="center">
-                    <Star weight="fill" color={color.secondary.yellow} />
-                    <h4>
-                      {
-                        approvedEvaluations(pageProfessional.evaluations)
-                          .average
-                      }
-                    </h4>
-                    <p>
-                      (
-                      {
-                        approvedEvaluations(pageProfessional.evaluations)
-                          .quantity
-                      }
-                      )
-                    </p>
-                  </FlexBox>
+          <Header>
+            <Title direction="column" gap={1}>
+              <h2>Deixe sua Avaliação</h2>
+              <p>
+                Melhore a experiência de outros usuários por meio de uma
+                avaliação rápida
+                <br />
+                Agradecemos por utilizar o Profissionais da Casa.
+              </p>
+            </Title>
+            <Profile gap={2} alignItems="flex-start">
+              <FlexBox direction="column" gap={1}>
+                <h3>{pageProfessional.name}</h3>
+                <FlexBox>
+                  <MapPin weight="fill" />
+                  {pageProfessional.locations.map((item) => (
+                    <p key={item.id}>{`${item.state} |`} </p>
+                  ))}
                 </FlexBox>
-                <div className="photo-container">
-                  <img
-                    src={pageProfessional.profilePicture}
-                    alt="professional photo"
-                    loading="lazy"
-                  />
-                </div>
-              </Profile>
-            </FlexBox>
+                <FlexBox gap={0.5} alignItems="center">
+                  <Star weight="fill" color={color.secondary.yellow} />
+                  <h4>
+                    {approvedEvaluations(pageProfessional.evaluations).average}
+                  </h4>
+                  <p>
+                    (
+                    {approvedEvaluations(pageProfessional.evaluations).quantity}
+                    )
+                  </p>
+                </FlexBox>
+              </FlexBox>
+              <div className="photo-container">
+                <img
+                  src={pageProfessional.profilePicture}
+                  alt="professional photo"
+                  loading="lazy"
+                />
+              </div>
+            </Profile>
           </Header>
           <FormSendReview user={me} professional={pageProfessional} />
         </>
