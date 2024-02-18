@@ -14,6 +14,7 @@ import { Evaluation, Me, Professional } from "services/User/types";
 import { Loading } from "components/Loading";
 import { EVALUATION_STATUS, EvaluationStatus } from "constants/evaluation";
 import { CaretLeft } from "@phosphor-icons/react";
+import { Page } from "components/Page";
 
 export interface AdmRatingListProps {}
 
@@ -107,7 +108,7 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
   };
 
   return (
-    <MarginContainer>
+    <Page>
       <FlexBox mt={2}>
         <Button variant="text" onClick={() => navigate(-1)}>
           <CaretLeft weight="fill" /> Voltar
@@ -176,6 +177,6 @@ export const AdmRatingList: React.FC<AdmRatingListProps> = () => {
           "detalhes"
         )}
       </ContentContainer>
-    </MarginContainer>
+    </Page>
   );
 };

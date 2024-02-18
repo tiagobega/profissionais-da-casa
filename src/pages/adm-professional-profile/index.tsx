@@ -13,6 +13,7 @@ import { LeadList } from "pages/userProfile/components/LeadList";
 import { Modal } from "components/Modal";
 import { socialMediaIcon } from "utils/socialMediaLogo";
 import { ButtonDelete } from "components/ButtonDelete";
+import { Page } from "components/Page";
 
 export interface ProfessionalDetailsProps {}
 
@@ -151,7 +152,7 @@ export const AdmProfessionalDetails: React.FC<
   };
 
   return (
-    <MarginContainer>
+    <Page>
       {currentProfessional && (
         <>
           <FlexBox my={2}>
@@ -351,6 +352,6 @@ export const AdmProfessionalDetails: React.FC<
           </FlexBox>
         </>
       )}
-    </MarginContainer>
+    </Page>
   );
 };

@@ -24,7 +24,7 @@ import { StarMeter } from "components/StarMeter";
 import { CarouselButton, MarginContainer } from "styles/commonComponents";
 
 import { useApi } from "contexts/User";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   approvedEvaluations,
@@ -33,12 +33,9 @@ import {
 import { ProfileManager } from "./ProfileManager";
 import {
   ActionsContainer,
-  ButtonsContainer,
   FeaturesContainer,
-  GalleryContainer,
   GalleryNotFound,
   GallerySection,
-  GrayContainer,
   GraySection,
   HeaderContainer,
   InformationContainer,
@@ -118,138 +115,138 @@ export const ProfessionalProfilePage: React.FC<
 
   return (
     <Page paddingY={false}>
-      <GraySection isOwn={isOwn}>
-        <MarginContainer>
-          <Button variant="text" onClick={() => navigate(-1)}>
-            <CaretLeft weight="fill" /> Voltar
-          </Button>
-        </MarginContainer>
+      <FlexBox mt={2}>
+        <Button variant="text" onClick={() => navigate(-1)}>
+          <CaretLeft weight="fill" /> Voltar
+        </Button>
+      </FlexBox>
 
-        <HeaderContainer full isOwn={isOwn} direction="column" gap={1}>
-          <InformationContainer full gap={1} alignItems="center">
-            <ProfilePicture centralized shrink={0}>
-              {isOwn && (
-                <Button
-                  variant="text"
-                  color="white"
-                  className="pictureButton"
-                  onClick={() => setModalPicture(true)}
-                >
-                  <Camera weight="fill" /> Trocar foto
+      <HeaderContainer full isOwn={isOwn} direction="column" gap={1}>
+        <InformationContainer full gap={1} alignItems="center">
+          <ProfilePicture centralized shrink={0}>
+            {!isOwn && (
+              <Button
+                variant="text"
+                color="white"
+                className="pictureButton"
+                onClick={() => setModalPicture(true)}
+              >
+                <Camera weight="fill" /> Trocar foto
+              </Button>
+            )}
+
+            {pageProfessional.profilePicture ? (
+              <img
+                src={pageProfessional.profilePicture}
+                alt="Foto de perfil do usuário"
+                className="userPicture"
+                loading="lazy"
+              />
+            ) : (
+              <User
+                color="white"
+                weight="light"
+                className="userIcon"
+                size="24"
+              />
+            )}
+          </ProfilePicture>
+
+          <TextsContainer full direction="column" gap={0.5} grow={1}>
+            <h2>{pageProfessional.name}</h2>
+            <p>{pageProfessional.description}</p>
+          </TextsContainer>
+
+          <ActionsContainer
+            direction="column"
+            gap={0.25}
+            alignItems="center"
+            px={2}
+            pt={1}
+            pb={2}
+          >
+            {!isOwn && (
+              <ProfileManager
+                professional={pageProfessional}
+                refetch={() => id && fetchProfessional(id)}
+              />
+            )}
+
+            {isOwn && (
+              <Button
+                variant="primary"
+                background={color.brand.yellowLight}
+                width={10}
+                onClick={() => setModalContact(true)}
+              >
+                Entrar em contato
+              </Button>
+            )}
+            {!pageProfessional.portfolioFile && isOwn && (
+              <a href={pageProfessional.portfolioFile} target="_blank" download>
+                <Button variant="outline">
+                  <DownloadSimple weight="bold" size={20} />
+                  Abrir portifólio do profissional
                 </Button>
-              )}
+              </a>
+            )}
+          </ActionsContainer>
+        </InformationContainer>
 
-              {pageProfessional.profilePicture ? (
-                <img
-                  src={pageProfessional.profilePicture}
-                  alt="Foto de perfil do usuário"
-                  className="userPicture"
-                  loading="lazy"
-                />
-              ) : (
-                <User color="white" weight="light" className="userIcon" />
-              )}
-            </ProfilePicture>
+        <FlexBox full gap={2} alignItems="center" justifyContent="center">
+          <RatingHeader>
+            <div className="rating">
+              <Star weight="fill" size={32} color={color.secondary.yellow} />
+              <p>{publicEvaluations.average}</p>
+              <span>({publicEvaluations.quantity})</span>
+            </div>
+          </RatingHeader>
+        </FlexBox>
+      </HeaderContainer>
 
-            <TextsContainer full direction="column" gap={0.5} grow={1}>
-              <h2>{pageProfessional.name}</h2>
-              <p>{pageProfessional.description}</p>
-            </TextsContainer>
+      <FeaturesContainer>
+        <Feature title={"Tags"}>
+          {!pageProfessional.tags.length && <p> Não há Tags cadastradas</p>}
+          <TagList>
+            {pageProfessional.tags.length > 0 &&
+              pageProfessional.tags
+                .split(",")
+                .map((item, key) => <li key={key}>{item}</li>)}
+          </TagList>
+        </Feature>
 
-            <ActionsContainer
-              direction="column"
-              gap={0.25}
-              alignItems="center"
-              px={2}
-              pt={1}
-              pb={2}
-            >
-              {!isOwn && (
-                <ProfileManager
-                  professional={pageProfessional}
-                  refetch={() => id && fetchProfessional(id)}
-                />
-              )}
+        <Feature title={"Locais de atuação"}>
+          {pageProfessional.locations.length === 0 &&
+            !pageProfessional.onlineAppointment && (
+              <p>Não há locais de atuação cadastrados</p>
+            )}
+          <LocationList>
+            {pageProfessional.locations.map((item) => (
+              <li key={item.id}>{`${item.state}`} </li>
+            ))}
 
-              {isOwn && (
-                <Button
-                  variant="primary"
-                  background={color.brand.yellowLight}
-                  width={10}
-                  onClick={() => setModalContact(true)}
-                >
-                  Entrar em contato
-                </Button>
-              )}
-              {!pageProfessional.portfolioFile && isOwn && (
-                <a
-                  href={pageProfessional.portfolioFile}
-                  target="_blank"
-                  download
-                >
-                  <Button variant="outline">
-                    <DownloadSimple weight="bold" size={20} />
-                    Abrir portifólio do profissional
-                  </Button>
-                </a>
-              )}
-            </ActionsContainer>
-          </InformationContainer>
+            {pageProfessional.onlineAppointment && <li>Atendimento online</li>}
+          </LocationList>
+        </Feature>
 
-          <FlexBox full gap={2} alignItems="center" justifyContent="center">
-            <RatingHeader>
-              <div className="rating">
-                <Star weight="fill" size={32} color={color.secondary.yellow} />
-                <p>{publicEvaluations.average}</p>
-                <span>({publicEvaluations.quantity})</span>
-              </div>
-            </RatingHeader>
-          </FlexBox>
-        </HeaderContainer>
+        <Feature title={"Redes Sociais"}>
+          {pageProfessional.socialMedias.length === 0 && (
+            <p>Não há redes sociais cadastradas</p>
+          )}
 
-        <FeaturesContainer>
-          {/* Tags */}
-          <FlexBox direction="column" gap={0.5}>
-            <h3>Tags</h3>
-            <TagList>
-              {pageProfessional.tags.length > 0 &&
-                pageProfessional.tags
-                  .split(",")
-                  .map((item, key) => <li key={key}>{item}</li>)}
-            </TagList>
-          </FlexBox>
-
-          {/* lugares */}
-          <FlexBox direction="column" gap={0.5}>
-            <h3>Locais de Atuação</h3>
-            <LocationList>
-              {pageProfessional.locations.map((item) => (
-                <li key={item.id}>{`${item.state}`} </li>
-              ))}
-
-              {pageProfessional.onlineAppointment && <p>Atendimento online</p>}
-            </LocationList>
-          </FlexBox>
-
-          {/* socials */}
-          <FlexBox direction="column" gap={0.5}>
-            <h3>Redes Sociais</h3>
-            <SocialList>
-              {pageProfessional.socialMedias.map((media) => (
-                <a
-                  key={media.id}
-                  href={socialMediaLink(media.link)}
-                  target="_blank"
-                >
-                  {socialMediaIcon(media.name)}
-                </a>
-              ))}
-            </SocialList>
-          </FlexBox>
-
-          {/* buttons */}
-        </FeaturesContainer>
-      </GraySection>
+          <SocialList>
+            {pageProfessional.socialMedias.map((media) => (
+              <a
+                key={media.id}
+                href={socialMediaLink(media.link)}
+                target="_blank"
+              >
+                {socialMediaIcon(media.name)}
+              </a>
+            ))}
+          </SocialList>
+        </Feature>
+      </FeaturesContainer>
 
       <GallerySection>
         {pageProfessional.portfolioProjects.length > 0 ? (
@@ -366,6 +363,7 @@ export const ProfessionalProfilePage: React.FC<
                 </div>
               </FlexBox>
             </RatingContainer>
+
             <FlexBox direction="column" alignItems="center" gap={3}>
               <FlexBox full centralized gap={2}>
                 <h3>Depoimentos</h3>
@@ -380,6 +378,7 @@ export const ProfessionalProfilePage: React.FC<
                   </Button>
                 )}
               </FlexBox>
+              
               <FlexBox
                 full
                 justifyContent="center"
@@ -462,4 +461,15 @@ export const ProfessionalProfilePage: React.FC<
   );
 };
 
-export const Header = () => {};
+export const Feature = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <FlexBox direction="column" gap={0.5} media={{ lg: { gap: 1.5 } }}>
+    <h3>{title}</h3>
+    {children}
+  </FlexBox>
+);

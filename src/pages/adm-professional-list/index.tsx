@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { CaretLeft } from "@phosphor-icons/react";
 import { Me, Professional } from "services/User/types";
 import { useApi } from "contexts/User";
+import { Page } from "components/Page";
 
 export interface AdmProfessionalListProps {}
 
@@ -45,7 +46,7 @@ export const AdmProfessionalList: React.FC<AdmProfessionalListProps> = () => {
   }, [allProfessionals]);
 
   return (
-    <MarginContainer>
+    <Page>
       <FlexBox mt={2}>
         <Button variant="text" onClick={() => navigate(-1)}>
           <CaretLeft weight="fill" /> Voltar
@@ -75,6 +76,6 @@ export const AdmProfessionalList: React.FC<AdmProfessionalListProps> = () => {
         users={allUsers || []}
         professionals={allProfessionals || []}
       />
-    </MarginContainer>
+    </Page>
   );
 };

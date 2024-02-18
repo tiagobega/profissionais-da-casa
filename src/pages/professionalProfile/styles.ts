@@ -6,7 +6,6 @@ import { media } from "styles/utils";
 export const GraySection = styled.section<{ isOwn: boolean }>`
   ${({ theme, isOwn }) => css`
     width: 100%;
-    background-color: ${isOwn ? theme.color.base[200] : theme.color.base[100]};
     padding: 2rem 0;
   `}
 `;
@@ -14,7 +13,6 @@ export const GraySection = styled.section<{ isOwn: boolean }>`
 export const HeaderContainer = styled(FlexBox)<{ isOwn: boolean }>`
   ${({ theme, isOwn }) => css`
     margin-top: 1rem;
-    background-color: ${!isOwn ? "transparent" : theme.color.base[200]};
 
     ${media.lg`
       // height: 257px;
@@ -51,8 +49,8 @@ export const InformationContainer = styled(FlexBox)`
 
 export const ProfilePicture = styled(FlexBox)`
   ${({ theme }) => css`
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border: 5px solid white;
     position: relative;
     border-radius: 50%;
@@ -90,16 +88,19 @@ export const ProfilePicture = styled(FlexBox)`
       transition: 200ms;
       border-radius: 50%;
       color: transparent;
+      font-size: 0.75rem;
+      display: flex;
+      flex-direction: column;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.75);
         color: white;
       }
     }
 
     .userIcon {
-      width: 8rem;
-      height: 8rem;
+      width: 75%;
+      height: 75%;
       position: absolute;
       opacity: 0.5;
     }
@@ -233,14 +234,36 @@ export const ButtonsContainer = styled(FlexBox)`
 `;
 
 export const FeaturesContainer = styled.div`
-  display: grid;
-  gap: 2rem;
-  margin-top: 1rem;
-  grid-template-columns: 1fr;
+  ${({ theme }) => css`
+    display: grid;
+    gap: 2rem;
+    margin-top: 1rem;
+    grid-template-columns: 1fr;
 
-  ${media.lg`
-  margin-top: 2rem;
-    grid-template-columns: repeat(3, 1fr);
+    > div {
+      p {
+        ${media.lg`
+          text-align:center;
+        `}
+      }
+
+      h3 {
+        ${media.lg`
+          width: 100%;
+          text-align: center;
+        `}
+      }
+
+      &:not(:last-child) {
+        ${media.lg`
+            border-right: 2px solid ${theme.color.base[200]};
+          `}
+      }
+    }
+    ${media.lg`
+      margin-top: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+    `}
   `}
 `;
 
@@ -250,10 +273,8 @@ export const List = styled.ul`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0.5rem;
-
-  ${media.md`
-  
-  `}
+  align-items: center;
+  padding: 0 0.5rem;
 
   li {
     font-size: 12px;

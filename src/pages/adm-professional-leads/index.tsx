@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MarginContainer } from "styles/commonComponents";
 import { LeadList } from "./components/LeadList";
 import { Header } from "./styles";
+import { Page } from "components/Page";
 
 export interface AdmProfessionalListProps {}
 
@@ -14,7 +15,7 @@ export const AdmLeadsList: React.FC<AdmProfessionalListProps> = () => {
   const { id } = useParams();
 
   return (
-    <MarginContainer>
+    <Page>
       <FlexBox mt={2}>
         <Button variant="text" onClick={() => navigate(-1)}>
           <CaretLeft weight="fill" /> Voltar
@@ -27,6 +28,6 @@ export const AdmLeadsList: React.FC<AdmProfessionalListProps> = () => {
       </Header>
 
       {/* {id && <LeadList professionalId={id} />} */}
-    </MarginContainer>
+    </Page>
   );
 };
