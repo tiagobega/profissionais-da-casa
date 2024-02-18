@@ -4,6 +4,7 @@ import { FlexBox } from "components/FlexBox";
 import { FormResendEmail } from "components/Forms/FormResendEmail";
 import { useUser } from "contexts/User";
 import { useNavigate } from "react-router-dom";
+import { Container } from "./styles";
 
 export interface LoginPageProps {}
 
@@ -17,13 +18,7 @@ export const RegisterUserConfirm: React.FC<LoginPageProps> = () => {
   };
 
   return (
-    <FlexBox
-      mt={16}
-      mb={16}
-      alignItems="center"
-      gap={10}
-      justifyContent="center"
-    >
+    <Container>
       <div className="logo">
         <img
           src={logo}
@@ -51,6 +46,6 @@ export const RegisterUserConfirm: React.FC<LoginPageProps> = () => {
       </div>
 
       <FormResendEmail />
-    </FlexBox>
+    </Container>
   );
 };
