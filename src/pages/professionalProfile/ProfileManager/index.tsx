@@ -1,14 +1,16 @@
-import { Plus } from "@phosphor-icons/react";
-import { Button } from "components/Button";
-import { FormEditProfile } from "components/Forms/FormEditProfile";
-import { Modal } from "components/Modal";
 import { useState } from "react";
-import { ManagerContainer } from "./styles";
-import { Professional } from "services/User/types";
+
+import { Button, type ButtonProps } from "components/Button";
+import { Modal, type ModalProps } from "components/Modal";
+import { FormEditProfile } from "components/Forms/FormEditProfile";
 import { PortfolioHome } from "../Portfolio";
 import { LeadsHome } from "../Leads";
 import { FormAddImage } from "components/Forms/FormAddImage";
 import { FormAddProfessionalBgPicture } from "components/Forms/FormAddProfessionalBgPicture";
+
+import { ManagerContainer, ManagerModalContainer } from "./styles";
+
+import { Professional } from "services/User/types";
 
 export interface ProfileManagerProps {
   professional: Professional;
@@ -24,50 +26,19 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
   const [modalBg, setModalBg] = useState(false);
 
   return (
-    <ManagerContainer direction="column" gap={1}>
-      <Button
-        variant="primary"
-        background="white"
-        small
-        onClick={() => setModalEdit(true)}
-        width={10}
-      >
-        Editar Perfil
-      </Button>
-
-      <Button
-        variant="primary"
-        background="white"
-        small
-        onClick={() => setModalPortfolio(true)}
-        width={10}
-      >
-        Meu portifolio
-      </Button>
-      <Button
-        variant="primary"
-        background="white"
-        small
-        onClick={() => setModalLeads(true)}
-        width={10}
-      >
-        Meus contatos
-      </Button>
-      <Button
-        variant="primary"
-        background="white"
-        small
-        onClick={() => setModalBg(true)}
-        width={10}
-      >
-        Foto do card
-      </Button>
-      <Modal
-        isOpened={modalEdit}
-        onProceed={() => console.log("proceed")}
-        onClose={() => {
-          refetch();
-          setModalEdit(false);
+    <ManagerContainer>
+      <ManagerModal
+        buttonText="Editar Perfil"
+        buttonProps={{
+          onClick: () => setModalEdit(true),
+        }}
+        modalProps={{
+          isOpened: modalEdit,
+          onProceed: () => console.log("proceed"),
+          onClose: () => {
+            refetch();
+            setModalEdit(false);
+          },
         }}
       >
         <FormEditProfile
@@ -77,30 +48,52 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
             setModalEdit(false);
           }}
         />
-      </Modal>
-      <Modal
-        isOpened={modalPortfolio}
-        onProceed={() => console.log("proceed")}
-        onClose={() => {
-          setModalPortfolio(false);
-          refetch();
+      </ManagerModal>
+
+      <ManagerModal
+        buttonText="Meu portifolio"
+        buttonProps={{
+          onClick: () => setModalPortfolio(true),
+        }}
+        modalProps={{
+          isOpened: modalPortfolio,
+          onProceed: () => console.log("proceed"),
+          onClose: () => {
+            setModalPortfolio(false);
+            refetch();
+          },
         }}
       >
         <PortfolioHome professional={professional} refetch={refetch} />
-      </Modal>
-      <Modal
-        isOpened={modalLeads}
-        onProceed={() => console.log("proceed")}
-        onClose={() => setModalLeads(false)}
+      </ManagerModal>
+
+      <ManagerModal
+        buttonText="Meus contatos"
+        buttonProps={{
+          onClick: () => setModalLeads(true),
+        }}
+        modalProps={{
+          isOpened: modalLeads,
+          onProceed: () => console.log("proceed"),
+          onClose: () => {
+            setModalLeads(false);
+          },
+        }}
       >
         <LeadsHome leads={professional.leads} />
-      </Modal>
-      <Modal
-        isOpened={modalBg}
-        onProceed={() => console.log("proceed")}
-        onClose={() => {
-          setModalBg(false);
-          refetch();
+      </ManagerModal>
+
+      <ManagerModal
+        buttonText="Foto do card"
+        buttonProps={{
+          onClick: () => setModalBg(true),
+        }}
+        modalProps={{
+          isOpened: modalBg,
+          onProceed: () => console.log("proceed"),
+          onClose: () => {
+            setModalBg(false);
+          },
         }}
       >
         <FormAddProfessionalBgPicture
@@ -110,7 +103,39 @@ export const ProfileManager: React.FC<ProfileManagerProps> = ({
             refetch();
           }}
         />
-      </Modal>
+      </ManagerModal>
     </ManagerContainer>
   );
 };
+
+interface ManagerModalProps {
+  buttonText: string;
+  buttonProps: Omit<ButtonProps, "children">;
+  modalProps: Omit<ModalProps, "children">;
+  children: React.ReactNode;
+}
+
+export const ManagerModal = ({
+  children,
+  buttonText,
+  buttonProps,
+  modalProps,
+}: ManagerModalProps) => {
+  return (
+    <ManagerModalContainer>
+      <Button
+        variant="primary"
+        background="white"
+        small={true}
+        {...buttonProps}
+      >
+        {buttonText}
+      </Button>
+      <Modal {...modalProps}>{children}</Modal>
+    </ManagerModalContainer>
+  );
+};
+
+export const EditPerfil = ({ ...props }: ManagerModalProps) => (
+  <ManagerModal {...props}></ManagerModal>
+);

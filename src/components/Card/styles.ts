@@ -19,8 +19,10 @@ export const PhotoContainer = styled.div`
     display: flex;
     align-items: center;
     overflow: hidden;
+
     img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
       transition: ease-in-out ${theme.transition.long};
       &:hover {

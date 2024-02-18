@@ -17,8 +17,8 @@ export const HeaderContainer = styled.header`
     background-color: ${theme.color.brand.orange};
     z-index: 10;
     padding: 0 auto;
+
     & > div {
-      width: ${theme.sizes.pageWidth};
       margin-inline: auto;
     }
   `}
@@ -46,7 +46,7 @@ export const PhotoColumn = styled(FlexBox)`
       display: flex;
       align-items: center;
       justify-content: center;
-      
+
       img {
         width: 100%;
         height: 100%;

@@ -1,16 +1,18 @@
+import { type Professional } from "services/User/types";
+
 import {
   Camera,
   CaretLeft,
   CaretRight,
   DownloadSimple,
-  FacebookLogo,
-  InstagramLogo,
-  LinkedinLogo,
   MapPin,
   Star,
   User,
   Warehouse,
 } from "@phosphor-icons/react";
+import { useTheme } from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { FormAddProfessionalProfilePicture } from "components/Forms/FormAddProfessionalProfilePicture";
@@ -18,39 +20,52 @@ import { FormContactProfessional } from "components/Forms/FormSendContact";
 import { Loading } from "components/Loading";
 import { Modal } from "components/Modal";
 import { StarMeter } from "components/StarMeter";
+
+import { CarouselButton, MarginContainer } from "styles/commonComponents";
+
 import { useApi } from "contexts/User";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Professional } from "services/User/types";
-import { useTheme } from "styled-components";
-import { CarouselButton, MarginContainer } from "styles/commonComponents";
+
 import {
   approvedEvaluations,
   evaluationSingleAverage,
 } from "utils/EvaluationAverage";
 import { ProfileManager } from "./ProfileManager";
 import {
+  ActionsContainer,
+  ButtonsContainer,
+  FeaturesContainer,
   GalleryContainer,
+  GalleryNotFound,
+  GallerySection,
   GrayContainer,
+  GraySection,
   HeaderContainer,
   InformationContainer,
+  LocationList,
   ProfilePicture,
   RatingContainer,
   RatingHeader,
   ReviewContainer,
   ReviewSection,
+  SocialList,
+  TagList,
+  TextsContainer,
 } from "./styles";
 import { socialMediaIcon } from "utils/socialMediaLogo";
+import { Page } from "components/Page";
+import { ButtonContainer } from "components/Button/style";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
   ProfessionalProfileProps
 > = () => {
   const { id } = useParams();
-  const { color } = useTheme();
-  const navigate = useNavigate();
 
   const theme = useTheme();
+  const { color } = theme;
+
+  const navigate = useNavigate();
 
   const [isOwn, setIsOwn] = useState(false);
 
@@ -64,7 +79,6 @@ export const ProfessionalProfilePage: React.FC<
 
   const { user, professional } = useApi();
   const { me } = user;
-
   const { getSingle } = professional;
 
   const fetchProfessional = async (id: string) => {
@@ -99,120 +113,65 @@ export const ProfessionalProfilePage: React.FC<
   const carrouselButtonArray = new Array(
     Math.ceil(pageProfessional.portfolioProjects.length / 2)
   ).fill("");
+
   const publicEvaluations = approvedEvaluations(pageProfessional.evaluations);
 
   return (
-    <>
-      <GrayContainer isOwn={isOwn}>
+    <Page paddingY={false}>
+      <GraySection isOwn={isOwn}>
         <MarginContainer>
           <Button variant="text" onClick={() => navigate(-1)}>
             <CaretLeft weight="fill" /> Voltar
           </Button>
         </MarginContainer>
 
-        <HeaderContainer isOwn={isOwn}>
-          <FlexBox
-            full
-            justifyContent="space-between"
-            alignItems="center"
-            gap={2}
-          >
-            {isOwn && (
-              <ProfileManager
-                professional={pageProfessional}
-                refetch={() => id && fetchProfessional(id)}
-              />
-            )}
-            <FlexBox full direction="column">
-              <FlexBox alignItems="center" gap={2}>
-                <ProfilePicture centralized>
-                  {isOwn && (
-                    <Button
-                      variant="text"
-                      color="white"
-                      className="pictureButton"
-                      onClick={() => setModalPicture(true)}
-                    >
-                      <Camera weight="fill" /> Trocar foto
-                    </Button>
-                  )}
-                  {pageProfessional.profilePicture ? (
-                    <img
-                      src={pageProfessional.profilePicture}
-                      alt="Foto de perfil do usuário"
-                      className="userPicture"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <User color="white" weight="light" className="userIcon" />
-                  )}
-                </ProfilePicture>
-                <InformationContainer direction="column" gap={1}>
-                  <FlexBox alignItems="center" gap={2}>
-                    <h2>{pageProfessional.name}</h2>
-                    <FlexBox alignItems="center" gap={0.5}>
-                      <MapPin weight="fill" />
-                      <FlexBox>
-                        {pageProfessional.locations.map((item) => (
-                          <p key={item.id}>{`${item.state} |`} </p>
-                        ))}
+        <HeaderContainer full isOwn={isOwn} direction="column" gap={1}>
+          <InformationContainer full gap={1} alignItems="center">
+            <ProfilePicture centralized shrink={0}>
+              {isOwn && (
+                <Button
+                  variant="text"
+                  color="white"
+                  className="pictureButton"
+                  onClick={() => setModalPicture(true)}
+                >
+                  <Camera weight="fill" /> Trocar foto
+                </Button>
+              )}
 
-                        {pageProfessional.onlineAppointment && (
-                          <p>Atendimento online</p>
-                        )}
-                      </FlexBox>
-                    </FlexBox>
-                    <FlexBox>
-                      {pageProfessional.socialMedias.map((media) => (
-                        <a
-                          key={media.id}
-                          href={socialMediaLink(media.link)}
-                          target="_blank"
-                        >
-                          {socialMediaIcon(media.name)}
-                        </a>
-                      ))}
-                    </FlexBox>
-                  </FlexBox>
-                  <FlexBox full>
-                    <p>{pageProfessional.description}</p>
-                  </FlexBox>
-                  <FlexBox gap={5} alignItems="center">
-                    <RatingHeader alignItems="center" gap={2}>
-                      <div className="rating">
-                        <Star
-                          weight="fill"
-                          size={32}
-                          color={color.secondary.yellow}
-                        />
-                        <p>{publicEvaluations.average}</p>
-                        <span>({publicEvaluations.quantity})</span>
-                      </div>
-                    </RatingHeader>
-                    {pageProfessional.portfolioFile && (
-                      <a
-                        href={pageProfessional.portfolioFile}
-                        target="_blank"
-                        download
-                      >
-                        <Button variant="text">
-                          <DownloadSimple weight="bold" size={20} />
-                          Abrir portifólio do profissional
-                        </Button>
-                      </a>
-                    )}
-                  </FlexBox>
-                </InformationContainer>
-              </FlexBox>
-              <ul className="category-list">
-                {pageProfessional.tags.length > 0 &&
-                  pageProfessional.tags
-                    .split(",")
-                    .map((item, key) => <li key={key}>{item}</li>)}
-              </ul>
-            </FlexBox>
-            {!isOwn && (
-              <FlexBox direction="column">
+              {pageProfessional.profilePicture ? (
+                <img
+                  src={pageProfessional.profilePicture}
+                  alt="Foto de perfil do usuário"
+                  className="userPicture"
+                  loading="lazy"
+                />
+              ) : (
+                <User color="white" weight="light" className="userIcon" />
+              )}
+            </ProfilePicture>
+
+            <TextsContainer full direction="column" gap={0.5} grow={1}>
+              <h2>{pageProfessional.name}</h2>
+              <p>{pageProfessional.description}</p>
+            </TextsContainer>
+
+            <ActionsContainer
+              direction="column"
+              gap={0.25}
+              alignItems="center"
+              px={2}
+              pt={1}
+              pb={2}
+            >
+              {!isOwn && (
+                <ProfileManager
+                  professional={pageProfessional}
+                  refetch={() => id && fetchProfessional(id)}
+                />
+              )}
+
+              {isOwn && (
                 <Button
                   variant="primary"
                   background={color.brand.yellowLight}
@@ -221,71 +180,142 @@ export const ProfessionalProfilePage: React.FC<
                 >
                   Entrar em contato
                 </Button>
-              </FlexBox>
-            )}
+              )}
+              {!pageProfessional.portfolioFile && isOwn && (
+                <a
+                  href={pageProfessional.portfolioFile}
+                  target="_blank"
+                  download
+                >
+                  <Button variant="outline">
+                    <DownloadSimple weight="bold" size={20} />
+                    Abrir portifólio do profissional
+                  </Button>
+                </a>
+              )}
+            </ActionsContainer>
+          </InformationContainer>
+
+          <FlexBox full gap={2} alignItems="center" justifyContent="center">
+            <RatingHeader>
+              <div className="rating">
+                <Star weight="fill" size={32} color={color.secondary.yellow} />
+                <p>{publicEvaluations.average}</p>
+                <span>({publicEvaluations.quantity})</span>
+              </div>
+            </RatingHeader>
           </FlexBox>
         </HeaderContainer>
-      </GrayContainer>
 
-      {pageProfessional.portfolioProjects.length > 0 ? (
-        <GalleryContainer>
-          <div className="gallery-bg">
-            <img
-              src={
-                pageProfessional.portfolioProjects[displayProject].images.split(
-                  ","
-                )[0]
-              }
-              alt="project image"
-              className="gallery-img"
-              loading="lazy"
-            />
-            <div className="gallery-info">
-              <FlexBox direction="column" gap={1}>
-                <h5>
-                  {pageProfessional.portfolioProjects[displayProject].name}
-                </h5>
-                <p>
-                  {
-                    pageProfessional.portfolioProjects[displayProject]
-                      .description
-                  }
-                </p>
-                <Button
-                  variant="text"
-                  onClick={() =>
-                    navigate(
-                      `/project/${pageProfessional.portfolioProjects[displayProject].id}`
-                    )
-                  }
-                >
-                  Ver Mais
-                  <CaretRight weight="fill" />
-                </Button>
-              </FlexBox>
-            </div>
-          </div>
-          <FlexBox full justifyContent="center" gap={1} p={1}>
-            {pageProfessional.portfolioProjects.map((item, index) => (
-              <CarouselButton
-                isActive={displayProject == index}
-                className="carousel-btn"
-                onClick={() => setDisplayProject(index)}
-                key={item.id}
-              />
-            ))}
+        <FeaturesContainer>
+          {/* Tags */}
+          <FlexBox direction="column" gap={0.5}>
+            <h3>Tags</h3>
+            <TagList>
+              {pageProfessional.tags.length > 0 &&
+                pageProfessional.tags
+                  .split(",")
+                  .map((item, key) => <li key={key}>{item}</li>)}
+            </TagList>
           </FlexBox>
-        </GalleryContainer>
-      ) : (
-        <FlexBox full centralized mb={2} gap={2}>
-          <Warehouse size={64} color={theme.color.brand.orange} />
-          <h2>
-            O profissional ainda não adicionou nenhum projeto
-            <br />
-            ao seu portifólio do profissionais da casa.
-          </h2>
-        </FlexBox>
-      )}
+
+          {/* lugares */}
+          <FlexBox direction="column" gap={0.5}>
+            <h3>Locais de Atuação</h3>
+            <LocationList>
+              {pageProfessional.locations.map((item) => (
+                <li key={item.id}>{`${item.state}`} </li>
+              ))}
+
+              {pageProfessional.onlineAppointment && <p>Atendimento online</p>}
+            </LocationList>
+          </FlexBox>
+
+          {/* socials */}
+          <FlexBox direction="column" gap={0.5}>
+            <h3>Redes Sociais</h3>
+            <SocialList>
+              {pageProfessional.socialMedias.map((media) => (
+                <a
+                  key={media.id}
+                  href={socialMediaLink(media.link)}
+                  target="_blank"
+                >
+                  {socialMediaIcon(media.name)}
+                </a>
+              ))}
+            </SocialList>
+          </FlexBox>
+
+          {/* buttons */}
+        </FeaturesContainer>
+      </GraySection>
+
+      <GallerySection>
+        {pageProfessional.portfolioProjects.length > 0 ? (
+          <>
+            <div className="gallery-bg">
+              <img
+                src={
+                  pageProfessional.portfolioProjects[
+                    displayProject
+                  ].images.split(",")[0]
+                }
+                alt="project image"
+                className="gallery-img"
+                loading="lazy"
+              />
+              <div className="gallery-info">
+                <FlexBox direction="column" gap={1}>
+                  <h5>
+                    {pageProfessional.portfolioProjects[displayProject].name}
+                  </h5>
+                  <p>
+                    {
+                      pageProfessional.portfolioProjects[displayProject]
+                        .description
+                    }
+                  </p>
+                  <Button
+                    variant="text"
+                    onClick={() =>
+                      navigate(
+                        `/project/${pageProfessional.portfolioProjects[displayProject].id}`
+                      )
+                    }
+                  >
+                    Ver Mais
+                    <CaretRight weight="fill" />
+                  </Button>
+                </FlexBox>
+              </div>
+            </div>
+            <FlexBox full justifyContent="center" gap={1} p={1}>
+              {pageProfessional.portfolioProjects.map((item, index) => (
+                <CarouselButton
+                  isActive={displayProject == index}
+                  className="carousel-btn"
+                  onClick={() => setDisplayProject(index)}
+                  key={item.id}
+                />
+              ))}
+            </FlexBox>
+          </>
+        ) : (
+          <GalleryNotFound
+            full
+            direction="column"
+            centralized
+            media={{ lg: { gap: 2, direction: "row" } }}
+          >
+            <Warehouse size={64} color={theme.color.brand.orange} />
+            <h2>
+              O profissional ainda não adicionou nenhum projeto ao seu
+              portifólio do profissionais da casa.
+            </h2>
+          </GalleryNotFound>
+        )}
+      </GallerySection>
 
       <ReviewSection>
         {publicEvaluations.evaluations.length > 0 ? (
@@ -396,6 +426,7 @@ export const ProfessionalProfilePage: React.FC<
           </FlexBox>
         )}
       </ReviewSection>
+
       <Modal
         isOpened={modalPicture}
         onClose={() => {
@@ -427,6 +458,8 @@ export const ProfessionalProfilePage: React.FC<
           />
         </FlexBox>
       </Modal>
-    </>
+    </Page>
   );
 };
+
+export const Header = () => {};

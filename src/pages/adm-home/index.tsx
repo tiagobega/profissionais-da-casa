@@ -1,19 +1,21 @@
-import { Question, Star, UserList } from "@phosphor-icons/react";
+import { Question, Star, UserList, User } from "@phosphor-icons/react";
 import { FlexBox } from "components/FlexBox";
 import { useNavigate } from "react-router-dom";
 import { MarginContainer } from "styles/commonComponents";
-import { Card } from "./styles";
+import { Card, CardList } from "./styles";
+import { Page } from "components/Page";
 
 export interface AdmHomeProps {}
 
 export const AdmHome: React.FC<AdmHomeProps> = () => {
   const navigate = useNavigate();
+
   return (
-    <MarginContainer>
-      <FlexBox direction="column" my={3}>
+    <Page>
+      <FlexBox direction="column" my={3} gap={3}>
         <h2>Painel Administrativo</h2>
 
-        <FlexBox gap={2}>
+        <CardList>
           <Card onClick={() => navigate("/faq/")}>
             <FlexBox alignItems="center" gap={1}>
               <Question size={32} />
@@ -40,8 +42,15 @@ export const AdmHome: React.FC<AdmHomeProps> = () => {
               Visualizar e gerenciar depoimentos dos usuários da plataforma.
             </p>
           </Card>
-        </FlexBox>
+          <Card onClick={() => navigate("/admin/users/")}>
+            <FlexBox gap={1} alignItems="center">
+              <User size={32} />
+              <h3>Usuários</h3>
+            </FlexBox>
+            <p>Visualizar e gerenciar usuários da plataforma.</p>
+          </Card>
+        </CardList>
       </FlexBox>
-    </MarginContainer>
+    </Page>
   );
 };
