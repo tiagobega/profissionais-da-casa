@@ -1,17 +1,30 @@
 import { FlexBox } from "components/FlexBox";
 import styled, { css } from "styled-components";
+import { crossm, media, px, vw } from "styles/utils";
 
 export const List = styled.section`
   ${({ theme }) => css`
-    width: 1171px;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    ${media.lg`
+    width: 1171px;
+    `}
   `}
 `;
 export const ListHeader = styled(FlexBox)`
   ${({ theme }) => css`
     background-color: ${theme.color.brand.yellowLight};
     padding-inline: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    ${media.md`
+    flex-direction: row;
+    gap: 1rem;
+    align-items:center;
+    justify-content:space-between;
+    `}
 
     h3 {
       width: 500px;

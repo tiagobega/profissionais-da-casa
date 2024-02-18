@@ -15,6 +15,7 @@ import {
   HeaderWrapper,
   InfoColumn,
   PhotoColumn,
+  ProjectContainer,
 } from "./styles";
 import { LeadList } from "./components/LeadList";
 import { Loading } from "components/Loading";
@@ -40,68 +41,63 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
         <>
           <HeaderWrapper>
             <HeaderContainer>
-              <FlexBox gap={6}>
-                <PhotoColumn
-                  direction="column"
-                  alignItems="center"
-                  gap={1}
-                  justifyContent="center"
-                >
-                  <div className="round-picture">
-                    <Button
-                      variant="text"
-                      color="white"
-                      className="pictureButton"
-                      onClick={() => setModalPicture(true)}
-                    >
-                      <Camera weight="fill" /> Trocar foto
-                    </Button>
-                    {me.profilePicture ? (
-                      <img
-                        src={me.profilePicture}
-                        alt="Foto de perfil do usuário"
-                        className="userPicture"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <User color="white" weight="light" className="userIcon" />
-                    )}
-                  </div>
-                  <p className="name">{me.name}</p>
-                  <p>Perfil Pessoal</p>
-                </PhotoColumn>
-                <InfoColumn direction="column" gap={1} justifyContent="center">
-                  <div>
-                    <p className="title">Telefone</p>
-                    <FlexBox alignItems="center" gap={0.5} mt={0.5}>
-                      <PhoneCall size={30} />
-                      {me.phone}
-                    </FlexBox>
-                  </div>
-                  <div>
-                    <p className="title">E-mail</p>
-                    <FlexBox alignItems="center" gap={0.5} mt={0.5}>
-                      <Envelope size={30} />
-                      {me.email}
-                    </FlexBox>
-                  </div>
-
-                  <FlexBox gap={2}>
-                    <Button
-                      background="white"
-                      onClick={() => setModalEdit(true)}
-                    >
-                      Editar Perfil
-                    </Button>
-                    <Button
-                      background="white"
-                      onClick={() => setModalPassword(true)}
-                    >
-                      Alterar Senha
-                    </Button>
+              <PhotoColumn
+                direction="column"
+                alignItems="center"
+                gap={1}
+                justifyContent="center"
+              >
+                <div className="round-picture">
+                  <Button
+                    variant="text"
+                    color="white"
+                    className="pictureButton"
+                    onClick={() => setModalPicture(true)}
+                  >
+                    <Camera weight="fill" /> Trocar foto
+                  </Button>
+                  {me.profilePicture ? (
+                    <img
+                      src={me.profilePicture}
+                      alt="Foto de perfil do usuário"
+                      className="userPicture"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <User color="white" weight="light" className="userIcon" />
+                  )}
+                </div>
+                <p className="name">{me.name}</p>
+                <p>Perfil Pessoal</p>
+              </PhotoColumn>
+              <InfoColumn direction="column" gap={1} justifyContent="center">
+                <div>
+                  <p className="title">Telefone</p>
+                  <FlexBox alignItems="center" gap={0.5} mt={0.5}>
+                    <PhoneCall size={30} />
+                    {me.phone}
                   </FlexBox>
-                </InfoColumn>
-              </FlexBox>
+                </div>
+                <div>
+                  <p className="title">E-mail</p>
+                  <FlexBox alignItems="center" gap={0.5} mt={0.5}>
+                    <Envelope size={30} />
+                    {me.email}
+                  </FlexBox>
+                </div>
+
+                <FlexBox gap={2}>
+                  <Button background="white" onClick={() => setModalEdit(true)}>
+                    Editar Perfil
+                  </Button>
+                  <Button
+                    background="white"
+                    onClick={() => setModalPassword(true)}
+                  >
+                    Alterar Senha
+                  </Button>
+                </FlexBox>
+              </InfoColumn>
             </HeaderContainer>
             <GeometryContainer>
               <div className="triangle1">
@@ -121,11 +117,9 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
               </div>
             </GeometryContainer>
           </HeaderWrapper>
-          <MarginContainer>
-            <FlexBox my={me.leads.length > 0 ? 2 : 5}>
-              {me.leads && <LeadList professional={false} leads={me.leads} />}
-            </FlexBox>
-          </MarginContainer>
+          <ProjectContainer my={me.leads.length > 0 ? 2 : 5}>
+            {me.leads && <LeadList professional={false} leads={me.leads} />}
+          </ProjectContainer>
 
           <Modal isOpened={modalEdit} onClose={() => setModalEdit(false)} small>
             <FlexBox direction="column" centralized gap={3}>

@@ -1,26 +1,35 @@
 import { FlexBox } from "components/FlexBox";
 import styled, { css } from "styled-components";
 import { FullContainer } from "styles/commonComponents";
+import { crossm, media, px, vw } from "styles/utils";
 
 export const HeaderWrapper = styled(FullContainer)`
   ${({ theme }) => css`
-    height: 334px;
     overflow-y: hidden;
+    ${media.md`
+    height: 334px;
+    `}
   `}
 `;
 
 export const HeaderContainer = styled.header`
   ${({ theme }) => css`
     display: flex;
-    height: 334px;
+    flex-direction: column;
     width: 100%;
     background-color: ${theme.color.brand.orange};
     z-index: 10;
-    padding: 0 auto;
+    align-items: center;
+    padding: 2rem 0;
+    gap: 2rem;
 
-    & > div {
-      margin-inline: auto;
-    }
+    ${media.md`
+      flex-direction: row;
+      justify-content: flex-start;
+      height: 334px;
+      padding: 2rem 5rem;
+      gap:6rem;
+    `}
   `}
 `;
 
@@ -33,6 +42,7 @@ export const PhotoColumn = styled(FlexBox)`
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 15;
     .round-picture {
       position: relative;
       width: 166px;
@@ -87,12 +97,17 @@ export const PhotoColumn = styled(FlexBox)`
 export const ProjectContainer = styled(FlexBox)`
   ${({ theme }) => css`
     display: flex;
-    width: 712px;
-    margin: 0 auto;
+    width: 100vw;
+    padding: 0 2rem;
+    ${media.md`
+    padding: 0 2rem;
+    
+    `}
   `}
 `;
 
 export const InfoColumn = styled(FlexBox)`
+  z-index: 15;
   ${({ theme }) => css`
     height: 100%;
 
@@ -108,12 +123,13 @@ export const InfoColumn = styled(FlexBox)`
 
 export const GeometryContainer = styled.header`
   ${({ theme }) => css`
+    /* display: none; */
     position: relative;
-    top: -334px;
+    top: 0;
     width: 100%;
-    height: 334px;
     z-index: 0;
     pointer-events: none;
+    opacity: 0.3;
     .triangle1 {
       position: absolute;
       bottom: 80px;
@@ -149,5 +165,12 @@ export const GeometryContainer = styled.header`
       width: 80px;
       height: 80px;
     }
+    ${media.md`
+    display: flex;
+    top: -334px;
+    width: 100%;
+    height: 334px;
+    opacity: 1;
+    `}
   `}
 `;
