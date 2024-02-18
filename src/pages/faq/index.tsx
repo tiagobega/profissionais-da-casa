@@ -16,6 +16,7 @@ import { useTheme } from "styled-components";
 import {
   CollapsibleInformation,
   FAQContainer,
+  GeometrySideContainer,
   InformationContainer,
 } from "./styles";
 import { ButtonDelete } from "components/ButtonDelete";
@@ -139,7 +140,7 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
 
   return (
     <FAQContainer>
-      <FlexBox direction="column">
+      <GeometrySideContainer>
         <Geometry color={color.brand.orange} width={170} triangle angle={270} />
         <Geometry color={color.secondary.green} width={170} angle={0} />
         <Geometry
@@ -149,9 +150,9 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
           angle={0}
         />
         <Geometry color={color.brand.orange} width={170} triangle angle={270} />
-      </FlexBox>
-      <InformationContainer direction="column" gap={2} alignItems="flex-start">
-        <FlexBox>
+      </GeometrySideContainer>
+      <InformationContainer>
+        <FlexBox full justifyContent="flex-start">
           <Button variant="text" onClick={() => navigate(-1)}>
             <CaretLeft weight="fill" /> Voltar
           </Button>
@@ -245,7 +246,7 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
           )}
         </FlexBox>
       </InformationContainer>
-      <FlexBox direction="column">
+      <GeometrySideContainer>
         <Geometry color={color.brand.yellowLight} width={170} angle={0} />
         <Geometry
           color={color.secondary.green}
@@ -260,7 +261,7 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
           triangle
           angle={180}
         />
-      </FlexBox>
+      </GeometrySideContainer>
       <Modal isOpened={isOpen} onClose={() => setForm(null)}>
         {displayForm()}
       </Modal>

@@ -154,6 +154,7 @@ export const GalleryContainer = styled(FullContainer)`
 export const ReviewSection = styled(MarginContainer)`
   ${({ theme }) => css`
     display: flex;
+    width: 100%;
     align-items: flex-start;
     justify-content: center;
     padding: 2rem 0;
