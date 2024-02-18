@@ -273,7 +273,7 @@ const mountStyles = ({
     ${wrap && `flex-wrap:${wrap}`};
     ${full && "width:100%;"}
     ${flex && `flex:${flex};`}
-    ${shrink && `flex-shrink:${shrink};`}
-    ${grow && `flex-grow:${grow};`}
+    ${shrink !== undefined && `flex-shrink:${shrink};`}
+    ${grow !== undefined && `flex-grow:${grow};`}
   `;
 };

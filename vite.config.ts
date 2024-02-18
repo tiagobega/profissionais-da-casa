@@ -23,5 +23,8 @@ export default defineConfig((config) => {
   return {
     plugins: [react(), tsconfigPaths()],
     base,
+    server: {
+      host: true,
+    },
   };
 });

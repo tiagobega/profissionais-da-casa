@@ -75,8 +75,6 @@ export const FilterContent = styled(FlexBox)`
 export const Container = styled.div`
   ${() => css`
     width: 100%;
-    // width: calc(100vw - 12rem);
-    max-width: 1170px;
     margin: 0 auto;
   `}
 `;
@@ -109,7 +107,6 @@ export const Triangle = styled(Geometry)`
 
 export const ProfileList = styled.ul`
   ${() => css`
-    // width: 1170px;
     width: 100%;
     margin-top: 2rem;
     display: grid;

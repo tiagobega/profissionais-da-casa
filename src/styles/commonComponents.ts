@@ -4,7 +4,6 @@ import { media } from "./utils";
 
 export const MarginContainer = styled.div`
   ${({ theme }) => css`
-    width: ${theme.sizes.pageWidth};
     margin: 0 auto;
 
     /* border: 1px solid red; */

@@ -2,18 +2,9 @@ import styled, { css } from "styled-components";
 import { FlexBox } from "components/FlexBox";
 import { media } from "styles/utils";
 
-export const ProfessionalsListPageContainer = styled(FlexBox)`
-  ${() => css`
-    max-width: 1170px;
-    margin: 0 auto;
-  `}
-`;
-
 export const HeaderContainer = styled.div`
   ${({ theme }) => css`
     width: 100%;
-
-    // width: 1170px;
     display: flex;
     gap: 1.5rem;
   `}
