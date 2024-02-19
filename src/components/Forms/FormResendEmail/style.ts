@@ -6,6 +6,7 @@ export const Form = styled.form`
   ${({ theme }) => css`
     display: relative;
     margin-top: 3rem;
+    width: 20rem;
     strong {
       font-size: 1.2rem;
     }

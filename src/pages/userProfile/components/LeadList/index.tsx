@@ -26,7 +26,7 @@ export const LeadList: React.FC<ProfessionalListProps> = ({
 
   return (
     <List>
-      <ListHeader alignItems="center" justifyContent="space-between" p={1}>
+      <ListHeader p={1}>
         <h3>
           {leads.length > 0
             ? admin
@@ -48,7 +48,7 @@ export const LeadList: React.FC<ProfessionalListProps> = ({
       {leads.length > 0 && (
         <ListContent>
           {filteredList().map((el) => (
-            <LeadListLine lead={el} professional={professional} />
+            <LeadListLine lead={el} professional={professional} key={el.id} />
           ))}
         </ListContent>
       )}

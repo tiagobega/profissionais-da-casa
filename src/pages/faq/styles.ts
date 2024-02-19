@@ -33,7 +33,6 @@ export const InformationContainer = styled(FlexBox)`
   ${() => css`
     width: 100%;
     padding-inline: 1rem;
-    border: 1px solid red;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -49,7 +48,6 @@ export const InformationContainer = styled(FlexBox)`
     }
     .questions {
       width: calc(100% - 3rem);
-      border: 1px solid blue;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;

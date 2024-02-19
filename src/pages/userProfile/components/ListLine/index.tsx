@@ -3,7 +3,7 @@ import { FlexBox } from "components/FlexBox";
 import { Modal } from "components/Modal";
 import { useEffect, useState } from "react";
 import { Lead, Me, Professional } from "services/User/types";
-import { Line } from "./styles";
+import { ContactDetails, Line } from "./styles";
 import { useApi } from "contexts/User";
 import { formatLongDate } from "utils/dateFormat";
 import { useNavigate } from "react-router-dom";
@@ -54,14 +54,14 @@ export const LeadListLine: React.FC<ProfessionalListLineProps> = ({
           <Button variant="outline" small onClick={() => setIsModalOpen(true)}>
             Exibir
           </Button>
-          <Modal isOpened={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <FlexBox direction="column" gap={1}>
-              <h3>{lead.name}</h3>
-              <p>{lead.description}</p>
-            </FlexBox>
-          </Modal>
         </Line>
       )}
+      <Modal isOpened={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <ContactDetails>
+          <h3>{lead.name}</h3>
+          <p>{lead.description}</p>
+        </ContactDetails>
+      </Modal>
     </>
   );
 };

@@ -1,12 +1,13 @@
-import styled, { css } from 'styled-components'
-import { FlexBox } from 'components/FlexBox'
-import { FullContainer, MarginContainer } from 'styles/commonComponents'
+import styled, { css } from "styled-components";
+import { FlexBox } from "components/FlexBox";
+import { FullContainer, MarginContainer } from "styles/commonComponents";
+import { crossm, media, px, vw } from "styles/utils";
 
 export const GalleryContainer = styled(FullContainer)`
   ${({ theme }) => css`
     .carousel-bg {
       width: 100%;
-      height: 610px;
+      height: 300px;
       overflow: hidden;
       background-color: black;
       display: flex;
@@ -17,16 +18,26 @@ export const GalleryContainer = styled(FullContainer)`
         height: 100%;
         object-fit: cover;
       }
+
+      ${media.md`
+      height: 610px;
+    `}
     }
   `}
-`
+`;
 export const InformationContainer = styled(MarginContainer)`
   ${({ theme }) => css`
     display: flex;
     gap: 2rem;
     padding: 2rem 0 5rem;
+    flex-direction: column-reverse;
+    padding: 1rem 2rem;
+    ${media.lg`
+      height: 610px;
+      flex-direction: row;
+    `}
   `}
-`
+`;
 
 export const ProfessionalInformation = styled.section`
   ${({ theme }) => css`
@@ -43,13 +54,13 @@ export const ProfessionalInformation = styled.section`
       font-weight: 400;
     }
   `}
-`
+`;
 
 export const ProjectInformation = styled.section`
   ${({ theme }) => css`
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 1rem;
   `}
-`
+`;
