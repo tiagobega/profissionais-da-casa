@@ -139,28 +139,61 @@ export const GallerySection = styled.section`
       overflow: hidden;
       display: flex;
       justify-content: center;
+      position: relative;
     }
+
     .gallery-img {
       width: 100%;
-      max-width: 1366px;
       height: 100%;
       object-fit: cover;
       animation: slideRight;
       animation-duration: ${theme.transition.short};
     }
+
     .gallery-info {
-      width: 300px;
-      height: 400px;
-      padding: 2rem;
+      padding: 1rem;
       position: absolute;
       background-color: ${theme.color.base[200]};
-      top: 0;
-      left: 58%;
+      bottom: 0;
+      left: 0;
+      height: 35%;
+      width: 100%;
+
+      h5 {
+        font-size: 1rem;
+        ${media.md`
+          font-size: 1.25rem`}
+      }
+
+      p {
+        font-size: 12px;
+        text-align: justify;
+        hyphens: auto;
+        overflow: hidden;
+        width: 100%;
+        height: 42px;
+        line-height: 14px;
+
+        ${media.md`
+          line-height: 125%;
+          font-size: 16px;
+          height: 100%;
+        `}
+      }
+
+      ${media.md`
+        padding: 1.5rem;
+        height: 100%;
+        left: 58%;
+        max-width: 300px;
+      `}
     }
+
     .carousel-btn {
       width: 1rem;
       height: 1rem;
     }
+
     @keyframes identifier slideRight {
       from {
         opacity: 0;
@@ -174,27 +207,34 @@ export const GallerySection = styled.section`
   `}
 `;
 
-export const ReviewSection = styled(MarginContainer)`
+export const ReviewSection = styled.section`
   ${({ theme }) => css`
     display: flex;
     width: 100%;
     align-items: flex-start;
     justify-content: center;
-    padding: 2rem 0;
-    gap: 4rem;
+    padding-bottom: 2rem;
+
     h3 {
+      width: 100%;
+      text-align: center;
       color: ${theme.color.secondary.lightTeal};
       font-size: 2rem;
+      border-top: 2px solid ${theme.color.base[200]};
+      padding-top: 1.5rem;
+
+      ${media.lg`
+        width: auto;
+        padding-top: 0;
+        border: none;
+      `}
     }
   `}
 `;
 
 export const ReviewContainer = styled(FlexBox)`
-  ${() => css`
+  ${({ theme }) => css`
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 570px;
     .review-item {
       width: 270px;
       p {
@@ -239,28 +279,28 @@ export const FeaturesContainer = styled.div`
     gap: 2rem;
     margin-top: 1rem;
     grid-template-columns: 1fr;
-
+    width: 100%;
     > div {
       p {
-        ${media.lg`
+        ${media.md`
           text-align:center;
         `}
       }
 
       h3 {
-        ${media.lg`
+        ${media.md`
           width: 100%;
           text-align: center;
         `}
       }
 
       &:not(:last-child) {
-        ${media.lg`
-            border-right: 2px solid ${theme.color.base[200]};
-          `}
+        ${media.md`
+          border-right: 2px solid ${theme.color.base[200]};
+        `}
       }
     }
-    ${media.lg`
+    ${media.md`
       margin-top: 2rem;
       grid-template-columns: repeat(3, 1fr);
     `}
@@ -273,7 +313,7 @@ export const List = styled.ul`
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0.5rem;
-  align-items: center;
+  justify-content: center;
   padding: 0 0.5rem;
 
   li {
@@ -328,4 +368,10 @@ export const GalleryNotFound = styled(FlexBox)`
   }
 `;
 
-export const Gallery = styled.div``;
+export const ReviewsNotFound = styled(FlexBox)`
+  h2 {
+    text-align: center;
+    width: 100%;
+    font-size: 1rem;
+  }
+`;

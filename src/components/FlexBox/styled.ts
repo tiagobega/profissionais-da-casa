@@ -19,7 +19,7 @@ export interface FlexBoxStyles {
   /**
    * flex align property
    */
-  alignItems?: "center" | "flex-start" | "flex-end";
+  alignItems?: "center" | "flex-start" | "flex-end" | "stretch";
   /**
    * gap size in REM
    */

@@ -36,7 +36,6 @@ import {
   FeaturesContainer,
   GalleryNotFound,
   GallerySection,
-  GraySection,
   HeaderContainer,
   InformationContainer,
   LocationList,
@@ -45,13 +44,13 @@ import {
   RatingHeader,
   ReviewContainer,
   ReviewSection,
+  ReviewsNotFound,
   SocialList,
   TagList,
   TextsContainer,
 } from "./styles";
 import { socialMediaIcon } from "utils/socialMediaLogo";
 import { Page } from "components/Page";
-import { ButtonContainer } from "components/Button/style";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -108,7 +107,7 @@ export const ProfessionalProfilePage: React.FC<
   if (!pageProfessional) return <Loading />;
 
   const carrouselButtonArray = new Array(
-    Math.ceil(pageProfessional.portfolioProjects.length / 2)
+    Math.floor(pageProfessional.portfolioProjects.length / 2)
   ).fill("");
 
   const publicEvaluations = approvedEvaluations(pageProfessional.evaluations);
@@ -263,7 +262,7 @@ export const ProfessionalProfilePage: React.FC<
                 loading="lazy"
               />
               <div className="gallery-info">
-                <FlexBox direction="column" gap={1}>
+                <FlexBox direction="column" gap={0.5}>
                   <h5>
                     {pageProfessional.portfolioProjects[displayProject].name}
                   </h5>
@@ -316,56 +315,67 @@ export const ProfessionalProfilePage: React.FC<
 
       <ReviewSection>
         {publicEvaluations.evaluations.length > 0 ? (
-          <>
+          <FlexBox
+            full
+            alignItems="center"
+            direction="column"
+            gap={2}
+            media={{ lg: { direction: "row", alignItems: "stretch" } }}
+          >
             <RatingContainer
               alignItems="center"
               direction="column"
               justifyContent="flex-start"
-              gap={0.5}
+              gap={1}
+              full
             >
               <FlexBox
                 full
-                alignItems="center"
-                justifyContent="flex-start"
+                justifyContent={"center"}
                 gap={1}
+                media={{ lg: { justifyContent: "flex-start" } }}
               >
                 <Star weight="fill" color={color.secondary.yellow} size={45} />
                 <p className="rating">{publicEvaluations.average}</p>
                 <p className="quantity">({publicEvaluations.quantity})</p>
               </FlexBox>
 
-              <FlexBox alignItems="flex-start" gap={0.75} direction="column">
-                <div>
-                  <p>Custo</p>
-                  <StarMeter rating={publicEvaluations.cost} size={16} />
-                </div>
-                <div>
-                  <p>Prazo</p>
-                  <StarMeter rating={publicEvaluations.deadlines} size={16} />
-                </div>
-                <div>
-                  <p>Funcionalidade</p>
-                  <StarMeter
-                    rating={publicEvaluations.functionality}
-                    size={16}
-                  />
-                </div>
-                <div>
-                  <p>Qualidade das Entregas</p>
-                  <StarMeter rating={publicEvaluations.quality} size={16} />
-                </div>
-                <div>
-                  <p>Relacionamento com o Cliente</p>
-                  <StarMeter
-                    rating={publicEvaluations.relationship}
-                    size={16}
-                  />
-                </div>
+              <FlexBox full alignItems="flex-start" gap={1} direction="column">
+                <ReviewCategory
+                  title="Custo"
+                  quantity={publicEvaluations.cost}
+                />
+                <ReviewCategory
+                  title="Prazo"
+                  quantity={publicEvaluations.deadlines}
+                />
+                <ReviewCategory
+                  title="Funcionalidade"
+                  quantity={publicEvaluations.functionality}
+                />
+                <ReviewCategory
+                  title="Qualidade das Entregas"
+                  quantity={publicEvaluations.quality}
+                />
+                <ReviewCategory
+                  title="Relacionamento com o Cliente"
+                  quantity={publicEvaluations.relationship}
+                />
               </FlexBox>
             </RatingContainer>
 
-            <FlexBox direction="column" alignItems="center" gap={3}>
-              <FlexBox full centralized gap={2}>
+            <FlexBox full direction="column" alignItems="center" gap={3}>
+              <FlexBox
+                direction="column"
+                full
+                centralized
+                gap={1}
+                media={{
+                  lg: {
+                    direction: "row",
+                  },
+                }}
+              >
                 <h3>Depoimentos</h3>
                 {me?.roleRel.name != "professional" && (
                   <Button
@@ -378,15 +388,21 @@ export const ProfessionalProfilePage: React.FC<
                   </Button>
                 )}
               </FlexBox>
-              
+
               <FlexBox
                 full
                 justifyContent="center"
                 alignItems="flex-start"
                 gap={5}
+                media={{ lg: { h: "100%" } }}
               >
-                <ReviewContainer direction="column" alignItems="center" gap={1}>
-                  <FlexBox gap={2}>
+                <ReviewContainer
+                  direction="column"
+                  alignItems="center"
+                  gap={1}
+                  media={{ lg: { h: "100%", justifyContent: "space-between" } }}
+                >
+                  <FlexBox gap={2} grow={1}>
                     {publicEvaluations.evaluations
                       .slice(displayReview, displayReview + 2)
                       .map((item) => (
@@ -409,9 +425,20 @@ export const ProfessionalProfilePage: React.FC<
                 </ReviewContainer>
               </FlexBox>
             </FlexBox>
-          </>
+          </FlexBox>
         ) : (
-          <FlexBox gap={2} alignItems="center">
+          <ReviewsNotFound
+            gap={1}
+            direction="column"
+            alignItems="center"
+            media={{
+              lg: {
+                direction: "row",
+                centralized: true,
+                gap: 2,
+              },
+            }}
+          >
             <h2>Ainda não há depoimentos para este profissional</h2>{" "}
             {!isOwn && (
               <Button
@@ -422,7 +449,7 @@ export const ProfessionalProfilePage: React.FC<
                 Adicionar
               </Button>
             )}
-          </FlexBox>
+          </ReviewsNotFound>
         )}
       </ReviewSection>
 
@@ -468,8 +495,26 @@ export const Feature = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <FlexBox direction="column" gap={0.5} media={{ lg: { gap: 1.5 } }}>
+  <FlexBox
+    direction="column"
+    alignItems="center"
+    gap={0.5}
+    media={{ lg: { gap: 1.5 } }}
+  >
     <h3>{title}</h3>
     {children}
+  </FlexBox>
+);
+
+export const ReviewCategory = ({
+  quantity,
+  title,
+}: {
+  quantity: number;
+  title: string;
+}) => (
+  <FlexBox direction="column" gap={0.25}>
+    <p>{title}</p>
+    <StarMeter rating={quantity} size={16} />
   </FlexBox>
 );
