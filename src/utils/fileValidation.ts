@@ -1,7 +1,7 @@
 import { errorFileSize, formErrors, minChars } from "constants/formErrors";
 import * as z from "zod";
 
-export const MAX_FILE_SIZE_MB = 2;
+export const MAX_FILE_SIZE_MB = 10;
 export const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
