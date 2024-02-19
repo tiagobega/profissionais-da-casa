@@ -337,7 +337,7 @@ export const ActionsContainer = styled(FlexBox)`
     bottom: 0;
     left: 0;
     width: 100vw;
-    z-index: 10;
+    z-index: 9;
     background-color: ${theme.color.brand.pinkLight};
 
     ${media.lg`

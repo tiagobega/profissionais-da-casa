@@ -10,6 +10,7 @@ export interface ModalProps {
   onClose: () => void;
   small?: boolean;
   bg?: string;
+  className?: string;
 }
 export const Modal: React.FC<ModalProps> = ({
   children,
@@ -18,11 +19,12 @@ export const Modal: React.FC<ModalProps> = ({
   bg,
   onClose,
   small = false,
+  className,
 }) => {
   const preventAutoClose = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
-    <Container open={isOpened}>
+    <Container open={isOpened} className={className}>
       <Background open={isOpened} onClick={onClose} />
 
       <Content
@@ -33,6 +35,7 @@ export const Modal: React.FC<ModalProps> = ({
         py={2}
         gap={2}
         direction="column"
+        className="content"
       >
         <FlexBox>
           <CloseButton variant="text" onClick={onClose}>

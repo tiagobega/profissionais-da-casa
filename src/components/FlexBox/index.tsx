@@ -3,6 +3,7 @@ import { FlexBoxContainer, FlexBoxStyleProps } from "./styled";
 interface FlexBoxProps extends FlexBoxStyleProps {
   children: ReactNode;
   onClick?: () => void;
+  className?: string;
 }
 export const FlexBox: React.FC<FlexBoxProps> = ({
   direction = "row",

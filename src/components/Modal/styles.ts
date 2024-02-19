@@ -1,6 +1,7 @@
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import styled, { css } from "styled-components";
+import { media } from "styles/utils";
 
 export const Container = styled.div<{ open: boolean }>`
   ${({ open }) => css`
@@ -56,12 +57,13 @@ export const Content = styled(FlexBox)<{
   ${({ theme, small, bg, open }) => css`
     width: 100%;
     height: 100%;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     transform: translateX(-100%);
     transition: all 400ms cubic-bezier(0.66, 0, 0.33, 1);
     background-color: ${bg || theme.color.base[200]};
+
     // top: 7.5rem;
     // left: 50%;
     // width: ${small ? "500px" : "770px"};
@@ -73,9 +75,31 @@ export const Content = styled(FlexBox)<{
     // transform: translateX(-50%);
     // background-color: ${bg};
 
+    ${media.lg`
+      width: 50vw;
+      height: auto;
+      max-height: 75vh;
+      overflow: auto;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
+
+      ${
+        open &&
+        `
+          top: 50%;
+          opacity: 1;
+        `
+      };
+
+    `}
+
     ${open &&
     `
       transform: none;
+      opacity: 1;
     `};
   `}
 `;

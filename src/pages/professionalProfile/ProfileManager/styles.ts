@@ -10,7 +10,7 @@ export const ManagerContainer = styled.div`
     width: 100%;
     grid-template-columns: repeat(2, 1fr);
     ${media.lg`
-    grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
     `}
 
     button {
