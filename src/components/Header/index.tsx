@@ -46,12 +46,13 @@ const Header = () => {
                 <HeaderLinkComponent
                   key={headerLinkKey}
                   headerLinkKey={headerLinkKey as HeaderLink}
+                  closeMenu={() => setOpen(false)}
                 />
               ))}
             </ul>
           </nav>
           <div className="list__user">
-            <HeaderUser role={currentRole} />
+            <HeaderUser role={currentRole} closeMenu={() => setOpen(false)} />
           </div>
         </div>
         <button
@@ -59,7 +60,7 @@ const Header = () => {
           onClick={() => setOpen((oldOpen) => !oldOpen)}
         />
         <div className="user">
-          <HeaderUser role={currentRole} />
+          <HeaderUser role={currentRole} closeMenu={() => setOpen(false)} />
         </div>
       </FlexBox>
     </HeaderContainer>
@@ -68,27 +69,37 @@ const Header = () => {
 
 const HeaderLinkComponent = ({
   headerLinkKey,
+  closeMenu,
 }: {
   headerLinkKey: HeaderLink;
+  closeMenu: () => void;
 }) => {
   const { external, link, name } = headerLinks[headerLinkKey];
 
   if (external) {
     return (
       <li>
-        <a href={link}>{name}</a>
+        <a href={link} onClick={() => closeMenu()}>
+          {name}
+        </a>
       </li>
     );
   }
 
   return (
     <li>
-      <Link to={link}>{name}</Link>
+      <Link to={link} onClick={() => closeMenu()}>
+        {name}
+      </Link>
     </li>
   );
 };
 
-const HeaderUser = ({ role }: RoleProps) => {
+interface HeadUserProps extends RoleProps {
+  closeMenu: () => void;
+}
+
+const HeaderUser = ({ role, closeMenu }: HeadUserProps) => {
   const navigate = useNavigate();
 
   const { user } = useApi();
@@ -106,7 +117,7 @@ const HeaderUser = ({ role }: RoleProps) => {
         >
           <FlexBox gap={0.5} direction="column">
             <LoginName>{me.name.split(" ")[0]}</LoginName>
-            <FlexBox gap={0.5} alignItems="center">
+            <FlexBox gap={0.5} alignItems="center" onClick={() => closeMenu()}>
               {role == "admin" ? (
                 <Button variant="text" onClick={() => navigate("/admin")}>
                   Painel Admim
