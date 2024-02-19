@@ -1,20 +1,67 @@
 import { Button } from "components/Button";
+import { FlexBox } from "components/FlexBox";
 import styled, { css } from "styled-components";
 
-export const Container = styled.dialog<{ small?: boolean; bg?: string }>`
-  ${({ theme, small, bg = "white" }) => css`
-    width: 100vw;
-    height: 100vh;
-    transform: translateX(-100%);
-    opacity: 0;
+export const Container = styled.div<{ open: boolean }>`
+  ${({ open }) => css`
+    position: fixed;
     top: 0;
     left: 0;
-    max-width: 100vw;
-    max-height: 100vh;
-    transition: opacity 300ms cubic-bezier(0.66, 0, 0.33, 1), display 300ms;
-    transition-behavior: allow-discrete;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    ${open &&
+    `
+      pointer-events:all;
+    `}
+  `}
+`;
 
-    // position: fixed;
+export const CloseButton = styled(Button)`
+  ${({ theme }) => css`
+    &:focus {
+      border: none;
+      text-decoration: underline;
+    }
+  `}
+`;
+
+export const Background = styled.div<{ open: boolean }>`
+  ${({ theme, open }) => css`
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-color: black;
+    transition: opacity 300ms;
+    pointer-events: none;
+    cursor: pointer;
+
+    ${open &&
+    `
+      opacity: 0.5;
+      pointer-events: all;
+    `}
+  `}
+`;
+
+export const Content = styled(FlexBox)<{
+  small?: boolean;
+  bg?: string;
+  open?: boolean;
+}>`
+  ${({ theme, small, bg, open }) => css`
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: all 400ms cubic-bezier(0.66, 0, 0.33, 1);
+    background-color: ${bg || theme.color.base[200]};
     // top: 7.5rem;
     // left: 50%;
     // width: ${small ? "500px" : "770px"};
@@ -26,20 +73,9 @@ export const Container = styled.dialog<{ small?: boolean; bg?: string }>`
     // transform: translateX(-50%);
     // background-color: ${bg};
 
-    &:focus {
-      border: none;
-    }
-    &::backdrop {
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-    transition: ${theme.transition.short};
-  `}
-`;
-export const CloseButton = styled(Button)`
-  ${({ theme }) => css`
-    &:focus {
-      border: none;
-      text-decoration: underline;
-    }
+    ${open &&
+    `
+      transform: none;
+    `};
   `}
 `;

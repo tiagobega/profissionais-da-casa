@@ -1,8 +1,7 @@
 import { FlexBox } from "components/FlexBox";
-import { ReactNode, useEffect, useRef } from "react";
-import { CloseButton, Container } from "./styles";
-import { CaretLeft, X } from "@phosphor-icons/react";
-import { Button } from "components/Button";
+import { ReactNode, useRef } from "react";
+import { Background, CloseButton, Container, Content } from "./styles";
+import { CaretLeft } from "@phosphor-icons/react";
 
 export interface ModalProps {
   children: ReactNode;
@@ -20,39 +19,32 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   small = false,
 }) => {
-  const ref: any = useRef(null);
-
-  useEffect(() => {
-    if (isOpened) {
-      ref.current?.showModal();
-      document.body.classList.add("modal-open");
-    } else {
-      ref.current?.close();
-      document.body.classList.remove("modal-open");
-    }
-  }, [isOpened]);
-
   const preventAutoClose = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
-    <Container
-      ref={ref}
-      onCancel={() => onClose()}
-      onClick={() => onClose()}
-      small={small}
-      bg={bg}
-    >
-      <div onClick={(event: React.MouseEvent) => preventAutoClose(event)}>
-        <FlexBox direction="column" py={3} px={6} gap={1} full>
-          <CloseButton variant="text" onClick={() => onClose()}>
+    <Container open={isOpened}>
+      <Background open={isOpened} onClick={onClose} />
+
+      <Content
+        open={isOpened}
+        bg={bg}
+        small={small}
+        px={1}
+        py={2}
+        gap={2}
+        direction="column"
+      >
+        <FlexBox>
+          <CloseButton variant="text" onClick={onClose}>
             <CaretLeft weight="fill" />
             Voltar
           </CloseButton>
-          <FlexBox full alignItems="center" direction="column">
-            {children}
-          </FlexBox>
         </FlexBox>
-      </div>
+
+        <FlexBox grow={1} direction="column" gap={1} full>
+          {children}
+        </FlexBox>
+      </Content>
     </Container>
   );
 };
