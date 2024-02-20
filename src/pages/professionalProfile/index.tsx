@@ -164,14 +164,14 @@ export const ProfessionalProfilePage: React.FC<
             pt={1}
             pb={2}
           >
-            {!isOwn && (
+            {isOwn && (
               <ProfileManager
                 professional={pageProfessional}
                 refetch={() => id && fetchProfessional(id)}
               />
             )}
 
-            {isOwn && (
+            {!isOwn && (
               <Button
                 variant="primary"
                 background={color.brand.yellowLight}

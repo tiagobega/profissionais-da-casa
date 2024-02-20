@@ -58,8 +58,13 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
       status: "pending",
     });
     setModalConfirm(true);
-    navigate(-1);
+    // navigate(-1);
     return;
+  };
+
+  const closeConfirmationModal = () => {
+    navigate(-1);
+    setModalConfirm(false);
   };
 
   const categories: {
@@ -100,7 +105,7 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
                 <Star
                   weight={"fill"}
                   onClick={() => setValue(cat.value, +rating)}
-                  key={rating}
+                  key={Math.random()}
                   size={24}
                   color={
                     watch(cat.value) >= rating
@@ -139,7 +144,7 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
           <Button
             type="button"
             background="white"
-            onClick={() => setModalConfirm(false)}
+            onClick={() => closeConfirmationModal()}
           >
             Sair
           </Button>

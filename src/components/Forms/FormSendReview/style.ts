@@ -47,7 +47,7 @@ export const StarContainer = styled(FlexBox)`
 
 export const ConfirmModal = styled(Modal)`
   ${({ theme }) => css`
-    background-color: red;
+    /* background-color: red; */
   `}
 `;
 export const Information = styled(FlexBox)`

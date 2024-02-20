@@ -55,6 +55,28 @@ const Header = () => {
             <HeaderUser role={currentRole} closeMenu={() => setOpen(false)} />
           </div>
         </div>
+        {!me && (
+          <div className="mobileLogin">
+            <Button variant="primary" onClick={() => navigate("/login")}>
+              <svg
+                width="16"
+                height="21"
+                viewBox="0 0 16 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M10.7389 9.70152C12.1184 8.73839 13.0208 7.1391 13.0208 5.32903C13.0208 2.38589 10.635 0 7.69181 0C4.74867 0 2.36278 2.38589 2.36278 5.32903C2.36278 7.13908 3.26521 8.73837 4.64469 9.7015L0 20.4279H15.3836L10.7389 9.70152Z"
+                  fill="black"
+                />
+              </svg>
+              Login
+            </Button>
+          </div>
+        )}
+
         <button
           className={cn("sandwich", { "sandwich--open": open })}
           onClick={() => setOpen((oldOpen) => !oldOpen)}
@@ -105,6 +127,11 @@ const HeaderUser = ({ role, closeMenu }: HeadUserProps) => {
   const { user } = useApi();
   const { me, logged, logout } = user;
 
+  const logoutAndClose = () => {
+    logout(() => navigate("/"));
+    closeMenu();
+  };
+
   return (
     <LoginContainer role={role}>
       {me && logged ? (
@@ -138,7 +165,7 @@ const HeaderUser = ({ role, closeMenu }: HeadUserProps) => {
               )}
             </FlexBox>
           </FlexBox>
-          <Button small onClick={() => logout(() => navigate("/"))}>
+          <Button small onClick={() => logoutAndClose()}>
             <SignOut size={20} weight="bold" />
           </Button>
         </FlexBox>
