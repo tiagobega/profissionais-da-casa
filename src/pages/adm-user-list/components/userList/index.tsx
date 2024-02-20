@@ -3,14 +3,26 @@ import Input from "components/Input";
 import { useState } from "react";
 import { UserListLine } from "../ListLine";
 import { List, ListContent, ListHeader, ListLegend } from "./styles";
-import { Me } from "services/User/types";
+import { Me, Professional } from "services/User/types";
+import { ROLES } from "constants/roles";
 
 export interface UserListProps {
   users: Me[];
+  professionals: Professional[];
+  refetch: () => void;
 }
 
-export const UserList: React.FC<UserListProps> = ({ users }) => {
+export const UserList: React.FC<UserListProps> = ({ users, professionals, refetch }) => {
   const [query, setQuery] = useState<string>("");
+
+  const list = users.map((user) => {
+    const professional =
+      user.roleRel.name !== ROLES.PROFESSIONAL
+        ? undefined
+        : professionals.find(({ userId }) => user.id === userId);
+
+    return { user, professional };
+  });
 
   return (
     <List>
@@ -33,8 +45,8 @@ export const UserList: React.FC<UserListProps> = ({ users }) => {
         </FlexBox>
       </ListLegend>
       <ListContent>
-        {users.map((el) => (
-          <UserListLine user={el} key={el.id} />
+        {list.map((el) => (
+          <UserListLine entry={el} key={el.user.id}  refetch={refetch}/>
         ))}
       </ListContent>
     </List>

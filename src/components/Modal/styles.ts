@@ -65,6 +65,7 @@ export const Content = styled(FlexBox)<{
     background-color: ${bg || theme.color.base[200]};
 
     ${media.lg`
+      width: auto;
       max-width: 50vw;
       height: auto;
       max-height: 75vh;

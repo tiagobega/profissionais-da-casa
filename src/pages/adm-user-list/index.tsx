@@ -5,7 +5,7 @@ import { UserList } from "./components/userList";
 import { Header } from "./styles";
 import { useNavigate } from "react-router-dom";
 import { CaretLeft } from "@phosphor-icons/react";
-import { Me } from "services/User/types";
+import { Me, Professional } from "services/User/types";
 import { useApi } from "contexts/User";
 import { Page } from "components/Page";
 
@@ -15,7 +15,7 @@ export type ScreenList = "professionals" | "validation";
 
 export const AdmUserList: React.FC<AdmUserListProps> = () => {
   const [allUsers, setAllUsers] = useState<Me[]>();
-
+  const [allProfessionals, setAllProfessionals] = useState<Professional[]>();
   const { professional, user } = useApi();
 
   const navigate = useNavigate();
@@ -25,9 +25,9 @@ export const AdmUserList: React.FC<AdmUserListProps> = () => {
     if (!userResponse) return;
 
     const professionalResponse = await professional.getAll();
-
     if (!professionalResponse) return;
 
+    setAllProfessionals(professionalResponse.proProfiles);
     setAllUsers(userResponse.users);
   };
 
@@ -47,7 +47,11 @@ export const AdmUserList: React.FC<AdmUserListProps> = () => {
         <h2>Usuários da Casa</h2>
       </Header>
 
-      <UserList users={allUsers || []} />
+      <UserList
+        professionals={allProfessionals || []}
+        users={allUsers || []}
+        refetch={fetchAll}
+      />
     </Page>
   );
 };
