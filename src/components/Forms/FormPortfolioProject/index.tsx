@@ -172,7 +172,12 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           />
           <p>{watch("description")?.length}/400 caracteres</p>
         </FlexBox>
-        <FlexBox alignItems="flex-end" gap={10} my={2}>
+        <FlexBox
+          direction="column"
+          alignItems="flex-end"
+          justifyContent={"space-between"}
+          my={2}
+        >
           <Input.File
             placeholder="Selecione uma foto"
             label={`Adicione uma foto (${imageList.length}/6)`}
@@ -181,6 +186,7 @@ export const FormPortfolioProject: React.FC<FormPortfolioProjectProps> = ({
           />
           <Button
             type="button"
+            width={3}
             onClick={() => addPhoto(imgFile)}
             disabled={!imgFile || imgFile?.length == 0 || imageList.length == 6}
           >
