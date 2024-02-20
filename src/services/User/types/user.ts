@@ -96,3 +96,5 @@ export type SignUpResponse = {
 export type ResendEmailData = Pick<Me, "email"> | Pick<Me, "id">;
 
 export type ResendEmailResponse = string;
+
+export type DeleteUserResponse = { messages: string };
