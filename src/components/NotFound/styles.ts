@@ -5,12 +5,13 @@ import { media } from "styles/utils";
 export const TextContainer = styled(FlexBox)`
   ${({ theme }) => css`
     width: auto;
-
+    text-align: center;
     h2 {
       font-size: 1.5rem;
     }
-    ${media.lg`
+    ${media.md`
       width: 30rem;
+      text=align:left;
         h2 {
           font-size: 2rem;
         }
@@ -22,7 +23,7 @@ export const Container = styled(FlexBox)`
     padding-inline: 2rem;
     img {
       display: none;
-      ${media.lg`
+      ${media.md`
       display: block;
     `}
     }
