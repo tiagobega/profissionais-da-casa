@@ -1,3 +1,4 @@
+import ReactGA from "react-ga4";
 import {
   MagnifyingGlass,
   SlidersHorizontal,
@@ -47,6 +48,23 @@ export const List: React.FC<ListProps> = () => {
   const locations = states;
   const categorias = tags;
 
+  const filterGaEvent = (
+    type: "location" | "profession" | "tag",
+    content: string
+  ) => {
+    ReactGA.event(
+      {
+        action: "click",
+        category: "professional_filter",
+        label: `professional_filter_${content}`,
+      },
+      {
+        content: content,
+        filter_type: type,
+      }
+    );
+  };
+
   const toggleTagOnFilter = (item: string) => {
     const currentList = [...selected];
     if (currentList.includes(item)) {
@@ -55,6 +73,7 @@ export const List: React.FC<ListProps> = () => {
     } else {
       currentList.push(item);
       setSelected(currentList);
+      filterGaEvent("tag", item);
     }
   };
   const toggleProfessionOnFilter = (item: string) => {
@@ -63,7 +82,9 @@ export const List: React.FC<ListProps> = () => {
       currentList = currentList.filter((el) => el !== item);
     } else {
       currentList.push(item);
+      filterGaEvent("profession", item);
     }
+
     setSelectedProfession(currentList);
   };
   const toggleLocationOnFilter = (item: string) => {
@@ -72,11 +93,17 @@ export const List: React.FC<ListProps> = () => {
       currentList = currentList.filter((el) => el !== item);
     } else {
       currentList.push(item);
+      filterGaEvent("location", item);
     }
     setSelectedState(currentList);
   };
   const toggleOnline = () => {
-    acceptOnline ? setAcceptOnline(false) : setAcceptOnline(true);
+    if (acceptOnline) {
+      setAcceptOnline(false);
+    } else {
+      setAcceptOnline(true);
+      filterGaEvent("location", "atendimento-online");
+    }
   };
 
   const clearFilter = () => {
@@ -99,7 +126,6 @@ export const List: React.FC<ListProps> = () => {
   }, []);
 
   const filteredProfessionals = (list: Professional[]) => {
-    console.log(list);
     let filteredList = [...list].filter((el) => el.active == true);
 
     if (acceptOnline) {
@@ -285,7 +311,7 @@ export const List: React.FC<ListProps> = () => {
             <CardProfile
               professional={professional}
               key={professional.id}
-            ></CardProfile>
+            />
           ))}
         </ProfileList>
       )}

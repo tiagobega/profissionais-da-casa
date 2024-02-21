@@ -1,6 +1,7 @@
 import { CaretRight, Star, User } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
+import ReactGA from "react-ga4";
 import { useTheme } from "styled-components";
 import {
   ButtonContainer,
@@ -82,7 +83,19 @@ export const CardProfile: React.FC<CardProfileProps> = ({ professional }) => {
           <Button
             variant="text"
             color={color.secondary.lightTeal}
-            onClick={() => navigate(`/professional/${professional.userId}`)}
+            onClick={() => {
+              ReactGA.event(
+                {
+                  action: "click",
+                  category: "professional",
+                  label: `professional_${professional.name}`,
+                },
+                {
+                  name: professional.name,
+                }
+              );
+              navigate(`/professional/${professional.userId}`);
+            }}
           >
             Ver mais <CaretRight />
           </Button>

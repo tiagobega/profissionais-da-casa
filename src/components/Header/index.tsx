@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { SignOut, X } from "@phosphor-icons/react";
 import cn from "classnames";
+import ReactGA from "react-ga4";
 
 import {
   HeaderContainer,
@@ -35,7 +36,19 @@ const Header = () => {
           <img
             src={logo}
             alt="cada casa"
-            onClick={() => navigate("/")}
+            onClick={() => {
+              ReactGA.event(
+                {
+                  action: "click",
+                  category: "header_click",
+                  label: `header_logo`,
+                },
+                {
+                  button_name: "logo",
+                }
+              );
+              navigate("/");
+            }}
             className="logo"
           />
         </div>
@@ -98,10 +111,29 @@ const HeaderLinkComponent = ({
 }) => {
   const { external, link, name } = headerLinks[headerLinkKey];
 
+  const eventFunction = () => {
+    ReactGA.event(
+      {
+        action: "click",
+        category: "header_click",
+        label: `header_button_${name}`,
+      },
+      {
+        button_name: name,
+      }
+    );
+  };
+
   if (external) {
     return (
       <li>
-        <a href={link} onClick={() => closeMenu()}>
+        <a
+          href={link}
+          onClick={() => {
+            eventFunction();
+            closeMenu();
+          }}
+        >
           {name}
         </a>
       </li>
@@ -110,7 +142,13 @@ const HeaderLinkComponent = ({
 
   return (
     <li>
-      <Link to={link} onClick={() => closeMenu()}>
+      <Link
+        to={link}
+        onClick={() => {
+          eventFunction();
+          closeMenu();
+        }}
+      >
         {name}
       </Link>
     </li>
@@ -170,7 +208,22 @@ const HeaderUser = ({ role, closeMenu }: HeadUserProps) => {
           </Button>
         </FlexBox>
       ) : (
-        <Button variant="primary" onClick={() => navigate("/login")}>
+        <Button
+          variant="primary"
+          onClick={() => {
+            ReactGA.event(
+              {
+                action: "click",
+                category: "header_click",
+                label: `header_login`,
+              },
+              {
+                button_name: "login",
+              }
+            );
+            navigate("/login");
+          }}
+        >
           <svg
             width="16"
             height="21"

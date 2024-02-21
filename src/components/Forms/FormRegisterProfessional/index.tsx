@@ -16,6 +16,7 @@ import { formationLevels } from "constants/formationLevels";
 import { FileReaderQueue, QueueFile } from "utils/FileReaderQueue";
 import { recreateApiAuthInterceptors } from "config/axios";
 import { UserUtils } from "utils/user";
+import ReactGA from "react-ga4";
 
 export type FormData = Zod.infer<typeof registerProfessionalSchema>;
 
@@ -291,6 +292,17 @@ export const FormRegisterProfessional: FC<FormRegisterProfessionalProps> = ({
       email: integratedRegister.user.email,
       subject: "Seja bem vindo a equipe dos Profissionais da Casa",
     });
+
+    ReactGA.event(
+      {
+        action: "click",
+        category: "register_complete",
+        label: `register_complete_professional`,
+      },
+      {
+        type: "professional",
+      }
+    );
 
     navigate("/account/confirm");
   };

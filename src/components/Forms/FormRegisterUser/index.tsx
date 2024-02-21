@@ -12,6 +12,7 @@ import { useApi } from "contexts/User";
 import { useNavigate } from "react-router-dom";
 import MaskedInput from "react-text-mask";
 import { mask, parseCPF, parsePhone } from "utils/masks";
+import ReactGA from "react-ga4";
 
 export type FormData = Zod.infer<typeof registerUserSchema>;
 
@@ -71,6 +72,18 @@ export const FormRegisterUser: FC<FormRegisterUserProps> = ({
       email: registerResponse.user.email,
       subject: "Seja bem vindo ao Profissionais da Casa",
     });
+
+    ReactGA.event(
+      {
+        action: "click",
+        category: "register_complete",
+        label: `register_complete_customer`,
+      },
+      {
+        type: 'customer',
+      }
+    );
+
 
     navigate("/account/confirm");
   };

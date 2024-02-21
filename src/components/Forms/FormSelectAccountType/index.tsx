@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Form, StyledTooltip } from "./style";
 import { accountSchema } from "./validation";
+import ReactGA from "react-ga4";
 
 export type FormData = Zod.infer<typeof accountSchema>;
 
@@ -31,6 +32,17 @@ export const FormAccountType = () => {
   });
 
   const onSubmit = (data: FormData) => {
+    ReactGA.event(
+      {
+        action: "click",
+        category: "register_click",
+        label: `register_button_${data.type}`,
+      },
+      {
+        type: data.type,
+      }
+    );
+
     const path = `/register/${data.type}`;
     data.type != null
       ? navigate(path)
