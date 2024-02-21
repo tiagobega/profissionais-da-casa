@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import { Camera, Envelope, PhoneCall, User } from "@phosphor-icons/react";
+import { useApi } from "contexts/User";
+
 import { Button } from "components/Button";
 import { FlexBox } from "components/FlexBox";
 import { FormAddImage } from "components/Forms/FormAddImage";
@@ -6,9 +9,9 @@ import { FormChangePassword } from "components/Forms/FormChangePassword";
 import { FormEditUserProfile } from "components/Forms/FormEditUserProfile";
 import { Geometry } from "components/Geometry";
 import { Modal } from "components/Modal";
-import { useUser } from "contexts/User";
-import { useEffect, useState } from "react";
-import { MarginContainer } from "styles/commonComponents";
+import { LeadList } from "./components/LeadList";
+import { Loading } from "components/Loading";
+
 import {
   GeometryContainer,
   HeaderContainer,
@@ -17,8 +20,6 @@ import {
   PhotoColumn,
   ProjectContainer,
 } from "./styles";
-import { LeadList } from "./components/LeadList";
-import { Loading } from "components/Loading";
 
 export interface CustomerProfileProps {}
 
@@ -26,10 +27,14 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
   const [modalEdit, setModalEdit] = useState(false);
   const [modalPassword, setModalPassword] = useState(false);
   const [modalPicture, setModalPicture] = useState(false);
-  const { me, getMe } = useUser();
+
+  const {
+    user: { me, getMe },
+  } = useApi();
 
   useEffect(() => {
     if (me) return;
+
     getMe();
   }, [me]);
 
@@ -56,6 +61,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
                   >
                     <Camera weight="fill" /> Trocar foto
                   </Button>
+
                   {me.profilePicture ? (
                     <img
                       src={me.profilePicture}

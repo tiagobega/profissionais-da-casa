@@ -752,4 +752,13 @@ export class UserService extends BaseService {
   static async putUser(data: ST.AdminUpdateUserData) {
     return await this.request<ST.Me>(API_ROUTES.PUT.USER_EDIT, "put", { data });
   }
+  static async deleteUser(data: ST.DeleteUserData) {
+    return await this.request<ST.DeleteUserResponse>(
+      API_ROUTES.POST.USER_DELETE,
+      "post",
+      {
+        data,
+      }
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import type { ErrorHandler, UserContext } from "../types";
 import type {
   AdminUpdateUserData,
+  DeleteUserData,
   ForgotPasswordData,
   Me,
   ResendEmailData,
@@ -156,6 +157,8 @@ export const userFunctions = (
   const getSingleUser = async (data: SingleUserData) =>
     withErrorHandler(await UserService.getSingleUser(data), errorHandler);
 
+  const deleteUser = async (data: DeleteUserData) =>
+    withErrorHandler(await UserService.deleteUser(data), errorHandler);
   return {
     logged,
     setLogged,
@@ -175,6 +178,7 @@ export const userFunctions = (
     resendMeEmailVerification,
     resendEmailVerification,
     updateUser,
+    deleteUser,
   };
 };
 

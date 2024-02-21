@@ -64,19 +64,9 @@ export const Content = styled(FlexBox)<{
     transition: all 400ms cubic-bezier(0.66, 0, 0.33, 1);
     background-color: ${bg || theme.color.base[200]};
 
-    // top: 7.5rem;
-    // left: 50%;
-    // width: ${small ? "500px" : "770px"};
-    // min-height: 25rem;
-    // height: fit-content;
-    // max-height: calc(95vh - 7rem);
-    // box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.2);
-    // border: none;
-    // transform: translateX(-50%);
-    // background-color: ${bg};
-
     ${media.lg`
-      width: 50vw;
+      width: auto;
+      max-width: 50vw;
       height: auto;
       max-height: 75vh;
       overflow: auto;

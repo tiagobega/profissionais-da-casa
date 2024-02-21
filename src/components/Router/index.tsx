@@ -32,6 +32,7 @@ import { PermissionInactivePage } from "pages/permissionInactive";
 import EmailConfirmedPage from "pages/email-confirm";
 import PrivacyPage from "pages/privacy-policy";
 import ReturnPage from "pages/return-policy";
+import { AdmUserList } from "pages/adm-user-list";
 
 const HomePage = React.lazy(() => import("pages/home"));
 
@@ -126,6 +127,10 @@ const Router = () => (
         <Route
           path={"/admin/"}
           element={<PrivateRoute admin element={<AdmHome />} />}
+        />
+        <Route
+          path={"/admin/users"}
+          element={<PrivateRoute admin element={<AdmUserList />} />}
         />
         <Route
           path={"/admin/reviews"}
