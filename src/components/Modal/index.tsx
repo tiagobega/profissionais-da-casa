@@ -31,20 +31,26 @@ export const Modal: React.FC<ModalProps> = ({
         open={isOpened}
         bg={bg}
         small={small}
-        px={1}
-        py={2}
         gap={2}
+        py={2}
         direction="column"
         className="content"
       >
-        <FlexBox>
+        <FlexBox px={1}>
           <CloseButton variant="text" onClick={onClose}>
             <CaretLeft weight="fill" />
             Voltar
           </CloseButton>
         </FlexBox>
 
-        <FlexBox grow={1} direction="column" gap={1} full>
+        <FlexBox
+          px={1}
+          grow={1}
+          className="inner_content"
+          direction="column"
+          gap={1}
+          full
+        >
           {children}
         </FlexBox>
       </Content>

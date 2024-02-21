@@ -14,7 +14,7 @@ export const HeaderContainer = styled.header<RoleProps>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 30;
+    z-index: 8;
     position: sticky;
     top: 0px;
     background-color: white;

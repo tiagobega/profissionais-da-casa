@@ -336,15 +336,16 @@ export const ActionsContainer = styled(FlexBox)`
     position: fixed;
     bottom: 0;
     left: 0;
+    background-color: ${theme.color.brand.pinkLight};
     width: 100vw;
     z-index: 9;
-    background-color: ${theme.color.brand.pinkLight};
 
     ${media.lg`
       position: relative;
       background-color: transparent;
       width: 100%;
       max-width: 300px;
+      z-index: auto;
     `}
 
     button, a {

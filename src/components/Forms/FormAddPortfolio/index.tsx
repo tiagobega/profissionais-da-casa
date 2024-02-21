@@ -15,9 +15,10 @@ import { Professional } from "services/User/types";
 export type FormEditProfileData = Zod.infer<typeof addPortfolioSchema>;
 interface FormAddImageProps {
   id: string;
+  onComplete: () => void;
 }
 
-export const FormAddPortfolio: FC<FormAddImageProps> = ({ id }) => {
+export const FormAddPortfolio: FC<FormAddImageProps> = ({ id, onComplete }) => {
   const {
     handleSubmit,
     register,
@@ -41,15 +42,17 @@ export const FormAddPortfolio: FC<FormAddImageProps> = ({ id }) => {
 
   const onSubmit = async (data: FormEditProfileData) => {
     if (!img || !data.portfolio[0]) return;
-    console.log(data);
     const fileResponse = await sendFile({
       filename: "portfolio file",
       content: img,
       contentType: data.portfolio[0].type,
     });
     if (fileResponse == false) return;
+
     await update({ id, portfolioFile: fileResponse });
-    close();
+
+    onComplete();
+
     toNull();
   };
 
@@ -68,7 +71,6 @@ export const FormAddPortfolio: FC<FormAddImageProps> = ({ id }) => {
     <form
       className="form-full"
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

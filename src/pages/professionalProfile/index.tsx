@@ -181,7 +181,7 @@ export const ProfessionalProfilePage: React.FC<
                 Entrar em contato
               </Button>
             )}
-            {!pageProfessional.portfolioFile && isOwn && (
+            {pageProfessional.portfolioFile && isOwn && (
               <a href={pageProfessional.portfolioFile} target="_blank" download>
                 <Button variant="outline">
                   <DownloadSimple weight="bold" size={20} />

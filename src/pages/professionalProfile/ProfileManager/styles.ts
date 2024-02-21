@@ -9,6 +9,7 @@ export const ManagerContainer = styled.div`
     gap: 0.5rem;
     width: 100%;
     grid-template-columns: repeat(2, 1fr);
+
     ${media.lg`
       grid-template-columns: 1fr;
     `}

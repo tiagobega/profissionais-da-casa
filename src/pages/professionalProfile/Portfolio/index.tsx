@@ -43,6 +43,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
 
   const deletePortfolioFile = async () => {
     await update({ id: professional.id, portfolioFile: "" });
+    refetch();
   };
 
   const handleDelete = async (id: string) => {
@@ -147,7 +148,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
                 </ButtonDelete>
               </FlexBox>
             ) : (
-              <FormAddPortfolio id={professional.id} />
+              <FormAddPortfolio id={professional.id} onComplete={refetch} />
             )}
           </PortfolioFileContainer>
         </>
