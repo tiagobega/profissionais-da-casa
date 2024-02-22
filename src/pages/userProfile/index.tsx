@@ -128,7 +128,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
           </ProjectContainer>
 
           <Modal isOpened={modalEdit} onClose={() => setModalEdit(false)} small>
-            <FlexBox direction="column" centralized gap={3}>
+            <FlexBox direction="column" full centralized gap={3}>
               <h2>Editar perfil</h2>
               <FormEditUserProfile
                 user={me}
@@ -141,7 +141,7 @@ export const UserProfile: React.FC<CustomerProfileProps> = () => {
             onClose={() => setModalPassword(false)}
             small
           >
-            <FlexBox direction="column" centralized gap={3}>
+            <FlexBox direction="column" full centralized gap={3}>
               <FormChangePassword closeModal={() => setModalPassword(false)} />
             </FlexBox>
           </Modal>

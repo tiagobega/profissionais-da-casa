@@ -347,7 +347,7 @@ export const ActionsContainer = styled(FlexBox)`
     left: 0;
     background-color: ${theme.color.brand.pinkLight};
     width: 100vw;
-    z-index: 9;
+    z-index: 31;
 
     ${media.lg`
       position: relative;
