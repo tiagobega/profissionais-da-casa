@@ -235,6 +235,15 @@ export const ReviewSection = styled.section`
 export const ReviewContainer = styled(FlexBox)`
   ${({ theme }) => css`
     display: flex;
+    .reviewDisplay {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      flex-grow: 1;
+      ${media.lg`
+        flex-direction:row;
+      `}
+    }
     .review-item {
       width: 270px;
       p {

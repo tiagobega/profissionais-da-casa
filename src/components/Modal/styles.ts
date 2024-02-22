@@ -3,19 +3,15 @@ import { FlexBox } from "components/FlexBox";
 import styled, { css } from "styled-components";
 import { media } from "styles/utils";
 
-export const Container = styled.aside<{ open: boolean }>`
+export const Container = styled.div<{ open: boolean }>`
   ${({ open }) => css`
     position: fixed;
-    display: flex;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 10;
-    align-items: center;
-    justify-content: center;
-
+    z-index: 9999;
     ${open &&
     `
       pointer-events:all;
@@ -68,27 +64,22 @@ export const Content = styled(FlexBox)<{
     transition: all 400ms cubic-bezier(0.66, 0, 0.33, 1);
     background-color: ${bg || theme.color.base[200]};
 
-    .inner_content {
-      overflow-y: auto;
-    }
-
     ${media.lg`
       width: auto;
       max-width: 50vw;
       height: auto;
       max-height: 75vh;
-      position: relative;
-      transform: none;
+      overflow: auto;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       opacity: 0;
       box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.25);
-      top: unset;
-      left: unset;
-      margin-top: 50px;
 
       ${
         open &&
         `
-        margin-top: 0px;
+          top: 50%;
           opacity: 1;
         `
       };

@@ -402,7 +402,7 @@ export const ProfessionalProfilePage: React.FC<
                   gap={1}
                   media={{ lg: { h: "100%", justifyContent: "space-between" } }}
                 >
-                  <FlexBox gap={2} grow={1}>
+                  <div className="reviewDisplay">
                     {publicEvaluations.evaluations
                       .slice(displayReview, displayReview + 2)
                       .map((item) => (
@@ -411,7 +411,7 @@ export const ProfessionalProfilePage: React.FC<
                           <StarMeter rating={evaluationSingleAverage(item)} />
                         </div>
                       ))}
-                  </FlexBox>
+                  </div>
                   <FlexBox full justifyContent="center" gap={1} p={1}>
                     {carrouselButtonArray.map((item, index) => (
                       <CarouselButton
