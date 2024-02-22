@@ -106,9 +106,18 @@ export const ProfessionalProfilePage: React.FC<
 
   if (!pageProfessional) return <Loading />;
 
-  const carrouselButtonArray = new Array(
-    Math.floor(pageProfessional.portfolioProjects.length / 2)
-  ).fill("");
+  pageProfessional.portfolioProjects.length;
+
+  const carrouselButtonArray = (
+    itemQuantity: number,
+    quantityDisplayed: number
+  ) => {
+    const array = new Array(Math.ceil(itemQuantity / quantityDisplayed)).fill(
+      ""
+    );
+
+    return array;
+  };
 
   const publicEvaluations = approvedEvaluations(pageProfessional.evaluations);
 
@@ -287,7 +296,10 @@ export const ProfessionalProfilePage: React.FC<
               </div>
             </div>
             <FlexBox full justifyContent="center" gap={1} p={1}>
-              {pageProfessional.portfolioProjects.map((item, index) => (
+              {carrouselButtonArray(
+                pageProfessional.portfolioProjects.length,
+                1
+              ).map((item, index) => (
                 <CarouselButton
                   isActive={displayProject == index}
                   className="carousel-btn"
@@ -413,14 +425,16 @@ export const ProfessionalProfilePage: React.FC<
                       ))}
                   </div>
                   <FlexBox full justifyContent="center" gap={1} p={1}>
-                    {carrouselButtonArray.map((item, index) => (
-                      <CarouselButton
-                        isActive={displayReview / 2 == index}
-                        className="carousel-btn"
-                        onClick={() => setDisplayReview(index * 2)}
-                        key={item.id}
-                      />
-                    ))}
+                    {carrouselButtonArray(publicEvaluations.quantity, 2).map(
+                      (item, index) => (
+                        <CarouselButton
+                          isActive={displayReview / 2 == index}
+                          className="carousel-btn"
+                          onClick={() => setDisplayReview(index * 2)}
+                          key={item.id}
+                        />
+                      )
+                    )}
                   </FlexBox>
                 </ReviewContainer>
               </FlexBox>
