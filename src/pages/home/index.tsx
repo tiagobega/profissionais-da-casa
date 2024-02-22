@@ -31,9 +31,10 @@ const HomePage = () => {
         <Geometry color={color.base[200]} width={170} triangle angle={270} />
       </div>
       <InformationContainer direction="column" gap={2} alignItems="center">
-        <h2>Diversas soluções para a sua reforma</h2>
+        <h2>Profissionais da Casa</h2>
         <p>
-          Encontre o melhor profissional na plataforma do Profissionais da Casa
+          A plataforma que une clientes a profissionais qualificados.
+          Cadastre-se agora e dê vida aos seus projetos!
         </p>
         <Button
           variant="primary"

@@ -54,7 +54,7 @@ export const ProfessionalList: React.FC<ProfessionalListProps> = ({
       <ListLegend full>
         <FlexBox gap={1}>
           <div className="name">Nome</div>
-          <div className="birth-date">Data de Nascimento</div>
+          <div className="birth-date">Usuário desde</div>
           <div className="email">Email</div>
           <div className="phone">Telefone</div>
           {approved && <div className="rating">Avaliação</div>}

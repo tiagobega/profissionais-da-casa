@@ -6,6 +6,7 @@ import { Line } from "./styles";
 import { Me, Professional } from "services/User/types";
 import { useNavigate } from "react-router-dom";
 import { approvedEvaluations } from "utils/EvaluationAverage";
+import { formatShortDate } from "utils/dateFormat";
 
 export interface ProfessionalListLineProps {
   professional: Professional;
@@ -26,7 +27,9 @@ export const ProfessionalListLine: React.FC<ProfessionalListLineProps> = ({
     <Line full justifyContent="space-between" py={0.5} alignItems="center">
       <FlexBox gap={1}>
         <div className="name">{professional.name}</div>
-        <div className="birth-date">{professional.birthDate}</div>
+        <div className="birth-date">
+          {formatShortDate(professional.createdAt)}
+        </div>
         <div className="email">{user.email}</div>
         <div className="phone">{user.phone}</div>
         {isApproved && (

@@ -57,6 +57,13 @@ export const FormContactProfessional: React.FC<
           ""
         }`) ||
       "";
+
+    const emailSignatureDisplay =
+      (me &&
+        `${me?.name} - ${(watch("byEmail") && `${me?.email}`) || ""} - ${
+          (watch("byWhatsapp") && `${me?.phone}`) || ""
+        }`) ||
+      "";
     const subject = "Profissionais da Casa - Contato de cliente";
 
     const userResponse = await getSingleUser({ id: professional.userId });
@@ -65,10 +72,12 @@ export const FormContactProfessional: React.FC<
       return onClose();
     }
 
+    const messageWithSignature = `${data.description} -  ${emailSignatureDisplay}`;
+
     const leadResponse = await create({
       professionalId: professional.id,
       userId: me.id,
-      description: data.description,
+      description: messageWithSignature,
       name: me.name,
     });
 

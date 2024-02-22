@@ -21,8 +21,8 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
         <h2>Encontre o profissional certo para a sua reforma</h2>
         <div>
           <p>
-            Pesquise por arquitetos e engenheiros de acordo com seu portifólio e
-            especialização.
+            Pesquise por profissionais de reforma através dos seus perfis e
+            portfólios.
           </p>
           <p>Depois, deixe a sua avaliação.</p>
         </div>
@@ -42,8 +42,8 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
           <FlexBox gap={1.5} alignItems="center">
             <FlexBox direction="column" gap={0.5}>
               <p>
-                Estamos sempre procurando novos profissionais de arquitetura e
-                engenharia.
+                Estamos sempre procurando novos profissionais de arquitetura,
+                engenharia e técnicos.
               </p>
               <p>
                 Faça o cadastro como Profissional da Casa para expor seu

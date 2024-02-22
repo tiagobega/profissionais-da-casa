@@ -6,6 +6,7 @@ import { Lead } from "services/User/types";
 import { LeadListLine } from "../ListLine";
 import { List, ListContent, ListHeader } from "./styles";
 import { useParams } from "react-router-dom";
+import { filteredLeadsList } from "utils/leadSort";
 
 export interface ProfessionalListProps {
   leads: Lead[];
@@ -16,13 +17,6 @@ export const LeadList: React.FC<ProfessionalListProps> = ({ leads }) => {
   const [query, setQuery] = useState<string>("");
   const { lead } = useApi();
   const { getAll } = lead;
-
-  const filteredList = () => {
-    if (query.length < 3) return leads;
-    return leads.filter((el) =>
-      el.name.toLowerCase().includes(query.toLowerCase())
-    );
-  };
 
   return (
     <List>
@@ -43,7 +37,9 @@ export const LeadList: React.FC<ProfessionalListProps> = ({ leads }) => {
 
       <ListContent>
         {leads ? (
-          filteredList().map((el) => <LeadListLine lead={el} />)
+          filteredLeadsList(leads, query).map((el) => (
+            <LeadListLine lead={el} />
+          ))
         ) : (
           <Loading />
         )}

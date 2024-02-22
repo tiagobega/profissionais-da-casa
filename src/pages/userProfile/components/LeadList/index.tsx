@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Lead } from "services/User/types";
 import { LeadListLine } from "../ListLine";
 import { List, ListContent, ListHeader } from "./styles";
+import { filteredLeadsList } from "utils/leadSort";
 
 export interface ProfessionalListProps {
   leads: Lead[];
@@ -16,13 +17,6 @@ export const LeadList: React.FC<ProfessionalListProps> = ({
   professional,
 }) => {
   const [query, setQuery] = useState<string>("");
-
-  const filteredList = () => {
-    if (query.length < 3) return leads;
-    return leads.filter((el) =>
-      el.name.toLowerCase().includes(query.toLowerCase())
-    );
-  };
 
   return (
     <List>
@@ -47,7 +41,7 @@ export const LeadList: React.FC<ProfessionalListProps> = ({
 
       {leads.length > 0 && (
         <ListContent>
-          {filteredList().map((el) => (
+          {filteredLeadsList(leads, query).map((el) => (
             <LeadListLine lead={el} professional={professional} key={el.id} />
           ))}
         </ListContent>

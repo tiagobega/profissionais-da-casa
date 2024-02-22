@@ -6,6 +6,8 @@ import { Loading } from "components/Loading";
 import { useState } from "react";
 import { Lead } from "services/User/types";
 import { useTheme } from "styled-components";
+import { formatShortDate } from "utils/dateFormat";
+import { filteredLeadsList } from "utils/leadSort";
 
 export interface LeadsHomeProps {
   leads: Lead[];
@@ -15,14 +17,6 @@ export const LeadsHome: React.FC<LeadsHomeProps> = ({ leads }) => {
   const [query, setQuery] = useState<string>("");
 
   const theme = useTheme();
-
-  const filteredList = () => {
-    if (query.length > 3) return leads;
-    const filteredList = leads.filter((el) =>
-      el.name.toLowerCase().includes(query.toLowerCase())
-    );
-    return filteredList;
-  };
 
   return (
     <>
@@ -59,8 +53,11 @@ export const LeadsHome: React.FC<LeadsHomeProps> = ({ leads }) => {
             <FlexBox gap={1} full direction="column">
               <>
                 <p>Você tem {leads?.length} contatos.</p>
-                {filteredList().map((item) => (
-                  <Collapsible title={item.name} variant="neutral">
+                {filteredLeadsList(leads, query).map((item) => (
+                  <Collapsible
+                    title={`${item.name} - ${formatShortDate(item.createdAt)}`}
+                    variant="neutral"
+                  >
                     <FlexBox direction="column">
                       <p>{item.description}</p>
                     </FlexBox>
