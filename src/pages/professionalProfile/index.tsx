@@ -25,7 +25,7 @@ import { CarouselButton, MarginContainer } from "styles/commonComponents";
 
 import { useApi } from "contexts/User";
 import React, { useEffect, useState } from "react";
-
+import ReactGA from "react-ga4";
 import {
   approvedEvaluations,
   evaluationSingleAverage,
@@ -492,6 +492,18 @@ export const ProfessionalProfilePage: React.FC<
         <FlexBox direction="column" centralized gap={3}>
           <FormContactProfessional
             professional={pageProfessional}
+            onSend={() => {
+              ReactGA.event(
+                {
+                  action: "click",
+                  category: "contact",
+                  label: `contact_${pageProfessional.name}`,
+                },
+                {
+                  professional: pageProfessional.name,
+                }
+              );
+            }}
             onClose={() => {
               setModalContact(false);
             }}

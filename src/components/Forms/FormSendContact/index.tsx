@@ -17,11 +17,12 @@ export type FormContactProfessional = Zod.infer<
 interface FormContactProfessionalProps {
   professional: Professional;
   onClose: () => void;
+  onSend?: () => void;
 }
 
 export const FormContactProfessional: React.FC<
   FormContactProfessionalProps
-> = ({ professional, onClose }) => {
+> = ({ professional, onClose, onSend }) => {
   const {
     handleSubmit,
     register,
@@ -96,7 +97,7 @@ export const FormContactProfessional: React.FC<
       },
       true
     );
-
+    onSend?.();
     onClose();
   };
 
