@@ -22,14 +22,7 @@ const TermsPage = () => {
         </Button>
       </header>
       <InformationContainer>
-        <div>
-          <Terms />
-
-          <Button variant="text" color="black" onClick={() => navigate(-1)}>
-            <CaretLeft weight="fill" />
-            Página Inicial
-          </Button>
-        </div>
+        <Terms />
       </InformationContainer>
     </TermsContainer>
   );

@@ -83,10 +83,7 @@ const Router = () => (
           element={<PublicRoute element={<RegisterUserConfirm />} />}
         />
 
-        <Route
-          path={"/catalog"}
-          element={<PrivateRoute element={<ProfessionalsListPage />} />}
-        />
+        <Route path={"/catalog"} element={<ProfessionalsListPage />} />
         <Route
           path={"/professional/:id"}
           element={

@@ -80,7 +80,7 @@ export const Benefits: React.FC<BenefitsProps> = ({ showForm, showTerms }) => {
               <p>Divulgação vinculada ao tráfego da plataforma</p>
             </div>
           </Benefit>
-          <Benefit gap={2}>
+          {/* <Benefit gap={2}>
             <div className="icon-container">
               <Check
                 size={24}
@@ -106,7 +106,7 @@ export const Benefits: React.FC<BenefitsProps> = ({ showForm, showTerms }) => {
                 tempo real
               </p>
             </div>
-          </Benefit>
+          </Benefit> */}
         </Card>
       </FlexBox>
 

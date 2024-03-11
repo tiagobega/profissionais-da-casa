@@ -92,4 +92,9 @@ export const Content = styled(FlexBox)<{
       opacity: 1;
     `};
   `}
+
+  .inner_content {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 `;

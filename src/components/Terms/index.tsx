@@ -8,8 +8,6 @@ export const Terms: React.FC<TermsProps> = () => {
       <div className="text">
         <h3 id="termos-gerais-pol-ticas-e-condi-es-de-uso-da-plataforma-digital-e">
           TERMOS GERAIS, POLÍTICAS E CONDIÇÕES DE USO DA PLATAFORMA DIGITAL E
-        </h3>
-        <h3 id="servi-os-profissionais-da-casa">
           SERVIÇOS PROFISSIONAIS DA CASA
         </h3>
         <p>

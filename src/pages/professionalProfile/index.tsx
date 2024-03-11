@@ -132,7 +132,7 @@ export const ProfessionalProfilePage: React.FC<
       <HeaderContainer full isOwn={isOwn} direction="column" gap={1}>
         <InformationContainer full gap={1} alignItems="center">
           <ProfilePicture centralized shrink={0}>
-            {!isOwn && (
+            {isOwn && (
               <Button
                 variant="text"
                 color="white"
