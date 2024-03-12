@@ -13,7 +13,9 @@ export const PortfolioCard = styled(FlexBox)`
     height: 6rem;
     padding-block: 1rem;
     img {
+      object-fit: cover;
       height: 4rem;
+      width: 6rem;
     }
   `}
 `;

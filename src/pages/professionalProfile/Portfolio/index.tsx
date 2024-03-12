@@ -109,9 +109,25 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
                 >
                   <FlexBox gap={1} alignItems="center">
                     <img src={item.images.split(",")[0]} loading="lazy" />
-                    <h4>{item.name}</h4>
+                    <FlexBox gap={0.5} direction="column">
+                      <h4>{item.name}</h4>
+                      <FlexBox gap={1}>
+                        <Button
+                          type="button"
+                          small
+                          onClick={() => setSelectedProject(item)}
+                        >
+                          Editar
+                        </Button>
+                        <ButtonDelete
+                          small
+                          deleteFn={() => handleDelete(item.id)}
+                          name={item.name}
+                        />
+                      </FlexBox>
+                    </FlexBox>
                   </FlexBox>
-                  <FlexBox gap={1}>
+                  {/* <FlexBox gap={1}>
                     <Button
                       type="button"
                       small
@@ -124,7 +140,7 @@ export const PortfolioHome: React.FC<PortfolioHomeProps> = ({
                       deleteFn={() => handleDelete(item.id)}
                       name={item.name}
                     />
-                  </FlexBox>
+                  </FlexBox> */}
                 </PortfolioCard>
               ))}
             </FlexBox>
