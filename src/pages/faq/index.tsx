@@ -1,4 +1,4 @@
-import { CaretLeft, Pen, Plus, Trash } from "@phosphor-icons/react";
+import { CaretLeft, Download, Pen, Plus, Trash } from "@phosphor-icons/react";
 import { Button } from "components/Button";
 import { Collapsible } from "components/Collapsable";
 import { FlexBox } from "components/FlexBox";
@@ -244,6 +244,12 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
               </Button>
             </FlexBox>
           )}
+        </FlexBox>
+        <FlexBox>
+          <Download />
+          <a href="">
+            <Button>Download manual de usuário</Button>
+          </a>
         </FlexBox>
       </InformationContainer>
       <GeometrySideContainer>
