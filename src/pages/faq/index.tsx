@@ -21,6 +21,8 @@ import {
 } from "./styles";
 import { ButtonDelete } from "components/ButtonDelete";
 import { useNavigate } from "react-router-dom";
+import manualUser from "../../assets/manuals/Manual Usuarios.pdf";
+import manualProfessional from "../../assets/manuals/Manual Profissionais.pdf";
 
 type FormList =
   | "addBlock"
@@ -247,8 +249,14 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
         </FlexBox>
         <FlexBox>
           <Download />
-          <a href="">
-            <Button>Download manual de usuário</Button>
+          <a href={manualUser} target="_blank">
+            <Button variant="text">Download manual de usuário</Button>
+          </a>
+        </FlexBox>
+        <FlexBox>
+          <Download />
+          <a href={manualProfessional} target="_blank">
+            <Button variant="text">Download manual de profissionis</Button>
           </a>
         </FlexBox>
       </InformationContainer>

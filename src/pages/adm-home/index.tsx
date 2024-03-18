@@ -1,9 +1,17 @@
-import { Question, Star, UserList, User } from "@phosphor-icons/react";
+import {
+  Question,
+  Star,
+  UserList,
+  User,
+  Download,
+} from "@phosphor-icons/react";
 import { FlexBox } from "components/FlexBox";
 import { useNavigate } from "react-router-dom";
 import { MarginContainer } from "styles/commonComponents";
 import { Card, CardList } from "./styles";
 import { Page } from "components/Page";
+import { Button } from "components/Button";
+import manualAdmin from "../../assets/manuals/Manual Admin.pdf";
 
 export interface AdmHomeProps {}
 
@@ -50,6 +58,12 @@ export const AdmHome: React.FC<AdmHomeProps> = () => {
             <p>Visualizar e gerenciar usuários da plataforma.</p>
           </Card>
         </CardList>
+        <FlexBox>
+          <Download />
+          <a href={manualAdmin} target="_blank">
+            <Button variant="text">Download manual de administrador</Button>
+          </a>
+        </FlexBox>
       </FlexBox>
     </Page>
   );
