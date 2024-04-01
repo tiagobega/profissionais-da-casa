@@ -18,11 +18,11 @@ export const headerLinks = {
     link: "https://cadacasa.com.br/",
     external: true,
   },
-  [HEADER_LINK.CASA_FAST]: {
-    name: "Casa Fast",
-    link: "https://cadacasa.com.br/casa-fast-inicial/",
-    external: true,
-  },
+  // [HEADER_LINK.CASA_FAST]: {
+  //   name: "Casa Fast",
+  //   link: "https://cadacasa.com.br/casa-fast-inicial/",
+  //   external: true,
+  // },
   [HEADER_LINK.CATALOG]: {
     name: "Catalogo",
     link: "/catalog",
