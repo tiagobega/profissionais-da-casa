@@ -6,6 +6,9 @@ import { filterProfessionalFunction } from "utils/filterList";
 import { ScreenList } from "pages/adm-professional-list";
 import { List, ListContent, ListHeader, ListLegend } from "./styles";
 import { Me, Professional } from "services/User/types";
+import { Button } from "components/Button";
+import { SortAscending } from "@phosphor-icons/react";
+import { sortFilterProfessional } from "utils/sortProfessional";
 
 export interface ProfessionalListProps {
   screen: ScreenList;
@@ -19,6 +22,7 @@ export const ProfessionalList: React.FC<ProfessionalListProps> = ({
   users,
 }) => {
   const [query, setQuery] = useState<string>("");
+  const [sort, setSort] = useState<"name" | "date">("name");
   const approved = screen == "professionals" ? true : false;
 
   const finalList = professionals.map((professional) => {
@@ -34,8 +38,8 @@ export const ProfessionalList: React.FC<ProfessionalListProps> = ({
   const waitingList = finalList.filter((item) => !item?.professional.active);
 
   const displayList = approved
-    ? filterProfessionalFunction(approvedList, query)
-    : filterProfessionalFunction(waitingList, query);
+    ? sortFilterProfessional(approvedList, sort, query)
+    : sortFilterProfessional(waitingList, sort, query);
 
   return (
     <List>
@@ -43,6 +47,16 @@ export const ProfessionalList: React.FC<ProfessionalListProps> = ({
         <h3>
           {approved ? "Cadastrados" : "Em análise"} ({displayList.length})
         </h3>
+        <FlexBox gap={0.5} alignItems="center">
+          <SortAscending size={20} />
+          Organizar por:
+          <Button variant="outline" onClick={() => setSort("name")} small>
+            Nome
+          </Button>
+          <Button variant="outline" onClick={() => setSort("date")} small>
+            Data
+          </Button>
+        </FlexBox>
         <Input.Text
           value={query}
           onChange={(e) => setQuery(e.target.value)}
