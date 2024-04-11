@@ -113,7 +113,7 @@ export const FormContactProfessional: React.FC<
       <FlexBox direction="column" gap={1.5} full>
         <h2>Entre em contato com {professional.name}</h2>
         <Input.Area
-          rows={20}
+          rows={10}
           label="Descrição do projeto"
           error={errors.description}
           placeholder="Descreva brevemente o seu projeto"
