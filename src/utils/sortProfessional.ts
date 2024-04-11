@@ -8,24 +8,28 @@ export const sortFilterProfessional = (
   type: "name" | "date",
   query: string
 ) => {
-  console.log(list[0]);
+  if (type == "date") {
+    list.sort(function (a, b) {
+      let keyA = new Date(a.professional.createdAt.toLocaleLowerCase());
+      let keyB = new Date(b.professional.createdAt.toLocaleLowerCase());
+      // Compare the 2 dates
+      if (keyA < keyB) return 1;
+      if (keyA > keyB) return -1;
+      return 0;
+    });
+  }
+  if (type == "name") {
+    list.sort(function (a, b) {
+      let keyA = a.professional.name.toLocaleLowerCase();
+      let keyB = b.professional.name.toLocaleLowerCase();
+      // Compare the 2 dates
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    });
+  }
 
-  const key: keyof Professional = type === "name" ? "name" : "createdAt";
-
-  const sortedLeads = list.sort(function (a, b) {
-    let keyA = new Date(a.professional[key].toLocaleLowerCase());
-    let keyB = new Date(b.professional[key].toLocaleLowerCase());
-    // Compare the 2 dates
-    if (keyA < keyB) return 1;
-    if (keyA > keyB) return -1;
-    return 0;
-  });
-
-  console.log(sortedLeads);
-
-  if (query.length > 3) return sortedLeads;
-
-  const filteredList = sortedLeads.filter((el) =>
+  const filteredList = list.filter((el) =>
     el.professional.name.toLowerCase().includes(query.toLowerCase())
   );
   return filteredList;
