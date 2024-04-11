@@ -7,7 +7,7 @@ export const HeaderWrapper = styled(FullContainer)`
   ${({ theme }) => css`
     overflow-y: hidden;
     ${media.md`
-    height: 334px;
+    height: 400px;
     `}
   `}
 `;
@@ -26,7 +26,7 @@ export const HeaderContainer = styled.header`
     ${media.md`
       flex-direction: row;
       justify-content: flex-start;
-      height: 334px;
+      height: 100%;
       padding: 2rem 5rem;
       gap:6rem;
     `}
