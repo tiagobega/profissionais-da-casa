@@ -39,7 +39,6 @@ export const FormAddBlock: React.FC<FormAddBlockProps> = ({ close, fetch }) => {
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
       style={{ width: "100%" }}

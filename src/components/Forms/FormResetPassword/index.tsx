@@ -51,7 +51,6 @@ export const FormResetPassword: FC<FormResetPasswordProps> = ({
     <>
       <Form
         onSubmit={handleSubmit((e) => {
-          console.log(e);
           return onSubmit(e);
         })}
       >

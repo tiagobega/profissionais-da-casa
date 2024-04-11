@@ -85,25 +85,15 @@ const Router = () => (
 
         <Route
           path={'/catalog'}
-          element={
-            <PrivateRoute
-              checkActive={false}
-              element={<ProfessionalsListPage />}
-            />
-          }
+          element={<PublicRoute element={<ProfessionalsListPage />} />}
         />
         <Route
           path={'/professional/:id'}
-          element={
-            <PrivateRoute
-              checkActive={false}
-              element={<ProfessionalProfilePage />}
-            />
-          }
+          element={<PublicRoute element={<ProfessionalProfilePage />} />}
         />
         <Route
           path={'/project/:id'}
-          element={<PrivateRoute element={<PortfolioProjectPage />} />}
+          element={<PublicRoute element={<PortfolioProjectPage />} />}
         />
         {/* //CUSTOMER/PROFESSIONAL ROUTES */}
         <Route
@@ -112,7 +102,7 @@ const Router = () => (
         />
         <Route
           path={'/project-details/:id'}
-          element={<PrivateRoute element={<ProjectPage status="ongoing" />} />}
+          element={<ProjectPage status="ongoing" />}
         />
         <Route
           path={'/review/:id'}
@@ -120,7 +110,7 @@ const Router = () => (
         />
         <Route
           path={'/profile'}
-          element={<PrivateRoute element={<UserProfile />} />}
+          element={<PrivateRoute checkActive={false} element={<UserProfile />} />}
         />
 
         <Route

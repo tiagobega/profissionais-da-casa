@@ -42,7 +42,6 @@ export const FormAddImage: FC<FormAddImageProps> = ({ close }) => {
 
   const onSubmit = async (data: FormEditProfileData) => {
     if (!img || !data.picture[0]) return;
-    console.log(data);
     const fileResponse = await sendFile({
       filename: "profile picture",
       content: img,
@@ -57,7 +56,6 @@ export const FormAddImage: FC<FormAddImageProps> = ({ close }) => {
   const imgFile = watch("picture");
 
   useEffect(() => {
-    console.log(imgFile);
 
     if (!imgFile?.length) return;
     (async () => {
@@ -69,7 +67,6 @@ export const FormAddImage: FC<FormAddImageProps> = ({ close }) => {
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

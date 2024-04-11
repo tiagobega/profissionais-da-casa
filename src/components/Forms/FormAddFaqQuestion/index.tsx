@@ -58,7 +58,6 @@ export const FormAddFaqQuestion: React.FC<FormAddFaqQuestionProps> = ({
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
       style={{ width: "100%" }}

@@ -50,7 +50,6 @@ export const FormSendReview: FC<FormSendReviewProps> = ({
   const { color } = useTheme();
 
   const onSubmit = async (data: FormData) => {
-    console.log(data, user);
     await create({
       ...data,
       professionalId: professional.id,

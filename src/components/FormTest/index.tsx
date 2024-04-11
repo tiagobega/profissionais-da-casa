@@ -62,19 +62,13 @@ export const FormTest = () => {
 
   const profession = watch("food");
   const onSubmit = (data: FormTestData) => {
-    console.log(data);
 
     window.alert(JSON.stringify(data));
   };
 
-  useEffect(() => {
-    console.log(profession);
-  }, [profession]);
-
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

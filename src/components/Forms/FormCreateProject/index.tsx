@@ -28,7 +28,6 @@ export const FormCreateProject = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
 
     window.alert(JSON.stringify(data));
 
@@ -38,7 +37,6 @@ export const FormCreateProject = () => {
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

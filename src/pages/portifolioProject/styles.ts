@@ -1,7 +1,7 @@
-import styled, { css } from "styled-components";
-import { FlexBox } from "components/FlexBox";
-import { FullContainer, MarginContainer } from "styles/commonComponents";
-import { crossm, media, px, vw } from "styles/utils";
+import styled, { css } from 'styled-components';
+import { FlexBox } from 'components/FlexBox';
+import { FullContainer, MarginContainer } from 'styles/commonComponents';
+import { crossm, media, px, vw } from 'styles/utils';
 
 export const GalleryContainer = styled(FullContainer)`
   ${({ theme }) => css`
@@ -29,9 +29,7 @@ export const InformationContainer = styled(MarginContainer)`
   ${({ theme }) => css`
     display: flex;
     gap: 2rem;
-    padding: 2rem 0 5rem;
     flex-direction: column-reverse;
-    padding: 1rem 2rem;
     ${media.lg`
       height: 610px;
       flex-direction: row;

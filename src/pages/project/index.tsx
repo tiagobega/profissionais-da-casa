@@ -1,19 +1,19 @@
-import { CaretLeft, Pencil, Plus } from "@phosphor-icons/react";
-import { Button } from "components/Button";
-import { Collapsible } from "components/Collapsable";
-import { FlexBox } from "components/FlexBox";
-import React, { useEffect, useState } from "react";
-import { useTheme } from "styled-components";
-import { MarginContainer } from "styles/commonComponents";
-import { AddButton, StageCollapsableContent } from "./styles";
-import { Modal } from "components/Modal";
-import { FormAddDelivery } from "components/Forms/FormAddDelivery";
-import { FormAddStage } from "components/Forms/FormAddStage";
-import Input from "components/Input";
-import { useNavigate } from "react-router-dom";
+import { CaretLeft, Pencil, Plus } from '@phosphor-icons/react';
+import { Button } from 'components/Button';
+import { Collapsible } from 'components/Collapsable';
+import { FlexBox } from 'components/FlexBox';
+import React, { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { MarginContainer } from 'styles/commonComponents';
+import { AddButton, StageCollapsableContent } from './styles';
+import { Modal } from 'components/Modal';
+import { FormAddDelivery } from 'components/Forms/FormAddDelivery';
+import { FormAddStage } from 'components/Forms/FormAddStage';
+import Input from 'components/Input';
+import { useNavigate } from 'react-router-dom';
 
 export interface ProjectPageProps {
-  status: "not-started" | "ongoing" | "complete";
+  status: 'not-started' | 'ongoing' | 'complete';
 }
 
 export type DeliveryType = {
@@ -33,29 +33,29 @@ export type ProjectManagementType = {
 };
 
 const initialProject: ProjectManagementType = {
-  projectId: "163-4774-233",
+  projectId: '163-4774-233',
   stages: [
     {
-      id: "1234",
-      name: "Vistoria técnica inicial",
-      deliveries: [{ id: "1234555", date: new Date(), delivered: false }],
+      id: '1234',
+      name: 'Vistoria técnica inicial',
+      deliveries: [{ id: '1234555', date: new Date(), delivered: false }],
     },
-    { id: "1235", name: "Projeto básico", deliveries: [] },
-    { id: "1236", name: "Anteprojeto", deliveries: [] },
-    { id: "1237", name: "Projeto pré-executivo", deliveries: [] },
+    { id: '1235', name: 'Projeto básico', deliveries: [] },
+    { id: '1236', name: 'Anteprojeto', deliveries: [] },
+    { id: '1237', name: 'Projeto pré-executivo', deliveries: [] },
     {
-      id: "1238",
-      name: "Orçamento básico para contratação de serviços",
+      id: '1238',
+      name: 'Orçamento básico para contratação de serviços',
       deliveries: [],
     },
-    { id: "1239", name: "Lista de materiais e componentes", deliveries: [] },
-    { id: "1230", name: "Visitas técnicas", deliveries: [] },
-    { id: "1232", name: "Vistoria Final", deliveries: [] },
+    { id: '1239', name: 'Lista de materiais e componentes', deliveries: [] },
+    { id: '1230', name: 'Visitas técnicas', deliveries: [] },
+    { id: '1232', name: 'Vistoria Final', deliveries: [] },
   ],
 };
 
 export const ProjectPage: React.FC<ProjectPageProps> = ({
-  status = "ongoing",
+  status = 'ongoing',
 }) => {
   const [project, setProject] = useState<ProjectManagementType>(initialProject);
   const [modalEntrega, setModalEntrega] = useState(false);
@@ -70,7 +70,6 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
       date: new Date(),
       delivered: true,
     });
-    console.log(updatedProject);
     setProject(updatedProject);
   };
 
@@ -78,10 +77,9 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
     const updatedProject: ProjectManagementType = project;
     updatedProject.stages.push({
       id: Math.random().toString(),
-      name: "Nova etapa do projeto",
+      name: 'Nova etapa do projeto',
       deliveries: [],
     });
-    console.log(updatedProject);
     setProject(updatedProject);
   };
 
@@ -95,18 +93,18 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
 
   const title = () => {
     switch (status) {
-      case "not-started":
-        return "Novo Projeto";
+      case 'not-started':
+        return 'Novo Projeto';
         break;
-      case "complete":
-        return "Visão geral";
+      case 'complete':
+        return 'Visão geral';
         break;
-      case "ongoing":
-        return "Acompanhar Projeto";
+      case 'ongoing':
+        return 'Acompanhar Projeto';
         break;
 
       default:
-        return "Visão geral";
+        return 'Visão geral';
         break;
     }
   };
@@ -121,7 +119,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
               Voltar
             </Button>
             <h2>{title()}</h2>
-            <Button variant="outline" onClick={() => navigate("/my-projects")}>
+            <Button variant="outline" onClick={() => navigate('/my-projects')}>
               Criar Projeto
             </Button>
           </FlexBox>
@@ -154,7 +152,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
                   {stage.deliveries.map((delivery, index) => (
                     <li key={Math.random()}>
                       <FlexBox alignItems="flex-end" gap={1}>
-                        {status == "ongoing" ? (
+                        {status == 'ongoing' ? (
                           <Input.Checkbox
                             label={`Entrega #${
                               index + 1
@@ -171,7 +169,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
                     </li>
                   ))}
                 </ul>
-                {status != "complete" && (
+                {status != 'complete' && (
                   <Button
                     variant="text"
                     onClick={() => {
@@ -184,18 +182,18 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
               </StageCollapsableContent>
             </Collapsible>
           ))}
-          {status == "not-started" && (
+          {status == 'not-started' && (
             <AddButton onClick={() => setModalStage(true)}>
               <Plus size={24} />
               Adicionar etapa
             </AddButton>
           )}
-          {status == "not-started" && (
+          {status == 'not-started' && (
             <FlexBox centralized full gap={4} mt={2}>
               <Button variant="primary">Iniciar Projeto</Button>
             </FlexBox>
           )}
-          {status == "ongoing" && (
+          {status == 'ongoing' && (
             <FlexBox centralized full gap={2} mt={2}>
               <Button variant="primary">Salvar Entregas</Button>
 
@@ -206,7 +204,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
           )}
         </FlexBox>
       </MarginContainer>
-      {(status == "not-started" || status == "ongoing") && (
+      {(status == 'not-started' || status == 'ongoing') && (
         <Modal isOpened={modalEntrega} onClose={handleCloseModal} small>
           <h2>Adicionar Entrega*</h2>
           <FlexBox
@@ -222,14 +220,14 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
           <FormAddDelivery />
         </Modal>
       )}
-      {status == "not-started" && (
+      {status == 'not-started' && (
         <Modal isOpened={modalStage} onClose={() => setModalStage(false)} small>
           <h2>Adicionar Etapa</h2>
 
           <FormAddStage />
         </Modal>
       )}
-      {status == "ongoing" && (
+      {status == 'ongoing' && (
         <Modal isOpened={modalStage} onClose={() => setModalStage(false)} small>
           <h2>Finalizar projeto</h2>
           <FlexBox>
@@ -240,13 +238,13 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({
               <p>Data: {Date.now()}</p>
             </FlexBox>
             <FlexBox centralized my={2}>
-              <p style={{ textAlign: "center" }}>
+              <p style={{ textAlign: 'center' }}>
                 Tem certeza que deseja finalizar o projeto?
               </p>
-              <p style={{ textAlign: "center" }}>
+              <p style={{ textAlign: 'center' }}>
                 Não será mais possível adicionar etapas ou entregas.
               </p>
-              <p style={{ textAlign: "center" }}>
+              <p style={{ textAlign: 'center' }}>
                 Os projetos finalizados não são editáveis
               </p>
             </FlexBox>

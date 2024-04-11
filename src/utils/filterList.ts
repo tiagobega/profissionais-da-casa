@@ -1,5 +1,5 @@
-import { RatingType } from "pages/adm-rating-list";
-import { Me, Professional } from "services/User/types";
+import { RatingType } from 'pages/adm-rating-list';
+import { Me, Professional } from 'services/User/types';
 
 export function filterProfessionalFunction(
   list: {
@@ -8,7 +8,7 @@ export function filterProfessionalFunction(
   }[],
   query: string
 ) {
-  const queryRegex = new RegExp(query, "i");
+  const queryRegex = new RegExp(query, 'i');
 
   if (query?.length < 3 || query == null) return list;
 
@@ -27,7 +27,7 @@ export function filterProfessionalFunction(
 }
 
 export function filterRating(list: RatingType[], query: string): RatingType[] {
-  const queryRegex = new RegExp(query, "i");
+  const queryRegex = new RegExp(query, 'i');
 
   if (query?.length < 3 || query == null) return list;
 
@@ -39,8 +39,6 @@ export function filterRating(list: RatingType[], query: string): RatingType[] {
       const stringifiedEntry = JSON.stringify(value);
       stringifiedEntry.toString().match(queryRegex) && occurences++;
     });
-
-    console.log(occurences);
 
     return occurences > 0;
   });

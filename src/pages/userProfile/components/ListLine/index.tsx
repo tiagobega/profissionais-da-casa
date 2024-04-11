@@ -1,12 +1,12 @@
-import { Button } from "components/Button";
-import { FlexBox } from "components/FlexBox";
-import { Modal } from "components/Modal";
-import { useEffect, useState } from "react";
-import { Lead, Me, Professional } from "services/User/types";
-import { ContactDetails, Line } from "./styles";
-import { useApi } from "contexts/User";
-import { formatLongDate } from "utils/dateFormat";
-import { useNavigate } from "react-router-dom";
+import { Button } from 'components/Button';
+import { FlexBox } from 'components/FlexBox';
+import { Modal } from 'components/Modal';
+import { useEffect, useState } from 'react';
+import { Lead, Me, Professional } from 'services/User/types';
+import { ContactDetails, Line } from './styles';
+import { useApi } from 'contexts/User';
+import { formatLongDate } from 'utils/dateFormat';
+import { useNavigate } from 'react-router-dom';
 
 export interface ProfessionalListLineProps {
   lead: Lead;
@@ -29,8 +29,6 @@ export const LeadListLine: React.FC<ProfessionalListLineProps> = ({
     const response = await getSingle({ id: lead.professionalId });
     response && setLeadUser(response);
   };
-
-  console.log(lead);
 
   useEffect(() => {
     getUserInfo();

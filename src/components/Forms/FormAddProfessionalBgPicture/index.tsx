@@ -76,7 +76,6 @@ export const FormAddProfessionalBgPicture: FC<
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

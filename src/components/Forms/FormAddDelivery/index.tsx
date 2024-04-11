@@ -23,15 +23,12 @@ export const FormAddDelivery = () => {
   const { color } = useTheme();
 
   const onSubmit = (data: FormEditProfileData) => {
-    console.log(data);
-
     window.alert(JSON.stringify(data));
   };
 
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
     >

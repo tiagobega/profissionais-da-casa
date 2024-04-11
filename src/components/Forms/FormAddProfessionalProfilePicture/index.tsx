@@ -46,7 +46,6 @@ export const FormAddProfessionalProfilePicture: FC<
   };
 
   const onSubmit = async (data: FormData) => {
-    console.log("asdfasdfasd", data);
 
     if (!img || !data.picture[0]) return;
     const fileResponse = await sendFile({

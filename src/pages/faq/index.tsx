@@ -1,36 +1,36 @@
-import { CaretLeft, Download, Pen, Plus, Trash } from "@phosphor-icons/react";
-import { Button } from "components/Button";
-import { Collapsible } from "components/Collapsable";
-import { FlexBox } from "components/FlexBox";
-import { FormAddBlock } from "components/Forms/FormAddFaqBlock";
-import { FormAddFaqQuestion } from "components/Forms/FormAddFaqQuestion";
-import { FormEditFaqBlock } from "components/Forms/FormEditFaqBlock";
-import { FormEditFaqQuestion } from "components/Forms/FormEditFaqQuestion";
-import { Geometry } from "components/Geometry";
-import { Loading } from "components/Loading";
-import { Modal } from "components/Modal";
-import { useApi } from "contexts/User";
-import { useEffect, useState } from "react";
-import { FaqBlock, FaqQuestion } from "services/User/types";
-import { useTheme } from "styled-components";
+import { CaretLeft, Download, Pen, Plus, Trash } from '@phosphor-icons/react';
+import { Button } from 'components/Button';
+import { Collapsible } from 'components/Collapsable';
+import { FlexBox } from 'components/FlexBox';
+import { FormAddBlock } from 'components/Forms/FormAddFaqBlock';
+import { FormAddFaqQuestion } from 'components/Forms/FormAddFaqQuestion';
+import { FormEditFaqBlock } from 'components/Forms/FormEditFaqBlock';
+import { FormEditFaqQuestion } from 'components/Forms/FormEditFaqQuestion';
+import { Geometry } from 'components/Geometry';
+import { Loading } from 'components/Loading';
+import { Modal } from 'components/Modal';
+import { useApi } from 'contexts/User';
+import { useEffect, useState } from 'react';
+import { FaqBlock, FaqQuestion } from 'services/User/types';
+import { useTheme } from 'styled-components';
 import {
   CollapsibleInformation,
   FAQContainer,
   GeometrySideContainer,
   InformationContainer,
-} from "./styles";
-import { ButtonDelete } from "components/ButtonDelete";
-import { useNavigate } from "react-router-dom";
-import manualUser from "../../assets/manuals/Manual Usuarios.pdf";
-import manualProfessional from "../../assets/manuals/Manual Profissionais.pdf";
+} from './styles';
+import { ButtonDelete } from 'components/ButtonDelete';
+import { useNavigate } from 'react-router-dom';
+import manualUser from '../../assets/manuals/Manual Usuarios.pdf';
+import manualProfessional from '../../assets/manuals/Manual Profissionais.pdf';
 
 type FormList =
-  | "addBlock"
-  | "addQuestion"
-  | "editQuestion"
-  | "editBlock"
-  | "deleteQuestion"
-  | "deleteBlock"
+  | 'addBlock'
+  | 'addQuestion'
+  | 'editQuestion'
+  | 'editBlock'
+  | 'deleteQuestion'
+  | 'deleteBlock'
   | null;
 
 export interface FAQPageProps {}
@@ -57,20 +57,19 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
 
   const getData = async () => {
     const blockList = await getAllBlock();
-    console.log(blockList);
     blockList && setBlocks(blockList.faqBlocks);
   };
   useEffect(() => {
-    me && setIsAdm(me.profileTypeRel.name == "admin" ? true : false);
+    me && setIsAdm(me.profileTypeRel.name == 'admin' ? true : false);
   }, [me]);
   useEffect(() => {
     setIsOpen(form != null ? true : false);
   }, [form]);
   useEffect(() => {
-    currentQuestion && setForm("editQuestion");
+    currentQuestion && setForm('editQuestion');
   }, [currentQuestion]);
   useEffect(() => {
-    currentBlock && setForm("editBlock");
+    currentBlock && setForm('editBlock');
   }, [currentBlock]);
 
   const handleClose = () => {
@@ -91,10 +90,10 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
 
   const displayForm = () => {
     switch (form) {
-      case "addBlock":
+      case 'addBlock':
         return <FormAddBlock close={handleClose} fetch={getData} />;
         break;
-      case "addQuestion":
+      case 'addQuestion':
         return (
           <FormAddFaqQuestion
             blockList={blocks}
@@ -103,7 +102,7 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
           />
         );
         break;
-      case "editBlock":
+      case 'editBlock':
         return (
           currentBlock && (
             <FormEditFaqBlock
@@ -114,7 +113,7 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
           )
         );
         break;
-      case "editQuestion":
+      case 'editQuestion':
         return (
           currentQuestion && (
             <FormEditFaqQuestion
@@ -237,10 +236,10 @@ export const FAQPage: React.FC<FAQPageProps> = () => {
             </div>
           ) : (
             <FlexBox full centralized gap={2}>
-              <Button onClick={() => setForm("addBlock")}>
+              <Button onClick={() => setForm('addBlock')}>
                 <Plus /> Adicionar Categoria
               </Button>
-              <Button onClick={() => setForm("addQuestion")}>
+              <Button onClick={() => setForm('addQuestion')}>
                 <Plus />
                 Adicionar Pergunta
               </Button>

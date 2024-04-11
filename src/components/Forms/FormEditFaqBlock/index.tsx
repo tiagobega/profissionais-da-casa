@@ -56,7 +56,6 @@ export const FormEditFaqBlock: React.FC<FormEditFaqBlockProps> = ({
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        console.log(e);
         return onSubmit(e);
       })}
       style={{ width: "100%" }}

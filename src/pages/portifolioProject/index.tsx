@@ -1,21 +1,22 @@
-import { CaretLeft, MapPin, Star } from "@phosphor-icons/react";
-import { Button } from "components/Button";
-import { FlexBox } from "components/FlexBox";
-import { Loading } from "components/Loading";
-import { useApi } from "contexts/User";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { PortfolioProject, Professional } from "services/User/types";
-import { useTheme } from "styled-components";
-import { CarouselButton, MarginContainer } from "styles/commonComponents";
-import { EditPortfolioProject } from "./EditProject";
+import { CaretLeft, MapPin, Star } from '@phosphor-icons/react';
+import { Button } from 'components/Button';
+import { FlexBox } from 'components/FlexBox';
+import { Loading } from 'components/Loading';
+import { useApi } from 'contexts/User';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { PortfolioProject, Professional } from 'services/User/types';
+import { useTheme } from 'styled-components';
+import { CarouselButton, MarginContainer } from 'styles/commonComponents';
+import { EditPortfolioProject } from './EditProject';
 import {
   GalleryContainer,
   InformationContainer,
   ProfessionalInformation,
   ProjectInformation,
-} from "./styles";
-import { approvedEvaluations } from "utils/EvaluationAverage";
+} from './styles';
+import { approvedEvaluations } from 'utils/EvaluationAverage';
+import { Page } from 'components/Page';
 
 export interface PortfolioProjectPageProps {}
 export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
@@ -54,17 +55,16 @@ export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
 
   if (!currentProject) return <Loading />;
   if (!currentProfessional) return <Loading />;
-  const projectImages = currentProject?.images.split(",");
-  console.log(projectImages);
+  const projectImages = currentProject?.images.split(',');
   return (
     <>
-      <MarginContainer>
+      <Page paddingY={false}>
         <FlexBox alignItems="center" gap={2} py={2}>
           <Button variant="text" onClick={() => navigate(-1)}>
             <CaretLeft weight="fill" /> Voltar
           </Button>
         </FlexBox>
-      </MarginContainer>
+      </Page>
       {projectImages && (
         <GalleryContainer>
           <div className="carousel-bg">
@@ -86,37 +86,39 @@ export const PortfolioProjectPage: React.FC<PortfolioProjectPageProps> = () => {
           </FlexBox>
         </GalleryContainer>
       )}
-      <InformationContainer>
-        <ProfessionalInformation>
-          <FlexBox direction="column" gap={1}>
-            <h2>{currentProfessional.name}</h2>
-            <FlexBox alignItems="center">
-              <MapPin weight="fill" size={32} />{" "}
-              {currentProfessional.locations.map((item) => (
-                <p key={item.id}>{item.state} | </p>
-              ))}
+      <Page>
+        <InformationContainer>
+          <ProfessionalInformation>
+            <FlexBox direction="column" gap={1}>
+              <h2>{currentProfessional.name}</h2>
+              <FlexBox alignItems="center">
+                <MapPin weight="fill" size={32} />{' '}
+                {currentProfessional.locations.map((item) => (
+                  <p key={item.id}>{item.state} | </p>
+                ))}
+              </FlexBox>
+              <FlexBox alignItems="center" gap={0.5} mb={1.5}>
+                <Star weight="fill" color={color.secondary.yellow} size={40} />
+                <p className="rating">{ratings?.average}</p>
+                <p className="quantity">{`(${ratings?.quantity})`}</p>
+              </FlexBox>
+              <Button
+                variant="text"
+                onClick={() => {
+                  navigate(`/professional/${currentProfessional.userId}`);
+                }}
+              >
+                <CaretLeft weight="fill" />
+                Voltar para perfil
+              </Button>
             </FlexBox>
-            <FlexBox alignItems="center" gap={0.5} mb={1.5}>
-              <Star weight="fill" color={color.secondary.yellow} size={40} />
-              <p className="rating">{ratings?.average}</p>
-              <p className="quantity">{`(${ratings?.quantity})`}</p>
-            </FlexBox>
-            <Button variant="text">
-              <CaretLeft
-                weight="fill"
-                onClick={() =>
-                  navigate(`/professional/${currentProfessional.userId}`)
-                }
-              />
-              Voltar para perfil
-            </Button>
-          </FlexBox>
-        </ProfessionalInformation>
-        <ProjectInformation>
-          <h2>{currentProject.name}</h2>
-          <p>{currentProject.description}</p>
-        </ProjectInformation>
-      </InformationContainer>
+          </ProfessionalInformation>
+          <ProjectInformation>
+            <h2>{currentProject.name}</h2>
+            <p>{currentProject.description}</p>
+          </ProjectInformation>
+        </InformationContainer>
+      </Page>
     </>
   );
 };

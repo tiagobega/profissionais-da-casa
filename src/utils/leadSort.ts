@@ -1,8 +1,6 @@
-import { Lead } from "services/User/types";
+import { Lead } from 'services/User/types';
 
 export const filteredLeadsList = (list: Lead[], query: string) => {
-  console.log(list);
-
   const sortedLeads = list.sort(function (a, b) {
     let keyA = new Date(a.createdAt);
     let keyB = new Date(b.createdAt);
@@ -11,8 +9,6 @@ export const filteredLeadsList = (list: Lead[], query: string) => {
     if (keyA > keyB) return -1;
     return 0;
   });
-
-  console.log(sortedLeads);
 
   if (query.length > 3) return sortedLeads;
 

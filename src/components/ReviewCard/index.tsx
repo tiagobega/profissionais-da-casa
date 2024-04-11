@@ -1,15 +1,15 @@
-import { FlexBox } from "components/FlexBox";
-import { InfoContainer, ReviewContainer } from "./styles";
-import profile from "assets/images/profile-placeholder.jpeg";
-import { useTheme } from "styled-components";
-import { Button } from "components/Button";
-import { StarMeter } from "components/StarMeter";
-import { EvaluationStatus } from "constants/evaluation";
-import { Modal } from "components/Modal";
-import { useEffect, useState } from "react";
-import { Evaluation, Me, Professional } from "services/User/types";
-import { useApi } from "contexts/User";
-import { evaluationSingleAverage } from "utils/EvaluationAverage";
+import { FlexBox } from 'components/FlexBox';
+import { InfoContainer, ReviewContainer } from './styles';
+import profile from 'assets/images/profile-placeholder.jpeg';
+import { useTheme } from 'styled-components';
+import { Button } from 'components/Button';
+import { StarMeter } from 'components/StarMeter';
+import { EvaluationStatus } from 'constants/evaluation';
+import { Modal } from 'components/Modal';
+import { useEffect, useState } from 'react';
+import { Evaluation, Me, Professional } from 'services/User/types';
+import { useApi } from 'contexts/User';
+import { evaluationSingleAverage } from 'utils/EvaluationAverage';
 
 export type ReviewType = {};
 
@@ -22,9 +22,9 @@ export interface ReviewCardProps {
 }
 
 const statusName = {
-  approved: "Aprovado",
-  refused: "Excluído",
-  pending: "Esperando análise",
+  approved: 'Aprovado',
+  refused: 'Excluído',
+  pending: 'Esperando análise',
 };
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({
@@ -47,17 +47,17 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   const { edit } = evaluationApi;
 
   const handleApprove = async () => {
-    await edit({ id: evaluation.id, status: "approved" });
+    await edit({ id: evaluation.id, status: 'approved' });
     refetch();
     closeDetails();
   };
   const handlePending = async () => {
-    await edit({ id: evaluation.id, status: "pending" });
+    await edit({ id: evaluation.id, status: 'pending' });
     refetch();
     closeDetails();
   };
   const handleRefuse = async () => {
-    await edit({ id: evaluation.id, status: "refused" });
+    await edit({ id: evaluation.id, status: 'refused' });
     refetch();
     closeDetails();
   };
@@ -83,7 +83,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
 
       <Modal
         isOpened={modalDetails}
-        onProceed={() => console.log("proceed")}
+        onProceed={() => console.log('proceed')}
         onClose={() => setModalDetails(false)}
       >
         <h2>Detalhes da Avaliação</h2>
@@ -133,7 +133,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
         </FlexBox>
 
         <FlexBox gap={2}>
-          {evaluation.status == "pending" && (
+          {evaluation.status == 'pending' && (
             <>
               <Button onClick={handleApprove}>Postar</Button>
               <Button variant="outline" onClick={handleRefuse}>
@@ -141,7 +141,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
               </Button>
             </>
           )}
-          {evaluation.status == "approved" && (
+          {evaluation.status == 'approved' && (
             <>
               <Button variant="outline" onClick={handlePending}>
                 Deixar em espera
@@ -151,7 +151,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
               </Button>
             </>
           )}
-          {evaluation.status == "refused" && (
+          {evaluation.status == 'refused' && (
             <>
               <Button onClick={handleApprove}>Aprovar</Button>
               <Button variant="outline" onClick={handlePending}>
