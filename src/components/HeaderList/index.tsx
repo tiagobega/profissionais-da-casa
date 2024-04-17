@@ -10,10 +10,13 @@ import { Button } from "components/Button";
 import { Geometry } from "components/Geometry";
 import { useTheme } from "styled-components";
 import { Router, useNavigate } from "react-router-dom";
+import { useApi } from "contexts/User";
 
 export interface HeaderListProps {}
 export const HeaderList: React.FC<HeaderListProps> = () => {
   const navigate = useNavigate();
+  const { user } = useApi();
+  const { me } = user;
   const { color } = useTheme();
   return (
     <HeaderContainer>
@@ -26,6 +29,7 @@ export const HeaderList: React.FC<HeaderListProps> = () => {
           </p>
           <p>Depois, deixe a sua avaliação.</p>
         </div>
+        {!me && <Button full>Cadastre-se</Button>}
       </TextContainer>
 
       <RightContainer>

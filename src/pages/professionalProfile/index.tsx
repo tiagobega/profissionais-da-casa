@@ -1,4 +1,4 @@
-import { type Professional } from 'services/User/types';
+import { type Professional } from "services/User/types";
 
 import {
   Camera,
@@ -9,28 +9,28 @@ import {
   Star,
   User,
   Warehouse,
-} from '@phosphor-icons/react';
-import { useTheme } from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+} from "@phosphor-icons/react";
+import { useTheme } from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { Button } from 'components/Button';
-import { FlexBox } from 'components/FlexBox';
-import { FormAddProfessionalProfilePicture } from 'components/Forms/FormAddProfessionalProfilePicture';
-import { FormContactProfessional } from 'components/Forms/FormSendContact';
-import { Loading } from 'components/Loading';
-import { Modal } from 'components/Modal';
-import { StarMeter } from 'components/StarMeter';
+import { Button } from "components/Button";
+import { FlexBox } from "components/FlexBox";
+import { FormAddProfessionalProfilePicture } from "components/Forms/FormAddProfessionalProfilePicture";
+import { FormContactProfessional } from "components/Forms/FormSendContact";
+import { Loading } from "components/Loading";
+import { Modal } from "components/Modal";
+import { StarMeter } from "components/StarMeter";
 
-import { CarouselButton, MarginContainer } from 'styles/commonComponents';
+import { CarouselButton, MarginContainer } from "styles/commonComponents";
 
-import { useApi } from 'contexts/User';
-import React, { useEffect, useState } from 'react';
-import ReactGA from 'react-ga4';
+import { useApi } from "contexts/User";
+import React, { useEffect, useState } from "react";
+import ReactGA from "react-ga4";
 import {
   approvedEvaluations,
   evaluationSingleAverage,
-} from 'utils/EvaluationAverage';
-import { ProfileManager } from './ProfileManager';
+} from "utils/EvaluationAverage";
+import { ProfileManager } from "./ProfileManager";
 import {
   ActionsContainer,
   FeaturesContainer,
@@ -48,9 +48,9 @@ import {
   SocialList,
   TagList,
   TextsContainer,
-} from './styles';
-import { socialMediaIcon } from 'utils/socialMediaLogo';
-import { Page } from 'components/Page';
+} from "./styles";
+import { socialMediaIcon } from "utils/socialMediaLogo";
+import { Page } from "components/Page";
 
 export interface ProfessionalProfileProps {}
 export const ProfessionalProfilePage: React.FC<
@@ -88,7 +88,7 @@ export const ProfessionalProfilePage: React.FC<
   };
 
   useEffect(() => {
-    if (!id) return navigate('/catalog');
+    if (!id) return navigate("/catalog");
 
     const ownPage = id === me?.id;
     setIsOwn(ownPage);
@@ -97,7 +97,7 @@ export const ProfessionalProfilePage: React.FC<
   }, [id]);
 
   const socialMediaLink = (link: string) => {
-    if (link[0] == '@') {
+    if (link[0] == "@") {
       return `https://www.instagram.com/${link.substring(1)}`;
     } else {
       return link;
@@ -113,7 +113,7 @@ export const ProfessionalProfilePage: React.FC<
     quantityDisplayed: number
   ) => {
     const array = new Array(Math.ceil(itemQuantity / quantityDisplayed)).fill(
-      ''
+      ""
     );
 
     return array;
@@ -130,8 +130,8 @@ export const ProfessionalProfilePage: React.FC<
         {isOwn && !pageProfessional.active && (
           <Button
             variant="primary"
-            background={'orange'}
-            onClick={() => navigate('/profile')}
+            background={"orange"}
+            onClick={() => navigate("/profile")}
           >
             Ver perfil de usuário <CaretRight weight="fill" />
           </Button>
@@ -199,6 +199,22 @@ export const ProfessionalProfilePage: React.FC<
                 Entrar em contato
               </Button>
             )}
+            {!isOwn && !me && (
+              <FlexBox direction="column" centralized gap={2}>
+                <h3>
+                  Para entrar em contato com este profissional clique abaixo
+                  para se cadastrar gratuitamente!
+                </h3>
+                <Button
+                  variant="primary"
+                  background={color.brand.yellowLight}
+                  width={10}
+                  onClick={() => navigate("/register/customer")}
+                >
+                  Cadastre-se
+                </Button>
+              </FlexBox>
+            )}
             {pageProfessional.portfolioFile && isOwn && (
               <a href={pageProfessional.portfolioFile} target="_blank" download>
                 <Button variant="outline">
@@ -222,17 +238,17 @@ export const ProfessionalProfilePage: React.FC<
       </HeaderContainer>
 
       <FeaturesContainer>
-        <Feature title={'Tags'}>
+        <Feature title={"Tags"}>
           {!pageProfessional.tags.length && <p> Não há Tags cadastradas</p>}
           <TagList>
             {pageProfessional.tags.length > 0 &&
               pageProfessional.tags
-                .split(',')
+                .split(",")
                 .map((item, key) => <li key={key}>{item}</li>)}
           </TagList>
         </Feature>
 
-        <Feature title={'Locais de atuação'}>
+        <Feature title={"Locais de atuação"}>
           {pageProfessional.locations.length === 0 &&
             !pageProfessional.onlineAppointment && (
               <p>Não há locais de atuação cadastrados</p>
@@ -246,7 +262,7 @@ export const ProfessionalProfilePage: React.FC<
           </LocationList>
         </Feature>
 
-        <Feature title={'Redes Sociais'}>
+        <Feature title={"Redes Sociais"}>
           {pageProfessional.socialMedias.length === 0 && (
             <p>Não há redes sociais cadastradas</p>
           )}
@@ -273,7 +289,7 @@ export const ProfessionalProfilePage: React.FC<
                 src={
                   pageProfessional.portfolioProjects[
                     displayProject
-                  ].images.split(',')[0]
+                  ].images.split(",")[0]
                 }
                 alt="project image"
                 className="gallery-img"
@@ -323,7 +339,7 @@ export const ProfessionalProfilePage: React.FC<
             full
             direction="column"
             centralized
-            media={{ lg: { gap: 2, direction: 'row' } }}
+            media={{ lg: { gap: 2, direction: "row" } }}
           >
             <Warehouse size={64} color={theme.color.brand.orange} />
             <h2>
@@ -341,7 +357,7 @@ export const ProfessionalProfilePage: React.FC<
             alignItems="center"
             direction="column"
             gap={2}
-            media={{ lg: { direction: 'row', alignItems: 'stretch' } }}
+            media={{ lg: { direction: "row", alignItems: "stretch" } }}
           >
             <RatingContainer
               alignItems="center"
@@ -352,9 +368,9 @@ export const ProfessionalProfilePage: React.FC<
             >
               <FlexBox
                 full
-                justifyContent={'center'}
+                justifyContent={"center"}
                 gap={1}
-                media={{ lg: { justifyContent: 'flex-start' } }}
+                media={{ lg: { justifyContent: "flex-start" } }}
               >
                 <Star weight="fill" color={color.secondary.yellow} size={45} />
                 <p className="rating">{publicEvaluations.average}</p>
@@ -393,12 +409,12 @@ export const ProfessionalProfilePage: React.FC<
                 gap={1}
                 media={{
                   lg: {
-                    direction: 'row',
+                    direction: "row",
                   },
                 }}
               >
                 <h3>Depoimentos</h3>
-                {me && me?.roleRel.name != 'professional' && (
+                {me && me?.roleRel.name != "professional" && (
                   <Button
                     variant="outline"
                     color={theme.color.secondary.lightTeal}
@@ -415,13 +431,13 @@ export const ProfessionalProfilePage: React.FC<
                 justifyContent="center"
                 alignItems="flex-start"
                 gap={5}
-                media={{ lg: { h: '100%' } }}
+                media={{ lg: { h: "100%" } }}
               >
                 <ReviewContainer
                   direction="column"
                   alignItems="center"
                   gap={1}
-                  media={{ lg: { h: '100%', justifyContent: 'space-between' } }}
+                  media={{ lg: { h: "100%", justifyContent: "space-between" } }}
                 >
                   <div className="reviewDisplay">
                     {publicEvaluations.evaluations
@@ -456,13 +472,13 @@ export const ProfessionalProfilePage: React.FC<
             alignItems="center"
             media={{
               lg: {
-                direction: 'row',
+                direction: "row",
                 centralized: true,
                 gap: 2,
               },
             }}
           >
-            <h2>Ainda não há depoimentos para este profissional</h2>{' '}
+            <h2>Ainda não há depoimentos para este profissional</h2>{" "}
             {!isOwn && me && (
               <Button
                 variant="outline"
@@ -504,8 +520,8 @@ export const ProfessionalProfilePage: React.FC<
             onSend={() => {
               ReactGA.event(
                 {
-                  action: 'click',
-                  category: 'contact',
+                  action: "click",
+                  category: "contact",
                   label: `contact_${pageProfessional.name}`,
                 },
                 {
